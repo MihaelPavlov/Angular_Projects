@@ -1,0 +1,45 @@
+{
+  "investments": [
+    {
+      "id": 1,
+      "investmentName": "Tesla",
+      "symbol": "TSI",
+      "quantity": 0.25,
+      "purchasePrice": 80,
+      "currency": 1,
+      "investmentType": 0
+    },
+    {
+      "id": 2,
+      "investmentName": "Microsoft",
+      "symbol": "MST",
+      "quantity": 1,
+      "purchasePrice": 213,
+      "currency": 0,
+      "investmentType": 0
+    },
+    {
+      "id": 3,
+      "investmentName": "ScdP500",
+      "symbol": "SP",
+      "quantity": 2.43,
+      "purchasePrice": 165,
+      "currency": 2,
+      "investmentType": 0
+    }
+  ],
+  "notifications": [
+    {
+      "id": 1,
+      "name": "Crypto"
+    },
+    {
+      "id": 2,
+      "name": "Stocks"
+    },
+    {
+      "id": 3,
+      "name": "Market"
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource">
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="investmentName">
+      <th mat-header-cell *matHeaderCellDef>Investment Name</th>
+      <td mat-cell *matCellDef="let investment"> {{investment.investmentName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="symbol">
+      <th mat-header-cell *matHeaderCellDef>Symbol</th>
+      <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="quantity">
+      <th mat-header-cell *matHeaderCellDef>Quantity</th>
+      <td mat-cell *matCellDef="let element"> {{element.quantity}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="purchasePrice">
+      <th mat-header-cell *matHeaderCellDef>Purchase Price</th>
+      <td mat-cell *matCellDef="let element"> {{element.purchasePrice}} {{element.currency | currencyToSymbol}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="investmentType">
+      <th mat-header-cell *matHeaderCellDef>Investment Type</th>
+      <td mat-cell *matCellDef="let element"> {{element.investmentType | investmentTypeToName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="redirectToDetailsPage(element.id)">Details</button>
+          <button mat-menu-item>Edit</button>
+          <button mat-menu-item>Delete</button>
+        </mat-menu>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                 showFirstLastButtons
+                 aria-label="Select page of periodic elements">
+  </mat-paginator>
+
+</div>
+
+<add-update-investment></add-update-investment>
