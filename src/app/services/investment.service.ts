@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {IInvestment} from "../models/investment";
 import {Currency} from "../../enums/currency.enum";
 import {InvestmentType} from "../../enums/investment-type.enum";
-import {BehaviorSubject, defaultIfEmpty, delay, map, Observable, tap, timeout} from "rxjs";
+import {BehaviorSubject, defaultIfEmpty, delay, map, Observable, take, tap, timeout} from "rxjs";
 import {RestApiService} from "../../lib/services/rest-api.service";
 
 @Injectable({
@@ -28,7 +28,7 @@ export class InvestmentService {
   }
 
   getInvestmentById(id: number): void {
-    this.restApiService.get<IInvestment | null>(`investments/${id}`).subscribe((result: any  )=>{
+    this.restApiService.get<IInvestment | null>(`investments/${id}`).subscribe((result: any) => {
       this.investmentForUpdateSubject$.next(result);
     })
   }
@@ -36,22 +36,35 @@ export class InvestmentService {
   create(investmentName: string, symbol: string, quantity: number,
          purchasePrice: number, currency: Currency, investmentType: InvestmentType): void {
 
-    const id = investments.reduce((max, investment) => {
-      return investment.id > max ? investment.id : max;
-    }, -1) + 1;
 
-    let newInvestment: IInvestment = {
-      id,
-      investmentName,
-      symbol,
-      quantity,
-      purchasePrice,
-      currency,
-      investmentType
-    };
+    this.investmentSubject$.subscribe(result => {
+      let id = result.reduce((max, investment) => {
+        return investment.id > max ? investment.id : max;
+      }, -1) + 1;
 
-    investments.push(newInvestment);
-    this.investmentSubject$.next([...investments]);
+      let newInvestment: IInvestment = {
+        id,
+        investmentName,
+        symbol,
+        quantity,
+        purchasePrice,
+        currency,
+        investmentType
+      };
+
+      this.restApiService.post<{ investmentId: number }>('investments', newInvestment)
+        .pipe(take(1))
+        .subscribe({
+          next: response => {
+            console.log('Sucessfully', response)
+          },
+          error: response => {
+            console.log('error', response)
+          }
+        })
+
+    })
+
   }
 
   update(id: number, investmentName: string, symbol: string, quantity: number,
@@ -66,41 +79,31 @@ export class InvestmentService {
       investmentType
     };
 
-    const index = investments.findIndex(investment => investment.id === id);
+    this.restApiService.put(`investments/${id}`, updatedInvestment)
+      .pipe(take(1))
+      .subscribe({
+        next: response => {
+          // show success toast message
+          this.getInvestments();
 
-    if (index !== -1) {
-      investments[index] = updatedInvestment;
-      this.investmentSubject$.next([...investments]);
-    }
+          console.log("succesfully", response)
+        },
+        error: response => {
+          // show error toast message
+          console.log('error from put', response)
+        }
+      })
+  }
+
+  delete(id: number): void {
+    this.restApiService.delete(`investments/${id}`,).subscribe({
+      next: response => {
+        console.log("Success deletion", response);
+        this.getInvestments();
+        },
+      error: response => {
+        console.log("Failed deletion", response);
+      }
+    })
   }
 }
-
-const investments: IInvestment[] = [
-  {
-    id: 1,
-    investmentName: "Tesla",
-    symbol: "TSI",
-    quantity: 0.25,
-    purchasePrice: 80,
-    currency: Currency.Euro,
-    investmentType: InvestmentType.Stock
-  },
-  {
-    id: 2,
-    investmentName: "Microsoft",
-    symbol: "MST",
-    quantity: 1,
-    purchasePrice: 213,
-    currency: Currency.Dollar,
-    investmentType: InvestmentType.Stock
-  },
-  {
-    id: 3,
-    investmentName: "SP500",
-    symbol: "SP",
-    quantity: 2.43,
-    purchasePrice: 165,
-    currency: Currency.BulgarianLev,
-    investmentType: InvestmentType.Stock
-  }
-]

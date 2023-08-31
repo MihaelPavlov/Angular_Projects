@@ -1,4 +1,8 @@
 /* styles.scss (or your component's CSS) */
+.wrapper {
+  margin: 5%;
+  font-family: 'Helvetica Neue', sans-serif;
+}
 
 .investment-details {
   display: flex;

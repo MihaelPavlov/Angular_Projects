@@ -1,39 +1,41 @@
-<div class="investment-details">
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>Investment Details</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <div *ngIf="this.investment" class="details">
-        <div class="detail-row">
-          <div class="label">Investment ID:</div>
-          <div class="value">{{ investment.id }}</div>
+<div class="wrapper">
+  <div class="investment-details">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Investment Details</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div *ngIf="this.investment" class="details">
+          <div class="detail-row">
+            <div class="label">Investment ID:</div>
+            <div class="value">{{ investment.id }}</div>
+          </div>
+          <div class="detail-row">
+            <div class="label">Investment Name:</div>
+            <div class="value">{{ investment.investmentName }}</div>
+          </div>
+          <div class="detail-row">
+            <div class="label">Symbol:</div>
+            <div class="value">{{ investment.symbol }}</div>
+          </div>
+          <div class="detail-row">
+            <div class="label">Quantity:</div>
+            <div class="value">{{ investment.quantity }}</div>
+          </div>
+          <div class="detail-row">
+            <div class="label">Purchase Price:</div>
+            <div class="value">{{ investment.purchasePrice }} {{investment.currency | currencyToSymbol}}</div>
+          </div>
+          <div class="detail-row">
+            <div class="label">Investment Type:</div>
+            <div class="value">{{ investment.investmentType | investmentTypeToName}}</div>
+          </div>
         </div>
-        <div class="detail-row">
-          <div class="label">Investment Name:</div>
-          <div class="value">{{ investment.investmentName }}</div>
-        </div>
-        <div class="detail-row">
-          <div class="label">Symbol:</div>
-          <div class="value">{{ investment.symbol }}</div>
-        </div>
-        <div class="detail-row">
-          <div class="label">Quantity:</div>
-          <div class="value">{{ investment.quantity }}</div>
-        </div>
-        <div class="detail-row">
-          <div class="label">Purchase Price:</div>
-          <div class="value">{{ investment.purchasePrice }} {{investment.currency | currencyToSymbol}}</div>
-        </div>
-        <div class="detail-row">
-          <div class="label">Investment Type:</div>
-          <div class="value">{{ investment.investmentType | investmentTypeToName}}</div>
-        </div>
-      </div>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-stroked-button color="primary" (click)="this.onBackClicked()">Back</button>
-      <button mat-stroked-button color="accent" (click)="this.onEditClicked()">Edit</button>
-    </mat-card-actions>
-  </mat-card>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-stroked-button color="primary" (click)="this.onBackClicked()">Back</button>
+        <button mat-stroked-button color="accent" (click)="this.onEditClicked()">Edit</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
 </div>

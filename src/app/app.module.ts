@@ -25,6 +25,8 @@ import {InvestmentDetailsComponent} from "./components/portfolio/investment-deta
 import {RouterModule, Routes} from "@angular/router";
 import {MatCardModule} from "@angular/material/card";
 import {HttpModule} from "../lib/http/http.module";
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {ToolBarComponent} from "./components/toolbar/tool-bar.component";
 
 const routes: Routes = [
   {path: '', component: InvestmentListComponent},
@@ -43,7 +45,8 @@ const routes: Routes = [
     InvestmentListComponent,
     InvestmentDetailsComponent,
     CurrencyToSymbolPipe,
-    InvestmentTypeToNamePipe
+    InvestmentTypeToNamePipe,
+    ToolBarComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +62,10 @@ const routes: Routes = [
     MatIconModule,
     MatCardModule,
     RouterModule.forRoot(routes),
-    HttpModule
+    HttpModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

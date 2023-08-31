@@ -1,16 +1,24 @@
-import {Component, OnInit} from "@angular/core";
+import {AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChildren} from "@angular/core";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {NotificationService} from "../../services/notification.service";
 import {INotification} from "../../models/notification";
-import {delay, timeout} from "rxjs";
+import {delay, map} from "rxjs";
+import {AuthService} from "../../../lib/services/auth.service";
+import {IUser} from "../../models/user";
+import {logMessages} from "@angular-devkit/build-angular/src/builders/browser-esbuild/esbuild";
+
 
 @Component({
   selector: "register",
   templateUrl: 'register.component.html',
   styleUrls: ['register.component.css']
 })
-export class RegisterComponent implements OnInit {
-  constructor(private notificationService: NotificationService, private formBuilder: FormBuilder) {
+export class RegisterComponent implements OnInit, AfterViewInit {
+  @ViewChildren("notificaions") notificaions: QueryList<ElementRef> | undefined;
+
+  constructor(private notificationService: NotificationService,
+              private formBuilder: FormBuilder,
+              private authService: AuthService) {
   }
 
   registerForm = new FormGroup({
@@ -29,22 +37,55 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.notificationService
-      .getNotifications().pipe(delay(5000))
+      .getNotifications().pipe(delay(1000))
       .subscribe(result => {
-        console.log('after timeout',result)
-      this.notifications = result;
+        console.log('after timeout', result)
+        this.notifications = result;
 
-      const notificationsGroup: { [key: string]: FormControl } = {};
+        const notificationsGroup: { [key: string]: FormControl } = {};
 
-      for (const notification of this.notifications) {
-        notificationsGroup[notification.name] = this.formBuilder.control(false);
-      }
+        for (const notification of this.notifications) {
+          notificationsGroup[notification.name] = this.formBuilder.control(false);
+        }
 
-      this.registerForm.controls.notifications.controls = notificationsGroup;
-    });
+        this.registerForm.controls.notifications.controls = notificationsGroup;
+      });
   }
 
-  register() {
-    console.log(this.registerForm);
+  ngAfterViewInit() {
+    // BASICALLY WE DONT NEED THIS
+    this.authService.user$.subscribe();
+  }
+
+  registerSubmit() {
+    let notificaions: INotification[] = [];
+    this.notificaions?.forEach(element => {
+      const id = element.nativeElement.querySelector('input').id;
+      const name = element.nativeElement.querySelector('input').name;
+      const formControl = this.registerForm.get(`notifications.${name}`);
+      if (formControl && formControl.value) {
+        const id = element.nativeElement.querySelector('input').id;
+
+        let obj: INotification = {
+          id,
+          name
+        }
+        notificaions.push(obj);
+      }
+    })
+
+    const user: IUser = {
+      id: 0, // Generated on the server
+      username: this.registerForm.controls.username.value,
+      password: this.registerForm.controls.password.value,
+      location: {
+        city: this.registerForm.controls.location.value.city,
+        address: this.registerForm.controls.location.value.address,
+        street: this.registerForm.controls.location.value.street
+      },
+      notifications: notificaions
+    };
+
+    this.authService.register(user);
   }
 }

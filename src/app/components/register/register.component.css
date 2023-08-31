@@ -1,3 +1,13 @@
+.wrapper {
+  font-family: 'Helvetica Neue', sans-serif;
+  background-color: #f5f5f5;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
 .register-container {
   max-width: 300px;
   margin: 0 auto;

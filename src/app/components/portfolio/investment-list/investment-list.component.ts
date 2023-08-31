@@ -12,7 +12,7 @@ import {Observable, tap} from "rxjs";
 })
 export class InvestmentListComponent implements OnInit, AfterViewInit {
   dataSource!: MatTableDataSource<IInvestment>;
-  displayedColumns: string[] = ['investmentName', 'symbol', 'quantity', 'purchasePrice', 'investmentType','actions'];
+  displayedColumns: string[] = ['investmentName', 'symbol', 'quantity', 'purchasePrice', 'investmentType', 'actions'];
 
   constructor(private investmentService: InvestmentService, private router: Router) {
   }
@@ -24,14 +24,22 @@ export class InvestmentListComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.investmentService.investment$.subscribe(x=>{
+    this.investmentService.investment$.subscribe(x => {
       console.log('inside subscriber after View Init')
 
       this.dataSource = new MatTableDataSource<IInvestment>(x);
     })
   }
 
-  redirectToDetailsPage(id: number) {
+  redirectToDetailsPage(id: number): void {
     this.router.navigate(['investment-details', id]);
+  }
+
+  onDelete(id: number): void {
+    this.investmentService.delete(id);
+  }
+
+  onEdit(id: number): void {
+    this.router.navigate(['update', id]);
   }
 }

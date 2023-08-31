@@ -1,3 +1,4 @@
+<div class="wrapper">
 <div class="mat-elevation-z8">
   <table mat-table [dataSource]="dataSource">
 
@@ -35,8 +36,8 @@
         </button>
         <mat-menu #menu="matMenu">
           <button mat-menu-item (click)="redirectToDetailsPage(element.id)">Details</button>
-          <button mat-menu-item>Edit</button>
-          <button mat-menu-item>Delete</button>
+          <button mat-menu-item (click)="onEdit(element.id)">Edit</button>
+          <button mat-menu-item (click)="onDelete(element.id)">Delete</button>
         </mat-menu>
       </td>
     </ng-container>
@@ -51,4 +52,4 @@
 
 </div>
 
-<add-update-investment></add-update-investment>
+</div>

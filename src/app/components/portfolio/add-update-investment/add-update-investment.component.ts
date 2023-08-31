@@ -48,14 +48,11 @@ export class AddUpdateInvestmentComponent implements OnInit {
 
   updateModel(): void {
     if (this.id != undefined) {
-/*
-      let model = this.investmentService.getInvestmentById(this.id);
-*/
-      //  this.investmentService.getInvestmentById(this.id).subscribe(result=> {
-      //   console.log('by id ', )
-      //
-      //     this.addUpdateForm.patchValue(result);
-      // })
+      this.investmentService.investmentForUpdate$.subscribe(result => {
+        if (result) {
+          this.addUpdateForm.patchValue(result)
+        }
+      })
     }
   }
 
