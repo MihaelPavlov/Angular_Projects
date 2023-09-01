@@ -22,106 +22,14 @@
     },
     {
       "id": 2,
-      "username": "test",
-      "password": "test",
+      "username": "zzz",
+      "password": "zzz",
       "location": {
-        "city": "test",
-        "address": "test",
-        "street": "test"
-      },
-      "notifications": [
-        {
-          "id": "2",
-          "name": "Stocks"
-        },
-        {
-          "id": "3",
-          "name": "Market"
-        }
-      ]
-    },
-    {
-      "id": 3,
-      "username": "ewqe",
-      "password": "qwewq",
-      "location": {
-        "city": "wq",
-        "address": "ewqe",
-        "street": "eqw"
-      },
-      "notifications": [
-        {
-          "id": "2",
-          "name": "Stocks"
-        }
-      ]
-    },
-    {
-      "id": 4,
-      "username": "312",
-      "password": "312",
-      "location": {
-        "city": "31",
-        "address": "312",
-        "street": "312"
-      },
-      "notifications": [
-        {
-          "id": "2",
-          "name": "Stocks"
-        }
-      ]
-    },
-    {
-      "id": 5,
-      "username": "31",
-      "password": "31",
-      "location": {
-        "city": "3123",
-        "address": "ew",
-        "street": "321"
+        "city": null,
+        "address": null,
+        "street": null
       },
       "notifications": []
-    },
-    {
-      "id": 6,
-      "username": "test",
-      "password": "test",
-      "location": {
-        "city": "dsa",
-        "address": "da",
-        "street": "dsa"
-      },
-      "notifications": [
-        {
-          "id": "2",
-          "name": "Stocks"
-        },
-        {
-          "id": "3",
-          "name": "Market"
-        }
-      ]
-    },
-    {
-      "id": 7,
-      "username": "TEST",
-      "password": "TEST",
-      "location": {
-        "city": "321",
-        "address": "3123",
-        "street": "21"
-      },
-      "notifications": [
-        {
-          "id": "2",
-          "name": "Stocks"
-        },
-        {
-          "id": "3",
-          "name": "Market"
-        }
-      ]
     }
   ],
   "investments": [

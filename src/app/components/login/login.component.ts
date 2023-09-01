@@ -1,5 +1,7 @@
-import {Component, OnInit} from "@angular/core";
+import {AfterViewInit, Component, OnInit} from "@angular/core";
 import {AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from "@angular/forms";
+import {AuthService} from "../../../lib/services/auth.service";
+import {IUser} from "../../models/user";
 
 @Component({
   selector: "login",
@@ -7,14 +9,17 @@ import {AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, 
   styleUrls: ["login.component.css"]
 })
 export class LoginComponent {
-
   loginForm = new FormGroup({
-    username: new FormControl('Write your name', [Validators.minLength(2), Validators.maxLength(10)]),
+    username: new FormControl('', [Validators.minLength(2), Validators.maxLength(10)]),
     password: new FormControl('', [this.validatePassword()])
   })
 
-  login() {
-    console.log('Login')
+  constructor(private authService: AuthService) {
+
+  }
+
+  loginSubmit() {
+    this.authService.login(String(this.loginForm.controls.username.value), String(this.loginForm.controls.password.value))
   }
 
   validatePassword(): ValidatorFn {

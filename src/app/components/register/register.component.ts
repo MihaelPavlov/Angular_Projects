@@ -1,11 +1,11 @@
-import {AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChildren} from "@angular/core";
+import {Component, ElementRef, OnInit, QueryList, ViewChildren} from "@angular/core";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {NotificationService} from "../../services/notification.service";
 import {INotification} from "../../models/notification";
-import {delay, map} from "rxjs";
+import {delay} from "rxjs";
 import {AuthService} from "../../../lib/services/auth.service";
 import {IUser} from "../../models/user";
-import {logMessages} from "@angular-devkit/build-angular/src/builders/browser-esbuild/esbuild";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -13,12 +13,13 @@ import {logMessages} from "@angular-devkit/build-angular/src/builders/browser-es
   templateUrl: 'register.component.html',
   styleUrls: ['register.component.css']
 })
-export class RegisterComponent implements OnInit, AfterViewInit {
+export class RegisterComponent implements OnInit {
   @ViewChildren("notificaions") notificaions: QueryList<ElementRef> | undefined;
 
   constructor(private notificationService: NotificationService,
               private formBuilder: FormBuilder,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private router: Router) {
   }
 
   registerForm = new FormGroup({
@@ -52,17 +53,13 @@ export class RegisterComponent implements OnInit, AfterViewInit {
       });
   }
 
-  ngAfterViewInit() {
-    // BASICALLY WE DONT NEED THIS
-    this.authService.user$.subscribe();
-  }
-
   registerSubmit() {
     let notificaions: INotification[] = [];
+
     this.notificaions?.forEach(element => {
-      const id = element.nativeElement.querySelector('input').id;
       const name = element.nativeElement.querySelector('input').name;
       const formControl = this.registerForm.get(`notifications.${name}`);
+
       if (formControl && formControl.value) {
         const id = element.nativeElement.querySelector('input').id;
 
@@ -87,5 +84,8 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     };
 
     this.authService.register(user);
+
+    //TODO: show a little loading screen
+    this.router.navigate(["/"]);
   }
 }

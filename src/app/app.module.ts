@@ -34,6 +34,7 @@ const routes: Routes = [
   {path: 'update/:id', component: AddUpdateInvestmentComponent},
   {path: 'investment-details/:id', component: InvestmentDetailsComponent},
   {path: 'register', component: RegisterComponent},
+  {path: 'login', component: LoginComponent},
 ]
 
 @NgModule({
