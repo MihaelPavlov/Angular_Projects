@@ -1,0 +1,89 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "test",
+      "password": "test",
+      "location": {
+        "city": "test",
+        "address": "test",
+        "street": "test"
+      },
+      "notifications": [
+        {
+          "id": "2",
+          "name": "Stocks"
+        },
+        {
+          "id": "3",
+          "name": "Market"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "username": "zzz",
+      "password": "zzz",
+      "location": {
+        "city": null,
+        "address": null,
+        "street": null
+      },
+      "notifications": []
+    },
+    {
+      "id": 3,
+      "username": "zzzz",
+      "password": "zzzz",
+      "location": {
+        "city": null,
+        "address": null,
+        "street": null
+      },
+      "notifications": []
+    }
+  ],
+  "investments": [
+    {
+      "id": 1,
+      "investmentName": "Tesla",
+      "symbol": "TSI",
+      "quantity": 0.25,
+      "purchasePrice": 80,
+      "currency": 1,
+      "investmentType": 0
+    },
+    {
+      "id": 2,
+      "investmentName": "Microsoft",
+      "symbol": "MST",
+      "quantity": 1,
+      "purchasePrice": 213,
+      "currency": 0,
+      "investmentType": 0
+    },
+    {
+      "id": 3,
+      "investmentName": "Tesla",
+      "symbol": "TSI",
+      "quantity": 0.25,
+      "purchasePrice": 80,
+      "currency": 1,
+      "investmentType": 0
+    }
+  ],
+  "notifications": [
+    {
+      "id": 1,
+      "name": "Crypto"
+    },
+    {
+      "id": 2,
+      "name": "Stocks"
+    },
+    {
+      "id": 3,
+      "name": "Market"
+    }
+  ]
+}
