@@ -30,6 +30,17 @@
         "street": null
       },
       "notifications": []
+    },
+    {
+      "id": 3,
+      "username": "zzzz",
+      "password": "zzzz",
+      "location": {
+        "city": null,
+        "address": null,
+        "street": null
+      },
+      "notifications": []
     }
   ],
   "investments": [
