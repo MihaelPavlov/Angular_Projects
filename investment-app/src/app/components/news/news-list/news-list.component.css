@@ -1,0 +1,40 @@
+.cardWrapper{
+  font-family: 'Helvetica Neue', sans-serif;
+  background-color: #f5f5f5;
+  margin: 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction:row;
+
+  flex-wrap:wrap;
+}
+
+.news-card {
+  max-width: 20%;
+  margin: 25px;
+}
+
+
+
+.avatar-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #ccc;
+  margin-right: 16px;
+}
+
+.mat-card-title,
+.mat-card-subtitle {
+  font-size: 16px;
+  margin: 0;
+}
+
+.mat-card-content {
+  font-size: 14px;
+}
+
+.mat-card-actions button {
+  font-size: 14px;
+}

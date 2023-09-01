@@ -27,6 +27,10 @@ import {MatCardModule} from "@angular/material/card";
 import {HttpModule} from "../lib/http/http.module";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {ToolBarComponent} from "./components/toolbar/tool-bar.component";
+import {NewsListComponent} from "./components/news/news-list/news-list.component";
+import { MatSnackBarModule} from "@angular/material/snack-bar";
+import {ToastComponent} from "./components/shared/error-snackbar/toast.component";
+import {TOAST_DEFAULT_OPTIONS} from "./models/toast";
 
 const routes: Routes = [
   {path: '', component: InvestmentListComponent},
@@ -47,7 +51,9 @@ const routes: Routes = [
     InvestmentDetailsComponent,
     CurrencyToSymbolPipe,
     InvestmentTypeToNamePipe,
-    ToolBarComponent
+    ToolBarComponent,
+    NewsListComponent,
+    ToastComponent
   ],
   imports: [
     BrowserModule,
@@ -66,9 +72,10 @@ const routes: Routes = [
     HttpModule,
     MatToolbarModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatSnackBarModule,
   ],
-  providers: [],
+  providers: [TOAST_DEFAULT_OPTIONS],
   bootstrap: [AppComponent]
 })
 export class AppModule {

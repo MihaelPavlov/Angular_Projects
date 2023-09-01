@@ -1,7 +1,9 @@
 import {Injectable} from "@angular/core";
-import {BehaviorSubject, filter, first, from, map, Observable, take, tap,} from "rxjs";
+import {BehaviorSubject, map, Observable,} from "rxjs";
 import {IUser} from "../../app/models/user";
 import {RestApiService} from "./rest-api.service";
+import {ToastService} from "./toast.service";
+import {ToastType} from "../../app/models/toast";
 
 @Injectable({
   providedIn: "root"
@@ -10,7 +12,7 @@ export class AuthService {
   private userSubject$ = new BehaviorSubject<IUser | null>(null);
   public user$ = this.userSubject$.asObservable()
 
-  constructor(private restApiService: RestApiService) {
+  constructor(private restApiService: RestApiService, private toasService: ToastService) {
   }
 
   register(user: IUser): void {
@@ -19,7 +21,7 @@ export class AuthService {
         next: response => {
           this.userSubject$.next(response as IUser);
           console.log('Registration Success', response)
-
+          this.toasService.success({message:"Successfully Registered", type:ToastType.Success})
           //TODO: show toast message
         },
         error: response => {
@@ -35,11 +37,11 @@ export class AuthService {
         map(users => users.filter(user => user.username === username && user.password === password)),
       ).subscribe({
       next: response => {
-        if (response.length != 0){
-
+        if (response.length != 0) {
+          this.userSubject$.next(response[0] as IUser)
           console.log('Login ', response)
-        }
-        else{
+        } else {
+          this.toasService.error({message: "Something get wrong",type: ToastType.Error})
           console.log('Failed no user')
         }
 

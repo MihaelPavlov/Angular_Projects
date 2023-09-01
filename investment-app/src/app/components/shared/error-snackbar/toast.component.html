@@ -1,0 +1,11 @@
+<div class="toast-container">
+  <img
+    class="toast-icon"
+    [src]="getIconPathByType(toastData.type)"
+    alt="toast icon"
+  />
+  <div class="toast-message">{{ toastData.message }}</div>
+  <div class="btn" (click)="snackBarRef.dismiss()">
+    <img src="../../../../assets/images/close-black.svg" alt="close icon" />
+  </div>
+</div>

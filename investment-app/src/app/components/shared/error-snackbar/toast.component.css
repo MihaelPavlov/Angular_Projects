@@ -1,0 +1,27 @@
+.toast-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.2rem 0.2rem;
+  color: black;
+  max-height: 4rem;
+  max-width: 20rem;
+  line-height: 1.375rem;
+}
+
+.toast-icon {
+  margin-right: 0.625rem;
+  margin-bottom: 0.25rem;
+}
+
+.spacer {
+  flex-grow: 1;
+}
+
+.toast-success {
+  background: #EBF2ED;
+}
+
+.toast-error {
+  background: #F6E8EB;
+}

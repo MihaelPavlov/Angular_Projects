@@ -1,0 +1,23 @@
+<div>
+  <div class="cardWrapper">
+    <mat-card *ngFor="let card of newsList" class="news-card">
+      <mat-card-header>
+        <div mat-card-avatar class="news-avatar">
+          <img src="{{card.imageUrl}}" alt="Card Avatar" class="avatar-image">
+        </div>
+        <mat-card-title>{{ card.name }}</mat-card-title>
+        <mat-card-subtitle>Views: {{card.views }} | Approx. Time: {{ card.timeToRead }} mins |
+          Comments: {{ card.comments.length }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad assumenda corporis doloremque eum maiores
+          numquam quia saepe velit voluptatum?</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary">Read In Details</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <mat-paginator [pageSizeOptions]="[3, 5, 10]" showFirstLastButtons></mat-paginator>
+</div>

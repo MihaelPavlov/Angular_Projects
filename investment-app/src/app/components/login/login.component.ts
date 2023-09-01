@@ -2,6 +2,7 @@ import {AfterViewInit, Component, OnInit} from "@angular/core";
 import {AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from "@angular/forms";
 import {AuthService} from "../../../lib/services/auth.service";
 import {IUser} from "../../models/user";
+import {Router} from "@angular/router";
 
 @Component({
   selector: "login",
@@ -14,12 +15,13 @@ export class LoginComponent {
     password: new FormControl('', [this.validatePassword()])
   })
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private router: Router) {
 
   }
 
   loginSubmit() {
     this.authService.login(String(this.loginForm.controls.username.value), String(this.loginForm.controls.password.value))
+    this.router.navigate(["/"])
   }
 
   validatePassword(): ValidatorFn {
