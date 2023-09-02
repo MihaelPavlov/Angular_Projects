@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {IInvestment} from "../models/investment";
 import {Currency} from "../../enums/currency.enum";
 import {InvestmentType} from "../../enums/investment-type.enum";
-import {BehaviorSubject, defaultIfEmpty, delay, map, Observable, take, tap, timeout} from "rxjs";
+import {BehaviorSubject, take, } from "rxjs";
 import {RestApiService} from "../../lib/services/rest-api.service";
 
 @Injectable({

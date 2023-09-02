@@ -27,6 +27,12 @@ import {MatCardModule} from "@angular/material/card";
 import {HttpModule} from "../lib/http/http.module";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {ToolBarComponent} from "./components/toolbar/tool-bar.component";
+import {NewsListComponent} from "./components/news/news-list/news-list.component";
+import { MatSnackBarModule} from "@angular/material/snack-bar";
+import {ToastComponent} from "./components/shared/toast/toast.component";
+import {TOAST_DEFAULT_OPTIONS} from "./models/toast";
+import {DetailsPopUpComponent} from "./components/news/details-pop-up/details-pop-up.component";
+import {MatDialogModule} from "@angular/material/dialog";
 
 const routes: Routes = [
   {path: '', component: InvestmentListComponent},
@@ -47,7 +53,10 @@ const routes: Routes = [
     InvestmentDetailsComponent,
     CurrencyToSymbolPipe,
     InvestmentTypeToNamePipe,
-    ToolBarComponent
+    ToolBarComponent,
+    NewsListComponent,
+    ToastComponent,
+    DetailsPopUpComponent
   ],
   imports: [
     BrowserModule,
@@ -66,9 +75,11 @@ const routes: Routes = [
     HttpModule,
     MatToolbarModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatSnackBarModule,
+    MatDialogModule
   ],
-  providers: [],
+  providers: [TOAST_DEFAULT_OPTIONS],
   bootstrap: [AppComponent]
 })
 export class AppModule {

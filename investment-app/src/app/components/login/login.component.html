@@ -1,19 +1,26 @@
-<div class="login-container">
-  <form [formGroup]="loginForm" (ngSubmit)="loginSubmit()">
-    <div class="form-group">
-      <span *ngIf="(this.loginForm.controls.username.errors?.['maxlength'] && this.loginForm.controls.username.dirty )" class="error-message">
+  <div class="login-container">
+    <form [formGroup]="loginForm" (ngSubmit)="loginSubmit()">
+      <div class="form-group">
+      <span *ngIf="(this.loginForm.controls.username.errors?.['maxlength'] && this.loginForm.controls.username.dirty )"
+            class="error-message">
         Username should be max {{this.loginForm.controls.username.errors?.['maxlength'].requiredLength}}: current symbols {{this.loginForm.controls.username.errors?.['maxlength'].actualLength}}</span>
-      <span *ngIf="(this.loginForm.controls.username.errors?.['minlength'] && this.loginForm.controls.username.dirty )" class="error-message">
-        Username should be minimum {{this.loginForm.controls.username.errors?.['minlength'].requiredLength}} symbols</span>
-      <label for="username">Username:</label>
-    <input type="text" id="username" formControlName="username" required>
-    </div>
-    <div class="form-group">
-      <label for="password">Password:</label>
-      <span *ngIf="(!this.loginForm.controls.password.errors?.['isPasswordValid']  && this.loginForm.controls.password.dirty )" class="error-message">Password is invalid!</span>
-      <input type="password" id="password" formControlName="password"  required>
-    </div>
+        <span
+          *ngIf="(this.loginForm.controls.username.errors?.['minlength'] && this.loginForm.controls.username.dirty )"
+          class="error-message">
+        Username should be minimum {{this.loginForm.controls.username.errors?.['minlength'].requiredLength}}
+          symbols</span>
+        <label for="username">Username:</label>
+        <input type="text" id="username" formControlName="username" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <span
+          *ngIf="(!this.loginForm.controls.password.errors?.['isPasswordValid']  && this.loginForm.controls.password.dirty )"
+          class="error-message">Password is invalid!</span>
+        <input type="password" id="password" formControlName="password" required>
+      </div>
 
-    <button type="submit">Login</button>
-  </form>
-</div>
+      <button type="submit">Login</button>
+    </form>
+  </div>
+
