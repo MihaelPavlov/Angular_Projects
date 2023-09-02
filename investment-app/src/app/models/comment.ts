@@ -1,6 +1,7 @@
-export interface IComments{
+export interface IComment {
   id: number
-  comment: string,
-  userId :number
+  newsId: number
+  comment: string
+  userId?: number
   likes: number
 }

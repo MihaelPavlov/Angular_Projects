@@ -62,3 +62,9 @@
 .btn:hover {
   background-color: #0056b3;
 }
+.info{
+margin-left: 5%;
+}
+.info button {
+  margin: 10px;
+}

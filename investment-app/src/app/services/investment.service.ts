@@ -36,7 +36,6 @@ export class InvestmentService {
   create(investmentName: string, symbol: string, quantity: number,
          purchasePrice: number, currency: Currency, investmentType: InvestmentType): void {
 
-
     this.investmentSubject$.subscribe(result => {
       let id = result.reduce((max, investment) => {
         return investment.id > max ? investment.id : max;

@@ -1,0 +1,24 @@
+<h1 mat-dialog-title>Comments</h1>
+
+<!-- Display all comments using ngFor -->
+<div *ngFor="let comment of this.comments; let i = index">
+  <mat-card>
+    <mat-card-content>{{ comment.comment }}</mat-card-content>
+
+    <!-- Edit button for your own comments -->
+    <mat-card-actions *ngIf="this.user?.id === comment.userId">
+      <button mat-stroked-button color="accent">Edit</button>
+      <button mat-stroked-button color="primary">Delete</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+
+<!-- Button to add a new comment -->
+<div class="add-comment">
+  <textarea matInput placeholder="Add a comment" [(ngModel)]="this.newCommentText"></textarea>
+  <button mat-raised-button color="primary" (click)="this.onAddComment()">Add Comment</button>
+</div>
+
+<mat-card-actions>
+  <button mat-button mat-dialog-close="" color="primary">Close</button>
+</mat-card-actions>

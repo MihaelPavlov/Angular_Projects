@@ -1,4 +1,4 @@
-import {IComments} from "./comment";
+import {IComment} from "./comment";
 
 export interface INews{
   id: number
@@ -8,5 +8,5 @@ export interface INews{
   smallDescription: string
   description: string
   imageUrl : string
-  comments: IComments[]
+  comments: IComment[]
 }
