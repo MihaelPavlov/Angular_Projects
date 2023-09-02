@@ -2,8 +2,6 @@ import {Injectable} from "@angular/core";
 import {BehaviorSubject, map, Observable,} from "rxjs";
 import {IUser} from "../../app/models/user";
 import {RestApiService} from "./rest-api.service";
-import {ToastService} from "./toast.service";
-import {ToastType} from "../../app/models/toast";
 
 @Injectable({
   providedIn: "root"
@@ -12,55 +10,27 @@ export class AuthService {
   private userSubject$ = new BehaviorSubject<IUser | null>(null);
   public user$ = this.userSubject$.asObservable()
 
-  constructor(private restApiService: RestApiService, private toasService: ToastService) {
+  constructor(private restApiService: RestApiService) {
   }
 
-  register(user: IUser): void {
-    this.restApiService.post('users', user)
-      .subscribe({
-        next: response => {
-          this.userSubject$.next(response as IUser);
-          console.log('Registration Success', response)
-          this.toasService.success({message:"Successfully Registered", type:ToastType.Success})
-          //TODO: show toast message
-        },
-        error: response => {
-          //TODO: show toast message
-          console.log('Registration Failed', response)
-        }
-      })
+  register(user: IUser): Observable<IUser | null> {
+    return this.restApiService.post<IUser>('users', user)
   }
 
-  login(username: string, password: string): void {
-    this.restApiService.get<IUser[]>('users')
+  login(username: string, password: string): Observable<IUser[]> {
+    return this.restApiService.get<IUser[]>('users')
       .pipe(
         map(users => users.filter(user => user.username === username && user.password === password)),
-      ).subscribe({
-      next: response => {
-        if (response.length != 0) {
-          this.userSubject$.next(response[0] as IUser)
-          console.log('Login ', response)
-        } else {
-          this.toasService.error({message: "Something get wrong",type: ToastType.Error})
-          console.log('Failed no user')
-        }
+      )
 
-      },
-      error: response => {
-        console.log('error', response)
-      },
-      complete: () => {
-        console.log('completed')
-      }
-    })
+  }
+
+  fetchUser(user: IUser): void {
+    this.userSubject$.next(user);
   }
 
   logout(): void {
-
-  }
-
-  isAuthenticated(): Observable<boolean> {
-    return new Observable<boolean>();
+    this.userSubject$.next(null);
   }
 }
 

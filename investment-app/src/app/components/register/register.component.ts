@@ -6,6 +6,8 @@ import {delay} from "rxjs";
 import {AuthService} from "../../../lib/services/auth.service";
 import {IUser} from "../../models/user";
 import {Router} from "@angular/router";
+import {ToastType} from "../../models/toast";
+import {ToastService} from "../../../lib/services/toast.service";
 
 
 @Component({
@@ -19,7 +21,8 @@ export class RegisterComponent implements OnInit {
   constructor(private notificationService: NotificationService,
               private formBuilder: FormBuilder,
               private authService: AuthService,
-              private router: Router) {
+              private router: Router,
+              private toastService: ToastService) {
   }
 
   registerForm = new FormGroup({
@@ -83,9 +86,19 @@ export class RegisterComponent implements OnInit {
       notifications: notificaions
     };
 
-    this.authService.register(user);
-
-    //TODO: show a little loading screen
-    this.router.navigate(["/"]);
+    this.authService.register(user).subscribe({
+      next: response => {
+        if (response != null) {
+          this.authService.fetchUser(response);
+          this.toastService.success({message: "Successfully Registered", type: ToastType.Success})
+          this.router.navigate(["/"]);
+        } else {
+          this.toastService.error({message: "Something get wrong", type: ToastType.Error})
+        }
+      },
+      error: response => {
+        this.toastService.error({message: `Something get wrong: ${response}`, type: ToastType.Error})
+      }
+    });
   }
 }

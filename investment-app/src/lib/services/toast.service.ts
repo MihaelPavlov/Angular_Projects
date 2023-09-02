@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {ToastComponent} from "../../app/components/shared/error-snackbar/toast.component";
+import {ToastComponent} from "../../app/components/shared/toast/toast.component";
 import {IToast, TOAST_CLASS} from "../../app/models/toast";
 
 @Injectable({ providedIn: 'root' })
@@ -20,6 +20,7 @@ export class ToastService {
     this.toast.openFromComponent(ToastComponent, {
       data,
       panelClass: TOAST_CLASS.ERROR,
+      duration: 5000
     });
     console.error(`Error: ${data.message}`, data || '');
   }

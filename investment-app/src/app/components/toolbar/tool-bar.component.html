@@ -11,6 +11,7 @@
     </div>
     <div *ngIf="this.user != null">
       <li><a>Welcome {{this.user.username}}</a></li>
+      <li><a (click)="onLogout()">Logout</a></li>
     </div>
   </ul>
 </nav>
