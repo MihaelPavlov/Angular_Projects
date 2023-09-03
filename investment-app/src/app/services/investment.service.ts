@@ -36,33 +36,33 @@ export class InvestmentService {
   create(investmentName: string, symbol: string, quantity: number,
          purchasePrice: number, currency: Currency, investmentType: InvestmentType): void {
 
-    this.investmentSubject$.subscribe(result => {
-      let id = result.reduce((max, investment) => {
-        return investment.id > max ? investment.id : max;
-      }, -1) + 1;
+    this.restApiService.get<IInvestment[]>('investments')
+      .subscribe(result => {
+        let id = result.reduce((max, investment) => {
+          return investment.id > max ? investment.id : max;
+        }, -1) + 1;
 
-      let newInvestment: IInvestment = {
-        id,
-        investmentName,
-        symbol,
-        quantity,
-        purchasePrice,
-        currency,
-        investmentType
-      };
+        let newInvestment: IInvestment = {
+          id,
+          investmentName,
+          symbol,
+          quantity,
+          purchasePrice,
+          currency,
+          investmentType
+        };
 
-      this.restApiService.post<{ investmentId: number }>('investments', newInvestment)
-        .pipe(take(1))
-        .subscribe({
-          next: response => {
-            console.log('Sucessfully', response)
-          },
-          error: response => {
-            console.log('error', response)
-          }
-        })
-
-    })
+        this.restApiService.post<{ investmentId: number }>('investments', newInvestment)
+          .subscribe({
+            next: response => {
+              this.getInvestments()
+              console.log('Sucessfully', response)
+            },
+            error: response => {
+              console.log('error', response)
+            }
+          })
+      });
 
   }
 

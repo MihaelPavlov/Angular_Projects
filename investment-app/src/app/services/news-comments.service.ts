@@ -28,15 +28,22 @@ export class NewsCommentsService {
   }
 
   createComment(comment: IComment) {
-    comment.id = this.commentsSubject$.value.reduce((max, comment) => {
-      return comment.id > max ? comment.id : max;
-    }, -1) + 1;
+    this.getAllComments().subscribe({
+      next: response=>{
+        comment.id = response.reduce((max, comment) => {
+          return comment.id > max ? comment.id : max;
+        }, -1) + 1;
 
-    this.restApiService.post<IComment>(`comments`, {...comment}).subscribe({
-      next: response => {
-        this.getCommentsByNewsId(comment.newsId)
+        console.log(response)
+        console.log("commentId",comment.id)
 
-      }
+        this.restApiService.post<IComment>(`comments`, {...comment}).subscribe({
+          next: response => {
+            this.getCommentsByNewsId(comment.newsId)
+
+          }
+        })
+    }
     })
 
   }

@@ -186,12 +186,44 @@
       "userId": 1,
       "comment": "Still cannot edit . Wanna add something extra. this is rly interesting article",
       "likes": 0
+    },
+    {
+      "id": 13,
+      "newsId": 2,
+      "userId": 1,
+      "comment": "dsa",
+      "likes": 0
+    },
+    {
+      "id": 14,
+      "newsId": 2,
+      "userId": 1,
+      "comment": "test",
+      "likes": 0
+    },
+    {
+      "id": 15,
+      "newsId": 2,
+      "comment": "ewq",
+      "likes": 0
+    },
+    {
+      "id": 16,
+      "newsId": 1,
+      "comment": "tes",
+      "likes": 0
+    },
+    {
+      "id": 17,
+      "newsId": 3,
+      "comment": "cxzczx",
+      "likes": 0
     }
   ],
   "investments": [
     {
       "id": 1,
-      "investmentName": "Tesla",
+      "investmentName": "Tesla11",
       "symbol": "TSI",
       "quantity": 0.25,
       "purchasePrice": 80,
@@ -215,6 +247,24 @@
       "purchasePrice": 80,
       "currency": 1,
       "investmentType": 0
+    },
+    {
+      "id": 4,
+      "investmentName": "zz",
+      "symbol": "zzz",
+      "quantity": 11,
+      "purchasePrice": 111,
+      "currency": 0,
+      "investmentType": 1
+    },
+    {
+      "id": 5,
+      "investmentName": "ccc",
+      "symbol": "ccc",
+      "quantity": 111,
+      "purchasePrice": 111,
+      "currency": 1,
+      "investmentType": 1
     }
   ],
   "notifications": [
