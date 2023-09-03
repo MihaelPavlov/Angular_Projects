@@ -1,9 +1,9 @@
-import {AfterViewInit, Component, OnInit, TemplateRef, ViewChild} from "@angular/core";
+import {AfterViewInit, Component, OnInit, } from "@angular/core";
 import {INews} from "../../../models/news";
 import {NewsService} from "../../../services/news.service";
-import {ModalService} from "../../../../lib/services/modal.service";
 import {DetailsPopUpComponent} from "../details-pop-up/details-pop-up.component";
 import {MatDialog} from "@angular/material/dialog";
+import {NewsCommentsService} from "../../../services/news-comments.service";
 
 @Component({
   selector: "news-list",
@@ -11,10 +11,8 @@ import {MatDialog} from "@angular/material/dialog";
   styleUrls: ["news-list.component.css"]
 })
 export class NewsListComponent implements OnInit, AfterViewInit {
-  @ViewChild('modal') modal!: TemplateRef<any | null>
   newsList: INews[] = [];
-
-  constructor(private newService: NewsService,public dialog: MatDialog ) {
+  constructor(private newService: NewsService,private newsCommentsService: NewsCommentsService,public dialog: MatDialog ) {
   }
 
   ngOnInit() {
@@ -24,6 +22,12 @@ export class NewsListComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.newService.news$.subscribe(result => {
       this.newsList = result;
+      this.newsCommentsService.getAllComments().subscribe(result=>{
+        this.newsList.forEach(x=>{
+          x.comments = result.filter(c=>c.newsId === x.id)
+        })
+      })
+
     })
 
   }

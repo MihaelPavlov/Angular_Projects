@@ -1,0 +1,18 @@
+/* Style for the add-comment section */
+.add-comment {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+.add-comment textarea{
+  padding: 40px;
+}
+/* Style for the comment cards */
+mat-card {
+  margin-bottom: 10px;
+}
+
+/* Style for the Edit button */
+mat-card-actions button {
+  color: darkred;
+}

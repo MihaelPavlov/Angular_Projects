@@ -1,6 +1,7 @@
 import {Component, Inject} from "@angular/core";
-import {MAT_DIALOG_DATA} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
 import {INews} from "../../../models/news";
+import {DetailsCommentsPopUpComponent} from "../details-comments-pop-up/details-comments-pop-up.component";
 
 @Component({
   selector: "details-modal",
@@ -9,7 +10,12 @@ import {INews} from "../../../models/news";
 })
 export class DetailsPopUpComponent {
 
-  constructor(
-    @Inject(MAT_DIALOG_DATA) public data: INews,
+  constructor(public dialog: MatDialog,
+  @Inject(MAT_DIALOG_DATA) public data: INews,
   ) {}
+
+  openDialog( newsId: number) {
+    this.dialog.open(DetailsCommentsPopUpComponent,{data: {newsId}});
+  }
 }
+

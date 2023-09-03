@@ -57,7 +57,7 @@ export class AddUpdateInvestmentComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.addUpdateForm)
+    console.log('Onsubmit register')
     if (this.id != undefined) {
       this.investmentService.update(
         this.id,
@@ -80,7 +80,7 @@ export class AddUpdateInvestmentComponent implements OnInit {
       );
     }
 
-    this.router.navigate(['/']).then()
+    this.router.navigate(['/'])
   }
 
   getCurrencyLabel(currency: number): string {

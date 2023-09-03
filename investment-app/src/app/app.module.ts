@@ -31,8 +31,14 @@ import {NewsListComponent} from "./components/news/news-list/news-list.component
 import { MatSnackBarModule} from "@angular/material/snack-bar";
 import {ToastComponent} from "./components/shared/toast/toast.component";
 import {TOAST_DEFAULT_OPTIONS} from "./models/toast";
-import {DetailsPopUpComponent} from "./components/news/details-pop-up/details-pop-up.component";
+import {
+  DetailsPopUpComponent
+} from "./components/news/details-pop-up/details-pop-up.component";
 import {MatDialogModule} from "@angular/material/dialog";
+import {
+  DetailsCommentsPopUpComponent
+} from "./components/news/details-comments-pop-up/details-comments-pop-up.component";
+import {MatInputModule} from "@angular/material/input";
 
 const routes: Routes = [
   {path: '', component: InvestmentListComponent},
@@ -56,7 +62,8 @@ const routes: Routes = [
     ToolBarComponent,
     NewsListComponent,
     ToastComponent,
-    DetailsPopUpComponent
+    DetailsPopUpComponent,
+    DetailsCommentsPopUpComponent
   ],
   imports: [
     BrowserModule,
@@ -77,7 +84,8 @@ const routes: Routes = [
     MatButtonModule,
     MatIconModule,
     MatSnackBarModule,
-    MatDialogModule
+    MatDialogModule,
+    MatInputModule
   ],
   providers: [TOAST_DEFAULT_OPTIONS],
   bootstrap: [AppComponent]
