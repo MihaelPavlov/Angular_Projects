@@ -110,13 +110,6 @@
   ],
   "comments": [
     {
-      "id": 1,
-      "newsId": 1,
-      "comment": "Very nice",
-      "userId": 1,
-      "likes": 1
-    },
-    {
       "id": 2,
       "newsId": 1,
       "comment": "This one is the best news from years",
@@ -154,13 +147,6 @@
       "likes": 0
     },
     {
-      "id": 8,
-      "newsId": 1,
-      "userId": 1,
-      "comment": "My comment",
-      "likes": 0
-    },
-    {
       "id": 9,
       "newsId": 3,
       "comment": "test",
@@ -171,34 +157,6 @@
       "newsId": 3,
       "userId": 1,
       "comment": "test312",
-      "likes": 0
-    },
-    {
-      "id": 11,
-      "newsId": 2,
-      "userId": 1,
-      "comment": "test",
-      "likes": 0
-    },
-    {
-      "id": 12,
-      "newsId": 2,
-      "userId": 1,
-      "comment": "Still cannot edit . Wanna add something extra. this is rly interesting article",
-      "likes": 0
-    },
-    {
-      "id": 13,
-      "newsId": 2,
-      "userId": 1,
-      "comment": "dsa",
-      "likes": 0
-    },
-    {
-      "id": 14,
-      "newsId": 2,
-      "userId": 1,
-      "comment": "test",
       "likes": 0
     },
     {
@@ -217,6 +175,44 @@
       "id": 17,
       "newsId": 3,
       "comment": "cxzczx",
+      "likes": 0
+    },
+    {
+      "id": 18,
+      "newsId": 2,
+      "comment": "das",
+      "likes": 0
+    },
+    {
+      "id": 19,
+      "newsId": 1,
+      "comment": "cxzc",
+      "likes": 0
+    },
+    {
+      "id": 20,
+      "newsId": 1,
+      "comment": "cxz",
+      "likes": 0
+    },
+    {
+      "id": 21,
+      "newsId": 1,
+      "comment": "vv",
+      "likes": 0
+    },
+    {
+      "id": 22,
+      "newsId": 2,
+      "userId": 1,
+      "comment": "test",
+      "likes": 0
+    },
+    {
+      "id": 23,
+      "newsId": 1,
+      "userId": 1,
+      "comment": "Very ",
       "likes": 0
     }
   ],
@@ -263,6 +259,15 @@
       "symbol": "ccc",
       "quantity": 111,
       "purchasePrice": 111,
+      "currency": 1,
+      "investmentType": 1
+    },
+    {
+      "id": 6,
+      "investmentName": "vvv111vcx",
+      "symbol": "vvv",
+      "quantity": 1213,
+      "purchasePrice": 31,
       "currency": 1,
       "investmentType": 1
     }

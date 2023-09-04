@@ -29,13 +29,13 @@ export class NewsCommentsService {
 
   createComment(comment: IComment) {
     this.getAllComments().subscribe({
-      next: response=>{
+      next: response => {
         comment.id = response.reduce((max, comment) => {
           return comment.id > max ? comment.id : max;
         }, -1) + 1;
 
         console.log(response)
-        console.log("commentId",comment.id)
+        console.log("commentId", comment.id)
 
         this.restApiService.post<IComment>(`comments`, {...comment}).subscribe({
           next: response => {
@@ -43,8 +43,16 @@ export class NewsCommentsService {
 
           }
         })
-    }
+      }
     })
 
+  }
+
+  updateComment(comment: IComment): Observable<IComment | null> {
+    return this.restApiService.put<IComment>(`comments/${comment.id}`, comment)
+  }
+
+  deleteComment(commentId: number): Observable<any>{
+    return this.restApiService.delete(`comments/${commentId}`);
   }
 }
