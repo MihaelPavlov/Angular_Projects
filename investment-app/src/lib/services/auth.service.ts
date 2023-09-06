@@ -13,6 +13,14 @@ export class AuthService {
   constructor(private restApiService: RestApiService) {
   }
 
+  isAuthenticated(): Promise<boolean> {
+    return new Promise<boolean>(
+      (resolve, reject) => {
+        resolve(this.userSubject$.value != null)
+      }
+    );
+  }
+
   register(user: IUser): Observable<IUser | null> {
     return this.restApiService.post<IUser>('users', user)
   }

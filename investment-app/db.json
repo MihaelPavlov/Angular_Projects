@@ -214,6 +214,13 @@
       "userId": 1,
       "comment": "Very ",
       "likes": 0
+    },
+    {
+      "id": 24,
+      "newsId": 2,
+      "userId": 1,
+      "comment": "dsad",
+      "likes": 0
     }
   ],
   "investments": [
@@ -270,6 +277,15 @@
       "purchasePrice": 31,
       "currency": 1,
       "investmentType": 1
+    },
+    {
+      "id": 7,
+      "investmentName": "cxz",
+      "symbol": "cxzcz",
+      "quantity": 231,
+      "purchasePrice": 312,
+      "currency": 1,
+      "investmentType": 0
     }
   ],
   "notifications": [

@@ -2,7 +2,6 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
-import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {LoginComponent} from "./components/login/login.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -22,7 +21,6 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatMenuModule} from "@angular/material/menu";
 import {MatIconModule} from "@angular/material/icon";
 import {InvestmentDetailsComponent} from "./components/portfolio/investment-details/investment-details.component";
-import {RouterModule, Routes} from "@angular/router";
 import {MatCardModule} from "@angular/material/card";
 import {HttpModule} from "../lib/http/http.module";
 import {MatToolbarModule} from "@angular/material/toolbar";
@@ -39,15 +37,17 @@ import {
   DetailsCommentsPopUpComponent
 } from "./components/news/details-comments-pop-up/details-comments-pop-up.component";
 import {MatInputModule} from "@angular/material/input";
+import {AppRoutingModule} from "./modules/app-routing.module";
+import {AuthGuardService} from "./guards/auth-guard.service";
 
-const routes: Routes = [
-  {path: '', component: InvestmentListComponent},
-  {path: 'create', component: AddUpdateInvestmentComponent},
-  {path: 'update/:id', component: AddUpdateInvestmentComponent},
-  {path: 'investment-details/:id', component: InvestmentDetailsComponent},
-  {path: 'register', component: RegisterComponent},
-  {path: 'login', component: LoginComponent},
-]
+// const routes: Routes = [
+//   {path: '', component: InvestmentListComponent},
+//   {path: 'create', component: AddUpdateInvestmentComponent},
+//   {path: 'update/:id', component: AddUpdateInvestmentComponent},
+//   {path: 'investment-details/:id', component: InvestmentDetailsComponent},
+//   {path: 'register', component: RegisterComponent},
+//   {path: 'login', component: LoginComponent},
+// ]
 
 @NgModule({
   declarations: [
@@ -78,16 +78,16 @@ const routes: Routes = [
     MatMenuModule,
     MatIconModule,
     MatCardModule,
-    RouterModule.forRoot(routes),
     HttpModule,
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
     MatSnackBarModule,
     MatDialogModule,
-    MatInputModule
+    MatInputModule,
+    AppRoutingModule
   ],
-  providers: [TOAST_DEFAULT_OPTIONS],
+  providers: [TOAST_DEFAULT_OPTIONS,AuthGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

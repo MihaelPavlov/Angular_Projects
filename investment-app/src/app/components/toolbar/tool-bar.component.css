@@ -29,3 +29,7 @@
 .nav-links li a:hover {
   color: #ffcc00; /* Yellow text color on hover */
 }
+
+.active{
+  background-color: #e67e22;
+}
