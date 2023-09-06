@@ -3,11 +3,11 @@
     <a routerLink="/">TR INV</a>
   </div>
   <ul class="nav-links">
-    <li><a routerLink="/">List</a></li>
-    <li><a routerLink="/create">Add New Investment</a></li>
+    <li><a routerLinkActive="active" routerLink="/" [routerLinkActiveOptions]="{ exact: true }">List</a></li>
+    <li><a routerLinkActive="active" routerLink="/create">Add New Investment</a></li>
     <div *ngIf="this.user == null">
-      <li><a routerLink="/login">Login</a></li>
-      <li><a routerLink="/register">Register</a></li>
+      <li><a routerLinkActive="active" routerLink="/login">Login</a></li>
+      <li><a routerLinkActive="active" routerLink="/register">Register</a></li>
     </div>
     <div *ngIf="this.user != null">
       <li><a>Welcome {{this.user.username}}</a></li>
