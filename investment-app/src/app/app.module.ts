@@ -39,6 +39,7 @@ import {
 import {MatInputModule} from "@angular/material/input";
 import {AppRoutingModule} from "./modules/app-routing.module";
 import {AuthGuardService} from "./guards/auth-guard.service";
+import {TestComponent} from "./components/test.component";
 
 // const routes: Routes = [
 //   {path: '', component: InvestmentListComponent},
@@ -63,7 +64,8 @@ import {AuthGuardService} from "./guards/auth-guard.service";
     NewsListComponent,
     ToastComponent,
     DetailsPopUpComponent,
-    DetailsCommentsPopUpComponent
+    DetailsCommentsPopUpComponent,
+    TestComponent
   ],
   imports: [
     BrowserModule,
