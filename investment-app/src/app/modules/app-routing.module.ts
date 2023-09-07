@@ -8,6 +8,7 @@ import {
 import {RegisterComponent} from "../components/register/register.component";
 import {LoginComponent} from "../components/login/login.component";
 import {AuthGuardService} from "../guards/auth-guard.service";
+import {TestComponent} from "../components/test.component";
 
 const routes: Routes = [
   {path: '', component: InvestmentListComponent},
@@ -16,6 +17,7 @@ const routes: Routes = [
   {path: 'investment-details/:id', component: InvestmentDetailsComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'login', component: LoginComponent},
+  {path: 'test', component: TestComponent},
 ]
 
 @NgModule({
