@@ -40,6 +40,7 @@ import {MatInputModule} from "@angular/material/input";
 import {AppRoutingModule} from "./modules/app-routing.module";
 import {AuthGuardService} from "./guards/auth-guard.service";
 import {TestComponent} from "./components/test.component";
+import {LoadingSpinnerComponent} from "./components/shared/spinner/spinner.component";
 
 // const routes: Routes = [
 //   {path: '', component: InvestmentListComponent},
@@ -65,7 +66,8 @@ import {TestComponent} from "./components/test.component";
     ToastComponent,
     DetailsPopUpComponent,
     DetailsCommentsPopUpComponent,
-    TestComponent
+    TestComponent,
+    LoadingSpinnerComponent
   ],
   imports: [
     BrowserModule,

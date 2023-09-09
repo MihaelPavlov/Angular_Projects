@@ -25,8 +25,8 @@ export class AuthService {
     return this.restApiService.post<IUser>('register', user)
   }
 
-  login(email: string, password: string): Observable<any> {
-    return this.restApiService.post('login',{email,password});
+  login(email: string, password: string): Observable<AuthResponseData| null> {
+    return this.restApiService.post<AuthResponseData>('login', {email, password});
   }
 
   fetchUser(user: IUser): void {
@@ -38,3 +38,7 @@ export class AuthService {
   }
 }
 
+export interface AuthResponseData extends IUser {
+  accessToken: string,
+
+}

@@ -1,5 +1,8 @@
   <div class="login-container">
-    <form [formGroup]="loginForm" (ngSubmit)="loginSubmit()">
+    <div *ngIf="isLoading">
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+    <form [formGroup]="loginForm" (ngSubmit)="loginSubmit()" *ngIf="!isLoading">
       <div class="form-group">
 <!--      <span *ngIf="(this.loginForm.controls.username.errors?.['maxlength'] && this.loginForm.controls.username.dirty )"-->
 <!--            class="error-message">-->
