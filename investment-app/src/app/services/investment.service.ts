@@ -20,7 +20,7 @@ export class InvestmentService {
   }
 
   getInvestments(): void {
-    this.restApiService.get<IInvestment[]>('investments')
+    this.restApiService.get<IInvestment[]>('440/investments')
       .subscribe(result => {
         console.log('From get investments', result)
         this.investmentSubject$.next(result)

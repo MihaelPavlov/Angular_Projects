@@ -12,7 +12,8 @@ import {ToastType} from "../../models/toast";
 })
 export class LoginComponent {
   loginForm = new FormGroup({
-    username: new FormControl('', [Validators.minLength(2), Validators.maxLength(10)]),
+    // username: new FormControl('', [Validators.minLength(2), Validators.maxLength(10)]),
+    email: new FormControl('',[Validators.email, Validators.required]),
     password: new FormControl('', [this.validatePassword()])
   })
 
@@ -21,8 +22,9 @@ export class LoginComponent {
   }
 
   loginSubmit() {
-    this.authService.login(String(this.loginForm.controls.username.value), String(this.loginForm.controls.password.value)).subscribe({
+    this.authService.login(String(this.loginForm.controls.email.value), String(this.loginForm.controls.password.value)).subscribe({
       next: result => {
+        console.log(result)
         if (result.length != 0) {
           this.authService.fetchUser(result[0]);
           this.toastService.success({message: "Successfully Login", type: ToastType.Success})
@@ -32,7 +34,8 @@ export class LoginComponent {
         }
       },
       error: response => {
-        this.toastService.error({message: `Something get wrong ${response}`, type: ToastType.Error})
+        console.log(response)
+        this.toastService.error({message: `Something get wrong ${response.error}`, type: ToastType.Error})
       }
     })
   }
