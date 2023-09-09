@@ -21,59 +21,38 @@
       ]
     },
     {
-      "id": 2,
-      "username": "zzz",
-      "password": "zzz",
+      "email": "test11@abv.bg",
+      "password": "$2a$10$caWXz9Qb.uurX2Z8P3/ghOhpawwjg.eLVzHIEQROfTXqCCSTIwS7C",
+      "username": "test11",
       "location": {
-        "city": null,
-        "address": null,
-        "street": null
+        "city": "te",
+        "address": "te",
+        "street": "te"
       },
-      "notifications": []
+      "notifications": [
+        {
+          "id": "2",
+          "name": "Stocks"
+        }
+      ],
+      "id": 2
     },
     {
-      "id": 3,
-      "username": "zzzz",
-      "password": "zzzz",
+      "email": "rap4obg@abv.bg",
+      "password": "$2a$10$cYvQVoUXAsMOV79soxUsF.7uvzxtUxR9.faNpGlrX8Tpd8q8fwhPW",
+      "username": "rap4obg",
       "location": {
-        "city": null,
-        "address": null,
-        "street": null
+        "city": "dsa",
+        "address": "dad",
+        "street": "1"
       },
-      "notifications": []
-    },
-    {
-      "id": 4,
-      "username": "test2",
-      "password": "test2",
-      "location": {
-        "city": null,
-        "address": null,
-        "street": null
-      },
-      "notifications": []
-    },
-    {
-      "id": 5,
-      "username": "new",
-      "password": "new",
-      "location": {
-        "city": null,
-        "address": null,
-        "street": null
-      },
-      "notifications": []
-    },
-    {
-      "id": 6,
-      "username": "zzzzz",
-      "password": "zzzzz",
-      "location": {
-        "city": null,
-        "address": null,
-        "street": null
-      },
-      "notifications": []
+      "notifications": [
+        {
+          "id": "1",
+          "name": "Crypto"
+        }
+      ],
+      "id": 3
     }
   ],
   "news": [

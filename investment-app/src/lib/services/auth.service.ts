@@ -22,15 +22,11 @@ export class AuthService {
   }
 
   register(user: IUser): Observable<IUser | null> {
-    return this.restApiService.post<IUser>('users', user)
+    return this.restApiService.post<IUser>('register', user)
   }
 
-  login(username: string, password: string): Observable<IUser[]> {
-    return this.restApiService.get<IUser[]>('users')
-      .pipe(
-        map(users => users.filter(user => user.username === username && user.password === password)),
-      )
-
+  login(email: string, password: string): Observable<AuthResponseData| null> {
+    return this.restApiService.post<AuthResponseData>('login', {email, password});
   }
 
   fetchUser(user: IUser): void {
@@ -42,3 +38,7 @@ export class AuthService {
   }
 }
 
+export interface AuthResponseData extends IUser {
+  accessToken: string,
+
+}

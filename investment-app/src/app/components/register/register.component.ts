@@ -27,6 +27,7 @@ export class RegisterComponent implements OnInit {
 
   registerForm = new FormGroup({
     username: new FormControl(),
+    email: new FormControl(),
     password: new FormControl(),
     confirmPassword: new FormControl(),
     location: new FormGroup({
@@ -75,8 +76,8 @@ export class RegisterComponent implements OnInit {
     })
 
     const user: IUser = {
-      id: 0, // Generated on the server
       username: this.registerForm.controls.username.value,
+      email: this.registerForm.controls.email.value,
       password: this.registerForm.controls.password.value,
       location: {
         city: this.registerForm.controls.location.value.city,
@@ -93,11 +94,14 @@ export class RegisterComponent implements OnInit {
           this.toastService.success({message: "Successfully Registered", type: ToastType.Success})
           this.router.navigate(["/"]);
         } else {
+          console.log(response)
           this.toastService.error({message: "Something get wrong", type: ToastType.Error})
         }
       },
       error: response => {
-        this.toastService.error({message: `Something get wrong: ${response}`, type: ToastType.Error})
+        console.log(response)
+
+        this.toastService.error({message: `Something get wrong: ${response.error}`, type: ToastType.Error})
       }
     });
   }

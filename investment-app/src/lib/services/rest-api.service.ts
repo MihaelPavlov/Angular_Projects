@@ -25,6 +25,7 @@ export class RestApiService {
     body: object | string,
     options?: object
   ): Observable<T | null> {
+    console.log(`test`,`${this.baseUrl}${path}`)
     return this.http
       .post<T>(`${this.baseUrl}${path}`, body, options)
       .pipe(map((res: any) => res as T));
