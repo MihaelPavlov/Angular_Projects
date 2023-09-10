@@ -53,6 +53,27 @@
         }
       ],
       "id": 3
+    },
+    {
+      "email": "rapito@abv.bg",
+      "password": "$2a$10$uTiBeam9WlbOb7H/hswIFubfIgfUWPRQe1FnZ2LArYYtK4x78SqjS",
+      "username": "rapito",
+      "location": {
+        "city": "dsad",
+        "address": "dsa",
+        "street": "ada"
+      },
+      "notifications": [
+        {
+          "id": "1",
+          "name": "Crypto"
+        },
+        {
+          "id": "2",
+          "name": "Stocks"
+        }
+      ],
+      "id": 4
     }
   ],
   "news": [
@@ -139,12 +160,6 @@
       "likes": 0
     },
     {
-      "id": 15,
-      "newsId": 2,
-      "comment": "ewq",
-      "likes": 0
-    },
-    {
       "id": 16,
       "newsId": 1,
       "comment": "tes",
@@ -159,7 +174,7 @@
     {
       "id": 18,
       "newsId": 2,
-      "comment": "das",
+      "comment": "dasew",
       "likes": 0
     },
     {
@@ -199,6 +214,12 @@
       "newsId": 2,
       "userId": 1,
       "comment": "dsad",
+      "likes": 0
+    },
+    {
+      "id": 25,
+      "newsId": 3,
+      "comment": "ds",
       "likes": 0
     }
   ],
@@ -265,6 +286,26 @@
       "purchasePrice": 312,
       "currency": 1,
       "investmentType": 0
+    },
+    {
+      "userId": 3,
+      "investmentName": "test",
+      "symbol": "test",
+      "quantity": 123,
+      "purchasePrice": 3213,
+      "currency": 1,
+      "investmentType": 1,
+      "id": 8
+    },
+    {
+      "userId": 3,
+      "investmentName": "zz",
+      "symbol": "zzz",
+      "quantity": 231,
+      "purchasePrice": 312321,
+      "currency": 1,
+      "investmentType": 1,
+      "id": 9
     }
   ],
   "notifications": [

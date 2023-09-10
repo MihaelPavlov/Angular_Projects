@@ -41,6 +41,7 @@ import {AppRoutingModule} from "./modules/app-routing.module";
 import {AuthGuardService} from "./guards/auth-guard.service";
 import {TestComponent} from "./components/test.component";
 import {LoadingSpinnerComponent} from "./components/shared/spinner/spinner.component";
+import {HomeComponent} from "./components/home/home.component";
 
 // const routes: Routes = [
 //   {path: '', component: InvestmentListComponent},
@@ -67,7 +68,8 @@ import {LoadingSpinnerComponent} from "./components/shared/spinner/spinner.compo
     DetailsPopUpComponent,
     DetailsCommentsPopUpComponent,
     TestComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

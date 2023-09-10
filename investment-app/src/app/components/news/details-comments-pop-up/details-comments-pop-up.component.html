@@ -25,7 +25,7 @@
 </div>
 
 <!-- Button to add a new comment -->
-<div class="add-comment">
+<div *ngIf="this.authService.isAuthenticated()" class="add-comment">
   <textarea matInput placeholder="Add a comment" [(ngModel)]="this.newCommentText"></textarea>
   <button mat-raised-button color="primary" (click)="this.onAddComment()">Add Comment</button>
 </div>

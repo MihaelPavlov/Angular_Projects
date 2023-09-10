@@ -4,6 +4,7 @@ import {NewsService} from "../../../services/news.service";
 import {DetailsPopUpComponent} from "../details-pop-up/details-pop-up.component";
 import {MatDialog} from "@angular/material/dialog";
 import {NewsCommentsService} from "../../../services/news-comments.service";
+import {AuthService} from "../../../../lib/services/auth.service";
 
 @Component({
   selector: "news-list",
@@ -12,7 +13,7 @@ import {NewsCommentsService} from "../../../services/news-comments.service";
 })
 export class NewsListComponent implements OnInit, AfterViewInit {
   newsList: INews[] = [];
-  constructor(private newService: NewsService,private newsCommentsService: NewsCommentsService,public dialog: MatDialog ) {
+  constructor(private newService: NewsService,private newsCommentsService: NewsCommentsService,public dialog: MatDialog) {
   }
 
   ngOnInit() {

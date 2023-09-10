@@ -12,18 +12,13 @@ export class AuthGuardService implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
 
-    return this.authService.isAuthenticated()
-      .then(
-        (isAuthenticated: boolean) => {
-          if (isAuthenticated) {
-            return true;
-          } else {
-            this.toastService.error({message: "You are not allowed", type: ToastType.Error})
-            this.router.navigate(['/']);
-          }
-          return false;
-        }
-      );
-
+    if (this.authService.isAuthenticated()) {
+      return true;
+    } else {
+      this.toastService.error({message: "You are not allowed", type: ToastType.Error})
+      this.router.navigate(['/']);
+    }
+    return false;
   }
+
 }

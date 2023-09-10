@@ -15,8 +15,11 @@ export class ToolBarComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
+    console.log('username',this.user?.username)
+
     this.authService.user$.subscribe(result => {
         this.user = result;
+    console.log('username',this.user?.username)
     })
   }
 

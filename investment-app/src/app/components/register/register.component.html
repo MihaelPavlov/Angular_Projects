@@ -51,9 +51,10 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
           <div formGroupName="notifications" class="location-tab">
-            <div #notificaions  *ngFor="let notification of this.notifications" class="form-group">
+            <div #notificaions *ngFor="let notification of this.notifications" class="form-group">
               <label for="{{notification.id}}">{{notification.name}}:</label>
-              <input type="checkbox" id="{{notification.id}}" name="{{notification.name}}" formControlName="{{notification.name}}">
+              <input type="checkbox" id="{{notification.id}}" name="{{notification.name}}"
+                     formControlName="{{notification.name}}">
             </div>
           </div>
         </mat-expansion-panel>
@@ -61,6 +62,7 @@
 
       <button type="submit">Register</button>
     </form>
+      <p>You have account ? - <a routerLinkActive="active" routerLink="/login">Sign In</a> </p>
     <div class="small-image-container">
       <img src="/assets/images/btc-logo.png" alt="btc logo">
       <img src="/assets/images/stock-market.png" alt="btc logo">

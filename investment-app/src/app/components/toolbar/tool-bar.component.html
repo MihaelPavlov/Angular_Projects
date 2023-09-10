@@ -1,17 +1,18 @@
 <nav class="navbar">
   <div class="logo">
-    <a routerLink="/">TR INV</a>
+    <a  routerLink="/">TR INV</a>
   </div>
   <ul class="nav-links">
-    <li><a routerLinkActive="active" routerLink="/" [routerLinkActiveOptions]="{ exact: true }">List</a></li>
-    <li><a routerLinkActive="active" routerLink="/create">Add New Investment</a></li>
-    <div *ngIf="this.user == null">
-      <li><a routerLinkActive="active" routerLink="/login">Login</a></li>
-      <li><a routerLinkActive="active" routerLink="/register">Register</a></li>
-    </div>
-    <div *ngIf="this.user != null">
+    <li><a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" routerLink="/">Home</a></li>
+    <li><a routerLinkActive="active" routerLink="/news">News</a></li>
+    <ng-container *ngIf="this.user == null">
+      <li><a routerLinkActive="active" routerLink="/register">Sign Up</a></li>
+    </ng-container>
+    <ng-container *ngIf="this.user != null">
       <li><a>Welcome {{this.user.username}}</a></li>
+      <li><a routerLinkActive="active" routerLink="/my-investments">My Investments</a></li>
+      <li><a routerLinkActive="active" routerLink="/create">Add New Investment</a></li>
       <li><a (click)="onLogout()">Logout</a></li>
-    </div>
+    </ng-container>
   </ul>
 </nav>

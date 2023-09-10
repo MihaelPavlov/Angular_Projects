@@ -21,7 +21,7 @@ export class DetailsCommentsPopUpComponent implements OnInit, AfterViewInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DetailsCommentsPopUpComponentData,
-    private authService: AuthService,
+    public authService: AuthService,
     private newsCommentsService: NewsCommentsService,
     private toastService: ToastService
   ) {

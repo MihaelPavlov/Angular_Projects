@@ -4,7 +4,6 @@ import {AuthService} from "../../../lib/services/auth.service";
 import {Router} from "@angular/router";
 import {ToastService} from "../../../lib/services/toast.service";
 import {ToastType} from "../../models/toast";
-import {timeout} from "rxjs";
 
 @Component({
   selector: "login",
@@ -25,13 +24,16 @@ export class LoginComponent {
 
   loginSubmit() {
     this.isLoading = true;
+
+    //TODO: In setTimeout to test the loading spinner. Can remove it in future
     setTimeout(x=>{
 
       this.authService.login(String(this.loginForm.controls.email.value), String(this.loginForm.controls.password.value)).subscribe({
         next: result => {
-          console.log(result)
+          console.log('login',result?.user)
           if (result != null) {
-            this.authService.fetchUser(result);
+            this.authService.fetchUser(result.user);
+            this.authService.setToken(result.accessToken);
             this.toastService.success({message: "Successfully Login", type: ToastType.Success})
             this.router.navigate(["/"])
           } else {
