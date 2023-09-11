@@ -43,6 +43,7 @@ export class AuthService {
     this.userSubject$.next(null);
     localStorage.removeItem(this.tokenKey);
   }
+  //TODO: Add auto login and logout
 }
 
 export interface AuthResponseData {

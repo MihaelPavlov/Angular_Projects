@@ -288,24 +288,14 @@
       "investmentType": 0
     },
     {
+      "id": 9,
       "userId": 3,
-      "investmentName": "test",
-      "symbol": "test",
-      "quantity": 123,
-      "purchasePrice": 3213,
-      "currency": 1,
-      "investmentType": 1,
-      "id": 8
-    },
-    {
-      "userId": 3,
-      "investmentName": "zz",
+      "investmentName": "test2",
       "symbol": "zzz",
       "quantity": 231,
       "purchasePrice": 312321,
       "currency": 1,
-      "investmentType": 1,
-      "id": 9
+      "investmentType": 1
     }
   ],
   "notifications": [

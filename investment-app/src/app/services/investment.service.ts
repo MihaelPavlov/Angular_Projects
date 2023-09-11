@@ -1,8 +1,6 @@
 import {Injectable} from "@angular/core";
 import {IInvestment} from "../models/investment";
-import {Currency} from "../../enums/currency.enum";
-import {InvestmentType} from "../../enums/investment-type.enum";
-import {BehaviorSubject, take,} from "rxjs";
+import {BehaviorSubject, Observable, take,} from "rxjs";
 import {RestApiService} from "../../lib/services/rest-api.service";
 
 @Injectable({
@@ -19,10 +17,9 @@ export class InvestmentService {
 
   }
 
-  getInvestments(): void {
-    this.restApiService.get<IInvestment[]>('440/investments')
+  getInvestments(userId: number): void {
+    this.restApiService.get<IInvestment[]>(`investments?userId=${userId}`)
       .subscribe(result => {
-        console.log('From get investments', result)
         this.investmentSubject$.next(result)
       });
   }
@@ -33,46 +30,16 @@ export class InvestmentService {
     })
   }
 
-  create(newInvestment: IInvestment): void {
-    this.restApiService.post<{ investmentId: number }>('investments', newInvestment)
-      .subscribe({
-        next: response => {
-          this.getInvestments()
-          console.log('Sucessfully', response)
-        },
-        error: response => {
-          console.log('error', response)
-        }
-      })
+  create(newInvestment: IInvestment): Observable<{ investmentId: number } | null> {
+    return this.restApiService.post<{ investmentId: number }>('investments', newInvestment);
   }
 
-  update(updatedInvestment: IInvestment): void {
-
-    this.restApiService.put(`investments/${updatedInvestment.id}`, updatedInvestment)
+  update(updatedInvestment: IInvestment): Observable<any> {
+    return this.restApiService.put(`investments/${updatedInvestment.id}`, updatedInvestment)
       .pipe(take(1))
-      .subscribe({
-        next: response => {
-          // show success toast message
-          this.getInvestments();
-
-          console.log("succesfully", response)
-        },
-        error: response => {
-          // show error toast message
-          console.log('error from put', response)
-        }
-      })
   }
 
-  delete(id: number): void {
-    this.restApiService.delete(`investments/${id}`,).subscribe({
-      next: response => {
-        console.log("Success deletion", response);
-        this.getInvestments();
-      },
-      error: response => {
-        console.log("Failed deletion", response);
-      }
-    })
+  delete(id: number): Observable<any> {
+    return this.restApiService.delete(`investments/${id}`,);
   }
 }

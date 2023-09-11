@@ -1,4 +1,3 @@
-
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
@@ -26,7 +25,7 @@ import {HttpModule} from "../lib/http/http.module";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {ToolBarComponent} from "./components/toolbar/tool-bar.component";
 import {NewsListComponent} from "./components/news/news-list/news-list.component";
-import { MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {ToastComponent} from "./components/shared/toast/toast.component";
 import {TOAST_DEFAULT_OPTIONS} from "./models/toast";
 import {
@@ -42,6 +41,8 @@ import {AuthGuardService} from "./guards/auth-guard.service";
 import {TestComponent} from "./components/test.component";
 import {LoadingSpinnerComponent} from "./components/shared/spinner/spinner.component";
 import {HomeComponent} from "./components/home/home.component";
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
+import {AuthInterceptor} from "./interceptors/auth.interceptor";
 
 // const routes: Routes = [
 //   {path: '', component: InvestmentListComponent},
@@ -91,9 +92,16 @@ import {HomeComponent} from "./components/home/home.component";
     MatSnackBarModule,
     MatDialogModule,
     MatInputModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
-  providers: [TOAST_DEFAULT_OPTIONS,AuthGuardService],
+  providers: [
+    TOAST_DEFAULT_OPTIONS,
+    AuthGuardService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule {
