@@ -9,14 +9,18 @@ import {RegisterComponent} from "../components/register/register.component";
 import {LoginComponent} from "../components/login/login.component";
 import {AuthGuardService} from "../guards/auth-guard.service";
 import {TestComponent} from "../components/test.component";
+import {NewsListComponent} from "../components/news/news-list/news-list.component";
+import {HomeComponent} from "../components/home/home.component";
 
 const routes: Routes = [
-  {path: '', component: InvestmentListComponent},
+  {path: '', component: HomeComponent},
+  {path: 'my-investments', component: InvestmentListComponent},
   {path: 'create', canActivate: [AuthGuardService], component: AddUpdateInvestmentComponent},
   {path: 'update/:id', component: AddUpdateInvestmentComponent},
   {path: 'investment-details/:id', component: InvestmentDetailsComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'login', component: LoginComponent},
+  {path: 'news', component: NewsListComponent},
   {path: 'test', component: TestComponent},
 ]
 

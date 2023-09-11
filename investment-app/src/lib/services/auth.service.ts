@@ -9,23 +9,20 @@ import {RestApiService} from "./rest-api.service";
 export class AuthService {
   private userSubject$ = new BehaviorSubject<IUser | null>(null);
   public user$ = this.userSubject$.asObservable()
+  private readonly tokenKey = 'aut_jwt_token';
 
   constructor(private restApiService: RestApiService) {
   }
 
-  isAuthenticated(): Promise<boolean> {
-    return new Promise<boolean>(
-      (resolve, reject) => {
-        resolve(this.userSubject$.value != null)
-      }
-    );
+  isAuthenticated(): boolean {
+    return !!this.getToken();
   }
 
-  register(user: IUser): Observable<IUser | null> {
-    return this.restApiService.post<IUser>('register', user)
+  register(user: IUser): Observable<AuthResponseData | null> {
+    return this.restApiService.post<AuthResponseData>('register', user)
   }
 
-  login(email: string, password: string): Observable<AuthResponseData| null> {
+  login(email: string, password: string): Observable<AuthResponseData | null> {
     return this.restApiService.post<AuthResponseData>('login', {email, password});
   }
 
@@ -33,12 +30,22 @@ export class AuthService {
     this.userSubject$.next(user);
   }
 
+  setToken(token: string) {
+    localStorage.setItem(this.tokenKey, token);
+  }
+
+  getToken(): string | null {
+    return localStorage.getItem((this.tokenKey))
+  }
+
+
   logout(): void {
     this.userSubject$.next(null);
+    localStorage.removeItem(this.tokenKey);
   }
 }
 
-export interface AuthResponseData extends IUser {
+export interface AuthResponseData {
   accessToken: string,
-
+  user: IUser
 }

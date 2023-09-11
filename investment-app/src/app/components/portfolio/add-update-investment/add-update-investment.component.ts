@@ -8,6 +8,8 @@ import {FormControl, FormGroup} from "@angular/forms";
 import {InvestmentService} from "../../../services/investment.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {catchError, filter} from "rxjs";
+import {AuthService} from "../../../../lib/services/auth.service";
+import {IUser} from "../../../models/user";
 
 
 @Component({
@@ -17,7 +19,7 @@ import {catchError, filter} from "rxjs";
 })
 export class AddUpdateInvestmentComponent implements OnInit {
   @Input("id") id: number | undefined;
-
+  public user?: IUser | null
   public currencies!: number[];
   public investmentTypes!: number[];
   public addUpdateForm = new FormGroup({
@@ -29,10 +31,14 @@ export class AddUpdateInvestmentComponent implements OnInit {
     investmentType: new FormControl(),
   })
 
-  constructor(private investmentService: InvestmentService, private route: ActivatedRoute, private router: Router) {
+  constructor(private investmentService: InvestmentService, private route: ActivatedRoute, private router: Router, private authService: AuthService) {
   }
 
   ngOnInit() {
+    this.authService.user$.subscribe(result => {
+      this.user = result;
+    })
+
     this.currencies = Object.values(Currency).filter(value => typeof value === 'number') as number[];
     this.investmentTypes = Object.values(InvestmentType).filter(value => typeof value === 'number') as number[];
 
@@ -59,24 +65,28 @@ export class AddUpdateInvestmentComponent implements OnInit {
   onSubmit() {
     console.log('Onsubmit register')
     if (this.id != undefined) {
-      this.investmentService.update(
-        this.id,
-        this.addUpdateForm.controls.investmentName.value,
-        this.addUpdateForm.controls.symbol.value,
-        this.addUpdateForm.controls.quantity.value,
-        this.addUpdateForm.controls.purchasePrice.value,
-        this.addUpdateForm.controls.currency.value,
-        this.addUpdateForm.controls.investmentType.value,
-      );
+      this.investmentService.update({
+        id: this.id,
+        userId: Number(this.user?.id),
+        investmentName: this.addUpdateForm.controls.investmentName.value,
+        symbol: this.addUpdateForm.controls.symbol.value,
+        quantity: this.addUpdateForm.controls.quantity.value,
+        purchasePrice: this.addUpdateForm.controls.purchasePrice.value,
+        currency: this.addUpdateForm.controls.currency.value,
+        investmentType: this.addUpdateForm.controls.investmentType.value
+      })
+      ;
 
     } else {
-      this.investmentService.create(
-        this.addUpdateForm.controls.investmentName.value,
-        this.addUpdateForm.controls.symbol.value,
-        this.addUpdateForm.controls.quantity.value,
-        this.addUpdateForm.controls.purchasePrice.value,
-        this.addUpdateForm.controls.currency.value,
-        this.addUpdateForm.controls.investmentType.value,
+      this.investmentService.create({
+          userId: Number(this.user?.id),
+          investmentName: this.addUpdateForm.controls.investmentName.value,
+          symbol: this.addUpdateForm.controls.symbol.value,
+          quantity: this.addUpdateForm.controls.quantity.value,
+          purchasePrice: this.addUpdateForm.controls.purchasePrice.value,
+          currency: this.addUpdateForm.controls.currency.value,
+          investmentType: this.addUpdateForm.controls.investmentType.value
+        }
       );
     }
 
