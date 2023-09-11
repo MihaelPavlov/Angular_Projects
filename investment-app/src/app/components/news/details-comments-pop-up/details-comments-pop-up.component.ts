@@ -32,6 +32,7 @@ export class DetailsCommentsPopUpComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    console.log('isAuthenticated' , this.authService.isAuthenticated())
     this.authService.user$.subscribe(result => {
       this.user = result;
     })

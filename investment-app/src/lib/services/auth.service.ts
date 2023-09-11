@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {BehaviorSubject, map, Observable,} from "rxjs";
+import {BehaviorSubject, catchError, map, Observable, take,} from "rxjs";
 import {IUser} from "../../app/models/user";
 import {RestApiService} from "./rest-api.service";
 
@@ -18,6 +18,26 @@ export class AuthService {
     return !!this.getToken();
   }
 
+  autoLogin() {
+    const token = localStorage.getItem((this.tokenKey))
+
+    if (!token) {
+      return;
+    }
+    let tokenData: { token: string, email: string } = JSON.parse(token);
+    this.getUserByToken(tokenData);
+  }
+
+  private getUserByToken(tokenData: { token: string, email: string }) {
+    this.restApiService.get<IUser[]>(`users?email=${tokenData.email}`).pipe(take(1)).subscribe({
+      next: response => {
+        if (response != null) {
+          this.userSubject$.next(response[0]);
+        }
+      }
+    })
+  }
+
   register(user: IUser): Observable<AuthResponseData | null> {
     return this.restApiService.post<AuthResponseData>('register', user)
   }
@@ -31,18 +51,19 @@ export class AuthService {
   }
 
   setToken(token: string) {
-    localStorage.setItem(this.tokenKey, token);
+    let email = this.userSubject$.value?.email;
+    localStorage.setItem(this.tokenKey, JSON.stringify({token, email}));
   }
 
   getToken(): string | null {
     return localStorage.getItem((this.tokenKey))
   }
 
-
   logout(): void {
     this.userSubject$.next(null);
     localStorage.removeItem(this.tokenKey);
   }
+
   //TODO: Add auto login and logout
 }
 
