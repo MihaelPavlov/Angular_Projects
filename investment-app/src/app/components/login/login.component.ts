@@ -26,7 +26,7 @@ export class LoginComponent {
     this.isLoading = true;
 
     //TODO: In setTimeout to test the loading spinner. Can remove it in future
-    setTimeout(x=>{
+    // setTimeout(x=>{
 
       this.authService.login(String(this.loginForm.controls.email.value), String(this.loginForm.controls.password.value)).subscribe({
         next: result => {
@@ -34,6 +34,7 @@ export class LoginComponent {
           if (result != null) {
             this.authService.fetchUser(result.user);
             this.authService.setToken(result.accessToken);
+            this.authService.autoLogout(3600*1000)
             this.toastService.success({message: "Successfully Login", type: ToastType.Success})
             this.router.navigate(["/"])
           } else {
@@ -49,7 +50,7 @@ export class LoginComponent {
         }
       })
 
-      },3000);
+      // },3000);
   }
 
   validatePassword(): ValidatorFn {

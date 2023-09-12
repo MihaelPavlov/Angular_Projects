@@ -288,24 +288,84 @@
       "investmentType": 0
     },
     {
+      "id": 9,
       "userId": 3,
-      "investmentName": "test",
-      "symbol": "test",
-      "quantity": 123,
-      "purchasePrice": 3213,
-      "currency": 1,
-      "investmentType": 1,
-      "id": 8
-    },
-    {
-      "userId": 3,
-      "investmentName": "zz",
+      "investmentName": "test2",
       "symbol": "zzz",
       "quantity": 231,
       "purchasePrice": 312321,
       "currency": 1,
+      "investmentType": 1
+    },
+    {
+      "userId": 3,
+      "investmentName": "test",
+      "symbol": "test",
+      "quantity": 321,
+      "purchasePrice": 3213,
+      "currency": 1,
       "investmentType": 1,
-      "id": 9
+      "id": 10
+    },
+    {
+      "userId": 3,
+      "investmentName": "zzz",
+      "symbol": "zz",
+      "quantity": 1,
+      "purchasePrice": 31313,
+      "currency": 3,
+      "investmentType": 1,
+      "id": 11
+    },
+    {
+      "userId": 3,
+      "investmentName": "ew",
+      "symbol": "qweeqw",
+      "quantity": 321,
+      "purchasePrice": 312,
+      "currency": 0,
+      "investmentType": 0,
+      "id": 12
+    },
+    {
+      "userId": 3,
+      "investmentName": "3213",
+      "symbol": "11",
+      "quantity": 21,
+      "purchasePrice": 1,
+      "currency": 0,
+      "investmentType": 0,
+      "id": 13
+    },
+    {
+      "userId": 3,
+      "investmentName": "vbbv",
+      "symbol": "bbvb",
+      "quantity": 2313,
+      "purchasePrice": 131,
+      "currency": 1,
+      "investmentType": null,
+      "id": 14
+    },
+    {
+      "userId": 3,
+      "investmentName": "aa",
+      "symbol": "a",
+      "quantity": 23,
+      "purchasePrice": 121,
+      "currency": 3,
+      "investmentType": 0,
+      "id": 15
+    },
+    {
+      "userId": 3,
+      "investmentName": "22",
+      "symbol": "12",
+      "quantity": 121,
+      "purchasePrice": 1,
+      "currency": 3,
+      "investmentType": 0,
+      "id": 16
     }
   ],
   "notifications": [

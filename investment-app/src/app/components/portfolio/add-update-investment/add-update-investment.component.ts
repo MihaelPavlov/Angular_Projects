@@ -1,16 +1,14 @@
 import {Component, Input, OnInit} from "@angular/core";
 import {Currency, getCurrencyLabel} from "../../../../enums/currency.enum";
-import {
-  getInvestmentTypeLabel,
-  InvestmentType,
-} from "../../../../enums/investment-type.enum";
+import {getInvestmentTypeLabel, InvestmentType,} from "../../../../enums/investment-type.enum";
 import {FormControl, FormGroup} from "@angular/forms";
 import {InvestmentService} from "../../../services/investment.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {catchError, filter} from "rxjs";
+import {Observable} from "rxjs";
 import {AuthService} from "../../../../lib/services/auth.service";
 import {IUser} from "../../../models/user";
-
+import {ToastService} from "../../../../lib/services/toast.service";
+import {ToastType} from "../../../models/toast";
 
 @Component({
   selector: "add-update-investment",
@@ -31,30 +29,35 @@ export class AddUpdateInvestmentComponent implements OnInit {
     investmentType: new FormControl(),
   })
 
-  constructor(private investmentService: InvestmentService, private route: ActivatedRoute, private router: Router, private authService: AuthService) {
+  constructor(private investmentService: InvestmentService, private route: ActivatedRoute,
+              private router: Router, private authService: AuthService, private toastService: ToastService) {
   }
 
   ngOnInit() {
-    this.authService.user$.subscribe(result => {
-      this.user = result;
-    })
-
     this.currencies = Object.values(Currency).filter(value => typeof value === 'number') as number[];
     this.investmentTypes = Object.values(InvestmentType).filter(value => typeof value === 'number') as number[];
 
     this.route.paramMap.subscribe(params => {
       let id = params.get('id');
-      if (typeof id === "string") {
-        this.id = parseInt(id);
+      if (id != null) {
+        this.id = Number(id);
+
+        this.investmentService.getInvestmentById(this.id);
       }
     });
 
     this.updateModel();
+
+    this.authService.user$.subscribe(result => {
+      this.user = result;
+    })
   }
 
   updateModel(): void {
+    console.log('iddd', this.id)
     if (this.id != undefined) {
       this.investmentService.investmentForUpdate$.subscribe(result => {
+        console.log('res', result)
         if (result) {
           this.addUpdateForm.patchValue(result)
         }
@@ -63,9 +66,10 @@ export class AddUpdateInvestmentComponent implements OnInit {
   }
 
   onSubmit() {
+    let obs: Observable<any> | Observable<{ investmentId: number } | null>
     console.log('Onsubmit register')
     if (this.id != undefined) {
-      this.investmentService.update({
+      obs = this.investmentService.update({
         id: this.id,
         userId: Number(this.user?.id),
         investmentName: this.addUpdateForm.controls.investmentName.value,
@@ -74,11 +78,9 @@ export class AddUpdateInvestmentComponent implements OnInit {
         purchasePrice: this.addUpdateForm.controls.purchasePrice.value,
         currency: this.addUpdateForm.controls.currency.value,
         investmentType: this.addUpdateForm.controls.investmentType.value
-      })
-      ;
-
+      });
     } else {
-      this.investmentService.create({
+      obs = this.investmentService.create({
           userId: Number(this.user?.id),
           investmentName: this.addUpdateForm.controls.investmentName.value,
           symbol: this.addUpdateForm.controls.symbol.value,
@@ -90,7 +92,20 @@ export class AddUpdateInvestmentComponent implements OnInit {
       );
     }
 
-    this.router.navigate(['/'])
+    obs.subscribe({
+      next: response => {
+        this.toastService.success({message: "Investment Tracked", type: ToastType.Success})
+        this.investmentService.getInvestments(Number(this.user?.id)).subscribe(x => {
+          this.investmentService.fetchInvestments(x);
+        });
+      },
+      error: response => {
+        this.toastService.error({message: "Something get wrong", type: ToastType.Error})
+      }
+
+    })
+
+    this.router.navigate(['/my-investments'])
   }
 
   getCurrencyLabel(currency: number): string {
