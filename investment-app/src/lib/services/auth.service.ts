@@ -10,6 +10,7 @@ export class AuthService {
   private userSubject$ = new BehaviorSubject<IUser | null>(null);
   public user$ = this.userSubject$.asObservable()
   private readonly tokenKey = 'aut_jwt_token';
+  private tokenExpirationTimer: any;
 
   constructor(private restApiService: RestApiService) {
   }
@@ -33,6 +34,8 @@ export class AuthService {
       next: response => {
         if (response != null) {
           this.userSubject$.next(response[0]);
+
+          this.autoLogout(3600*1000)
         }
       }
     })
@@ -62,9 +65,17 @@ export class AuthService {
   logout(): void {
     this.userSubject$.next(null);
     localStorage.removeItem(this.tokenKey);
+
+    if (this.tokenExpirationTimer) {
+      clearTimeout(this.tokenExpirationTimer);
+    }
   }
 
-  //TODO: Add auto login and logout
+  autoLogout(expirationDuration: number): void {
+    this.tokenExpirationTimer = setTimeout(() => {
+      this.logout();
+    }, expirationDuration)
+  }
 }
 
 export interface AuthResponseData {

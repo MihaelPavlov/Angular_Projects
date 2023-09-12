@@ -17,11 +17,12 @@ export class InvestmentService {
 
   }
 
-  getInvestments(userId: number): void {
-    this.restApiService.get<IInvestment[]>(`investments?userId=${userId}`)
-      .subscribe(result => {
-        this.investmentSubject$.next(result)
-      });
+  getInvestments(userId: number): Observable<IInvestment[]> {
+    return this.restApiService.get<IInvestment[]>(`investments?userId=${userId}`);
+  }
+
+  fetchInvestments(investments:IInvestment[]): void{
+    this.investmentSubject$.next(investments)
   }
 
   getInvestmentById(id: number): void {

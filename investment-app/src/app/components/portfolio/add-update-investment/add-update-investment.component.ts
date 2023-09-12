@@ -38,9 +38,12 @@ export class AddUpdateInvestmentComponent implements OnInit {
     this.investmentTypes = Object.values(InvestmentType).filter(value => typeof value === 'number') as number[];
 
     this.route.paramMap.subscribe(params => {
-      this.id = Number(params.get('id'));
+      let id = params.get('id');
+      if (id != null) {
+        this.id = Number(id);
 
-      this.investmentService.getInvestmentById(this.id);
+        this.investmentService.getInvestmentById(this.id);
+      }
     });
 
     this.updateModel();
@@ -51,6 +54,7 @@ export class AddUpdateInvestmentComponent implements OnInit {
   }
 
   updateModel(): void {
+    console.log('iddd', this.id)
     if (this.id != undefined) {
       this.investmentService.investmentForUpdate$.subscribe(result => {
         console.log('res', result)
@@ -91,7 +95,9 @@ export class AddUpdateInvestmentComponent implements OnInit {
     obs.subscribe({
       next: response => {
         this.toastService.success({message: "Investment Tracked", type: ToastType.Success})
-        this.investmentService.getInvestments(Number(this.user?.id));
+        this.investmentService.getInvestments(Number(this.user?.id)).subscribe(x => {
+          this.investmentService.fetchInvestments(x);
+        });
       },
       error: response => {
         this.toastService.error({message: "Something get wrong", type: ToastType.Error})

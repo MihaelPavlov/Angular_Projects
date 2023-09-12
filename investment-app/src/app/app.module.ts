@@ -43,6 +43,7 @@ import {LoadingSpinnerComponent} from "./components/shared/spinner/spinner.compo
 import {HomeComponent} from "./components/home/home.component";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {AuthInterceptor} from "./interceptors/auth.interceptor";
+import {MatSortModule} from "@angular/material/sort";
 
 // const routes: Routes = [
 //   {path: '', component: InvestmentListComponent},
@@ -93,6 +94,7 @@ import {AuthInterceptor} from "./interceptors/auth.interceptor";
     MatDialogModule,
     MatInputModule,
     AppRoutingModule,
+    MatSortModule
   ],
   providers: [
     TOAST_DEFAULT_OPTIONS,

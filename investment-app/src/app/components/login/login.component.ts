@@ -34,6 +34,7 @@ export class LoginComponent {
           if (result != null) {
             this.authService.fetchUser(result.user);
             this.authService.setToken(result.accessToken);
+            this.authService.autoLogout(3600*1000)
             this.toastService.success({message: "Successfully Login", type: ToastType.Success})
             this.router.navigate(["/"])
           } else {
