@@ -1,7 +1,32 @@
 <div class="wrapper">
   <div class="mat-elevation-z8">
-    <table mat-table matSort [dataSource]="dataSource">
+    <button class="filter-btn" (click)="showFilters()">Filter</button>
+    <ng-container *ngIf="areFilterShown">
+      <ng-container [ngTemplateOutlet]="applyFilter"></ng-container>
+    </ng-container>
 
+    <ng-template #applyFilter>
+      <form [formGroup]="filterForm" (ngSubmit)="onSubmitFilters()" class="mat-form-field-wrapper form">
+        <div>
+          <mat-label>Add a filter option</mat-label>
+          <mat-select class="mat-select-panel" [(value)]="selectedColumn">
+            <mat-option *ngFor="let column of filterColumns" (click)="AddInput(column)"
+                        [value]="column.value">{{ column.value }}</mat-option>
+          </mat-select>
+        </div>
+        <div formArrayName="filters" class="example-full-width">
+          <div class="input-items" *ngFor="let filter of filterForm.controls.filters.controls; let i = index">
+            <mat-label>{{this.labels[i]}}</mat-label>
+            <input type="text" class="mat-form-field" [formControlName]="i"/>
+            <a class="anchor-hover-effect"  (click)="removeInput(i)">X</a>
+          </div>
+        </div>
+        <div>
+          <button type="submit" class="mat-flat-button show-result-btn">Show Result</button>
+        </div>
+      </form>
+    </ng-template>
+    <table mat-table matSort [dataSource]="dataSource">
       <!-- Position Column -->
       <ng-container matColumnDef="investmentName">
         <th mat-header-cell mat-sort-header *matHeaderCellDef>Investment Name</th>
