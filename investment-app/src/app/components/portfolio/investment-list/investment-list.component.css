@@ -7,3 +7,97 @@ table {
   font-family: 'Helvetica Neue', sans-serif;
 }
 
+.filter-btn {
+  float: right;
+  margin-bottom: 20px;
+}
+
+.show-result-btn {
+  position: absolute;
+  right:5px;
+  color: #333;
+  margin-right: 20px;
+  transition: color 0.3s; /* Transition property for smooth color change */
+}
+
+.show-result-btn:hover {
+  color: #f39c12; /* Initial text color */
+  transform: scale(1.05); /* Scale the button to 1.1 times its size */
+}
+
+.filter-list-container {
+  background-color: #0000000a;
+  width: 100%;
+  display: flex;
+  padding: 1rem;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.form {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.mat-elevation-z8 {
+  padding: 16px;
+  background-color: #f0f0f0; /* Set your desired background color */
+  border-radius: 8px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Add a subtle box shadow */
+}
+
+/* Style for the filter button */
+.filter-btn {
+  background-color: #007bff; /* Set your desired button background color */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 16px;
+  cursor: pointer;
+}
+
+/* Style for the filter form */
+.mat-form-field-wrapper.form {
+  margin-top: 16px; /* Adjust the top margin as needed */
+}
+
+/* Style for the select box */
+mat-select {
+  /* Make the select box take up the full width */
+  position: static;
+  float: left;
+}
+
+/* Style for the input fields */
+.mat-form-field {
+  width: 100%; /* Make the input fields take up the full width */
+  margin-bottom: 10px; /* Add spacing between input fields */
+}
+
+.input-items {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  padding: 5px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.input-items input {
+  width: 40%;
+}
+
+.anchor-hover-effect {
+  color: #333; /* Initial text color */
+  transition: color 0.3s; /* Transition property for smooth color change */
+}
+
+/* Define the hover effect */
+.anchor-hover-effect:hover {
+  color: #ffcc00; /* Text color when hovered */
+}
+
+.input-items mat-label {
+  float: left;
+}
