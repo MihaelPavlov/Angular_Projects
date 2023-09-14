@@ -33,7 +33,8 @@ export class InvestmentListComponent implements OnInit, AfterViewInit {
   @ViewChild("#applyFilter") myFilter!: TemplateRef<any>
 
   filterForm = new FormGroup({
-    "filters": new FormArray([])
+    "filters": new FormArray([]),
+    "filtersIds": new FormArray([])
   });
 
   constructor(private investmentService: InvestmentService, private router: Router,
@@ -90,21 +91,28 @@ export class InvestmentListComponent implements OnInit, AfterViewInit {
     console.log('filtered text ->', this.filterText)
   }
 
-  AddInput(column: { id:number, value: string}) {
+  AddInput(column: { id: number, value: string }) {
     console.log("add input", column);
     this.labels.push(column.value);
     console.log('labels', this.labels);
     (<FormArray>this.filterForm.get('filters')).push(new FormControl(null, Validators.required));
+    (<FormArray>this.filterForm.get('filtersIds')).push(new FormControl(column.id, Validators.required));
   }
 
   removeInput(index: number) {
     (<FormArray>this.filterForm.get('filters')).removeAt(index);
+    (<FormArray>this.filterForm.get('filtersIds')).removeAt(index);
     this.labels.splice(index, 1);
   }
 
+//TODO: combine filter and filtersIds into one object {id: fromFilterId: value: from filters}
   onSubmitFilters() {
-    console.log(this.getEnumValueByName('investmentName'))
-    console.log('filter form -=>', this.filterForm)
+    console.log('filter form -=>', this.filterForm.controls.filters.controls)
+    console.log('filterIDS form -=>', this.filterForm.controls.filtersIds.controls)
+    let filterObj = this.filterForm.controls.filters.controls.map((value, index) => ({
+      id: (this.filterForm.controls.filtersIds.controls[index] as any).value,
+      value: (value as any).value,
+    }));
   }
 
   getEnumValueByName(enumName: string): number | undefined {
