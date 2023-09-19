@@ -366,6 +366,16 @@
       "currency": 3,
       "investmentType": 0,
       "id": 16
+    },
+    {
+      "userId": 3,
+      "investmentName": "test",
+      "symbol": "33",
+      "quantity": 333,
+      "purchasePrice": 333,
+      "currency": 3,
+      "investmentType": 1,
+      "id": 17
     }
   ],
   "notifications": [

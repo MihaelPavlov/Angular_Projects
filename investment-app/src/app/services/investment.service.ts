@@ -7,8 +7,8 @@ import {RestApiService} from "../../lib/services/rest-api.service";
   providedIn: "root"
 })
 export class InvestmentService {
-  private investmentSubject$ = new BehaviorSubject<IInvestment[]>([]);
-  public investment$ = this.investmentSubject$.asObservable();
+  private investmentsSubject$ = new BehaviorSubject<IInvestment[]>([]);
+  public investments$ = this.investmentsSubject$.asObservable();
 
   private investmentForUpdateSubject$ = new BehaviorSubject<IInvestment | null>(null);
   public investmentForUpdate$ = this.investmentForUpdateSubject$.asObservable();
@@ -21,8 +21,24 @@ export class InvestmentService {
     return this.restApiService.get<IInvestment[]>(`investments?userId=${userId}`);
   }
 
-  fetchInvestments(investments:IInvestment[]): void{
-    this.investmentSubject$.next(investments)
+  // TODO: Implement real filter: Currently the filter is working like
+  //  (searching for records which contains all the fields) Not contains at the moment the filter is working with exact field value
+  //  Example: investmentName -> test will return only the records with Investment Name test. If we have test2, will not be returned.
+  filterInvestments(filters: { name: string, value: string }[],userId: number) {
+    let queryString = filters
+      .filter(item => item.value !== null && item.value !== undefined && item.value !== '') // Remove empty values
+      .map(item => `${encodeURIComponent(item.name)}=${encodeURIComponent(item.value)}`)
+      .join('&');
+
+    this.restApiService.get<IInvestment[]>(`investments?userId=${userId}&${queryString}`).subscribe({
+      next:response =>{
+        this.investmentsSubject$.next(response);
+      }
+    });
+  }
+
+  fetchInvestments(investments: IInvestment[]): void {
+    this.investmentsSubject$.next(investments)
   }
 
   getInvestmentById(id: number): void {
