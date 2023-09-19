@@ -8,8 +8,8 @@ import {IUser} from "../../../models/user";
 import {ToastService} from "../../../../lib/services/toast.service";
 import {ToastType} from "../../../models/toast";
 import {MatPaginator} from "@angular/material/paginator";
-import {MatSort, Sort} from "@angular/material/sort";
-import {Form, FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
+import {MatSort} from "@angular/material/sort";
+import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: "investment-list",
@@ -53,8 +53,7 @@ export class InvestmentListComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-
-    this.investmentService.investment$.subscribe(x => {
+    this.investmentService.investments$.subscribe(x => {
 
       this.dataSource = new MatTableDataSource<IInvestment>(x);
       this.dataSource.paginator = this.paginator;
@@ -92,9 +91,19 @@ export class InvestmentListComponent implements OnInit, AfterViewInit {
   }
 
   AddInput(column: { id: number, value: string }) {
-    console.log("add input", column);
+    let filterObj = this.filterForm.controls.filters.controls.map((value, index) => ({
+      id: (this.filterForm.controls.filtersIds.controls[index] as any).value,
+      value: (value as any).value,
+    }));
+
+    const idAlreadyExists = filterObj.some(item => item.id === column.id);
+    if(idAlreadyExists){
+      this.toastService.error({message:"This field is already in the filter",type:ToastType.Error});
+      return;
+    }
+
     this.labels.push(column.value);
-    console.log('labels', this.labels);
+
     (<FormArray>this.filterForm.get('filters')).push(new FormControl(null, Validators.required));
     (<FormArray>this.filterForm.get('filtersIds')).push(new FormControl(column.id, Validators.required));
   }
@@ -107,12 +116,14 @@ export class InvestmentListComponent implements OnInit, AfterViewInit {
 
 //TODO: combine filter and filtersIds into one object {id: fromFilterId: value: from filters}
   onSubmitFilters() {
-    console.log('filter form -=>', this.filterForm.controls.filters.controls)
-    console.log('filterIDS form -=>', this.filterForm.controls.filtersIds.controls)
-    let filterObj = this.filterForm.controls.filters.controls.map((value, index) => ({
-      id: (this.filterForm.controls.filtersIds.controls[index] as any).value,
+    let filterObj = this.filterForm.controls.filters.controls.filter(x=> (x as any).value != "").map((value, index) => ({
+      name: this.getEnumValueByKey((this.filterForm.controls.filtersIds.controls[index] as any).value),
       value: (value as any).value,
     }));
+
+    this.investmentService.filterInvestments(filterObj,Number(this.user?.id));
+
+    this.toastService.success({message:"Currently the filter is working like (searching for records which contains all the fields)",type:ToastType.Success})
   }
 
   getEnumValueByName(enumName: string): number | undefined {
@@ -134,6 +145,23 @@ export class InvestmentListComponent implements OnInit, AfterViewInit {
     }
     return "";
   }
+
+  getEnumValueByKey(key: number): string {
+    switch (key) {
+      case Fields.investmentName:
+        return "investmentName";
+      case Fields.symbol:
+        return "symbol";
+      case Fields.quantity:
+        return "quantity";
+      case Fields.purchasePrice:
+        return "purchasePrice";
+      case Fields.investmentType:
+        return "investmentType";
+    }
+    return "";
+  }
+
 }
 
 export enum Fields {
