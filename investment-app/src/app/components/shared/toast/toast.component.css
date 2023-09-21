@@ -18,10 +18,14 @@
   flex-grow: 1;
 }
 
-.toast-success {
+.toast-success{
   background: #EBF2ED;
 }
 
-.toast-error {
+.toast-error{
   background: #F6E8EB;
+}
+
+.mat-mdc-snack-bar-container {
+  --mdc-snackbar-container-color: rgba(255, 255, 255, 0);
 }

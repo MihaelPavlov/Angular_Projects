@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {map, Observable, tap} from "rxjs";
+import {map, Observable} from "rxjs";
 import {UrlService} from "./url.service";
 
 @Injectable({

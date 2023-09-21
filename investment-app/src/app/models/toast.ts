@@ -1,4 +1,4 @@
-import {MAT_LEGACY_SNACK_BAR_DEFAULT_OPTIONS as MAT_SNACK_BAR_DEFAULT_OPTIONS} from "@angular/material/legacy-snack-bar";
+import {MAT_SNACK_BAR_DEFAULT_OPTIONS} from "@angular/material/snack-bar";
 
 export interface IToast {
   message: string;
@@ -25,6 +25,6 @@ export const TOAST_DEFAULT_OPTIONS = {
   useValue: {
     horizontalPosition: 'right',
     verticalPosition: 'top',
-    duration: 4000,
+    duration: 222222000,
   },
 };

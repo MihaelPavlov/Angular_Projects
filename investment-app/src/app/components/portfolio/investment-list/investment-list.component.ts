@@ -1,15 +1,15 @@
 import {AfterViewInit, Component, OnInit, TemplateRef, ViewChild} from "@angular/core";
 import {IInvestment} from "../../../models/investment";
 import {InvestmentService} from "../../../services/investment.service";
-import {MatLegacyTableDataSource as MatTableDataSource} from "@angular/material/legacy-table";
 import {Router} from "@angular/router";
 import {AuthService} from "../../../../lib/services/auth.service";
 import {IUser} from "../../../models/user";
 import {ToastService} from "../../../../lib/services/toast.service";
 import {ToastType} from "../../../models/toast";
-import {MatLegacyPaginator as MatPaginator} from "@angular/material/legacy-paginator";
 import {MatSort} from "@angular/material/sort";
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
+import {MatTableDataSource} from "@angular/material/table";
+import {MatPaginator} from "@angular/material/paginator";
 
 @Component({
   selector: "investment-list",
