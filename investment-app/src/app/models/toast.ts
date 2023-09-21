@@ -25,6 +25,6 @@ export const TOAST_DEFAULT_OPTIONS = {
   useValue: {
     horizontalPosition: 'right',
     verticalPosition: 'top',
-    duration: 4000,
+    duration: 222222000,
   },
 };

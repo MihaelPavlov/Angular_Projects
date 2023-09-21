@@ -2,7 +2,6 @@ import {Injectable} from "@angular/core";
 import {RestApiService} from "../../lib/services/rest-api.service";
 import {BehaviorSubject} from "rxjs";
 import {INews} from "../models/news";
-import {IInvestment} from "../models/investment";
 
 @Injectable({
   providedIn: "root"

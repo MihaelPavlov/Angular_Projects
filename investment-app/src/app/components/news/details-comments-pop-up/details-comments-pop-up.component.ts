@@ -1,11 +1,11 @@
 import {AfterViewInit, Component, Inject, OnInit} from "@angular/core";
-import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 import {IComment} from "../../../models/comment";
 import {AuthService} from "../../../../lib/services/auth.service";
 import {IUser} from "../../../models/user";
 import {NewsCommentsService} from "../../../services/news-comments.service";
 import {ToastService} from "../../../../lib/services/toast.service";
 import {ToastType} from "../../../models/toast";
+import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 
 @Component({
   selector: "details-comments-modal",

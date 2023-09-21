@@ -4,8 +4,8 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 
-import {MAT_SNACK_BAR_DATA, MatSnackBarRef} from "@angular/material/snack-bar";
 import {IToast} from "../../../models/toast";
+import {MAT_SNACK_BAR_DATA, MatSnackBarRef} from "@angular/material/snack-bar";
 @Component({
   selector: "error-snack-bar",
   templateUrl: "toast.component.html",

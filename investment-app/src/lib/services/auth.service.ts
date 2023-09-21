@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {BehaviorSubject, catchError, map, Observable, take,} from "rxjs";
+import {BehaviorSubject, Observable, take,} from "rxjs";
 import {IUser} from "../../app/models/user";
 import {RestApiService} from "./rest-api.service";
 
