@@ -2,7 +2,7 @@ import {AfterViewInit, Component, OnInit, } from "@angular/core";
 import {INews} from "../../../models/news";
 import {NewsService} from "../../../services/news.service";
 import {DetailsPopUpComponent} from "../details-pop-up/details-pop-up.component";
-import {MatDialog} from "@angular/material/dialog";
+import {MatLegacyDialog as MatDialog} from "@angular/material/legacy-dialog";
 import {NewsCommentsService} from "../../../services/news-comments.service";
 import {AuthService} from "../../../../lib/services/auth.service";
 
