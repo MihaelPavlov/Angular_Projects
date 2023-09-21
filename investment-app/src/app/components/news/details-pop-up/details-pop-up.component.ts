@@ -1,7 +1,7 @@
 import {Component, Inject} from "@angular/core";
-import {MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA, MatLegacyDialog as MatDialog} from "@angular/material/legacy-dialog";
 import {INews} from "../../../models/news";
 import {DetailsCommentsPopUpComponent} from "../details-comments-pop-up/details-comments-pop-up.component";
+import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: "details-modal",

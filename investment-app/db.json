@@ -290,11 +290,11 @@
     {
       "id": 9,
       "userId": 3,
-      "investmentName": "test2",
+      "investmentName": "test222",
       "symbol": "zzz",
       "quantity": 231,
       "purchasePrice": 312321,
-      "currency": 1,
+      "currency": 2,
       "investmentType": 1
     },
     {
