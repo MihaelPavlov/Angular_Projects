@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, TemplateRef, ViewChild} from "@angular/core";
+import {AfterViewInit, Component, OnDestroy, OnInit, TemplateRef, ViewChild} from "@angular/core";
 import {IInvestment} from "../../../models/investment";
 import {InvestmentService} from "../../../services/investment.service";
 import {Router} from "@angular/router";
@@ -10,15 +10,21 @@ import {MatSort} from "@angular/material/sort";
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
+import {select, Store} from "@ngrx/store";
+import * as fromInvestment from "../portfolio.action";
+import * as fromInvestmentSelectors from "../portfolio.selectors";
+import {distinctUntilChanged, filter, Observable, Subscription, take} from "rxjs";
 
 @Component({
   selector: "investment-list",
   templateUrl: "investment-list.component.html",
   styleUrls: ["investment-list.component.css"]
 })
-export class InvestmentListComponent implements OnInit, AfterViewInit {
+export class InvestmentListComponent implements OnInit, OnDestroy {
   user?: IUser | null
   dataSource!: MatTableDataSource<IInvestment>;
+  investments$!: Observable<IInvestment[]>
+  isLoading$!: Observable<boolean>
   displayedColumns: string[] = ['investmentName', 'symbol', 'quantity', 'purchasePrice', 'investmentType', 'actions'];
   filterColumns: { id: number, value: string }[] = Object.keys(Fields).map(x => ({
     id: Number(x),
@@ -31,52 +37,43 @@ export class InvestmentListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild("#applyFilter") myFilter!: TemplateRef<any>
-
+  mySub!: Subscription
   filterForm = new FormGroup({
     "filters": new FormArray([]),
     "filtersIds": new FormArray([])
   });
 
   constructor(private investmentService: InvestmentService, private router: Router,
-              private authService: AuthService, private toastService: ToastService) {
+              private authService: AuthService, private toastService: ToastService,
+              private store: Store<{ portfolio: { investments: IInvestment[] } }>) {
     this.authService.user$.subscribe(result => {
       this.user = result;
     })
   }
 
+  ngOnDestroy(): void {
+    this.mySub.unsubscribe();
+  }
+
   ngOnInit() {
-    this.investmentService.getInvestments(Number(this.user?.id)).subscribe(x => {
-      this.investmentService.fetchInvestments(x);
+    this.isLoading$ = this.store.pipe(select(fromInvestmentSelectors.selectInvestmentIsLoading));
+    this.investments$ = this.store.pipe(select(fromInvestmentSelectors.selectInvestmentsList));
+
+    this.store.dispatch(new fromInvestment.GetInvestments({userId: Number(this.user?.id)}));
+
+    this.mySub = this.investments$.subscribe(x => {
+      this.dataSource = new MatTableDataSource<IInvestment>(x);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
   }
 
-  ngAfterViewInit() {
-    this.investmentService.investments$.subscribe(x => {
-
-      this.dataSource = new MatTableDataSource<IInvestment>(x);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    })
+  onDelete(investmentId: number): void {
+    this.store.dispatch(new fromInvestment.DeleteInvestment({investmentId, userId: Number(this.user?.id)}))
   }
 
   redirectToDetailsPage(id: number): void {
     this.router.navigate(['investment-details', id]);
-  }
-
-  onDelete(id: number): void {
-    this.investmentService.delete(id).subscribe({
-      next: response => {
-        this.toastService.success({message: 'Successfully Deleted', type: ToastType.Success})
-        this.investmentService.getInvestments(Number(this.user?.id)).subscribe(x => {
-          this.investmentService.fetchInvestments(x);
-        });
-      },
-      error: response => {
-        this.toastService.error({message: 'Something get wrong', type: ToastType.Error})
-      }
-    });
   }
 
   onEdit(id: number): void {
@@ -97,8 +94,8 @@ export class InvestmentListComponent implements OnInit, AfterViewInit {
     }));
 
     const idAlreadyExists = filterObj.some(item => item.id === column.id);
-    if(idAlreadyExists){
-      this.toastService.error({message:"This field is already in the filter",type:ToastType.Error});
+    if (idAlreadyExists) {
+      this.toastService.error({message: "This field is already in the filter", type: ToastType.Error});
       return;
     }
 
@@ -116,18 +113,17 @@ export class InvestmentListComponent implements OnInit, AfterViewInit {
 
 //TODO: combine filter and filtersIds into one object {id: fromFilterId: value: from filters}
   onSubmitFilters() {
-    let filterObj = this.filterForm.controls.filters.controls.filter(x=> (x as any).value != "").map((value, index) => ({
+    let filterObj = this.filterForm.controls.filters.controls.filter(x => (x as any).value != "").map((value, index) => ({
       name: this.getEnumValueByKey((this.filterForm.controls.filtersIds.controls[index] as any).value),
       value: (value as any).value,
     }));
 
-    this.investmentService.filterInvestments(filterObj,Number(this.user?.id));
+    this.store.dispatch(new fromInvestment.FilterInvestment({userId: Number(this.user?.id), filters: filterObj}));
 
-    this.toastService.success({message:"Currently the filter is working like (searching for records which contains all the fields)",type:ToastType.Success})
-  }
-
-  getEnumValueByName(enumName: string): number | undefined {
-    return Fields[enumName as keyof typeof Fields];
+    this.toastService.success({
+      message: "Currently the filter is working like (searching for records which contains all the fields)",
+      type: ToastType.Success
+    })
   }
 
   getEnumTextByKey(key: number): string {

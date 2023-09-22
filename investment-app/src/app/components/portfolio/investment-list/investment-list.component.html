@@ -26,7 +26,8 @@
         </div>
       </form>
     </ng-template>
-    <table mat-table matSort [dataSource]="dataSource">
+    <ng-container *ngIf="!(this.isLoading$ | async)">
+    <table mat-table matSort [dataSource]="this.dataSource">
       <!-- Position Column -->
       <ng-container matColumnDef="investmentName">
         <th mat-header-cell mat-sort-header *matHeaderCellDef>Investment Name</th>
@@ -70,6 +71,7 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+    </ng-container>
     <mat-paginator [pageSizeOptions]="[5, 10, 20]"
                    showFirstLastButtons
                    aria-label="Select page of periodic elements">

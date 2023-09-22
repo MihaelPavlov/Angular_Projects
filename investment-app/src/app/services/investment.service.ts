@@ -24,17 +24,13 @@ export class InvestmentService {
   // TODO: Implement real filter: Currently the filter is working like
   //  (searching for records which contains all the fields) Not contains at the moment the filter is working with exact field value
   //  Example: investmentName -> test will return only the records with Investment Name test. If we have test2, will not be returned.
-  filterInvestments(filters: { name: string, value: string }[],userId: number) {
+  filterInvestments(filters: { name: string, value: string }[], userId: number): Observable<IInvestment[]> {
     let queryString = filters
       .filter(item => item.value !== null && item.value !== undefined && item.value !== '') // Remove empty values
       .map(item => `${encodeURIComponent(item.name)}=${encodeURIComponent(item.value)}`)
       .join('&');
 
-    this.restApiService.get<IInvestment[]>(`investments?userId=${userId}&${queryString}`).subscribe({
-      next:response =>{
-        this.investmentsSubject$.next(response);
-      }
-    });
+    return this.restApiService.get<IInvestment[]>(`investments?userId=${userId}&${queryString}`);
   }
 
   fetchInvestments(investments: IInvestment[]): void {
@@ -47,8 +43,8 @@ export class InvestmentService {
     })
   }
 
-  create(newInvestment: IInvestment): Observable<{ investmentId: number } | null> {
-    return this.restApiService.post<{ investmentId: number }>('investments', newInvestment);
+  create(newInvestment: IInvestment): Observable<IInvestment | null> {
+    return this.restApiService.post<IInvestment>('investments', newInvestment);
   }
 
   update(updatedInvestment: IInvestment): Observable<any> {
