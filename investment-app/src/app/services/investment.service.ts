@@ -47,9 +47,8 @@ export class InvestmentService {
     return this.restApiService.post<IInvestment>('investments', newInvestment);
   }
 
-  update(updatedInvestment: IInvestment): Observable<any> {
-    return this.restApiService.put(`investments/${updatedInvestment.id}`, updatedInvestment)
-      .pipe(take(1))
+  update(updatedInvestment: IInvestment): Observable<IInvestment| null> {
+    return this.restApiService.put(`investments/${updatedInvestment.id}`, updatedInvestment);
   }
 
   delete(id: number): Observable<any> {

@@ -25,6 +25,17 @@ export function investmentsListReducer(state: InvestmentInitialState = initialSt
         isLoading: false,
         investments: [...state.investments, action.payload.investment as IInvestment]
       }
+    case portfolioActions.UPDATE_INVESTMENT:
+      return {
+        ...state,
+        isLoading: true
+      }
+    case portfolioActions.UPDATE_INVESTMENT_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        investments: [...state.investments.map((i) => i.id === action.payload.investment?.id ? action.payload.investment as IInvestment : i)]
+      }
     case portfolioActions.GET_INVESTMENTS:
       return {
         ...state,

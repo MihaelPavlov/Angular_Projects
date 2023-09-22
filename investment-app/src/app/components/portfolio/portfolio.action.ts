@@ -3,6 +3,8 @@ import {IInvestment} from "../../models/investment";
 
 export const ADD_INVESTMENT = '[Investment] Add Investment';
 export const ADD_INVESTMENT_SUCCESS = '[Investment] Add Investment Success';
+export const UPDATE_INVESTMENT = '[Investment] Update Investment';
+export const UPDATE_INVESTMENT_SUCCESS = '[Investment] Update Investment Success';
 export const DELETE_INVESTMENT = '[Investment] Delete Investment'
 export const DELETE_INVESTMENT_SUCCESS = '[Investment] Delete Investment Success'
 export const GET_INVESTMENTS = '[Investment] Get Investments'
@@ -19,6 +21,19 @@ export class AddInvestment implements Action {
 
 export class AddInvestmentSuccess implements Action {
   readonly type = ADD_INVESTMENT_SUCCESS;
+
+  constructor(public payload: { investment: IInvestment | null }) {
+  }
+}
+export class UpdateInvestment implements Action {
+  readonly type = UPDATE_INVESTMENT;
+
+  constructor(public payload: { investment: IInvestment | null }) {
+  }
+}
+
+export class UpdateInvestmentSuccess implements Action {
+  readonly type = UPDATE_INVESTMENT_SUCCESS;
 
   constructor(public payload: { investment: IInvestment | null }) {
   }
@@ -69,6 +84,8 @@ export class FilterInvestmentSuccess implements Action {
 export type PortfolioActions =
   AddInvestment
   | AddInvestmentSuccess
+  | UpdateInvestment
+  | UpdateInvestmentSuccess
   | GetInvestments
   | GetInvestmentsSuccess
   | DeleteInvestment
