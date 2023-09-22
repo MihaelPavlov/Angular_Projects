@@ -38,6 +38,23 @@ export class InvestmentEffects {
     )
   )
 
+  updateInvestments$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromInvestments.UPDATE_INVESTMENT),
+      switchMap((data: fromInvestments.UpdateInvestment) => {
+        return this.investmentService.update(data.payload.investment as IInvestment).pipe(
+          map((investment: IInvestment | null) => {
+            return new fromInvestments.UpdateInvestmentSuccess({investment});
+          }),
+          tap(() => this.toastService.success({message: 'Investment Updated', type: ToastType.Success})),
+          catchError((error) => {
+            this.toastService.error({message: 'Something get wrong', type: ToastType.Error})
+            return of({type: "Failed", payload: error})
+          }));
+      }),
+    )
+  )
+
   deleteInvestments$ = createEffect(() =>
     this.actions$.pipe(
       ofType(fromInvestments.DELETE_INVESTMENT),

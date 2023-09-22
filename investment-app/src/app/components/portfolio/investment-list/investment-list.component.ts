@@ -12,8 +12,10 @@ import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {select, Store} from "@ngrx/store";
 import * as fromInvestment from "../portfolio.action";
+import * as fromInvestmentReducer from "../portfolio.reducer";
 import * as fromInvestmentSelectors from "../portfolio.selectors";
-import {distinctUntilChanged, filter, Observable, Subscription, take} from "rxjs";
+import {Observable, Subscription} from "rxjs";
+import {AppState} from "../portfolio.reducer";
 
 @Component({
   selector: "investment-list",
@@ -45,7 +47,7 @@ export class InvestmentListComponent implements OnInit, OnDestroy {
 
   constructor(private investmentService: InvestmentService, private router: Router,
               private authService: AuthService, private toastService: ToastService,
-              private store: Store<{ portfolio: { investments: IInvestment[] } }>) {
+              private store: Store<fromInvestmentReducer.AppState>) {
     this.authService.user$.subscribe(result => {
       this.user = result;
     })

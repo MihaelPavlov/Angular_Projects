@@ -11,7 +11,7 @@ import {ToastService} from "../../../../lib/services/toast.service";
 import {ToastType} from "../../../models/toast";
 import {Store} from "@ngrx/store";
 import {IInvestment} from "../../../models/investment";
-import {AddInvestment} from "../portfolio.action";
+import {AddInvestment, UpdateInvestment} from "../portfolio.action";
 
 @Component({
   selector: "add-update-investment",
@@ -34,7 +34,7 @@ export class AddUpdateInvestmentComponent implements OnInit {
 
   constructor(private investmentService: InvestmentService, private route: ActivatedRoute,
               private router: Router, private authService: AuthService, private toastService: ToastService,
-              private store: Store<{portfolio:{investments : IInvestment[]}}>) {
+              private store: Store<{ portfolio: { investments: IInvestment[] } }>) {
   }
 
   ngOnInit() {
@@ -70,64 +70,32 @@ export class AddUpdateInvestmentComponent implements OnInit {
   }
 
   onSubmit() {
-    let obs: Observable<any> | Observable<{ investmentId: number } | null>
-    console.log('Onsubmit register')
     if (this.id != undefined) {
-      // this.store.dispatch(new AddInvestment({
-      //   id: this.id,
-      //   userId: Number(this.user?.id),
-      //   investmentName: this.addUpdateForm.controls.investmentName.value,
-      //   symbol: this.addUpdateForm.controls.symbol.value,
-      //   quantity: this.addUpdateForm.controls.quantity.value,
-      //   purchasePrice: this.addUpdateForm.controls.purchasePrice.value,
-      //   currency: this.addUpdateForm.controls.currency.value,
-      //   investmentType: this.addUpdateForm.controls.investmentType.value
-      // }));
-
-      obs = this.investmentService.update({
-        id: this.id,
-        userId: Number(this.user?.id),
-        investmentName: this.addUpdateForm.controls.investmentName.value,
-        symbol: this.addUpdateForm.controls.symbol.value,
-        quantity: this.addUpdateForm.controls.quantity.value,
-        purchasePrice: this.addUpdateForm.controls.purchasePrice.value,
-        currency: this.addUpdateForm.controls.currency.value,
-        investmentType: this.addUpdateForm.controls.investmentType.value
-      });
+      this.store.dispatch(new UpdateInvestment({
+        investment: {
+          id: this.id,
+          userId: Number(this.user?.id),
+          investmentName: this.addUpdateForm.controls.investmentName.value,
+          symbol: this.addUpdateForm.controls.symbol.value,
+          quantity: this.addUpdateForm.controls.quantity.value,
+          purchasePrice: this.addUpdateForm.controls.purchasePrice.value,
+          currency: this.addUpdateForm.controls.currency.value,
+          investmentType: this.addUpdateForm.controls.investmentType.value
+        }
+      }));
     } else {
-      this.store.dispatch(new AddInvestment({investment:{
-        userId: Number(this.user?.id),
-        investmentName: this.addUpdateForm.controls.investmentName.value,
-        symbol: this.addUpdateForm.controls.symbol.value,
-        quantity: this.addUpdateForm.controls.quantity.value,
-        purchasePrice: this.addUpdateForm.controls.purchasePrice.value,
-        currency: this.addUpdateForm.controls.currency.value,
-        investmentType: this.addUpdateForm.controls.investmentType.value
-      }}));
-      // obs = this.investmentService.create({
-      //     userId: Number(this.user?.id),
-      //     investmentName: this.addUpdateForm.controls.investmentName.value,
-      //     symbol: this.addUpdateForm.controls.symbol.value,
-      //     quantity: this.addUpdateForm.controls.quantity.value,
-      //     purchasePrice: this.addUpdateForm.controls.purchasePrice.value,
-      //     currency: this.addUpdateForm.controls.currency.value,
-      //     investmentType: this.addUpdateForm.controls.investmentType.value
-      //   }
-      // );
+      this.store.dispatch(new AddInvestment({
+        investment: {
+          userId: Number(this.user?.id),
+          investmentName: this.addUpdateForm.controls.investmentName.value,
+          symbol: this.addUpdateForm.controls.symbol.value,
+          quantity: this.addUpdateForm.controls.quantity.value,
+          purchasePrice: this.addUpdateForm.controls.purchasePrice.value,
+          currency: this.addUpdateForm.controls.currency.value,
+          investmentType: this.addUpdateForm.controls.investmentType.value
+        }
+      }));
     }
-
-    // obs.subscribe({
-    //   next: response => {
-    //     this.toastService.success({message: "Investment Tracked", type: ToastType.Success})
-    //     this.investmentService.getInvestments(Number(this.user?.id)).subscribe(x => {
-    //       this.investmentService.fetchInvestments(x);
-    //     });
-    //   },
-    //   error: response => {
-    //     this.toastService.error({message: "Something get wrong", type: ToastType.Error})
-    //   }
-    //
-    // })
 
     this.router.navigate(['/my-investments'])
   }
