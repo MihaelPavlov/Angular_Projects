@@ -35,7 +35,7 @@ import {HomeComponent} from "./components/home/home.component";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {AuthInterceptor} from "./interceptors/auth.interceptor";
 import {MatSortModule} from "@angular/material/sort";
-import { EffectsModule } from '@ngrx/effects';
+import {Actions, EffectsModule} from '@ngrx/effects';
 import {StoreModule} from "@ngrx/store";
 import {MatSelectModule} from "@angular/material/select";
 import {MatPaginatorModule} from "@angular/material/paginator";
@@ -47,6 +47,11 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatInputModule} from "@angular/material/input";
 import {CommonModule} from "@angular/common";
+import {
+  portfolioReducers,
+
+} from "./components/portfolio/portfolio.reducer";
+import {InvestmentEffects} from "./components/portfolio/portfolio.effects";
 
 // const routes: Routes = [
 //   {path: '', component: InvestmentListComponent},
@@ -99,8 +104,8 @@ import {CommonModule} from "@angular/common";
     MatInputModule,
     AppRoutingModule,
     MatSortModule,
-    StoreModule.forRoot({ }),
-    EffectsModule.forRoot([])
+    StoreModule.forRoot(portfolioReducers),
+    EffectsModule.forRoot(InvestmentEffects)
   ],
   providers: [
     TOAST_DEFAULT_OPTIONS,
