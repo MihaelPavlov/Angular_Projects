@@ -37,10 +37,8 @@ export class InvestmentService {
     this.investmentsSubject$.next(investments)
   }
 
-  getInvestmentById(id: number): void {
-    this.restApiService.get<IInvestment | null>(`investments/${id}`).subscribe((result: any) => {
-      this.investmentForUpdateSubject$.next(result);
-    })
+  getInvestmentById(id: number): Observable<IInvestment | null> {
+    return this.restApiService.get<IInvestment | null>(`investments/${id}`)
   }
 
   create(newInvestment: IInvestment): Observable<IInvestment | null> {

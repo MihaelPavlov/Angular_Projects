@@ -4,3 +4,4 @@ import {InvestmentInitialState} from "./portfolio.reducer";
 export const selectInvestmentState = createFeatureSelector<InvestmentInitialState>('portfolio');
 export const selectInvestmentsList = createSelector(selectInvestmentState, (state) => state.investments);
 export const selectInvestmentIsLoading = createSelector(selectInvestmentState, (state) => state.isLoading);
+export const selectInvestment = createSelector(selectInvestmentState, (state) => state.investment);

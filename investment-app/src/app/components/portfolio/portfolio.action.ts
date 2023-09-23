@@ -9,6 +9,9 @@ export const DELETE_INVESTMENT = '[Investment] Delete Investment'
 export const DELETE_INVESTMENT_SUCCESS = '[Investment] Delete Investment Success'
 export const GET_INVESTMENTS = '[Investment] Get Investments'
 export const GET_INVESTMENTS_SUCCESS = '[Investment] Get Investments Success'
+export const GET_INVESTMENT_BY_ID = '[Investment] Get Investment By Id'
+export const GET_INVESTMENT_BY_ID_SUCCESS = '[Investment] Get Investment By Id Success'
+export const GET_INVESTMENT_BY_ID_FAILED = '[Investment] Get Investment By Id Failed'
 export const FILTER_INVESTMENTS = '[Investment] Filter Investment'
 export const FILTER_INVESTMENTS_SUCCESS = '[Investment] Filter Investment Success'
 
@@ -25,6 +28,7 @@ export class AddInvestmentSuccess implements Action {
   constructor(public payload: { investment: IInvestment | null }) {
   }
 }
+
 export class UpdateInvestment implements Action {
   readonly type = UPDATE_INVESTMENT;
 
@@ -50,6 +54,27 @@ export class GetInvestmentsSuccess implements Action {
   readonly type = GET_INVESTMENTS_SUCCESS;
 
   constructor(public payload: { investments: IInvestment[] }) {
+  }
+}
+
+export class GetInvestmentById implements Action {
+  public readonly type = GET_INVESTMENT_BY_ID;
+
+  constructor(public payload: { investmentId: number }) {
+  }
+}
+
+export class GetInvestmentByIdSuccess implements Action {
+  readonly type = GET_INVESTMENT_BY_ID_SUCCESS;
+
+  constructor(public payload: { investment: IInvestment }) {
+  }
+}
+
+export class GetInvestmentByIdFailed implements Action {
+  readonly type = GET_INVESTMENT_BY_ID_FAILED;
+
+  constructor(public payload: { error: string }) {
   }
 }
 
@@ -88,6 +113,9 @@ export type PortfolioActions =
   | UpdateInvestmentSuccess
   | GetInvestments
   | GetInvestmentsSuccess
+  | GetInvestmentById
+  | GetInvestmentByIdSuccess
+  | GetInvestmentByIdFailed
   | DeleteInvestment
   | DeleteInvestmentSuccess
   | FilterInvestment

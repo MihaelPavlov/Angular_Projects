@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnDestroy, OnInit, TemplateRef, ViewChild} from "@angular/core";
+import { Component, OnDestroy, OnInit, TemplateRef, ViewChild} from "@angular/core";
 import {IInvestment} from "../../../models/investment";
 import {InvestmentService} from "../../../services/investment.service";
 import {Router} from "@angular/router";
@@ -11,11 +11,11 @@ import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {select, Store} from "@ngrx/store";
-import * as fromInvestment from "../portfolio.action";
-import * as fromInvestmentReducer from "../portfolio.reducer";
-import * as fromInvestmentSelectors from "../portfolio.selectors";
+import * as fromPortfolioActions from "../portfolio.action";
+import * as fromPortfolioReducer from "../portfolio.reducer";
+import * as fromPortfolioSelectors from "../portfolio.selectors";
 import {Observable, Subscription} from "rxjs";
-import {AppState} from "../portfolio.reducer";
+import {AppState} from "../../../../shared/app.reducer";
 
 @Component({
   selector: "investment-list",
@@ -47,7 +47,7 @@ export class InvestmentListComponent implements OnInit, OnDestroy {
 
   constructor(private investmentService: InvestmentService, private router: Router,
               private authService: AuthService, private toastService: ToastService,
-              private store: Store<fromInvestmentReducer.AppState>) {
+              private store: Store<AppState>) {
     this.authService.user$.subscribe(result => {
       this.user = result;
     })
@@ -58,10 +58,10 @@ export class InvestmentListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.isLoading$ = this.store.pipe(select(fromInvestmentSelectors.selectInvestmentIsLoading));
-    this.investments$ = this.store.pipe(select(fromInvestmentSelectors.selectInvestmentsList));
+    this.isLoading$ = this.store.pipe(select(fromPortfolioSelectors.selectInvestmentIsLoading));
+    this.investments$ = this.store.pipe(select(fromPortfolioSelectors.selectInvestmentsList));
 
-    this.store.dispatch(new fromInvestment.GetInvestments({userId: Number(this.user?.id)}));
+    this.store.dispatch(new fromPortfolioActions.GetInvestments({userId: Number(this.user?.id)}));
 
     this.mySub = this.investments$.subscribe(x => {
       this.dataSource = new MatTableDataSource<IInvestment>(x);
@@ -71,7 +71,7 @@ export class InvestmentListComponent implements OnInit, OnDestroy {
   }
 
   onDelete(investmentId: number): void {
-    this.store.dispatch(new fromInvestment.DeleteInvestment({investmentId, userId: Number(this.user?.id)}))
+    this.store.dispatch(new fromPortfolioActions.DeleteInvestment({investmentId, userId: Number(this.user?.id)}))
   }
 
   redirectToDetailsPage(id: number): void {
@@ -120,7 +120,7 @@ export class InvestmentListComponent implements OnInit, OnDestroy {
       value: (value as any).value,
     }));
 
-    this.store.dispatch(new fromInvestment.FilterInvestment({userId: Number(this.user?.id), filters: filterObj}));
+    this.store.dispatch(new fromPortfolioActions.FilterInvestment({userId: Number(this.user?.id), filters: filterObj}));
 
     this.toastService.success({
       message: "Currently the filter is working like (searching for records which contains all the fields)",
