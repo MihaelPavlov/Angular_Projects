@@ -9,9 +9,10 @@ import {AuthService} from "../../../../lib/services/auth.service";
 import {IUser} from "../../../models/user";
 import {ToastService} from "../../../../lib/services/toast.service";
 import {ToastType} from "../../../models/toast";
-import {Store} from "@ngrx/store";
+import {select, Store} from "@ngrx/store";
 import {IInvestment} from "../../../models/investment";
-import {AddInvestment, UpdateInvestment} from "../portfolio.action";
+import {AddInvestment, GetInvestmentById, UpdateInvestment} from "../portfolio.action";
+import {selectInvestment} from "../portfolio.selectors";
 
 @Component({
   selector: "add-update-investment",
@@ -46,7 +47,7 @@ export class AddUpdateInvestmentComponent implements OnInit {
       if (id != null) {
         this.id = Number(id);
 
-        this.investmentService.getInvestmentById(this.id);
+        this.store.dispatch(new GetInvestmentById({investmentId: this.id}))
       }
     });
 
@@ -60,7 +61,7 @@ export class AddUpdateInvestmentComponent implements OnInit {
   updateModel(): void {
     console.log('iddd', this.id)
     if (this.id != undefined) {
-      this.investmentService.investmentForUpdate$.subscribe(result => {
+      this.store.pipe(select(selectInvestment)).subscribe(result => {
         console.log('res', result)
         if (result) {
           this.addUpdateForm.patchValue(result)

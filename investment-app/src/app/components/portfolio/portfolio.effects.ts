@@ -21,6 +21,23 @@ export class InvestmentEffects {
     )
   )
 
+  getInvestmentById$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromInvestments.GET_INVESTMENT_BY_ID),
+      switchMap((data: fromInvestments.GetInvestmentById) =>
+        this.investmentService.getInvestmentById(data.payload.investmentId).pipe(
+          map((investment: IInvestment | null) => {
+            if (investment == null) {
+              this.toastService.error({message: 'Something get wrong', type: ToastType.Error})
+              return new fromInvestments.GetInvestmentByIdFailed({error: "Object not found!"});
+            } else {
+              return new fromInvestments.GetInvestmentByIdSuccess({investment});
+            }
+          })
+        )
+      )
+    ));
+
   addInvestments$ = createEffect(() =>
     this.actions$.pipe(
       ofType(fromInvestments.ADD_INVESTMENT),

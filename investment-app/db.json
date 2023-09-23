@@ -288,19 +288,9 @@
       "investmentType": 0
     },
     {
-      "userId": 3,
-      "investmentName": "cxzcxz",
-      "symbol": null,
-      "quantity": null,
-      "purchasePrice": null,
-      "currency": null,
-      "investmentType": null,
-      "id": 14
-    },
-    {
       "id": 16,
       "userId": 3,
-      "investmentName": "Tesla",
+      "investmentName": "Tesla222",
       "symbol": "eqwewq",
       "quantity": null,
       "purchasePrice": 1,
@@ -308,14 +298,14 @@
       "investmentType": 1
     },
     {
+      "id": 19,
       "userId": 3,
-      "investmentName": "tes",
-      "symbol": "ewq",
-      "quantity": 2321,
-      "purchasePrice": 3123,
-      "currency": 1,
-      "investmentType": null,
-      "id": 18
+      "investmentName": "PEPE1",
+      "symbol": "12e12e",
+      "quantity": 2321321321,
+      "purchasePrice": 1221,
+      "currency": 0,
+      "investmentType": 1
     }
   ],
   "notifications": [
