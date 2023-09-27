@@ -1,6 +1,6 @@
 <div>
   <div class="cardWrapper">
-    <mat-card *ngFor="let card of newsList" class="news-card">
+    <mat-card *ngFor="let card of newsList$|async" class="news-card">
       <mat-card-header>
         <div mat-card-avatar class="news-avatar">
           <img src="{{card.imageUrl}}" alt="Card Avatar" class="avatar-image">

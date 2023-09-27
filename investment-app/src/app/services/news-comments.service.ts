@@ -13,14 +13,9 @@ export class NewsCommentsService {
   constructor(private restApiService: RestApiService) {
   }
 
-  getCommentsByNewsId(newsId: number) {
-    this.restApiService.get<IComment[]>(`comments`)
+  getCommentsByNewsId(newsId: number): Observable<IComment[]> {
+    return this.restApiService.get<IComment[]>(`comments`)
       .pipe(map(x => x.filter(y => y.newsId === newsId)))
-      .subscribe({
-        next: response => {
-          this.commentsSubject$.next(response);
-        }
-      })
   }
 
   getAllComments(): Observable<IComment[]> {
