@@ -221,6 +221,20 @@
       "newsId": 3,
       "comment": "ds",
       "likes": 0
+    },
+    {
+      "id": 27,
+      "newsId": 1,
+      "userId": 3,
+      "comment": "das231",
+      "likes": 0
+    },
+    {
+      "id": 28,
+      "newsId": 1,
+      "userId": 3,
+      "comment": "ewq",
+      "likes": 0
     }
   ],
   "investments": [

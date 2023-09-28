@@ -59,6 +59,11 @@ export class DetailsCommentsPopUpComponent implements OnInit, AfterViewInit {
       userId: this.user != null ? this.user.id : undefined,
       comment: this.newCommentText,
       likes: 0
+    }).subscribe({
+      next: response => {
+        this.store.dispatch(fromNewsActions.GetCommentsByNewsId({newsId: this.data.newsId}))
+        this.toastService.success({message: "Comment Created", type: ToastType.Success});
+      }
     })
 
     this.newCommentText = ''
@@ -77,12 +82,16 @@ export class DetailsCommentsPopUpComponent implements OnInit, AfterViewInit {
   }
 
   onEditSubmit() {
+    console.log(this.editingComment?.comment);
+    console.log(this.updateCommentText);
     if (this.editingComment != null) {
-      this.editingComment.comment = this.updateCommentText;
+      this.editingComment = {...this.editingComment, comment: this.updateCommentText};
       this.newsCommentsService.updateComment({
         ...this.editingComment
       }).subscribe({
         next: response => {
+          this.store.dispatch(fromNewsActions.GetCommentsByNewsId({newsId: this.data.newsId}))
+
           this.toastService.success({message: "Comment Updated", type: ToastType.Success});
         },
         error: response => {
@@ -93,10 +102,13 @@ export class DetailsCommentsPopUpComponent implements OnInit, AfterViewInit {
     this.onCancelEditing();
   }
 
-  onDeleteSubmit(commentId: number) {
+  onDeleteSubmit(commentId: number | undefined) {
+    if (commentId == undefined) {
+      return;
+    }
     this.newsCommentsService.deleteComment(commentId).subscribe({
       next: response => {
-        this.newsCommentsService.getCommentsByNewsId(this.data.newsId)
+        this.store.dispatch(fromNewsActions.GetCommentsByNewsId({newsId: this.data.newsId}))
         this.toastService.success({message: "Comment Delete", type: ToastType.Success});
       },
       error: response => {

@@ -50,6 +50,7 @@ import {CommonModule} from "@angular/common";
 import {InvestmentEffects} from "./components/portfolio/portfolio.effects";
 import {metaReducers, reducers} from "../shared/app.reducer";
 import {NewsEffects} from "./components/news/news.effects";
+import {CoinsComponent} from "./components/coins/coins.component";
 
 // const routes: Routes = [
 //   {path: '', component: InvestmentListComponent},
@@ -77,7 +78,8 @@ import {NewsEffects} from "./components/news/news.effects";
     DetailsCommentsPopUpComponent,
     TestComponent,
     LoadingSpinnerComponent,
-    HomeComponent
+    HomeComponent,
+    CoinsComponent
   ],
   imports: [
     CommonModule,

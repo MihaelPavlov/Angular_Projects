@@ -1,0 +1,75 @@
+/* Styling for the table */
+table {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 25px;
+  border-collapse: collapse;
+  font-family: Arial, sans-serif;
+
+}
+
+/* Styling for table header */
+th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  text-align: left;
+  padding: 10px;
+}
+
+/* Styling for alternate table rows */
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Styling for table data cells */
+td {
+  padding: 10px;
+}
+
+/* Styling for the first column (Rank) */
+td:first-child {
+  text-align: left;
+  padding-left: 20px;
+}
+
+/* Styling for the second column (Name) */
+td:nth-child(2) {
+  text-align: left;
+  align-items: center;
+}
+
+/* Styling for the image in the second column */
+td:nth-child(2) img {
+  max-width: 24px;
+  max-height: 24px;
+  margin-right: 5px;
+}
+
+/* Styling for the last column (Change) */
+td:last-child {
+  color: black;
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-weight: bold;
+}
+
+/* Styling for positive change */
+td:last-child.green {
+  background-color: #4caf50;
+}
+
+/* Styling for negative change */
+td:last-child.red {
+  background-color: #f44336;
+}
+
+/* Add your CSS rules here for styling the table row */
+tr.right.aligned {
+  /* Your CSS styles for the row go here */
+  background-color: #f0f0f0; /* Example background color */
+  color: #333; /* Example text color */
+  /* Add more styles as needed */
+}
+
+/* You can target specific elements within the row using selectors like .right.aligned td, .right.aligned a, etc. */
