@@ -51,6 +51,7 @@ import {InvestmentEffects} from "./components/portfolio/portfolio.effects";
 import {metaReducers, reducers} from "../shared/app.reducer";
 import {NewsEffects} from "./components/news/news.effects";
 import {CoinsComponent} from "./components/coins/coins.component";
+import {FormatNumberPipe} from "./pipes/round-number.pipe";
 
 // const routes: Routes = [
 //   {path: '', component: InvestmentListComponent},
@@ -71,6 +72,7 @@ import {CoinsComponent} from "./components/coins/coins.component";
     InvestmentDetailsComponent,
     CurrencyToSymbolPipe,
     InvestmentTypeToNamePipe,
+    FormatNumberPipe,
     ToolBarComponent,
     NewsListComponent,
     ToastComponent,
@@ -105,7 +107,7 @@ import {CoinsComponent} from "./components/coins/coins.component";
     AppRoutingModule,
     MatSortModule,
     StoreModule.forRoot(reducers, {metaReducers}),
-    EffectsModule.forRoot(InvestmentEffects,NewsEffects)
+    EffectsModule.forRoot(InvestmentEffects, NewsEffects)
   ],
   providers: [
     TOAST_DEFAULT_OPTIONS,
