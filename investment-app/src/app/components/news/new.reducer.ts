@@ -2,7 +2,6 @@ import {INews} from "../../models/news";
 import {createEntityAdapter, EntityState, Update} from "@ngrx/entity";
 import {createReducer, on} from "@ngrx/store";
 import * as NewsActions from "./news.action";
-import {act} from "@ngrx/effects";
 
 export const adapter = createEntityAdapter<INews>();
 export const {selectAll} = adapter.getSelectors();

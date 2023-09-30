@@ -58,3 +58,19 @@ button {
 button:hover {
   background-color: #e67e22;
 }
+
+.ellipsis {
+  display: inline-block;
+  vertical-align: middle;
+  bottom: 20px;
+}
+
+img{
+  max-width: 24px;
+  max-height: 24px;
+  margin-right: 5px;
+}
+
+.investment-select{
+ width: 95%;
+}

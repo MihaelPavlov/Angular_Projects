@@ -50,8 +50,12 @@ import {CommonModule} from "@angular/common";
 import {InvestmentEffects} from "./components/portfolio/portfolio.effects";
 import {metaReducers, reducers} from "../shared/app.reducer";
 import {NewsEffects} from "./components/news/news.effects";
-import {CoinsComponent} from "./components/coins/coins.component";
+import {CoinsComponent} from "./components/crypto_assets/coins/coins.component";
 import {FormatNumberPipe} from "./pipes/round-number.pipe";
+import {CryptoAssetsEffects} from "./components/crypto_assets/crypto-assets.effects";
+import {FormatNumberWithColorPipe} from "./pipes/format-number-with-color.pipe";
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {DataListServie} from "./services/data-list.servie";
 
 // const routes: Routes = [
 //   {path: '', component: InvestmentListComponent},
@@ -72,6 +76,7 @@ import {FormatNumberPipe} from "./pipes/round-number.pipe";
     InvestmentDetailsComponent,
     CurrencyToSymbolPipe,
     InvestmentTypeToNamePipe,
+    FormatNumberWithColorPipe,
     FormatNumberPipe,
     ToolBarComponent,
     NewsListComponent,
@@ -106,11 +111,13 @@ import {FormatNumberPipe} from "./pipes/round-number.pipe";
     MatInputModule,
     AppRoutingModule,
     MatSortModule,
+    MatTooltipModule,
     StoreModule.forRoot(reducers, {metaReducers}),
-    EffectsModule.forRoot(InvestmentEffects, NewsEffects)
+    EffectsModule.forRoot(InvestmentEffects, NewsEffects,CryptoAssetsEffects)
   ],
   providers: [
     TOAST_DEFAULT_OPTIONS,
+    DataListServie,
     AuthGuardService,
     {
       provide: HTTP_INTERCEPTORS,

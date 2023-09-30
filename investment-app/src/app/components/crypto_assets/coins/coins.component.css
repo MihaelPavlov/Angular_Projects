@@ -1,12 +1,18 @@
 /* Styling for the table */
-table {
-  width: 80%;
+.table {
+  width: 90%;
+  min-width: 90%;
   margin-left: auto;
   margin-right: auto;
   margin-top: 25px;
-  border-collapse: collapse;
   font-family: Arial, sans-serif;
 
+  border: 2px solid rgba(34,36,38,.15);
+  box-shadow: 1px -0.5px 10px #ffcc00;
+  border-radius: 0.28571429rem;
+  text-align: left;
+  border-collapse: separate;
+  border-spacing: 0;
 }
 
 /* Styling for table header */
@@ -70,6 +76,25 @@ tr.right.aligned {
   background-color: #f0f0f0; /* Example background color */
   color: #333; /* Example text color */
   /* Add more styles as needed */
+}
+
+.ellipsis {
+  display: inline-block;
+  vertical-align: middle;
+  bottom: 20px;
+}
+
+.ellipsis:hover {
+  color: #3498db;
+  transition: color 0.3s;
+}
+
+.text-green {
+  color: green;
+}
+
+.text-red {
+  color: red;
 }
 
 /* You can target specific elements within the row using selectors like .right.aligned td, .right.aligned a, etc. */

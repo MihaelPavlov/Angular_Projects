@@ -1,6 +1,7 @@
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Injectable} from "@angular/core";
 import {ICryptoAsset} from "../../app/models/cryptoAsset";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: "root"
@@ -15,12 +16,12 @@ export class CoinService {
   constructor(private http: HttpClient) {
   }
 
-  getAllCoins() {
-    return this.http.get<allCoins>(this.url, {headers:this.headers});
+  getAllCoins() : Observable<CoinResult> {
+    return this.http.get<CoinResult>(this.url, {headers:this.headers});
   }
 }
 
-export interface allCoins{
+export interface CoinResult{
   data: ICryptoAsset[]
   timestamp: number
 

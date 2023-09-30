@@ -11,7 +11,7 @@ import {AuthGuardService} from "../guards/auth-guard.service";
 import {TestComponent} from "../components/test.component";
 import {NewsListComponent} from "../components/news/news-list/news-list.component";
 import {HomeComponent} from "../components/home/home.component";
-import {CoinsComponent} from "../components/coins/coins.component";
+import {CoinsComponent} from "../components/crypto_assets/coins/coins.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},

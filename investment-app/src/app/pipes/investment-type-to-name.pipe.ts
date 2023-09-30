@@ -1,3 +1,4 @@
+
 import {Pipe, PipeTransform} from "@angular/core";
 import {getInvestmentTypeLabel} from "../../enums/investment-type.enum";
 

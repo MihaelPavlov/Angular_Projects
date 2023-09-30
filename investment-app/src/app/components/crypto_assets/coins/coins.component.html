@@ -1,0 +1,98 @@
+<div class="table">
+  <div *ngIf="!(this.isLoading$ | async)">
+    <table class="mat-table-sticky mat-elevation-z8" matSort mat-table [dataSource]="this.coinsData$">
+      <ng-container matColumnDef="rank">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>Rank</th>
+        <td mat-cell *matCellDef="let coin">{{coin.rank}}</td>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let coin">
+          <img alt='img' src="https://assets.coincap.io/assets/icons/{{coin.symbol.toLowerCase()}}@2x.png">
+          <div class="ellipsis">
+            <a matTooltip="{{coin.name}} white paper" (click)="redirectToWhitePaper(coin.name)">
+              <p style="font-size: 0.8em; opacity: 0.7;">{{coin.name}} ({{coin.symbol}})</p>
+            </a>
+          </div>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="priceUsd">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>Price</th>
+        <td mat-cell *matCellDef="let coin">{{coin.priceUsd | formatNumber}}</td>
+      </ng-container>
+      <ng-container matColumnDef="marketCapUsd">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>Market Cap</th>
+        <td mat-cell *matCellDef="let coin">{{coin.marketCapUsd | formatNumber}}</td>
+      </ng-container>
+      <ng-container matColumnDef="supply">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>Supply</th>
+        <td mat-cell *matCellDef="let coin">{{coin.supply | formatNumber}} / {{coin.maxSupply| formatNumber}}</td>
+      </ng-container>
+      <ng-container matColumnDef="volumeUsd24Hr">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>Volume 24Hr</th>
+        <td mat-cell *matCellDef="let coin">{{coin.volumeUsd24Hr | formatNumber}}</td>
+      </ng-container>
+      <ng-container matColumnDef="changePercent24Hr">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>Change Percent</th>
+        <td mat-cell *matCellDef="let coin">
+          <span [class]="coin.changePercent24Hr| numberFormatForCandle">{{coin.changePercent24Hr | formatNumber}}
+            %</span>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+      <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
+      <!--  <thead>-->
+      <!--  <tr class="center aligned">-->
+      <!--    <th class="center aligned">Rank</th>-->
+      <!--    <th class="left aligned">Name</th>-->
+      <!--    <th class="right aligned">Price</th>-->
+      <!--    <th class="right aligned xs-hidden">Market Cap</th>-->
+      <!--    <th class="right aligned xs-hidden tablet-hidden"><span>VWAP (24Hr)</span></th>-->
+      <!--    <th class="right aligned xs-hidden tablet-hidden">Supply</th>-->
+      <!--    <th class="right aligned xs-hidden">Volume (24Hr)</th>-->
+      <!--    <th class="right aligned xs-hidden">Change (24Hr)</th>-->
+      <!--  </tr>-->
+      <!--  </thead>-->
+      <!--  <tbody>-->
+      <!--  &lt;!&ndash; Table rows with data go here &ndash;&gt;-->
+      <!--  <tr *ngFor="let coin of this.coins$ | async" class="center aligned">-->
+      <!--    <td class="center aligned ">{{coin.rank}}</td>-->
+      <!--    <td class="left aligned">-->
+      <!--      <img alt='img' src="https://assets.coincap.io/assets/icons/{{coin.symbol.toLowerCase()}}@2x.png">-->
+      <!--      <div class="ellipsis">-->
+      <!--        <a matTooltip="{{coin.name}} white paper" (click)="redirectToWhitePaper(coin.name)">-->
+      <!--          <p style="font-size: 0.8em; opacity: 0.7;">{{coin.name}} ({{coin.symbol}})</p>-->
+      <!--        </a>-->
+      <!--      </div>-->
+      <!--    </td>-->
+      <!--    <td class="right aligned">-->
+      <!--      <span class="Numeral__Container-sc-18j7kzw-0 jbOTGs numeral ">${{coin.priceUsd | formatNumber}}</span>-->
+      <!--    </td>-->
+      <!--    <td class="right aligned xs-hidden">-->
+      <!--      <span class="Numeral__Container-sc-18j7kzw-0 jbOTGs numeral ">${{coin.marketCapUsd | formatNumber}}</span>-->
+      <!--    </td>-->
+      <!--    <td class="right aligned xs-hidden tablet-hidden">-->
+      <!--      <span class="Numeral__Container-sc-18j7kzw-0 jbOTGs numeral ">${{coin.marketCapUsd | formatNumber}}</span>-->
+      <!--    </td>-->
+      <!--    <td class="right aligned xs-hidden tablet-hidden">-->
+      <!--      <span class="Numeral__Container-sc-18j7kzw-0 jbOTGs numeral ">{{coin.supply | formatNumber}}-->
+      <!--        / {{coin.maxSupply| formatNumber}}</span>-->
+      <!--    </td>-->
+      <!--    <td class="right aligned xs-hidden">-->
+      <!--      <span class="Numeral__Container-sc-18j7kzw-0 jbOTGs numeral ">${{coin.volumeUsd24Hr | formatNumber}}</span>-->
+      <!--    </td>-->
+      <!--    <td class="right aligned xs-hidden">-->
+      <!--      <span [class]="coin.changePercent24Hr| numberFormatForCandle">{{coin.changePercent24Hr | formatNumber}}%</span>-->
+      <!--    </td>-->
+      <!--  </tr>-->
+      <!--  </tbody>-->
+    </table>
+  </div>
+
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    showFirstLastButtons
+    aria-label="Select page">
+  </mat-paginator>
+</div>

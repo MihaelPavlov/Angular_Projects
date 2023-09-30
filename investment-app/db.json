@@ -320,6 +320,86 @@
       "purchasePrice": 1221,
       "currency": 0,
       "investmentType": 1
+    },
+    {
+      "userId": 3,
+      "investmentName": "dfassssssssssssssssssssssssssssssssssssss",
+      "symbol": "32e1e4123e1e21e12e21e12e1",
+      "quantity": null,
+      "purchasePrice": 21,
+      "currency": 0,
+      "investmentType": null,
+      "id": 20
+    },
+    {
+      "userId": 3,
+      "investmentName": "eqw",
+      "symbol": "fsdgffgdfsdfdsfasdsadqwdwqdw1d13e1 e2313e 12e 12e 12e 12e 12 e1",
+      "quantity": null,
+      "purchasePrice": null,
+      "currency": null,
+      "investmentType": null,
+      "id": 21
+    },
+    {
+      "userId": 3,
+      "investmentName": "e1e12e",
+      "symbol": null,
+      "quantity": null,
+      "purchasePrice": null,
+      "currency": null,
+      "investmentType": null,
+      "id": 22
+    },
+    {
+      "userId": 3,
+      "investmentName": "e1e1e1e1e1",
+      "symbol": null,
+      "quantity": null,
+      "purchasePrice": null,
+      "currency": null,
+      "investmentType": null,
+      "id": 23
+    },
+    {
+      "userId": 3,
+      "investmentName": "bitcoin",
+      "symbol": "ewq",
+      "quantity": null,
+      "purchasePrice": null,
+      "currency": 1,
+      "investmentType": 0,
+      "id": 24
+    },
+    {
+      "userId": 3,
+      "investmentName": "bitcoin",
+      "symbol": "321",
+      "quantity": 312,
+      "purchasePrice": 31,
+      "currency": 0,
+      "investmentType": null,
+      "id": 25
+    },
+    {
+      "userId": 3,
+      "investmentName": "ethereum",
+      "symbol": null,
+      "quantity": null,
+      "purchasePrice": null,
+      "currency": null,
+      "investmentType": null,
+      "id": 26
+    },
+    {
+      "userId": 3,
+      "investmentName": "usd-coin",
+      "symbol": null,
+      "quantity": null,
+      "purchasePrice": null,
+      "currency": 0,
+      "investmentType": 1,
+      "id": 27
     }
   ],
   "notifications": [
