@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, TemplateRef, ViewChild} from "@angular/core";
+import {Component, OnDestroy, OnInit, TemplateRef, ViewChild} from "@angular/core";
 import {IInvestment} from "../../../models/investment";
 import {InvestmentService} from "../../../services/investment.service";
 import {Router} from "@angular/router";
@@ -12,10 +12,10 @@ import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {select, Store} from "@ngrx/store";
 import * as fromPortfolioActions from "../portfolio.action";
-import * as fromPortfolioReducer from "../portfolio.reducer";
 import * as fromPortfolioSelectors from "../portfolio.selectors";
 import {Observable, Subscription} from "rxjs";
 import {AppState} from "../../../../shared/app.reducer";
+import {DataListService} from "../../../services/data-list.servie";
 
 @Component({
   selector: "investment-list",
@@ -35,18 +35,20 @@ export class InvestmentListComponent implements OnInit, OnDestroy {
   labels: string[] = []
   areFilterShown: boolean = false;
   selectedColumn!: string
-  filterText!: string
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild("#applyFilter") myFilter!: TemplateRef<any>
-  mySub!: Subscription
+  subscriptions!: Subscription[]
   filterForm = new FormGroup({
     "filters": new FormArray([]),
     "filtersIds": new FormArray([])
   });
 
-  constructor(private investmentService: InvestmentService, private router: Router,
-              private authService: AuthService, private toastService: ToastService,
+  constructor(private dataListService: DataListService<IInvestment>,
+              private investmentService: InvestmentService,
+              private router: Router,
+              private authService: AuthService,
+              private toastService: ToastService,
               private store: Store<AppState>) {
     this.authService.user$.subscribe(result => {
       this.user = result;
@@ -54,20 +56,22 @@ export class InvestmentListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.mySub.unsubscribe();
+    this.subscriptions.forEach(sub => {
+      sub.unsubscribe();
+    })
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.isLoading$ = this.store.pipe(select(fromPortfolioSelectors.selectInvestmentIsLoading));
     this.investments$ = this.store.pipe(select(fromPortfolioSelectors.selectInvestmentsList));
 
     this.store.dispatch(new fromPortfolioActions.GetInvestments({userId: Number(this.user?.id)}));
 
-    this.mySub = this.investments$.subscribe(x => {
-      this.dataSource = new MatTableDataSource<IInvestment>(x);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    });
+    this.subscriptions.push(this.investments$.subscribe(x => {
+      this.dataSource = this.dataListService.initializeData(x)
+        .addSorting(this.sort)
+        .addPagination(this.paginator);
+    }));
   }
 
   onDelete(investmentId: number): void {
@@ -82,14 +86,11 @@ export class InvestmentListComponent implements OnInit, OnDestroy {
     this.router.navigate(['update', id]);
   }
 
-  showFilters() {
-    console.log(this.filterForm.controls.filters)
+  showFilters(): void {
     this.areFilterShown = !this.areFilterShown;
-    console.log('selected column ->', this.selectedColumn)
-    console.log('filtered text ->', this.filterText)
   }
 
-  AddInput(column: { id: number, value: string }) {
+  AddInput(column: { id: number, value: string }): void {
     let filterObj = this.filterForm.controls.filters.controls.map((value, index) => ({
       id: (this.filterForm.controls.filtersIds.controls[index] as any).value,
       value: (value as any).value,
@@ -107,18 +108,19 @@ export class InvestmentListComponent implements OnInit, OnDestroy {
     (<FormArray>this.filterForm.get('filtersIds')).push(new FormControl(column.id, Validators.required));
   }
 
-  removeInput(index: number) {
+  removeInput(index: number): void {
     (<FormArray>this.filterForm.get('filters')).removeAt(index);
     (<FormArray>this.filterForm.get('filtersIds')).removeAt(index);
     this.labels.splice(index, 1);
   }
 
-//TODO: combine filter and filtersIds into one object {id: fromFilterId: value: from filters}
-  onSubmitFilters() {
-    let filterObj = this.filterForm.controls.filters.controls.filter(x => (x as any).value != "").map((value, index) => ({
-      name: this.getEnumValueByKey((this.filterForm.controls.filtersIds.controls[index] as any).value),
-      value: (value as any).value,
-    }));
+  onSubmitFilters(): void {
+    let filterObj = this.filterForm.controls.filters.controls
+      .filter(x => (x as any).value != "")
+      .map((value, index) => ({
+        name: this.getEnumValueByKey((this.filterForm.controls.filtersIds.controls[index] as any).value),
+        value: (value as any).value,
+      }));
 
     this.store.dispatch(new fromPortfolioActions.FilterInvestment({userId: Number(this.user?.id), filters: filterObj}));
 

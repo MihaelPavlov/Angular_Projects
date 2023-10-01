@@ -55,7 +55,7 @@ import {FormatNumberPipe} from "./pipes/round-number.pipe";
 import {CryptoAssetsEffects} from "./components/crypto_assets/crypto-assets.effects";
 import {FormatNumberWithColorPipe} from "./pipes/format-number-with-color.pipe";
 import {MatTooltipModule} from "@angular/material/tooltip";
-import {DataListServie} from "./services/data-list.servie";
+import {DataListService} from "./services/data-list.servie";
 
 // const routes: Routes = [
 //   {path: '', component: InvestmentListComponent},
@@ -117,7 +117,7 @@ import {DataListServie} from "./services/data-list.servie";
   ],
   providers: [
     TOAST_DEFAULT_OPTIONS,
-    DataListServie,
+    DataListService,
     AuthGuardService,
     {
       provide: HTTP_INTERCEPTORS,

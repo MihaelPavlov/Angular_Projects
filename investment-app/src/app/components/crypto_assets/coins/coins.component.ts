@@ -10,7 +10,7 @@ import {HttpClient} from "@angular/common/http";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
-import {DataListServie} from "../../../services/data-list.servie";
+import {DataListService} from "../../../services/data-list.servie";
 
 @Component({
   selector: "coins",
@@ -25,7 +25,12 @@ export class CoinsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private dataListService:DataListServie<ICryptoAsset>,private http: HttpClient, private renderer: Renderer2, private coinService: CoinService, private store: Store, private router: Router) {
+  constructor(private dataListService:DataListService<ICryptoAsset>,
+              private http: HttpClient,
+              private renderer: Renderer2,
+              private coinService: CoinService,
+              private store: Store,
+              private router: Router) {
   }
 
   ngOnInit(): void {
