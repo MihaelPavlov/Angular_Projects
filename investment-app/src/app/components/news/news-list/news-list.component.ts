@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, } from "@angular/core";
+import {Component, OnInit,} from "@angular/core";
 import {INews} from "../../../models/news";
 import {DetailsPopUpComponent} from "../details-pop-up/details-pop-up.component";
 import {MatDialog} from "@angular/material/dialog";
@@ -13,9 +13,10 @@ import {Observable} from "rxjs";
   templateUrl: "news-list.component.html",
   styleUrls: ["news-list.component.css"]
 })
-export class NewsListComponent implements OnInit, AfterViewInit {
+export class NewsListComponent implements OnInit {
   newsList$!: Observable<INews[]>;
-  constructor(private store:Store<NewsInitialState>,public dialog: MatDialog) {
+
+  constructor(private store: Store<NewsInitialState>, public dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -25,18 +26,7 @@ export class NewsListComponent implements OnInit, AfterViewInit {
 
   }
 
-  ngAfterViewInit() {
-
-      // this.newsCommentsService.getAllComments().subscribe(result=>{
-      //   this.newsList.forEach(x=>{
-      //     x.comments = result.filter(c=>c.newsId === x.id)
-      //   })
-      // })
-
-
-
-  }
   openDialog(news: INews) {
-    this.dialog.open(DetailsPopUpComponent,{data: {...news}});
+    this.dialog.open(DetailsPopUpComponent, {data: {...news}});
   }
 }

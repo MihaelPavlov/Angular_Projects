@@ -45,10 +45,6 @@ export class DetailsCommentsPopUpComponent implements OnInit, AfterViewInit {
     this.authService.user$.subscribe(result => {
       this.user = result;
     })
-
-    // this.newsCommentsService.comments$.subscribe(result => {
-    //   this.comments = result;
-    // })
   }
 
   onAddComment() {

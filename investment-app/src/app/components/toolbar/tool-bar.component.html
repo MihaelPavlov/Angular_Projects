@@ -6,10 +6,10 @@
     <li><a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" routerLink="/">Home</a></li>
     <li><a routerLinkActive="active" routerLink="/news">News</a></li>
     <li><a routerLinkActive="active" routerLink="/coins">Coins</a></li>
-    <ng-container *ngIf="this.user == null">
+    <ng-container *ngIf="(this.user| async) == null">
       <li><a routerLinkActive="active" routerLink="/register">Sign Up</a></li>
     </ng-container>
-    <ng-container *ngIf="this.user != null">
+    <ng-container *ngIf="(this.user| async) as user">
       <li><a>Welcome {{this.user.username}}</a></li>
       <li><a routerLinkActive="active" routerLink="/my-investments">My Investments</a></li>
       <li><a routerLinkActive="active" routerLink="/create">Add New Investment</a></li>

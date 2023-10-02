@@ -14,7 +14,7 @@ import {select, Store} from "@ngrx/store";
 import * as fromPortfolioActions from "../portfolio.action";
 import * as fromPortfolioSelectors from "../portfolio.selectors";
 import {Observable, Subscription} from "rxjs";
-import {AppState} from "../../../../shared/app.reducer";
+import {AppState} from "../../../../shared/ngrx/app.reducer";
 import {DataListService} from "../../../services/data-list.servie";
 
 @Component({

@@ -98,6 +98,9 @@ export class InvestmentEffects {
     ));
 
 
-  constructor(private actions$: Actions, private investmentService: InvestmentService, private toastService: ToastService) {
+  constructor(
+    private readonly actions$: Actions,
+    private readonly investmentService: InvestmentService,
+    private readonly toastService: ToastService) {
   }
 }

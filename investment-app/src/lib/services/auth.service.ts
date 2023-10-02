@@ -12,7 +12,7 @@ export class AuthService {
   private readonly tokenKey = 'aut_jwt_token';
   private tokenExpirationTimer: any;
 
-  constructor(private restApiService: RestApiService) {
+  constructor(private readonly restApiService: RestApiService) {
   }
 
   isAuthenticated(): boolean {

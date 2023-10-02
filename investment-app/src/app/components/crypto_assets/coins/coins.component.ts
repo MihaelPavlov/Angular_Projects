@@ -1,8 +1,8 @@
-import { Component,  OnInit, Renderer2, ViewChild} from "@angular/core";
+import {Component, OnInit, Renderer2, ViewChild} from "@angular/core";
 import {CoinService} from "../../../../lib/services/coin.service";
 import {ICryptoAsset} from "../../../models/cryptoAsset";
 import {select, Store} from "@ngrx/store";
-import { Observable} from "rxjs";
+import {Observable} from "rxjs";
 import * as fromCryptoAssetsActions from "../crypto-assets.actions";
 import * as fromCryptoAssetsSelectors from "../crypto-assets.selectors";
 import {Router} from "@angular/router";
@@ -25,7 +25,7 @@ export class CoinsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private dataListService:DataListService<ICryptoAsset>,
+  constructor(private dataListService: DataListService<ICryptoAsset>,
               private http: HttpClient,
               private renderer: Renderer2,
               private coinService: CoinService,
@@ -39,9 +39,9 @@ export class CoinsComponent implements OnInit {
 
     this.store.pipe(select(fromCryptoAssetsSelectors.selectCoinList)).subscribe({
       next: response => {
-        this.coinsData$= this.dataListService.initializeData(response)
-         .addPagination(this.paginator)
-         .addSorting(this.sort);
+        this.coinsData$ = this.dataListService.initializeData(response)
+          .addPagination(this.paginator)
+          .addSorting(this.sort);
       }
     })
   }
@@ -49,5 +49,4 @@ export class CoinsComponent implements OnInit {
   redirectToWhitePaper(name: string) {
     window.open(`https://whitepaper.io/coin/${name.toLowerCase()}`, "_blank");
   }
-
 }

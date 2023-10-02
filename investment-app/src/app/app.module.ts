@@ -48,7 +48,7 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {MatInputModule} from "@angular/material/input";
 import {CommonModule} from "@angular/common";
 import {InvestmentEffects} from "./components/portfolio/portfolio.effects";
-import {metaReducers, reducers} from "../shared/app.reducer";
+import {metaReducers, reducers} from "../shared/ngrx/app.reducer";
 import {NewsEffects} from "./components/news/news.effects";
 import {CoinsComponent} from "./components/crypto_assets/coins/coins.component";
 import {FormatNumberPipe} from "./pipes/round-number.pipe";
@@ -56,15 +56,7 @@ import {CryptoAssetsEffects} from "./components/crypto_assets/crypto-assets.effe
 import {FormatNumberWithColorPipe} from "./pipes/format-number-with-color.pipe";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {DataListService} from "./services/data-list.servie";
-
-// const routes: Routes = [
-//   {path: '', component: InvestmentListComponent},
-//   {path: 'create', component: AddUpdateInvestmentComponent},
-//   {path: 'update/:id', component: AddUpdateInvestmentComponent},
-//   {path: 'investment-details/:id', component: InvestmentDetailsComponent},
-//   {path: 'register', component: RegisterComponent},
-//   {path: 'login', component: LoginComponent},
-// ]
+import {AuthEffects} from "../shared/ngrx/auth/auth.effects";
 
 @NgModule({
   declarations: [
@@ -113,7 +105,7 @@ import {DataListService} from "./services/data-list.servie";
     MatSortModule,
     MatTooltipModule,
     StoreModule.forRoot(reducers, {metaReducers}),
-    EffectsModule.forRoot(InvestmentEffects, NewsEffects,CryptoAssetsEffects)
+    EffectsModule.forRoot(InvestmentEffects, NewsEffects,CryptoAssetsEffects,AuthEffects)
   ],
   providers: [
     TOAST_DEFAULT_OPTIONS,
