@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import {AfterViewInit, Component, OnInit} from "@angular/core";
 import {AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from "@angular/forms";
 import {AuthService} from "../../../lib/services/auth.service";
 import {Router} from "@angular/router";
@@ -15,22 +15,20 @@ import {Login} from "../../../shared/ngrx/auth/auth.actions";
   templateUrl: "login.component.html",
   styleUrls: ["login.component.css"]
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.email, Validators.required]),
     password: new FormControl('', [this.validatePassword()])
   })
-  isLoading!:boolean;
+  isLoading: boolean = false;
 
   constructor(private store: Store<AuthInitialState>, private authService: AuthService, private router: Router, private toastService: ToastService) {
-  }
-
-  ngOnInit() {
-     this.store.pipe(select(selectAuthIsLoading)).subscribe({
-       next:response=>{
-         this.isLoading = response;
-       }
-     });
+    this.store.pipe(select(selectAuthIsLoading)).subscribe({
+      next: response => {
+        console.log('from is loading in login')
+        this.isLoading = response;
+      }
+    });
     this.store.pipe(select(selectAuthError)).subscribe({
       next: response => {
         console.log('inside error sub')

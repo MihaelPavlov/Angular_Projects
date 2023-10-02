@@ -6,6 +6,8 @@ import {ToastType} from "../../../app/models/toast";
 import {ToastService} from "../../../lib/services/toast.service";
 import {Router} from "@angular/router";
 import {Injectable} from "@angular/core";
+import {Store} from "@ngrx/store";
+import {AuthInitialState} from "./auth.reducer";
 
 @Injectable()
 export class AuthEffects {
@@ -25,11 +27,9 @@ export class AuthEffects {
           return new fromAuthActions.LoginSuccess({user: data.user});
         }),
         catchError((error) => {
-          //TODO: Find the problem this catch error doesn't work. And because of that we have loop on the loading
           console.log('err')
-          new fromAuthActions.LoginError({error: "Something get wrong"});
-          this.toastService.error({message: 'Something get wrong', type: ToastType.Error})
-          return of({type: "Failed", payload: error})
+          // this.toastService.error({message: 'Something get wrong', type: ToastType.Error})
+          return of(new fromAuthActions.LoginError({error: "Something get wrong"}))
         })
       )),
     )
