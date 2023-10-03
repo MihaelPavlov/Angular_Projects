@@ -6,8 +6,6 @@ import {ToastType} from "../../../app/models/toast";
 import {ToastService} from "../../../lib/services/toast.service";
 import {Router} from "@angular/router";
 import {Injectable} from "@angular/core";
-import {Store} from "@ngrx/store";
-import {AuthInitialState} from "./auth.reducer";
 
 @Injectable()
 export class AuthEffects {
@@ -20,7 +18,7 @@ export class AuthEffects {
           if (data == null) {
             return new fromAuthActions.LoginError({error: "Something get wrong"});
           }
-          this.authService.setToken(data.accessToken);
+          this.authService.setToken(data.accessToken,data.user.email);
           this.authService.autoLogout(3600 * 1000)
           this.toastService.success({message: "Successfully Login", type: ToastType.Success})
           this.router.navigate(["/"])
@@ -28,7 +26,7 @@ export class AuthEffects {
         }),
         catchError((error) => {
           console.log('err')
-          // this.toastService.error({message: 'Something get wrong', type: ToastType.Error})
+           this.toastService.error({message: 'Something get wrong', type: ToastType.Error})
           return of(new fromAuthActions.LoginError({error: "Something get wrong"}))
         })
       )),

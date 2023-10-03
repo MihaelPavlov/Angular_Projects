@@ -240,7 +240,7 @@
   "investments": [
     {
       "id": 1,
-      "investmentName": "Tesla11",
+      "investmentId": "Tesla11",
       "symbol": "TSI",
       "quantity": 0.25,
       "purchasePrice": 80,
@@ -249,7 +249,7 @@
     },
     {
       "id": 2,
-      "investmentName": "Microsoft",
+      "investmentId": "Microsoft",
       "symbol": "MST",
       "quantity": 1,
       "purchasePrice": 213,
@@ -258,7 +258,7 @@
     },
     {
       "id": 3,
-      "investmentName": "Tesla1",
+      "investmentId": "Tesla1",
       "symbol": "TSI",
       "quantity": 0.25,
       "purchasePrice": 80,
@@ -267,7 +267,7 @@
     },
     {
       "id": 4,
-      "investmentName": "zz",
+      "investmentId": "zz",
       "symbol": "zzz",
       "quantity": 11,
       "purchasePrice": 111,
@@ -276,7 +276,7 @@
     },
     {
       "id": 5,
-      "investmentName": "ccc",
+      "investmentId": "ccc",
       "symbol": "ccc",
       "quantity": 111,
       "purchasePrice": 111,
@@ -285,7 +285,7 @@
     },
     {
       "id": 6,
-      "investmentName": "vvv111vcx",
+      "investmentId": "vvv111vcx",
       "symbol": "vvv",
       "quantity": 1213,
       "purchasePrice": 31,
@@ -294,7 +294,7 @@
     },
     {
       "id": 7,
-      "investmentName": "cxz",
+      "investmentId": "cxz",
       "symbol": "cxzcz",
       "quantity": 231,
       "purchasePrice": 312,
@@ -304,7 +304,7 @@
     {
       "id": 16,
       "userId": 3,
-      "investmentName": "Tesla222",
+      "investmentId": "Tesla222",
       "symbol": "eqwewq",
       "quantity": null,
       "purchasePrice": 1,
@@ -314,7 +314,7 @@
     {
       "id": 19,
       "userId": 3,
-      "investmentName": "PEPE1",
+      "investmentId": "PEPE1",
       "symbol": "12e12e",
       "quantity": 2321321321,
       "purchasePrice": 1221,
@@ -323,7 +323,7 @@
     },
     {
       "userId": 3,
-      "investmentName": "dfassssssssssssssssssssssssssssssssssssss",
+      "investmentId": "dfassssssssssssssssssssssssssssssssssssss",
       "symbol": "32e1e4123e1e21e12e21e12e1",
       "quantity": null,
       "purchasePrice": 21,
@@ -333,7 +333,7 @@
     },
     {
       "userId": 3,
-      "investmentName": "eqw",
+      "investmentId": "eqw",
       "symbol": "fsdgffgdfsdfdsfasdsadqwdwqdw1d13e1 e2313e 12e 12e 12e 12e 12 e1",
       "quantity": null,
       "purchasePrice": null,
@@ -343,7 +343,7 @@
     },
     {
       "userId": 3,
-      "investmentName": "e1e12e",
+      "investmentId": "e1e12e",
       "symbol": null,
       "quantity": null,
       "purchasePrice": null,
@@ -353,7 +353,7 @@
     },
     {
       "userId": 3,
-      "investmentName": "e1e1e1e1e1",
+      "investmentId": "e1e1e1e1e1",
       "symbol": null,
       "quantity": null,
       "purchasePrice": null,
@@ -363,7 +363,7 @@
     },
     {
       "userId": 3,
-      "investmentName": "bitcoin",
+      "investmentId": "bitcoin",
       "symbol": "ewq",
       "quantity": null,
       "purchasePrice": null,
@@ -373,7 +373,7 @@
     },
     {
       "userId": 3,
-      "investmentName": "bitcoin",
+      "investmentId": "bitcoin",
       "symbol": "321",
       "quantity": 312,
       "purchasePrice": 31,
@@ -383,7 +383,7 @@
     },
     {
       "userId": 3,
-      "investmentName": "ethereum",
+      "investmentId": "ethereum",
       "symbol": null,
       "quantity": null,
       "purchasePrice": null,
@@ -393,13 +393,53 @@
     },
     {
       "userId": 3,
-      "investmentName": "usd-coin",
+      "investmentId": "usd-coin",
       "symbol": null,
       "quantity": null,
       "purchasePrice": null,
       "currency": 0,
       "investmentType": 1,
       "id": 27
+    },
+    {
+      "userId": null,
+      "investmentId": "ethereum",
+      "symbol": "e",
+      "quantity": 100000000000,
+      "purchasePrice": 11,
+      "currency": 0,
+      "investmentType": 0,
+      "id": 28
+    },
+    {
+      "userId": null,
+      "investmentId": "ethereum",
+      "symbol": "2313",
+      "quantity": 21,
+      "purchasePrice": null,
+      "currency": null,
+      "investmentType": null,
+      "id": 29
+    },
+    {
+      "userId": 3,
+      "investmentId": "bitcoin",
+      "symbol": "e1e",
+      "quantity": null,
+      "purchasePrice": 3131,
+      "currency": 0,
+      "investmentType": null,
+      "id": 30
+    },
+    {
+      "id": 31,
+      "userId": 3,
+      "investmentId": "ethereum",
+      "symbol": "1112222",
+      "quantity": 11,
+      "purchasePrice": 11,
+      "currency": 0,
+      "investmentType": 1
     }
   ],
   "notifications": [

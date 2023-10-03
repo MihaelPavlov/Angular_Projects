@@ -3,18 +3,23 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {InvestmentService} from "../../../services/investment.service";
 import {IInvestment} from "../../../models/investment";
 import {Location} from "@angular/common";
+import {select, Store} from "@ngrx/store";
+import {InvestmentInitialState} from "../portfolio.reducer";
+import {selectInvestmentState} from "../portfolio.selectors";
+import {GetInvestmentById} from "../portfolio.action";
 
 @Component({
   templateUrl: "investment-details.component.html",
   styleUrls: ['investment-details.component.css']
 })
-export class InvestmentDetailsComponent implements OnInit , AfterViewInit{
-  investment!: IInvestment | undefined;
+export class InvestmentDetailsComponent implements OnInit, AfterViewInit {
+  investment!: IInvestment | null;
 
-  constructor(private route: ActivatedRoute,
-              private investmentService: InvestmentService,
-              private location: Location,
-              private router: Router) {
+  constructor(private readonly route: ActivatedRoute,
+              private readonly investmentService: InvestmentService,
+              private readonly location: Location,
+              private readonly router: Router,
+              private readonly store: Store<InvestmentInitialState>) {
   }
 
   ngOnInit() {
@@ -22,15 +27,17 @@ export class InvestmentDetailsComponent implements OnInit , AfterViewInit{
       let id = params.get('id');
       console.log(id)
       if (typeof id === "string") {
-        this.investmentService.getInvestmentById(parseInt(id))
+        this.store.dispatch(new GetInvestmentById({investmentId: parseInt(id)}))
+
+        // this.investmentService.getInvestmentById(parseInt(id))
       }
     });
   }
 
   ngAfterViewInit() {
-    this.investmentService.investmentForUpdate$.subscribe(result => {
-      if (result != null){
-        this.investment = result;
+    this.store.pipe(select(selectInvestmentState)).subscribe(result => {
+      if (result != null) {
+        this.investment = result.investment;
       }
     });
   }

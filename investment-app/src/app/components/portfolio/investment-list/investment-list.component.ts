@@ -16,6 +16,7 @@ import * as fromPortfolioSelectors from "../portfolio.selectors";
 import {Observable, Subscription} from "rxjs";
 import {AppState} from "../../../../shared/ngrx/app.reducer";
 import {DataListService} from "../../../services/data-list.servie";
+import {selectAuthUser} from "../../../../shared/ngrx/auth/auth.selectors";
 
 @Component({
   selector: "investment-list",
@@ -23,11 +24,11 @@ import {DataListService} from "../../../services/data-list.servie";
   styleUrls: ["investment-list.component.css"]
 })
 export class InvestmentListComponent implements OnInit, OnDestroy {
-  user?: IUser | null
+  user!: IUser | null
   dataSource!: MatTableDataSource<IInvestment>;
   investments$!: Observable<IInvestment[]>
   isLoading$!: Observable<boolean>
-  displayedColumns: string[] = ['investmentName', 'symbol', 'quantity', 'purchasePrice', 'investmentType', 'actions'];
+  displayedColumns: string[] = ['investmentId', 'symbol', 'quantity', 'purchasePrice', 'investmentType', 'actions'];
   filterColumns: { id: number, value: string }[] = Object.keys(Fields).map(x => ({
     id: Number(x),
     value: this.getEnumTextByKey(Number(x))
@@ -38,7 +39,7 @@ export class InvestmentListComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild("#applyFilter") myFilter!: TemplateRef<any>
-  subscriptions!: Subscription[]
+  subscriptions: Subscription[] = []
   filterForm = new FormGroup({
     "filters": new FormArray([]),
     "filtersIds": new FormArray([])
@@ -50,14 +51,18 @@ export class InvestmentListComponent implements OnInit, OnDestroy {
               private authService: AuthService,
               private toastService: ToastService,
               private store: Store<AppState>) {
-    this.authService.user$.subscribe(result => {
-      this.user = result;
-    })
+    this.subscriptions.push(this.store.pipe(select(selectAuthUser)).subscribe({
+      next: response => {
+        if (response != null) {
+          this.user = response;
+        }
+      }
+    }));
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach(sub => {
-      sub.unsubscribe();
+    this.subscriptions.forEach(x => {
+      x.unsubscribe();
     })
   }
 
@@ -132,7 +137,7 @@ export class InvestmentListComponent implements OnInit, OnDestroy {
 
   getEnumTextByKey(key: number): string {
     switch (key) {
-      case Fields.investmentName:
+      case Fields.investmentId:
         return "Investment Name";
       case Fields.symbol:
         return "Symbol";
@@ -148,8 +153,8 @@ export class InvestmentListComponent implements OnInit, OnDestroy {
 
   getEnumValueByKey(key: number): string {
     switch (key) {
-      case Fields.investmentName:
-        return "investmentName";
+      case Fields.investmentId:
+        return "investmentId";
       case Fields.symbol:
         return "symbol";
       case Fields.quantity:
@@ -165,7 +170,7 @@ export class InvestmentListComponent implements OnInit, OnDestroy {
 }
 
 export enum Fields {
-  investmentName = 0,
+  investmentId = 0,
   symbol = 1,
   quantity = 2,
   purchasePrice = 3,

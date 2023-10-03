@@ -15,7 +15,7 @@ import {Login} from "../../../shared/ngrx/auth/auth.actions";
   templateUrl: "login.component.html",
   styleUrls: ["login.component.css"]
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.email, Validators.required]),
     password: new FormControl('', [this.validatePassword()])
@@ -23,21 +23,15 @@ export class LoginComponent {
   isLoading: boolean = false;
 
   constructor(private store: Store<AuthInitialState>, private authService: AuthService, private router: Router, private toastService: ToastService) {
-    this.store.pipe(select(selectAuthIsLoading)).subscribe({
-      next: response => {
-        console.log('from is loading in login')
-        this.isLoading = response;
-      }
-    });
-    this.store.pipe(select(selectAuthError)).subscribe({
-      next: response => {
-        console.log('inside error sub')
-        if (response != null) {
-          this.toastService.error({message: "Something get wrong", type: ToastType.Error})
-        }
-      }
-    })
   }
+ngOnInit() {
+  this.store.pipe(select(selectAuthIsLoading)).subscribe({
+    next: response => {
+      console.log('from is loading in login')
+      this.isLoading = response;
+    }
+  });
+}
 
   loginSubmit() {
     this.store.dispatch(new Login({

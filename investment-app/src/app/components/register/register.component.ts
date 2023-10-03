@@ -91,7 +91,7 @@ export class RegisterComponent implements OnInit {
       next: response => {
         if (response != null) {
           this.authService.fetchUser(response.user);
-          this.authService.setToken(response.accessToken);
+          this.authService.setToken(response.accessToken,user.email);
           this.authService.autoLogout(3600*1000)
           this.toastService.success({message: "Successfully Registered", type: ToastType.Success})
           this.router.navigate(["/"]);
