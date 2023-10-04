@@ -51,7 +51,7 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
           <div formGroupName="notifications" class="location-tab">
-            <div #notificaions *ngFor="let notification of this.notifications" class="form-group">
+            <div #notifications *ngFor="let notification of this.notifications" class="form-group">
               <label for="{{notification.id}}">{{notification.name}}:</label>
               <input type="checkbox" id="{{notification.id}}" name="{{notification.name}}"
                      formControlName="{{notification.name}}">

@@ -22,12 +22,15 @@ export const newsListReducer = createReducer(
   initialState,
 
   on(NewsActions.GetNewsSuccess,
-    (state, action) => adapter.addMany(action.news, state)),
+    (state, action) =>{
+      console.log('reducer new list', )
+    return adapter.addMany(action.news, state)
+    } ),
 
   on(NewsActions.GetCommentsByNewsIdSuccess,
     (state, action) => {
       let news = {...selectAll(state)[action.comments[0].newsId]};
-      news.comments = action.comments;
+      news.comment = action.comments;
 
       let updateNews: Update<INews> = {
         id: news.id,

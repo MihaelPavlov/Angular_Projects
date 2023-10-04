@@ -14,23 +14,23 @@ export class NewsCommentsService {
   }
 
   getCommentsByNewsId(newsId: number): Observable<IComment[]> {
-    return this.restApiService.get<IComment[]>(`comments`)
+    return this.restApiService.get<IComment[]>(`comment`)
       .pipe(map(x => x.filter(y => y.newsId === newsId)))
   }
 
   getAllComments(): Observable<IComment[]> {
-    return this.restApiService.get<IComment[]>("comments");
+    return this.restApiService.get<IComment[]>("comment");
   }
 
   createComment(comment: IComment): Observable<any> {
-    return this.restApiService.post<IComment>(`comments`, {...comment});
+    return this.restApiService.post<IComment>(`comment`, {...comment});
   }
 
   updateComment(comment: IComment): Observable<IComment | null> {
-    return this.restApiService.put<IComment>(`comments/${comment.id}`, comment)
+    return this.restApiService.put<IComment>(`comment/${comment.id}`, comment)
   }
 
   deleteComment(commentId: number): Observable<any> {
-    return this.restApiService.delete(`comments/${commentId}`);
+    return this.restApiService.delete(`comment/${commentId}`);
   }
 }

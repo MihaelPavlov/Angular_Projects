@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, OnInit} from "@angular/core";
+import {Component, Inject, OnInit} from "@angular/core";
 import {IComment} from "../../../models/comment";
 import {AuthService} from "../../../../lib/services/auth.service";
 import {IUser} from "../../../models/user";
@@ -12,12 +12,13 @@ import * as fromNewsActions from "../news.action";
 import * as fromNewsSelectors from "../news.selectors";
 import {INews} from "../../../models/news";
 import {Observable} from "rxjs";
+import {selectAuthUser} from "../../../../shared/ngrx/auth/auth.selectors";
 
 @Component({
   selector: "details-comments-modal",
   templateUrl: "details-comments-pop-up.component.html"
 })
-export class DetailsCommentsPopUpComponent implements OnInit, AfterViewInit {
+export class DetailsCommentsPopUpComponent implements OnInit {
   public user!: IUser | null
   public newCommentText: string = ''
   public updateCommentText: string = '';
@@ -35,16 +36,16 @@ export class DetailsCommentsPopUpComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.store.pipe(select(selectAuthUser)).subscribe({
+      next: response => {
+        if (response != null) {
+          this.user = response;
+        }
+      }
+    })
     this.newsById$ = this.store.pipe(select(fromNewsSelectors.selectNewsById))
 
     this.store.dispatch(fromNewsActions.GetCommentsByNewsId({newsId: this.data.newsId}))
-  }
-
-  ngAfterViewInit() {
-    console.log('isAuthenticated', this.authService.isAuthenticated())
-    this.authService.user$.subscribe(result => {
-      this.user = result;
-    })
   }
 
   onAddComment() {
@@ -102,12 +103,17 @@ export class DetailsCommentsPopUpComponent implements OnInit, AfterViewInit {
     if (commentId == undefined) {
       return;
     }
+    console.log("from comment Id", commentId)
+    //TODO: FIX COMMENT DELETION
     this.newsCommentsService.deleteComment(commentId).subscribe({
       next: response => {
+        console.log("from delete next")
         this.store.dispatch(fromNewsActions.GetCommentsByNewsId({newsId: this.data.newsId}))
         this.toastService.success({message: "Comment Delete", type: ToastType.Success});
       },
       error: response => {
+        console.log("from delete error",response.message)
+
         this.toastService.error({message: "Something Get Wrong", type: ToastType.Error});
       }
     })

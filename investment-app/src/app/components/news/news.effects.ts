@@ -1,14 +1,11 @@
 import {Injectable} from "@angular/core";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
-import {ToastService} from "../../../lib/services/toast.service";
 import {NewsService} from "../../services/news.service";
 import * as fromNews from "./news.action";
 import {concatMap, from, map} from "rxjs";
 import {INews} from "../../models/news";
 import {NewsCommentsService} from "../../services/news-comments.service";
-import {Update} from "@ngrx/entity";
 import {IComment} from "../../models/comment";
-import {selectAll} from "./new.reducer";
 
 @Injectable()
 export class NewsEffects {
@@ -30,10 +27,10 @@ export class NewsEffects {
     )
   )
 
-  constructor(private actions$: Actions, private newsService: NewsService, private newsCommentsService: NewsCommentsService,
-              private toastService: ToastService
+  constructor(
+    private readonly actions$: Actions,
+    private readonly newsService: NewsService,
+    private readonly newsCommentsService: NewsCommentsService
   ) {
   }
-
-
 }

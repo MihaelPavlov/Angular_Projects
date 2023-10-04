@@ -26,7 +26,34 @@ export function authReducer(state: AuthInitialState = initialState, action: from
         user: action.payload.user,
       }
     case fromAuthActions.LOGIN_ERROR:
-      console.log('from error reducer')
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload.error
+      }
+    case fromAuthActions.AUTO_LOGIN_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload.error
+      }
+    case fromAuthActions.LOGOUT:
+      return {...state, isLoading: true};
+    case fromAuthActions.LOGOUT_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        user: null
+      }
+    case fromAuthActions.REGISTER:
+      return {...state, isLoading: true};
+    case fromAuthActions.REGISTER_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        user: action.payload.response.user,
+      }
+    case fromAuthActions.REGISTER_ERROR:
       return {
         ...state,
         isLoading: false,

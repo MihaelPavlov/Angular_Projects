@@ -1,7 +1,7 @@
 <h1 mat-dialog-title>Comments</h1>
 
 <!-- Display all comments using ngFor -->
-<div *ngFor="let comment of (this.newsById$ | async)?.comments; let i = index">
+<div *ngFor="let comment of (this.newsById$ | async)?.comment; let i = index">
   <mat-card *ngIf="!this.isEditing || (editingComment != null && editingComment.id != comment.id); else updateComment">
     <mat-card-content>{{ comment.comment }}</mat-card-content>
 

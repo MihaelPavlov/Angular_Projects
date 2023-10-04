@@ -3,11 +3,10 @@ import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {NotificationService} from "../../services/notification.service";
 import {INotification} from "../../models/notification";
 import {delay} from "rxjs";
-import {AuthService} from "../../../lib/services/auth.service";
 import {IUser} from "../../models/user";
-import {Router} from "@angular/router";
-import {ToastType} from "../../models/toast";
-import {ToastService} from "../../../lib/services/toast.service";
+import * as fromAuthReducer from "../../../shared/ngrx/auth/auth.reducer";
+import {Store} from "@ngrx/store";
+import * as fromAuthActions from "../../../shared/ngrx/auth/auth.actions";
 
 
 @Component({
@@ -16,13 +15,12 @@ import {ToastService} from "../../../lib/services/toast.service";
   styleUrls: ['register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  @ViewChildren("notificaions") notificaions: QueryList<ElementRef> | undefined;
+  @ViewChildren("notifications") notificationsChild: QueryList<ElementRef> | undefined;
 
-  constructor(private notificationService: NotificationService,
-              private formBuilder: FormBuilder,
-              private authService: AuthService,
-              private router: Router,
-              private toastService: ToastService) {
+  constructor(
+    private notificationService: NotificationService,
+    private formBuilder: FormBuilder,
+    private store: Store<fromAuthReducer.AuthInitialState>) {
   }
 
   registerForm = new FormGroup({
@@ -60,7 +58,7 @@ export class RegisterComponent implements OnInit {
   registerSubmit() {
     let notificaions: INotification[] = [];
 
-    this.notificaions?.forEach(element => {
+    this.notificationsChild?.forEach(element => {
       const name = element.nativeElement.querySelector('input').name;
       const formControl = this.registerForm.get(`notifications.${name}`);
 
@@ -87,24 +85,6 @@ export class RegisterComponent implements OnInit {
       notifications: notificaions
     };
 
-    this.authService.register(user).subscribe({
-      next: response => {
-        if (response != null) {
-          this.authService.fetchUser(response.user);
-          this.authService.setToken(response.accessToken,user.email);
-          this.authService.autoLogout(3600*1000)
-          this.toastService.success({message: "Successfully Registered", type: ToastType.Success})
-          this.router.navigate(["/"]);
-        } else {
-          console.log(response)
-          this.toastService.error({message: "Something get wrong", type: ToastType.Error})
-        }
-      },
-      error: response => {
-        console.log(response)
-
-        this.toastService.error({message: `Something get wrong: ${response.error}`, type: ToastType.Error})
-      }
-    });
+    this.store.dispatch(new fromAuthActions.Register({user}));
   }
 }

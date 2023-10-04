@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthService} from "../lib/services/auth.service";
+import {AuthInitialState} from "../shared/ngrx/auth/auth.reducer";
+import {Store} from "@ngrx/store";
+import {AutoLogin} from "../shared/ngrx/auth/auth.actions";
 
 @Component({
   selector: 'app-root',
@@ -9,10 +11,10 @@ import {AuthService} from "../lib/services/auth.service";
 export class AppComponent implements OnInit {
   title = 'tracking-investments-app';
 
-  constructor(private authService: AuthService) {
+  constructor(private store: Store<AuthInitialState>) {
   }
 
-   ngOnInit() {
-     this.authService.autoLogin();
+  ngOnInit() {
+    this.store.dispatch(new AutoLogin());
   }
 }
