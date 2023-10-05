@@ -1,6 +1,5 @@
 import {Component, Inject, OnInit} from "@angular/core";
 import {IComment} from "../../../models/comment";
-import {AuthService} from "../../../../lib/services/auth.service";
 import {IUser} from "../../../models/user";
 import {NewsCommentsService} from "../../../services/news-comments.service";
 import {ToastService} from "../../../../lib/services/toast.service";
@@ -28,7 +27,6 @@ export class DetailsCommentsPopUpComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DetailsCommentsPopUpComponentData,
-    public authService: AuthService,
     private newsCommentsService: NewsCommentsService,
     private toastService: ToastService,
     private store: Store<NewsInitialState>
@@ -44,11 +42,12 @@ export class DetailsCommentsPopUpComponent implements OnInit {
       }
     })
     this.newsById$ = this.store.pipe(select(fromNewsSelectors.selectNewsById))
-
+    console.log('data', this.data.newsId)
     this.store.dispatch(fromNewsActions.GetCommentsByNewsId({newsId: this.data.newsId}))
   }
 
   onAddComment() {
+    //Todo: change the ngrx
     let newsId = this.data.newsId;
     this.newsCommentsService.createComment({
       id: 0,
@@ -81,20 +80,11 @@ export class DetailsCommentsPopUpComponent implements OnInit {
   onEditSubmit() {
     console.log(this.editingComment?.comment);
     console.log(this.updateCommentText);
+
     if (this.editingComment != null) {
       this.editingComment = {...this.editingComment, comment: this.updateCommentText};
-      this.newsCommentsService.updateComment({
-        ...this.editingComment
-      }).subscribe({
-        next: response => {
-          this.store.dispatch(fromNewsActions.GetCommentsByNewsId({newsId: this.data.newsId}))
 
-          this.toastService.success({message: "Comment Updated", type: ToastType.Success});
-        },
-        error: response => {
-          this.toastService.error({message: "Something Get Wrong", type: ToastType.Error});
-        }
-      })
+      this.store.dispatch(fromNewsActions.UpdateNewsComment({comment: this.editingComment, newsId: this.data.newsId}))
     }
     this.onCancelEditing();
   }
@@ -103,20 +93,8 @@ export class DetailsCommentsPopUpComponent implements OnInit {
     if (commentId == undefined) {
       return;
     }
-    console.log("from comment Id", commentId)
-    //TODO: FIX COMMENT DELETION
-    this.newsCommentsService.deleteComment(commentId).subscribe({
-      next: response => {
-        console.log("from delete next")
-        this.store.dispatch(fromNewsActions.GetCommentsByNewsId({newsId: this.data.newsId}))
-        this.toastService.success({message: "Comment Delete", type: ToastType.Success});
-      },
-      error: response => {
-        console.log("from delete error",response.message)
 
-        this.toastService.error({message: "Something Get Wrong", type: ToastType.Error});
-      }
-    })
+    this.store.dispatch(fromNewsActions.DeleteNewsComment({commentId, newsId: this.data.newsId}))
   }
 }
 

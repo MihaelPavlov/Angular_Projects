@@ -8,5 +8,5 @@ export interface INews{
   smallDescription: string
   description: string
   imageUrl : string
-  comment: IComment[]
+  comments: IComment[]
 }

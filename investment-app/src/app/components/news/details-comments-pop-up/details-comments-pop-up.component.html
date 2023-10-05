@@ -1,7 +1,7 @@
 <h1 mat-dialog-title>Comments</h1>
 
 <!-- Display all comments using ngFor -->
-<div *ngFor="let comment of (this.newsById$ | async)?.comment; let i = index">
+<div *ngFor="let comment of (this.newsById$ | async)?.comments; let i = index">
   <mat-card *ngIf="!this.isEditing || (editingComment != null && editingComment.id != comment.id); else updateComment">
     <mat-card-content>{{ comment.comment }}</mat-card-content>
 
@@ -15,7 +15,7 @@
   <ng-template #updateComment>
     <mat-card>
 
-      <textarea matInput  [(ngModel)]="this.updateCommentText"></textarea>
+      <textarea matInput [(ngModel)]="this.updateCommentText"></textarea>
       <mat-card-actions>
         <button mat-stroked-button color="warn" (click)="onEditSubmit()">Edit</button>
         <button mat-stroked-button color="warn" (click)="this.onCancelEditing()">Cancel</button>
@@ -25,7 +25,7 @@
 </div>
 
 <!-- Button to add a new comment -->
-<div *ngIf="this.authService.isAuthenticated()" class="add-comment">
+<div *ngIf="this.user != null" class="add-comment">
   <textarea matInput placeholder="Add a comment" [(ngModel)]="this.newCommentText"></textarea>
   <button mat-raised-button color="primary" (click)="this.onAddComment()">Add Comment</button>
 </div>

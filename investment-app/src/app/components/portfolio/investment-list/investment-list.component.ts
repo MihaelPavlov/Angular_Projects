@@ -48,7 +48,6 @@ export class InvestmentListComponent implements OnInit, OnDestroy {
   constructor(private dataListService: DataListService<IInvestment>,
               private investmentService: InvestmentService,
               private router: Router,
-              private authService: AuthService,
               private toastService: ToastService,
               private store: Store<AppState>) {
     this.subscriptions.push(this.store.pipe(select(selectAuthUser)).subscribe({
