@@ -1,9 +1,6 @@
 import {Component, Inject, OnInit} from "@angular/core";
 import {IComment} from "../../../models/comment";
 import {IUser} from "../../../models/user";
-import {NewsCommentsService} from "../../../services/news-comments.service";
-import {ToastService} from "../../../../lib/services/toast.service";
-import {ToastType} from "../../../models/toast";
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 import {NewsInitialState} from "../new.reducer";
 import {select, Store} from "@ngrx/store";
@@ -27,8 +24,6 @@ export class DetailsCommentsPopUpComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DetailsCommentsPopUpComponentData,
-    private newsCommentsService: NewsCommentsService,
-    private toastService: ToastService,
     private store: Store<NewsInitialState>
   ) {
   }
@@ -42,25 +37,19 @@ export class DetailsCommentsPopUpComponent implements OnInit {
       }
     })
     this.newsById$ = this.store.pipe(select(fromNewsSelectors.selectNewsById))
-    console.log('data', this.data.newsId)
+
     this.store.dispatch(fromNewsActions.GetCommentsByNewsId({newsId: this.data.newsId}))
   }
 
   onAddComment() {
-    //Todo: change the ngrx
-    let newsId = this.data.newsId;
-    this.newsCommentsService.createComment({
+    let comment = {
       id: 0,
-      newsId,
+      newsId : this.data.newsId,
       userId: this.user != null ? this.user.id : undefined,
       comment: this.newCommentText,
       likes: 0
-    }).subscribe({
-      next: response => {
-        this.store.dispatch(fromNewsActions.GetCommentsByNewsId({newsId: this.data.newsId}))
-        this.toastService.success({message: "Comment Created", type: ToastType.Success});
-      }
-    })
+    }
+    this.store.dispatch(fromNewsActions.CreateNewsComment({comment}));
 
     this.newCommentText = ''
   }

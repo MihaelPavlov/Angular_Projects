@@ -2,12 +2,13 @@ import {Injectable} from "@angular/core";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
 import {NewsService} from "../../services/news.service";
 import * as fromNews from "./news.action";
-import {concatMap, map, switchMap} from "rxjs";
+import {concatMap, map, mergeMap, of, switchMap, tap} from "rxjs";
 import {INews} from "../../models/news";
 import {NewsCommentsService} from "../../services/news-comments.service";
 import {IComment} from "../../models/comment";
 import {ToastService} from "../../../lib/services/toast.service";
 import {ToastType} from "../../models/toast";
+import {CreateNewsComment} from "./news.action";
 
 @Injectable()
 export class NewsEffects {
@@ -31,6 +32,27 @@ export class NewsEffects {
     )
   );
 
+  createComment$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromNews.CreateNewsComment),
+      switchMap(({comment}) => {
+        return this.newsCommentsService.createComment(comment).pipe(
+          map((comment: IComment | null) => {
+            if(comment != null){
+              this.toastService.success({message: "Comment Created", type: ToastType.Success});
+
+              return fromNews.CreateNewsCommentSuccess({comment})
+            }
+            this.toastService.error({message: "Something get wrong", type: ToastType.Error});
+
+            return fromNews.CreateNewsCommentError({error: "Comment was not created"});
+            }
+          )
+        )
+
+      })
+    ))
+
   deleteComment$ = createEffect(() =>
     this.actions$.pipe(
       ofType(fromNews.DeleteNewsComment),
@@ -46,14 +68,14 @@ export class NewsEffects {
     this.actions$.pipe(
       ofType(fromNews.UpdateNewsComment),
       concatMap(({comment, newsId}) => this.newsCommentsService.updateComment({...comment})),
-      map((comment:IComment| null)=>{
-        if(comment == null){
+      map((comment: IComment | null) => {
+        if (comment == null) {
           this.toastService.error({message: "Something get wrong", type: ToastType.Error});
           return fromNews.UpdateNewsCommentError({error: "Comment was not updated"});
         }
 
-          this.toastService.success({message: "Comment Updated", type: ToastType.Success});
-          return fromNews.UpdateNewsCommentSuccess({comment,newsId: comment.newsId})
+        this.toastService.success({message: "Comment Updated", type: ToastType.Success});
+        return fromNews.UpdateNewsCommentSuccess({comment, newsId: comment.newsId})
       })
     ))
 

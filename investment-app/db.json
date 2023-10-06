@@ -83,7 +83,7 @@
       "id": 14,
       "newsId": 3,
       "userId": 3,
-      "comment": "cxz1",
+      "comment": "cxz1ewq",
       "likes": 0
     },
     {
@@ -92,9 +92,61 @@
       "userId": 3,
       "comment": "ewq",
       "likes": 0
+    },
+    {
+      "id": 16,
+      "newsId": 2,
+      "userId": 3,
+      "comment": "ewq",
+      "likes": 0
+    },
+    {
+      "id": 17,
+      "newsId": 2,
+      "userId": 3,
+      "comment": "cxz",
+      "likes": 0
+    },
+    {
+      "id": 18,
+      "newsId": 3,
+      "userId": 3,
+      "comment": "dsa",
+      "likes": 0
     }
   ],
-  "investments": [],
+  "investments": [
+    {
+      "userId": 3,
+      "investmentId": "bitcoin",
+      "symbol": "e1",
+      "quantity": 10,
+      "purchasePrice": null,
+      "currency": 0,
+      "investmentType": 0,
+      "id": 1
+    },
+    {
+      "id": 2,
+      "userId": 3,
+      "investmentId": "bitcoin",
+      "symbol": "e1",
+      "quantity": 1,
+      "purchasePrice": 32131,
+      "currency": 0,
+      "investmentType": 0
+    },
+    {
+      "userId": 3,
+      "investmentId": "bitcoin",
+      "symbol": "2312",
+      "quantity": 3131,
+      "purchasePrice": 31,
+      "currency": 1,
+      "investmentType": 0,
+      "id": 3
+    }
+  ],
   "notifications": [
     {
       "id": 1,

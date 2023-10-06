@@ -41,6 +41,24 @@ export const newsListReducer = createReducer(
       return adapter.updateOne(updateNews, {...state, newsById: news})
     }),
 
+  on(NewsActions.CreateNewsComment,
+    (state, action) => {
+      return state;
+    }),
+
+  on(NewsActions.CreateNewsCommentSuccess,
+    (state, action) => {
+      let news = {...selectAll(state).find(x => x.id == action.comment.newsId)} as INews;
+
+      news.comments = [...news.comments, action.comment];
+      let updateNews: Update<INews> = {
+        id: news.id as number,
+        changes: news,
+      }
+
+      return adapter.updateOne(updateNews, {...state, newsById: news})
+    }),
+
   on(NewsActions.DeleteNewsComment,
     (state, action) => {
       let news = {...selectAll(state).find(x => x.id == action.newsId)} as INews;

@@ -7,7 +7,9 @@ export const GET_NEWS_SUCCESS = '[News] Get News Success'
 
 export const GET_COMMENTS_BY_NEWS_ID = "[News] Get Comments By News Id"
 export const GET_COMMENTS_BY_NEWS_ID_SUCCESS = "[News] Get Comments By News Id Success"
-
+export const CREATE_NEWS_COMMENT = '[News] Create News Comment'
+export const CREATE_NEWS_COMMENT_SUCCESS = '[News] Create News Comment Success'
+export const CREATE_NEWS_COMMENT_ERROR = '[News] Create News Comment Error'
 export const DELETE_NEWS_COMMENT = '[News] Delete News Comment'
 export const DELETE_NEWS_COMMENT_SUCCESS = '[News] Delete News Comment Success'
 export const UPDATE_NEWS_COMMENT = '[News] Update News Comment'
@@ -31,6 +33,20 @@ export const GetCommentsByNewsId = createAction(
 export const GetCommentsByNewsIdSuccess = createAction(
   GET_COMMENTS_BY_NEWS_ID_SUCCESS,
   props<{ comments: IComment[], newsId: number }>()
+)
+
+export const CreateNewsComment = createAction(
+  CREATE_NEWS_COMMENT,
+  props<{ comment: IComment }>()
+)
+
+export const CreateNewsCommentSuccess = createAction(
+  CREATE_NEWS_COMMENT_SUCCESS,
+  props<{ comment: IComment }>()
+)
+export const CreateNewsCommentError = createAction(
+  CREATE_NEWS_COMMENT_ERROR,
+  props<{ error: string }>()
 )
 
 export const DeleteNewsComment = createAction(

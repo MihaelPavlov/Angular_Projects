@@ -22,7 +22,7 @@ export class NewsCommentsService {
     return this.restApiService.get<IComment[]>("comments");
   }
 
-  createComment(comment: IComment): Observable<any> {
+  createComment(comment: IComment): Observable<IComment | null> {
     return this.restApiService.post<IComment>(`comments`, {...comment});
   }
 
