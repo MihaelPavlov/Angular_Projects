@@ -17,6 +17,18 @@ import {Observable, Subscription} from "rxjs";
 import {AppState} from "../../../../shared/ngrx/app.reducer";
 import {DataListService} from "../../../services/data-list.servie";
 import {selectAuthUser} from "../../../../shared/ngrx/auth/auth.selectors";
+import _default from "chart.js/dist/plugins/plugin.tooltip";
+import numbers = _default.defaults.animations.numbers;
+import {
+  Chart,
+  ChartConfiguration,
+  LineController,
+  LineElement,
+  PointElement,
+  LinearScale,
+  Title,
+  BarController, CategoryScale, BarElement
+} from 'chart.js'
 
 @Component({
   selector: "investment-list",
@@ -38,8 +50,10 @@ export class InvestmentListComponent implements OnInit, OnDestroy {
   selectedColumn!: string
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild('#myChart') canvasElement!: HTMLCanvasElement;
   @ViewChild("#applyFilter") myFilter!: TemplateRef<any>
   subscriptions: Subscription[] = []
+  public chart: any;
   filterForm = new FormGroup({
     "filters": new FormArray([]),
     "filtersIds": new FormArray([])
@@ -57,6 +71,38 @@ export class InvestmentListComponent implements OnInit, OnDestroy {
         }
       }
     }));
+
+  }
+
+  initializeChart() {
+    Chart.register(BarController,LinearScale,CategoryScale,BarElement,LineController, LineElement, PointElement, LinearScale, Title);
+
+    this.chart = new Chart("MyChart", {
+    type: 'bar', //this denotes tha type of chart
+
+    data: {// values on X-Axis
+      labels: ['2022-05-10', '2022-05-11', '2022-05-12','2022-05-13',
+        '2022-05-14', '2022-05-15', '2022-05-16','2022-05-17', ],
+      datasets: [
+        {
+          label: "Sales",
+          data: ['467','576', '572', '79', '92',
+            '574', '573', '576'],
+          backgroundColor: 'blue'
+        },
+        {
+          label: "Profit",
+          data: ['542', '542', '536', '327', '17',
+            '0.00', '538', '541'],
+          backgroundColor: 'limegreen'
+        }
+      ]
+    },
+    options: {
+      aspectRatio:2.5
+    }
+
+  });
   }
 
   ngOnDestroy(): void {
@@ -76,6 +122,8 @@ export class InvestmentListComponent implements OnInit, OnDestroy {
         .addSorting(this.sort)
         .addPagination(this.paginator);
     }));
+
+    this.initializeChart()
   }
 
   onDelete(investmentId: number): void {
