@@ -27,7 +27,15 @@ import {
   PointElement,
   LinearScale,
   Title,
-  BarController, CategoryScale, BarElement
+  BarController,
+  CategoryScale,
+  BarElement,
+  DoughnutController,
+  ArcElement,
+  Tooltip,
+  PieController,
+  DatasetController,
+  RadarController, ScatterController
 } from 'chart.js'
 
 @Component({
@@ -39,6 +47,7 @@ export class InvestmentListComponent implements OnInit, OnDestroy {
   user!: IUser | null
   dataSource!: MatTableDataSource<IInvestment>;
   investments$!: Observable<IInvestment[]>
+  groupedData: { [investmentName: string]: { sumPrice: number; sumQuantity: number } } = {};
   isLoading$!: Observable<boolean>
   displayedColumns: string[] = ['investmentId', 'symbol', 'quantity', 'purchasePrice', 'investmentType', 'actions'];
   filterColumns: { id: number, value: string }[] = Object.keys(Fields).map(x => ({
@@ -64,6 +73,8 @@ export class InvestmentListComponent implements OnInit, OnDestroy {
               private router: Router,
               private toastService: ToastService,
               private store: Store<AppState>) {
+    Chart.register(PieController,Tooltip,BarController,LinearScale,CategoryScale,BarElement,LineController, LineElement, PointElement, LinearScale, Title,DoughnutController,ArcElement);
+
     this.subscriptions.push(this.store.pipe(select(selectAuthUser)).subscribe({
       next: response => {
         if (response != null) {
@@ -75,32 +86,40 @@ export class InvestmentListComponent implements OnInit, OnDestroy {
   }
 
   initializeChart() {
-    Chart.register(BarController,LinearScale,CategoryScale,BarElement,LineController, LineElement, PointElement, LinearScale, Title);
-
-    this.chart = new Chart("MyChart", {
-    type: 'bar', //this denotes tha type of chart
-
-    data: {// values on X-Axis
-      labels: ['2022-05-10', '2022-05-11', '2022-05-12','2022-05-13',
-        '2022-05-14', '2022-05-15', '2022-05-16','2022-05-17', ],
-      datasets: [
-        {
-          label: "Sales",
-          data: ['467','576', '572', '79', '92',
-            '574', '573', '576'],
-          backgroundColor: 'blue'
-        },
-        {
-          label: "Profit",
-          data: ['542', '542', '536', '327', '17',
-            '0.00', '538', '541'],
-          backgroundColor: 'limegreen'
-        }
-      ]
-    },
-    options: {
-      aspectRatio:2.5
+    console.log('dsadsadsadsada --------',this.groupedData)
+    if (this.chart){
+      this.chart.destroy();
     }
+
+    const data = {
+      datasets: [{
+        data: Object.values(this.groupedData).map((data) => data.sumPrice),
+        backgroundColor: [
+          'rgb(255, 205, 86)',
+          'rgb(255, 99, 132)',
+           'rgb(54, 162, 235)',
+        ],
+        hoverOffset: 1
+      }],
+      labels: Object.keys(this.groupedData),
+
+    };
+    this.chart = new Chart("MyChart", {
+    type: 'doughnut', //this denotes tha type of chart
+
+    data: data,
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'Sum Price'
+          }
+        }
+      },
 
   });
   }
@@ -118,12 +137,25 @@ export class InvestmentListComponent implements OnInit, OnDestroy {
     this.store.dispatch(new fromPortfolioActions.GetInvestments({userId: Number(this.user?.id)}));
 
     this.subscriptions.push(this.investments$.subscribe(x => {
+
+    x.forEach((investment) => {
+        const { investmentId, purchasePrice, quantity } = investment;
+        if (!this.groupedData[investmentId]) {
+          this.groupedData[investmentId] = { sumPrice: purchasePrice, sumQuantity: quantity };
+        } else {
+          this.groupedData[investmentId].sumPrice += purchasePrice;
+          this.groupedData[investmentId].sumQuantity += quantity;
+        }
+      });
+
       this.dataSource = this.dataListService.initializeData(x)
         .addSorting(this.sort)
         .addPagination(this.paginator);
+
+      this.initializeChart()
+
     }));
 
-    this.initializeChart()
   }
 
   onDelete(investmentId: number): void {
