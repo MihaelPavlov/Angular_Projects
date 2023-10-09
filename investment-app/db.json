@@ -145,6 +145,26 @@
       "purchasePrice": 13,
       "currency": null,
       "investmentType": null
+    },
+    {
+      "userId": 3,
+      "investmentId": "xrp",
+      "symbol": "1",
+      "quantity": 1,
+      "purchasePrice": 1,
+      "currency": 3,
+      "investmentType": 1,
+      "id": 4
+    },
+    {
+      "userId": 3,
+      "investmentId": "polygon",
+      "symbol": "112",
+      "quantity": 0.0001,
+      "purchasePrice": 0.001,
+      "currency": 3,
+      "investmentType": 1,
+      "id": 5
     }
   ],
   "notifications": [

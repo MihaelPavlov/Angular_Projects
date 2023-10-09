@@ -60,9 +60,11 @@ export class InvestmentListComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild('#myChart') canvasElement!: HTMLCanvasElement;
+  @ViewChild('#myChart1') canvasElement1!: HTMLCanvasElement;
   @ViewChild("#applyFilter") myFilter!: TemplateRef<any>
   subscriptions: Subscription[] = []
   public chart: any;
+  public chart1: any;
   filterForm = new FormGroup({
     "filters": new FormArray([]),
     "filtersIds": new FormArray([])
@@ -86,9 +88,38 @@ export class InvestmentListComponent implements OnInit, OnDestroy {
   }
 
   initializeChart() {
+    const data1 = {
+      labels: ['JuanarY','MAY','APPRIL'],
+      datasets: [{
+        label: 'My First Dataset',
+        data: [65, 59, 80, 81, 56, 55, 40],
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+          'rgba(255, 205, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(201, 203, 207, 0.2)'
+        ],
+        borderColor: [
+          'rgb(255, 99, 132)',
+          'rgb(255, 159, 64)',
+          'rgb(255, 205, 86)',
+          'rgb(75, 192, 192)',
+          'rgb(54, 162, 235)',
+          'rgb(153, 102, 255)',
+          'rgb(201, 203, 207)'
+        ],
+        borderWidth: 1
+      }]
+    };
     console.log('dsadsadsadsada --------',this.groupedData)
     if (this.chart){
       this.chart.destroy();
+    }
+    if(this.chart1){
+      this.chart1.destroy()
     }
 
     const data = {
@@ -104,6 +135,22 @@ export class InvestmentListComponent implements OnInit, OnDestroy {
       labels: Object.keys(this.groupedData),
 
     };
+
+    this.chart1 = new Chart("MyChart1",{
+      type: 'bar',
+      data: data,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: false
+          },
+          x:{
+            beginAtZero:true
+          }
+        }
+      },
+    });
+
     this.chart = new Chart("MyChart", {
     type: 'doughnut', //this denotes tha type of chart
 
