@@ -14,7 +14,7 @@ table {
 
 .show-result-btn {
   position: absolute;
-  right:5px;
+  right: 5px;
   color: #333;
   margin-right: 20px;
   transition: color 0.3s; /* Transition property for smooth color change */
@@ -100,4 +100,18 @@ mat-select {
 
 .input-items mat-label {
   float: left;
+}
+
+.charts {
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+  align-items: flex-end;
+}
+
+.chart-container {
+  margin: 20px;
+  background-color: grey;
+  border-color: grey;
+  border-radius: 20px;
 }

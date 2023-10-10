@@ -18,10 +18,8 @@ import {AppState} from "../../../../shared/ngrx/app.reducer";
 import {DataListService} from "../../../services/data-list.servie";
 import {selectAuthUser} from "../../../../shared/ngrx/auth/auth.selectors";
 import _default from "chart.js/dist/plugins/plugin.tooltip";
-import numbers = _default.defaults.animations.numbers;
 import {
   Chart,
-  ChartConfiguration,
   LineController,
   LineElement,
   PointElement,
@@ -34,8 +32,6 @@ import {
   ArcElement,
   Tooltip,
   PieController,
-  DatasetController,
-  RadarController, ScatterController
 } from 'chart.js'
 
 @Component({
@@ -75,7 +71,7 @@ export class InvestmentListComponent implements OnInit, OnDestroy {
               private router: Router,
               private toastService: ToastService,
               private store: Store<AppState>) {
-    Chart.register(PieController,Tooltip,BarController,LinearScale,CategoryScale,BarElement,LineController, LineElement, PointElement, LinearScale, Title,DoughnutController,ArcElement);
+    Chart.register(PieController, Tooltip, BarController, LinearScale, CategoryScale, BarElement, LineController, LineElement, PointElement, LinearScale, Title, DoughnutController, ArcElement);
 
     this.subscriptions.push(this.store.pipe(select(selectAuthUser)).subscribe({
       next: response => {
@@ -88,37 +84,10 @@ export class InvestmentListComponent implements OnInit, OnDestroy {
   }
 
   initializeChart() {
-    const data1 = {
-      labels: ['JuanarY','MAY','APPRIL'],
-      datasets: [{
-        label: 'My First Dataset',
-        data: [65, 59, 80, 81, 56, 55, 40],
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
-          'rgba(255, 205, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(201, 203, 207, 0.2)'
-        ],
-        borderColor: [
-          'rgb(255, 99, 132)',
-          'rgb(255, 159, 64)',
-          'rgb(255, 205, 86)',
-          'rgb(75, 192, 192)',
-          'rgb(54, 162, 235)',
-          'rgb(153, 102, 255)',
-          'rgb(201, 203, 207)'
-        ],
-        borderWidth: 1
-      }]
-    };
-    console.log('dsadsadsadsada --------',this.groupedData)
-    if (this.chart){
+    if (this.chart) {
       this.chart.destroy();
     }
-    if(this.chart1){
+    if (this.chart1) {
       this.chart1.destroy()
     }
 
@@ -128,7 +97,7 @@ export class InvestmentListComponent implements OnInit, OnDestroy {
         backgroundColor: [
           'rgb(255, 205, 86)',
           'rgb(255, 99, 132)',
-           'rgb(54, 162, 235)',
+          'rgb(54, 162, 235)',
         ],
         hoverOffset: 1
       }],
@@ -136,7 +105,7 @@ export class InvestmentListComponent implements OnInit, OnDestroy {
 
     };
 
-    this.chart1 = new Chart("MyChart1",{
+    this.chart1 = new Chart("MyChart1", {
       type: 'bar',
       data: data,
       options: {
@@ -144,17 +113,17 @@ export class InvestmentListComponent implements OnInit, OnDestroy {
           y: {
             beginAtZero: false
           },
-          x:{
-            beginAtZero:true
+          x: {
+            beginAtZero: true
           }
         }
       },
     });
 
     this.chart = new Chart("MyChart", {
-    type: 'doughnut', //this denotes tha type of chart
+      type: 'doughnut',
 
-    data: data,
+      data: data,
       options: {
         responsive: true,
         plugins: {
@@ -168,7 +137,7 @@ export class InvestmentListComponent implements OnInit, OnDestroy {
         }
       },
 
-  });
+    });
   }
 
   ngOnDestroy(): void {
@@ -185,10 +154,10 @@ export class InvestmentListComponent implements OnInit, OnDestroy {
 
     this.subscriptions.push(this.investments$.subscribe(x => {
 
-    x.forEach((investment) => {
-        const { investmentId, purchasePrice, quantity } = investment;
+      x.forEach((investment) => {
+        const {investmentId, purchasePrice, quantity} = investment;
         if (!this.groupedData[investmentId]) {
-          this.groupedData[investmentId] = { sumPrice: purchasePrice, sumQuantity: quantity };
+          this.groupedData[investmentId] = {sumPrice: purchasePrice, sumQuantity: quantity};
         } else {
           this.groupedData[investmentId].sumPrice += purchasePrice;
           this.groupedData[investmentId].sumQuantity += quantity;
@@ -200,9 +169,7 @@ export class InvestmentListComponent implements OnInit, OnDestroy {
         .addPagination(this.paginator);
 
       this.initializeChart()
-
     }));
-
   }
 
   onDelete(investmentId: number): void {
