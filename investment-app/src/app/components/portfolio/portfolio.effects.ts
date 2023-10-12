@@ -1,5 +1,5 @@
 import {Actions, createEffect, ofType,} from "@ngrx/effects";
-import {map, mergeMap, of, switchMap, catchError, tap} from "rxjs";
+import {map, of, switchMap, catchError, tap} from "rxjs";
 import {InvestmentService} from "../../services/investment.service";
 import {Injectable} from "@angular/core";
 import * as fromInvestments from "./portfolio.action";
@@ -25,7 +25,7 @@ export class InvestmentEffects {
     this.actions$.pipe(
       ofType(fromInvestments.GET_INVESTMENT_BY_ID),
       switchMap((data: fromInvestments.GetInvestmentById) =>
-        this.investmentService.getInvestmentById(data.payload.investmentId).pipe(
+        this.investmentService.getInvestmentById(data.payload.id).pipe(
           map((investment: IInvestment | null) => {
             if (investment == null) {
               this.toastService.error({message: 'Something get wrong', type: ToastType.Error})
@@ -75,12 +75,12 @@ export class InvestmentEffects {
   deleteInvestments$ = createEffect(() =>
     this.actions$.pipe(
       ofType(fromInvestments.DELETE_INVESTMENT),
-      mergeMap((data: fromInvestments.DeleteInvestment) =>
-        this.investmentService.delete(Number(data.payload.investmentId)).pipe(
+      switchMap((data: fromInvestments.DeleteInvestment) =>
+        this.investmentService.delete(Number(data.payload.id)).pipe(
           map(() => {
-            return new fromInvestments.DeleteInvestmentSuccess({investmentId: data.payload.investmentId});
-          }),
-          tap(() => this.toastService.success({message: 'Successfully Deleted', type: ToastType.Success}))
+            this.toastService.success({message: 'Successfully Deleted', type: ToastType.Success})
+            return new fromInvestments.DeleteInvestmentSuccess({id: data.payload.id});
+          })
         )
       )
     )

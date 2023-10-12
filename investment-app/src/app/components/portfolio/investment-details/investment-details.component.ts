@@ -25,9 +25,8 @@ export class InvestmentDetailsComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
       let id = params.get('id');
-      console.log(id)
       if (typeof id === "string") {
-        this.store.dispatch(new GetInvestmentById({investmentId: parseInt(id)}))
+        this.store.dispatch(new GetInvestmentById({id: parseInt(id)}))
 
         // this.investmentService.getInvestmentById(parseInt(id))
       }

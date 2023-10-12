@@ -27,7 +27,6 @@ export class LoginComponent implements OnInit{
 ngOnInit() {
   this.store.pipe(select(selectAuthIsLoading)).subscribe({
     next: response => {
-      console.log('from is loading in login')
       this.isLoading = response;
     }
   });

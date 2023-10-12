@@ -2,7 +2,6 @@ import {Component, OnDestroy, OnInit, TemplateRef, ViewChild} from "@angular/cor
 import {IInvestment} from "../../../models/investment";
 import {InvestmentService} from "../../../services/investment.service";
 import {Router} from "@angular/router";
-import {AuthService} from "../../../../lib/services/auth.service";
 import {IUser} from "../../../models/user";
 import {ToastService} from "../../../../lib/services/toast.service";
 import {ToastType} from "../../../models/toast";
@@ -17,7 +16,6 @@ import {Observable, Subscription} from "rxjs";
 import {AppState} from "../../../../shared/ngrx/app.reducer";
 import {DataListService} from "../../../services/data-list.servie";
 import {selectAuthUser} from "../../../../shared/ngrx/auth/auth.selectors";
-import _default from "chart.js/dist/plugins/plugin.tooltip";
 import {
   Chart,
   LineController,
@@ -42,10 +40,11 @@ import {
 export class InvestmentListComponent implements OnInit, OnDestroy {
   user!: IUser | null
   dataSource!: MatTableDataSource<IInvestment>;
+  public chartData: any | null = null;
   investments$!: Observable<IInvestment[]>
   groupedData: { [investmentName: string]: { sumPrice: number; sumQuantity: number } } = {};
   isLoading$!: Observable<boolean>
-  displayedColumns: string[] = ['investmentId', 'symbol', 'quantity', 'purchasePrice', 'investmentType', 'actions'];
+  displayedColumns: string[] = ['investmentName', 'symbol', 'quantity', 'purchasePrice', 'investmentType', 'actions'];
   filterColumns: { id: number, value: string }[] = Object.keys(Fields).map(x => ({
     id: Number(x),
     value: this.getEnumTextByKey(Number(x))
@@ -55,11 +54,9 @@ export class InvestmentListComponent implements OnInit, OnDestroy {
   selectedColumn!: string
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  @ViewChild('#myChart') canvasElement!: HTMLCanvasElement;
   @ViewChild('#myChart1') canvasElement1!: HTMLCanvasElement;
   @ViewChild("#applyFilter") myFilter!: TemplateRef<any>
   subscriptions: Subscription[] = []
-  public chart: any;
   public chart1: any;
   filterForm = new FormGroup({
     "filters": new FormArray([]),
@@ -71,7 +68,6 @@ export class InvestmentListComponent implements OnInit, OnDestroy {
               private router: Router,
               private toastService: ToastService,
               private store: Store<AppState>) {
-    Chart.register(PieController, Tooltip, BarController, LinearScale, CategoryScale, BarElement, LineController, LineElement, PointElement, LinearScale, Title, DoughnutController, ArcElement);
 
     this.subscriptions.push(this.store.pipe(select(selectAuthUser)).subscribe({
       next: response => {
@@ -84,9 +80,7 @@ export class InvestmentListComponent implements OnInit, OnDestroy {
   }
 
   initializeChart() {
-    if (this.chart) {
-      this.chart.destroy();
-    }
+
     if (this.chart1) {
       this.chart1.destroy()
     }
@@ -120,27 +114,10 @@ export class InvestmentListComponent implements OnInit, OnDestroy {
       },
     });
 
-    this.chart = new Chart("MyChart", {
-      type: 'doughnut',
-
-      data: data,
-      options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            position: 'top',
-          },
-          title: {
-            display: true,
-            text: 'Sum Price'
-          }
-        }
-      },
-
-    });
   }
 
   ngOnDestroy(): void {
+    this.groupedData = {}
     this.subscriptions.forEach(x => {
       x.unsubscribe();
     })
@@ -153,27 +130,42 @@ export class InvestmentListComponent implements OnInit, OnDestroy {
     this.store.dispatch(new fromPortfolioActions.GetInvestments({userId: Number(this.user?.id)}));
 
     this.subscriptions.push(this.investments$.subscribe(x => {
-
+      this.groupedData = {};
       x.forEach((investment) => {
-        const {investmentId, purchasePrice, quantity} = investment;
-        if (!this.groupedData[investmentId]) {
-          this.groupedData[investmentId] = {sumPrice: purchasePrice, sumQuantity: quantity};
+        const {investmentName, purchasePrice, quantity} = investment;
+        if (!this.groupedData[investmentName]) {
+          this.groupedData[investmentName] = {sumPrice: purchasePrice, sumQuantity: quantity};
         } else {
-          this.groupedData[investmentId].sumPrice += purchasePrice;
-          this.groupedData[investmentId].sumQuantity += quantity;
+
+          this.groupedData[investmentName].sumPrice += purchasePrice;
+          this.groupedData[investmentName].sumQuantity += quantity;
         }
       });
+      console.log(this.groupedData)
+      this.chartData = {
+        datasets: [{
+          data: Object.values(this.groupedData).map((data) => data.sumPrice),
+          backgroundColor: [
+            'rgb(255, 205, 86)',
+            'rgb(255, 99, 132)',
+            'rgb(54, 162, 235)',
+          ],
+          hoverOffset: 1
+        }],
+        labels: Object.keys(this.groupedData),
 
+      };
       this.dataSource = this.dataListService.initializeData(x)
         .addSorting(this.sort)
         .addPagination(this.paginator);
 
-      this.initializeChart()
+      // this.initializeChart()
+
     }));
   }
 
-  onDelete(investmentId: number): void {
-    this.store.dispatch(new fromPortfolioActions.DeleteInvestment({investmentId, userId: Number(this.user?.id)}))
+  onDelete(id: number): void {
+    this.store.dispatch(new fromPortfolioActions.DeleteInvestment({id, userId: Number(this.user?.id)}))
   }
 
   redirectToDetailsPage(id: number): void {
@@ -230,7 +222,7 @@ export class InvestmentListComponent implements OnInit, OnDestroy {
 
   getEnumTextByKey(key: number): string {
     switch (key) {
-      case Fields.investmentId:
+      case Fields.investmentName:
         return "Investment Name";
       case Fields.symbol:
         return "Symbol";
@@ -246,8 +238,8 @@ export class InvestmentListComponent implements OnInit, OnDestroy {
 
   getEnumValueByKey(key: number): string {
     switch (key) {
-      case Fields.investmentId:
-        return "investmentId";
+      case Fields.investmentName:
+        return "investmentName";
       case Fields.symbol:
         return "symbol";
       case Fields.quantity:
@@ -263,7 +255,7 @@ export class InvestmentListComponent implements OnInit, OnDestroy {
 }
 
 export enum Fields {
-  investmentId = 0,
+  investmentName = 0,
   symbol = 1,
   quantity = 2,
   purchasePrice = 3,

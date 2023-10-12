@@ -4,7 +4,7 @@
     <form [formGroup]="addUpdateForm" (ngSubmit)="onSubmit()">
       <mat-form-field class="investment-select">
         <mat-label>Investment Name</mat-label>
-        <mat-select formControlName="investmentId">
+        <mat-select formControlName="investmentName">
           <mat-option *ngFor="let coin of this.coins | async" [value]="coin.id">
             <img alt='img' src="https://assets.coincap.io/assets/icons/{{coin.symbol.toLowerCase()}}@2x.png">
             <div class="ellipsis">

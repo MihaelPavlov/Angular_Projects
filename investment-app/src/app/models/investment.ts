@@ -4,7 +4,7 @@ import {InvestmentType} from "../../enums/investment-type.enum";
 export interface IInvestment {
   id?: number
   userId: number
-  investmentId: string
+  investmentName: string
   symbol: string
   quantity: number
   purchasePrice: number

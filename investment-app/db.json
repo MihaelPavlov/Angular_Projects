@@ -119,52 +119,22 @@
     {
       "id": 1,
       "userId": 3,
-      "investmentId": "bitcoin",
-      "symbol": "321",
-      "quantity": 31,
-      "purchasePrice": 31,
-      "currency": 3,
-      "investmentType": 1
+      "investmentName": "bitcoin",
+      "symbol": "e1",
+      "quantity": 3,
+      "purchasePrice": 332,
+      "currency": 0,
+      "investmentType": 0
     },
     {
-      "id": 2,
+      "id": 4,
       "userId": 3,
-      "investmentId": "ethereum",
+      "investmentName": "ethereum",
       "symbol": "31",
-      "quantity": 13,
-      "purchasePrice": 33,
-      "currency": 3,
-      "investmentType": 1
-    },
-    {
-      "id": 3,
-      "userId": 3,
-      "investmentId": "binance-coin",
-      "symbol": "321",
-      "quantity": null,
-      "purchasePrice": 13,
-      "currency": null,
-      "investmentType": null
-    },
-    {
-      "userId": 3,
-      "investmentId": "xrp",
-      "symbol": "1",
       "quantity": 1,
-      "purchasePrice": 1,
-      "currency": 3,
-      "investmentType": 1,
-      "id": 4
-    },
-    {
-      "userId": 3,
-      "investmentId": "polygon",
-      "symbol": "112",
-      "quantity": 0.0001,
-      "purchasePrice": 0.001,
-      "currency": 3,
-      "investmentType": 1,
-      "id": 5
+      "purchasePrice": 111,
+      "currency": 0,
+      "investmentType": 0
     }
   ],
   "notifications": [

@@ -67,9 +67,6 @@ export class DetailsCommentsPopUpComponent implements OnInit {
   }
 
   onEditSubmit() {
-    console.log(this.editingComment?.comment);
-    console.log(this.updateCommentText);
-
     if (this.editingComment != null) {
       this.editingComment = {...this.editingComment, comment: this.updateCommentText};
 

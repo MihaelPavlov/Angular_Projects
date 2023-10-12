@@ -57,6 +57,10 @@ import {FormatNumberWithColorPipe} from "./pipes/format-number-with-color.pipe";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {DataListService} from "./services/data-list.servie";
 import {AuthEffects} from "../shared/ngrx/auth/auth.effects";
+import {
+  CryptoDoughnutChartComponent
+} from "./components/crypto_assets/charts/doughnut-chart/crypto-doughnut-chart.component";
+
 
 @NgModule({
   declarations: [
@@ -78,7 +82,8 @@ import {AuthEffects} from "../shared/ngrx/auth/auth.effects";
     TestComponent,
     LoadingSpinnerComponent,
     HomeComponent,
-    CoinsComponent
+    CoinsComponent,
+    CryptoDoughnutChartComponent
   ],
   imports: [
     CommonModule,

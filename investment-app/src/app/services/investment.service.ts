@@ -7,11 +7,6 @@ import {RestApiService} from "../../lib/services/rest-api.service";
   providedIn: "root"
 })
 export class InvestmentService {
-  private investmentsSubject$ = new BehaviorSubject<IInvestment[]>([]);
-  public investments$ = this.investmentsSubject$.asObservable();
-
-  private investmentForUpdateSubject$ = new BehaviorSubject<IInvestment | null>(null);
-  public investmentForUpdate$ = this.investmentForUpdateSubject$.asObservable();
 
   constructor(private restApiService: RestApiService) {
 
@@ -31,10 +26,6 @@ export class InvestmentService {
       .join('&');
 
     return this.restApiService.get<IInvestment[]>(`investments?userId=${userId}&${queryString}`);
-  }
-
-  fetchInvestments(investments: IInvestment[]): void {
-    this.investmentsSubject$.next(investments)
   }
 
   getInvestmentById(id: number): Observable<IInvestment | null> {

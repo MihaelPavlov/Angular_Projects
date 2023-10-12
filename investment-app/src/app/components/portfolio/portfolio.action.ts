@@ -60,7 +60,7 @@ export class GetInvestmentsSuccess implements Action {
 export class GetInvestmentById implements Action {
   public readonly type = GET_INVESTMENT_BY_ID;
 
-  constructor(public payload: { investmentId: number }) {
+  constructor(public payload: { id: number }) {
   }
 }
 
@@ -81,14 +81,14 @@ export class GetInvestmentByIdFailed implements Action {
 export class DeleteInvestment implements Action {
   readonly type = DELETE_INVESTMENT;
 
-  constructor(public payload: { investmentId: number, userId: number }) {
+  constructor(public payload: { id: number, userId: number }) {
   }
 }
 
 export class DeleteInvestmentSuccess implements Action {
   readonly type = DELETE_INVESTMENT_SUCCESS;
 
-  constructor(public payload: { investmentId: number }) {
+  constructor(public payload: { id: number }) {
   }
 }
 

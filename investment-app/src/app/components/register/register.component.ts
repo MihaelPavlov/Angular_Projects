@@ -42,7 +42,6 @@ export class RegisterComponent implements OnInit {
     this.notificationService
       .getNotifications().pipe(delay(1000))
       .subscribe(result => {
-        console.log('after timeout', result)
         this.notifications = result;
 
         const notificationsGroup: { [key: string]: FormControl } = {};

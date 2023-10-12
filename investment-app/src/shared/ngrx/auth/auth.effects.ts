@@ -6,7 +6,6 @@ import {ToastType} from "../../../app/models/toast";
 import {ToastService} from "../../../lib/services/toast.service";
 import {Router} from "@angular/router";
 import {Injectable} from "@angular/core";
-import {AutoLogin} from "./auth.actions";
 
 @Injectable()
 export class AuthEffects {
@@ -31,7 +30,6 @@ export class AuthEffects {
           return new fromAuthActions.LoginSuccess({user: data.user});
         }),
         catchError((error) => {
-          console.log('err')
           this.toastService.error({message: 'Something get wrong', type: ToastType.Error})
           return of(new fromAuthActions.LoginError({error: "Something get wrong"}))
         })

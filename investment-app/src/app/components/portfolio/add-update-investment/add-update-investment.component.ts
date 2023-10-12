@@ -30,7 +30,7 @@ export class AddUpdateInvestmentComponent implements OnInit {
   public coins!: Observable<ICryptoAsset[]>
   public investmentTypes!: number[];
   public addUpdateForm = new FormGroup({
-    investmentId: new FormControl(),
+    investmentName: new FormControl(),
     symbol: new FormControl(),
     quantity: new FormControl(),
     purchasePrice: new FormControl(),
@@ -55,7 +55,7 @@ export class AddUpdateInvestmentComponent implements OnInit {
       if (id != null) {
         this.id = Number(id);
 
-        this.store.dispatch(new GetInvestmentById({investmentId: this.id}))
+        this.store.dispatch(new GetInvestmentById({id: this.id}))
       }
     });
 
@@ -87,7 +87,7 @@ export class AddUpdateInvestmentComponent implements OnInit {
         investment: {
           id: this.id,
           userId: Number(this.user?.id),
-          investmentId: this.addUpdateForm.controls.investmentId.value,
+          investmentName: this.addUpdateForm.controls.investmentName.value,
           symbol: this.addUpdateForm.controls.symbol.value,
           quantity: this.addUpdateForm.controls.quantity.value,
           purchasePrice: this.addUpdateForm.controls.purchasePrice.value,
@@ -99,7 +99,7 @@ export class AddUpdateInvestmentComponent implements OnInit {
       this.store.dispatch(new AddInvestment({
         investment: {
           userId: Number(this.user?.id),
-          investmentId: this.addUpdateForm.controls.investmentId.value,
+          investmentName: this.addUpdateForm.controls.investmentName.value,
           symbol: this.addUpdateForm.controls.symbol.value,
           quantity: this.addUpdateForm.controls.quantity.value,
           purchasePrice: this.addUpdateForm.controls.purchasePrice.value,
