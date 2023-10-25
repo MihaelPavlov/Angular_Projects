@@ -12,6 +12,7 @@ import {TestComponent} from "../components/test.component";
 import {NewsListComponent} from "../components/news/news-list/news-list.component";
 import {HomeComponent} from "../components/home/home.component";
 import {CoinsComponent} from "../components/crypto_assets/coins/coins.component";
+import {ProfileComponent} from "../components/profile/profile.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -24,6 +25,7 @@ const routes: Routes = [
   {path: 'news', component: NewsListComponent},
   {path: 'test', component: TestComponent},
   {path: 'coins', component: CoinsComponent},
+  {path: 'profile', component: ProfileComponent}
 ]
 
 @NgModule({

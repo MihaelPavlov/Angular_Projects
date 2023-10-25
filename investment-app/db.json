@@ -135,6 +135,16 @@
       "purchasePrice": 111,
       "currency": 0,
       "investmentType": 0
+    },
+    {
+      "id": 5,
+      "userId": 3,
+      "investmentName": "tether",
+      "symbol": "111",
+      "quantity": 111,
+      "purchasePrice": 13,
+      "currency": 3,
+      "investmentType": 0
     }
   ],
   "notifications": [

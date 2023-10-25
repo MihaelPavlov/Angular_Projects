@@ -60,6 +60,7 @@ import {AuthEffects} from "../shared/ngrx/auth/auth.effects";
 import {
   CryptoDoughnutChartComponent
 } from "./components/crypto_assets/charts/doughnut-chart/crypto-doughnut-chart.component";
+import {ProfileComponent} from "./components/profile/profile.component";
 
 
 @NgModule({
@@ -83,7 +84,8 @@ import {
     LoadingSpinnerComponent,
     HomeComponent,
     CoinsComponent,
-    CryptoDoughnutChartComponent
+    CryptoDoughnutChartComponent,
+    ProfileComponent
   ],
   imports: [
     CommonModule,

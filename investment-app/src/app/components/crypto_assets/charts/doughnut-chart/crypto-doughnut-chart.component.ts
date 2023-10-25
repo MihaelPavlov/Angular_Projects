@@ -23,7 +23,6 @@ export class CryptoDoughnutChartComponent implements OnInit, OnDestroy {
 
   constructor() {
     Chart.register(PieController, Tooltip, BarController, LinearScale, CategoryScale, BarElement, LineController, LineElement, PointElement, LinearScale, Title, DoughnutController, ArcElement);
-
   }
 
   ngOnDestroy(): void {
