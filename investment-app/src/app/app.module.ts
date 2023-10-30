@@ -61,6 +61,7 @@ import {
   CryptoDoughnutChartComponent
 } from "./components/crypto_assets/charts/doughnut-chart/crypto-doughnut-chart.component";
 import {ProfileComponent} from "./components/profile/profile.component";
+import {DashboardComponent} from "./components/profile/dashboard/dashboard.component";
 
 
 @NgModule({
@@ -85,7 +86,8 @@ import {ProfileComponent} from "./components/profile/profile.component";
     HomeComponent,
     CoinsComponent,
     CryptoDoughnutChartComponent,
-    ProfileComponent
+    ProfileComponent,
+    DashboardComponent
   ],
   imports: [
     CommonModule,
