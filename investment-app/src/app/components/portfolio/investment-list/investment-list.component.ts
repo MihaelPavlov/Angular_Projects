@@ -17,19 +17,7 @@ import {AppState} from "../../../../shared/ngrx/app.reducer";
 import {DataListService} from "../../../services/data-list.servie";
 import {selectAuthUser} from "../../../../shared/ngrx/auth/auth.selectors";
 import {
-  Chart,
-  LineController,
-  LineElement,
-  PointElement,
-  LinearScale,
-  Title,
-  BarController,
-  CategoryScale,
-  BarElement,
-  DoughnutController,
-  ArcElement,
-  Tooltip,
-  PieController,
+  Chart
 } from 'chart.js'
 
 @Component({

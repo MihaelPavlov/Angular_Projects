@@ -62,6 +62,7 @@ import {
 } from "./components/crypto_assets/charts/doughnut-chart/crypto-doughnut-chart.component";
 import {ProfileComponent} from "./components/profile/profile.component";
 import {DashboardComponent} from "./components/profile/dashboard/dashboard.component";
+import {MatTabsModule} from "@angular/material/tabs";
 
 
 @NgModule({
@@ -113,6 +114,7 @@ import {DashboardComponent} from "./components/profile/dashboard/dashboard.compo
     AppRoutingModule,
     MatSortModule,
     MatTooltipModule,
+    MatTabsModule,
     StoreModule.forRoot(reducers, {metaReducers}),
     EffectsModule.forRoot(InvestmentEffects, NewsEffects,CryptoAssetsEffects,AuthEffects)
   ],
