@@ -14,6 +14,7 @@ import {HomeComponent} from "../components/home/home.component";
 import {CoinsComponent} from "../components/crypto_assets/coins/coins.component";
 import {ProfileComponent} from "../components/profile/profile.component";
 import {DashboardComponent} from "../components/profile/dashboard/dashboard.component";
+import {GlobalSettingsComponent} from "../components/profile/global-settings/global-settings.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -27,7 +28,8 @@ const routes: Routes = [
   {path: 'test', component: TestComponent},
   {path: 'coins', component: CoinsComponent},
   {path: 'profile', component: ProfileComponent},
-  {path: 'dashboard', component: DashboardComponent}
+  {path: 'dashboard', component: DashboardComponent},
+  {path: 'global-settings', component: GlobalSettingsComponent}
 ]
 
 @NgModule({

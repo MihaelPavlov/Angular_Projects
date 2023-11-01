@@ -63,6 +63,7 @@ import {
 import {ProfileComponent} from "./components/profile/profile.component";
 import {DashboardComponent} from "./components/profile/dashboard/dashboard.component";
 import {MatTabsModule} from "@angular/material/tabs";
+import {GlobalSettingsComponent} from "./components/profile/global-settings/global-settings.component";
 
 
 @NgModule({
@@ -88,7 +89,8 @@ import {MatTabsModule} from "@angular/material/tabs";
     CoinsComponent,
     CryptoDoughnutChartComponent,
     ProfileComponent,
-    DashboardComponent
+    DashboardComponent,
+    GlobalSettingsComponent
   ],
   imports: [
     CommonModule,

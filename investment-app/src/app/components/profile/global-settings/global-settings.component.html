@@ -1,0 +1,229 @@
+<mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center">
+  <mat-tab label="Alerts">
+
+    <div class="container mx-auto mt-10 rounded w-11/12 xl:w-full">
+      <div class="xl:w-full py-5 px-8">
+        <div class="flex items-center mx-auto">
+          <div class="container mx-auto">
+            <div class="mx-auto xl:w-full">
+              <p class="text-lg text-gray-800 dark:text-gray-100 font-bold">Alerts</p>
+              <p class="text-sm text-gray-600 dark:text-gray-400 pt-1">Get updates of any new activity or features. Turn on/off your preferences</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="example-action-buttons">
+          <button mat-button (click)="accordion.openAll()">Expand All</button>
+          <button mat-button (click)="accordion.closeAll()">Collapse All</button>
+        </div>
+        <mat-accordion multi class="example-headers-align">
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Comments
+              </mat-panel-title>
+              <mat-panel-description>
+
+                <mat-icon>account_circle</mat-icon>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <div class="flex justify-between items-center mb-8 mt-4">
+              <div class="w-9/12">
+                <p id="cb12" class="text-sm text-gray-600 dark:text-gray-400">Get notified when a post or comment is made</p>
+              </div>
+              <label class="relative inline-flex cursor-pointer items-center">
+                <input id="switch-2" type="checkbox" class="peer sr-only" />
+                <label for="switch-2" class="hidden"></label>
+                <div class="peer h-4 w-11 rounded border bg-slate-200 after:absolute after:-top-1 after:left-0 after:h-6 after:w-6 after:rounded-md after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-green-300 peer-checked:after:translate-x-full peer-focus:ring-green-300"></div>
+              </label>
+            </div>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Job Applications
+              </mat-panel-title>
+              <mat-panel-description>
+
+                <mat-icon>grade</mat-icon>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <div class="flex justify-between items-center mb-8 mt-4">
+              <div class="w-9/12">
+                <p id="cb12" class="text-sm text-gray-600 dark:text-gray-400">Get notified when a candidate applies to a job posting</p>
+              </div>
+              <label class="relative inline-flex cursor-pointer items-center">
+                <input id="switch-2" type="checkbox" class="peer sr-only" />
+                <label for="switch-2" class="hidden"></label>
+                <div class="peer h-4 w-11 rounded border bg-slate-200 after:absolute after:-top-1 after:left-0 after:h-6 after:w-6 after:rounded-md after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-green-300 peer-checked:after:translate-x-full peer-focus:ring-green-300"></div>
+              </label>
+            </div>
+          </mat-expansion-panel>
+
+        </mat-accordion>
+      </div>
+
+    </div>
+
+  </mat-tab>
+  <mat-tab label="Notifications">
+
+    <div class="pb-4 border-b border-gray-300 dark:border-gray-700 px-8">
+      <div class="flex items-center text-gray-800 dark:text-gray-100">
+        <img class="dark:hidden" src="https://tuk-cdn.s3.amazonaws.com/can-uploader/simple_form-svg8.svg" alt="notification">
+        <img class="dark:hidden" src="https://tuk-cdn.s3.amazonaws.com/can-uploader/simple_form-svg8dark.svg" alt="notification">
+        <p class="text-sm font-bold ml-2 text-gray-800 dark:text-gray-100">Push Notifications</p>
+      </div>
+    </div>
+    <div class="px-8">
+      <div class="flex justify-between items-center mb-8 mt-4">
+        <div class="w-9/12">
+          <p class="text-sm text-gray-800 dark:text-gray-100 pb-1">Comments</p>
+          <p id="cb4" class="text-sm text-gray-600 dark:text-gray-400">Get notified when a post or comment is made</p>
+        </div>
+        <div class="cursor-pointer rounded-full bg-gray-200 relative shadow-sm">
+          <input aria-labelledby="cb4" tabindex="0" type="checkbox" name="notification_comment" id="toggle4" class="focus:outline-none checkbox w-6 h-6 rounded-full bg-white dark:bg-gray-400 absolute shadow-sm appearance-none cursor-pointer border border-transparent top-0 bottom-0 m-auto" />
+          <label class="toggle-label block w-12 h-4 overflow-hidden rounded-full bg-gray-300 dark:bg-gray-800 cursor-pointer"></label>
+        </div>
+      </div>
+      <div class="flex justify-between items-center mb-8">
+        <div class="w-9/12">
+          <p class="text-sm text-gray-800 dark:text-gray-100 pb-1">Job Applications</p>
+          <p id="cb5" class="text-sm text-gray-600 dark:text-gray-400">Get notified when a candidate applies to a job posting</p>
+        </div>
+        <div class="cursor-pointer rounded-full bg-gray-200 relative shadow-sm">
+          <input aria-labelledby="cb5" tabindex="0" type="checkbox" name="notification_application" id="toggle5" class="focus:outline-none checkbox w-6 h-6 rounded-full bg-white dark:bg-gray-400 absolute shadow-sm appearance-none cursor-pointer border border-transparent top-0 bottom-0 m-auto" />
+          <label class="toggle-label block w-12 h-4 overflow-hidden rounded-full bg-gray-300 dark:bg-gray-800 cursor-pointer"></label>
+        </div>
+      </div>
+      <div class="flex justify-between items-center mb-8">
+        <div class="w-9/12">
+          <p class="text-sm text-gray-800 dark:text-gray-100 pb-1">Product Updates</p>
+          <p id="cb6" class="text-sm text-gray-600 dark:text-gray-400">Get notifitied when there is a new product feature or upgrades</p>
+        </div>
+        <div class="cursor-pointer rounded-full bg-gray-200 relative shadow-sm">
+          <input aria-labelledby="cb6" tabindex="0" type="checkbox" name="notification_updates" id="toggle6" class="focus:outline-none checkbox w-6 h-6 rounded-full bg-white dark:bg-gray-400 absolute shadow-sm appearance-none cursor-pointer border border-transparent top-0 bottom-0 m-auto" />
+          <label class="toggle-label block w-12 h-4 overflow-hidden rounded-full bg-gray-300 dark:bg-gray-800 cursor-pointer"></label>
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+  <mat-tab label="Currency">Currency Settings</mat-tab>
+  <mat-tab label="Animations">Animations</mat-tab>
+</mat-tab-group>
+<!--<form id="login">-->
+<!--  <div class="bg-white dark:bg-gray-800">-->
+<!--    <div class="container mx-auto mt-10 rounded bg-gray-100 dark:bg-gray-700 w-11/12 xl:w-full">-->
+<!--      <div class="xl:w-full py-5 px-8">-->
+<!--        <div class="flex items-center mx-auto">-->
+<!--          <div class="container mx-auto">-->
+<!--            <div class="mx-auto xl:w-full">-->
+<!--              <p class="text-lg text-gray-800 dark:text-gray-100 font-bold">Alerts</p>-->
+<!--              <p class="text-sm text-gray-600 dark:text-gray-400 pt-1">Get updates of any new activity or features. Turn on/off your preferences</p>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="container mx-auto pb-6">-->
+<!--        <div class="flex items-center pb-4 border-b border-gray-300 dark:border-gray-700 px-8 text-gray-800 dark:text-gray-100">-->
+<!--          <img class="dark:hidden" src="https://tuk-cdn.s3.amazonaws.com/can-uploader/simple_form-svg7.svg" alt="mail">-->
+<!--          <img class="dark:block hidden" src="https://tuk-cdn.s3.amazonaws.com/can-uploader/simple_form-svg7dark.svg" alt="mail">-->
+<!--          <p class="text-sm font-bold ml-2 text-gray-800 dark:text-gray-100">Via Email</p>-->
+<!--        </div>-->
+<!--        <div class="px-8">-->
+<!--          <div class="flex justify-between items-center mb-8 mt-4">-->
+<!--            <div class="w-9/12">-->
+<!--              <p class="text-sm text-gray-800 dark:text-gray-100 pb-1">Comments</p>-->
+<!--              <p id="cb1" class="text-sm text-gray-600 dark:text-gray-400">Get notified when a post or comment is made</p>-->
+<!--            </div>-->
+<!--            <div class="cursor-pointer rounded-full bg-gray-200 relative shadow-sm">-->
+<!--              <input tabindex="0" aria-labelledby="cb1" type="checkbox" name="email_comments" id="toggle1" class="focus:outline-none checkbox w-6 h-6 rounded-full bg-white dark:bg-gray-400 absolute shadow-sm appearance-none cursor-pointer border border-transparent top-0 bottom-0 m-auto" />-->
+<!--              <label class="toggle-label block w-12 h-4 overflow-hidden rounded-full bg-gray-300 dark:bg-gray-800 cursor-pointer"></label>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="flex justify-between items-center mb-8">-->
+<!--            <div class="w-9/12">-->
+<!--              <p class="text-sm text-gray-800 dark:text-gray-100 pb-1">Job Applications</p>-->
+<!--              <p id="cb2" class="text-sm text-gray-600 dark:text-gray-400">Get notified when a candidate applies to a job posting</p>-->
+<!--            </div>-->
+<!--            <div class="cursor-pointer rounded-full bg-gray-200 relative shadow-sm">-->
+<!--              <input aria-labelledby="cb2" tabindex="0" type="checkbox" name="email_job_application" id="toggle2" class="focus:outline-none checkbox w-6 h-6 rounded-full bg-white dark:bg-gray-400 absolute shadow-sm appearance-none cursor-pointer border border-transparent top-0 bottom-0 m-auto" />-->
+<!--              <label class="toggle-label block w-12 h-4 overflow-hidden rounded-full bg-gray-300 dark:bg-gray-800 cursor-pointer"></label>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="flex justify-between items-center mb-8">-->
+<!--            <div class="w-9/12">-->
+<!--              <p class="text-sm text-gray-800 dark:text-gray-100 pb-1">Product Updates</p>-->
+<!--              <p id="cb3" class="text-sm text-gray-600 dark:text-gray-400">Get notifitied when there is a new product feature or upgrades</p>-->
+<!--            </div>-->
+<!--            <div class="cursor-pointer rounded-full bg-gray-200 relative shadow-sm">-->
+<!--              <input aria-labelledby="cb3" tabindex="0" type="checkbox" name="email_product_update" id="toggle3" class="focus:outline-none checkbox w-6 h-6 rounded-full bg-white dark:bg-gray-400 absolute shadow-sm appearance-none cursor-pointer border border-transparent top-0 bottom-0 m-auto" />-->
+<!--              <label class="toggle-label block w-12 h-4 overflow-hidden rounded-full bg-gray-300 dark:bg-gray-800 cursor-pointer"></label>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="pb-4 border-b border-gray-300 dark:border-gray-700 px-8">-->
+<!--          <div class="flex items-center text-gray-800 dark:text-gray-100">-->
+<!--            <img class="dark:hidden" src="https://tuk-cdn.s3.amazonaws.com/can-uploader/simple_form-svg8.svg" alt="notification">-->
+<!--            <img class="dark:hidden" src="https://tuk-cdn.s3.amazonaws.com/can-uploader/simple_form-svg8dark.svg" alt="notification">-->
+<!--            <p class="text-sm font-bold ml-2 text-gray-800 dark:text-gray-100">Push Notifications</p>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="px-8">-->
+<!--          <div class="flex justify-between items-center mb-8 mt-4">-->
+<!--            <div class="w-9/12">-->
+<!--              <p class="text-sm text-gray-800 dark:text-gray-100 pb-1">Comments</p>-->
+<!--              <p id="cb4" class="text-sm text-gray-600 dark:text-gray-400">Get notified when a post or comment is made</p>-->
+<!--            </div>-->
+<!--            <div class="cursor-pointer rounded-full bg-gray-200 relative shadow-sm">-->
+<!--              <input aria-labelledby="cb4" tabindex="0" type="checkbox" name="notification_comment" id="toggle4" class="focus:outline-none checkbox w-6 h-6 rounded-full bg-white dark:bg-gray-400 absolute shadow-sm appearance-none cursor-pointer border border-transparent top-0 bottom-0 m-auto" />-->
+<!--              <label class="toggle-label block w-12 h-4 overflow-hidden rounded-full bg-gray-300 dark:bg-gray-800 cursor-pointer"></label>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="flex justify-between items-center mb-8">-->
+<!--            <div class="w-9/12">-->
+<!--              <p class="text-sm text-gray-800 dark:text-gray-100 pb-1">Job Applications</p>-->
+<!--              <p id="cb5" class="text-sm text-gray-600 dark:text-gray-400">Get notified when a candidate applies to a job posting</p>-->
+<!--            </div>-->
+<!--            <div class="cursor-pointer rounded-full bg-gray-200 relative shadow-sm">-->
+<!--              <input aria-labelledby="cb5" tabindex="0" type="checkbox" name="notification_application" id="toggle5" class="focus:outline-none checkbox w-6 h-6 rounded-full bg-white dark:bg-gray-400 absolute shadow-sm appearance-none cursor-pointer border border-transparent top-0 bottom-0 m-auto" />-->
+<!--              <label class="toggle-label block w-12 h-4 overflow-hidden rounded-full bg-gray-300 dark:bg-gray-800 cursor-pointer"></label>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="flex justify-between items-center mb-8">-->
+<!--            <div class="w-9/12">-->
+<!--              <p class="text-sm text-gray-800 dark:text-gray-100 pb-1">Product Updates</p>-->
+<!--              <p id="cb6" class="text-sm text-gray-600 dark:text-gray-400">Get notifitied when there is a new product feature or upgrades</p>-->
+<!--            </div>-->
+<!--            <div class="cursor-pointer rounded-full bg-gray-200 relative shadow-sm">-->
+<!--              <input aria-labelledby="cb6" tabindex="0" type="checkbox" name="notification_updates" id="toggle6" class="focus:outline-none checkbox w-6 h-6 rounded-full bg-white dark:bg-gray-400 absolute shadow-sm appearance-none cursor-pointer border border-transparent top-0 bottom-0 m-auto" />-->
+<!--              <label class="toggle-label block w-12 h-4 overflow-hidden rounded-full bg-gray-300 dark:bg-gray-800 cursor-pointer"></label>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div class="container mx-auto w-11/12 xl:w-full">-->
+<!--      <div class="w-full py-4 sm:px-0 bg-white dark:bg-gray-800 flex justify-end">-->
+<!--        <button role="button" aria-label="cancel form" class="bg-gray-200 focus:outline-none transition duration-150 ease-in-out hover:bg-gray-300 dark:bg-gray-700 rounded text-indigo-600 dark:text-indigo-600 px-6 py-2 text-xs mr-4 focus:ring-2 focus:ring-offset-2 focus:ring-gray-700">Cancel</button>-->
+<!--        <button role="button" aria-label="Save form" class="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 bg-indigo-700 focus:outline-none transition duration-150 ease-in-out hover:bg-indigo-600 rounded text-white px-8 py-2 text-sm" type="submit">Save</button>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</form>-->
+<style>
+  .checkbox:checked {
+    /* Apply class right-0*/
+    right: 0;
+  }
+  .checkbox:checked + .toggle-label {
+    /* Apply class bg-indigo-700 */
+    background-color: #4c51bf;
+  }
+</style>
+
+
+

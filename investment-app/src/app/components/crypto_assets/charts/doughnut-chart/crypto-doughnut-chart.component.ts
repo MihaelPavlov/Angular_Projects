@@ -1,13 +1,14 @@
 import {Component, Input, OnDestroy, OnInit, ViewChild} from "@angular/core";
 import {
+  DoughnutAnimationOptions,
   ArcElement,
   BarController,
   BarElement,
   CategoryScale,
-  Chart, DatasetController, DoughnutController, LegendItem,
+  Chart, DatasetController, DoughnutController, Legend, Animations,
   LinearScale, LineController, LineElement,
   PieController, PointElement, Title,
-  Tooltip
+  Tooltip, TooltipItem
 } from "chart.js";
 
 @Component({
@@ -22,12 +23,11 @@ export class CryptoDoughnutChartComponent implements OnInit, OnDestroy {
   public chart: any;
 
   constructor() {
-    Chart.register( Tooltip, Title, DoughnutController, ArcElement);
+    Chart.register( Tooltip, Title, DoughnutController, ArcElement,Legend);
   }
 
   ngOnDestroy(): void {
     if (this.chart) {
-      console.log('destroyedeeeeed')
       this.chart.destroy();
     }
   }
@@ -37,26 +37,24 @@ export class CryptoDoughnutChartComponent implements OnInit, OnDestroy {
       type: 'doughnut',
       data: this.data,
       options: {
-        layout: { padding: { left: 0.0, right: 0.0, top: 0.0, bottom: 0.0 } },
-        animation: { duration: 0.0 },
+        animation: { duration: 1000 },
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
+          tooltip:{
+            yAlign: 'top',
+            xAlign: 'center',
+            position: 'nearest',
+            displayColors: false,
+            axis: 'x',
+          },
           legend: {
             display:true,
-            position: 'top',
+            position: 'bottom',
             align:'center',
-            reverse:false,
             labels:{
-              boxWidth:80,
-              padding:50.0,
-              useBorderRadius:true,
-              // generateLabels(chart: Chart): LegendItem[] {
-              //   let items=Chart.defaults.plugins.legend.labels.generateLabels.call(this,chart);
-              //   console.log('dsadsadsadsadasdasdaa', items)
-              //   items.forEach(item => item.text = (chart.data.labels as string[])[item.index as number] as string);
-              //   return items;
-              // }
+              boxWidth:20,
+              padding:15.0,
             }
           },
           title: {

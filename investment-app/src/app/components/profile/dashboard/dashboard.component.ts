@@ -21,7 +21,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public chartData: any | null = null;
   isLoading$!: Observable<boolean>
   user!: IUser | null
-  groupedData: { [investmentName: string]: { sumPrice: number; sumQuantity: number } } = {};
+  groupedData: { [investmentName: string]: { sumPrice: number; sumQuantity: number , label: string } } = {};
   investments$!: Observable<IInvestment[]>
 
   subscriptions: Subscription[] = [];
@@ -59,18 +59,20 @@ export class DashboardComponent implements OnInit, OnDestroy {
       x.forEach((investment) => {
         const {investmentName, purchasePrice, quantity} = investment;
         if (!this.groupedData[investmentName]) {
-          this.groupedData[investmentName] = {sumPrice: purchasePrice, sumQuantity: quantity};
+          this.groupedData[investmentName] = {sumPrice: purchasePrice, sumQuantity: quantity, label:investmentName};
         } else {
 
           this.groupedData[investmentName].sumPrice += purchasePrice;
           this.groupedData[investmentName].sumQuantity += quantity;
+          this.groupedData[investmentName].label = investmentName;
         }
       });
-
+      console.log('tesssssssss ------------------- > ', Object.values(this.groupedData).map((data) => ({data: data.sumPrice , label:data.label,backgroundColor:'rgb(255, 205, 86)', hoverOffset:1})))
       this.chartData = {
         labels: Object.keys(this.groupedData),
-        datasets: [{
-          data: Object.values(this.groupedData).map((data) => data.sumPrice),
+        datasets:
+          [{
+          data: Object.values(this.groupedData).map((data) =>  data.sumPrice),
           backgroundColor: [
             'rgb(255, 205, 86)',
             'rgb(255, 99, 132)',
