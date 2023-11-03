@@ -6,7 +6,6 @@
     <li><a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" routerLink="/">Home</a></li>
     <li><a routerLinkActive="active" routerLink="/news">News</a></li>
     <li><a routerLinkActive="active" routerLink="/coins">Coins</a></li>
-    <li><a routerLinkActive="active" routerLink="/dashboard">Dashboard</a></li>
     <ng-container *ngIf="(this.user| async) == null">
       <li><a routerLinkActive="active" routerLink="/register">Sign Up</a></li>
     </ng-container>
@@ -15,6 +14,24 @@
       <li><a routerLinkActive="active" routerLink="/my-investments">My Investments</a></li>
       <li><a routerLinkActive="active" routerLink="/create">Add New Investment</a></li>
       <li><a (click)="onLogout()">Logout</a></li>
+
+      <li>
+        <mat-drawer-container class="bg-none size" [hasBackdrop]="false">
+          <mat-drawer position="end" class="sidenav-custom-container" #drawer mode="over">
+            <profile (click)="drawer.close()"></profile>
+          </mat-drawer>
+          <mat-drawer-content class="mat-container ">
+
+            <div>
+              <button type="button" mat-button (click)="drawer.toggle()">
+                <mat-icon class="text-white">menu</mat-icon>
+              </button>
+            </div>
+          </mat-drawer-content>
+
+        </mat-drawer-container>
+
+      </li>
     </ng-container>
   </ul>
 </nav>

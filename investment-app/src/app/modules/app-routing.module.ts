@@ -15,6 +15,8 @@ import {CoinsComponent} from "../components/crypto_assets/coins/coins.component"
 import {ProfileComponent} from "../components/profile/profile.component";
 import {DashboardComponent} from "../components/profile/dashboard/dashboard.component";
 import {GlobalSettingsComponent} from "../components/profile/global-settings/global-settings.component";
+import {UserInformationComponent} from "../components/profile/user-information/user-information.component";
+import {ApiSourcesComponent} from "../components/profile/api-sources/api-sources.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -29,7 +31,9 @@ const routes: Routes = [
   {path: 'coins', component: CoinsComponent},
   {path: 'profile', component: ProfileComponent},
   {path: 'dashboard', component: DashboardComponent},
-  {path: 'global-settings', component: GlobalSettingsComponent}
+  {path: 'global-settings', component: GlobalSettingsComponent},
+  {path: 'user-information', component: UserInformationComponent},
+  {path: 'api-sources', component: ApiSourcesComponent}
 ]
 
 @NgModule({

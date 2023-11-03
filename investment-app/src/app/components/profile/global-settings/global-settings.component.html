@@ -1,5 +1,5 @@
-<mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center">
-  <mat-tab label="Alerts">
+<mat-tab-group mat-stretch-tabs="false" class="index" mat-align-tabs="center">
+  <mat-tab label="Alerts" >
 
     <div class="container mx-auto mt-10 rounded w-11/12 xl:w-full">
       <div class="xl:w-full py-5 px-8">
@@ -20,21 +20,32 @@
           <mat-expansion-panel>
             <mat-expansion-panel-header>
               <mat-panel-title>
-                Comments
+                Mail
               </mat-panel-title>
               <mat-panel-description>
 
-                <mat-icon>account_circle</mat-icon>
+                <mat-icon>mail</mat-icon>
               </mat-panel-description>
             </mat-expansion-panel-header>
 
             <div class="flex justify-between items-center mb-8 mt-4">
               <div class="w-9/12">
-                <p id="cb12" class="text-sm text-gray-600 dark:text-gray-400">Get notified when a post or comment is made</p>
+                <p  class="text-sm text-gray-600 dark:text-gray-400">Get Emails when you are logged from different IP address</p>
               </div>
               <label class="relative inline-flex cursor-pointer items-center">
-                <input id="switch-2" type="checkbox" class="peer sr-only" />
-                <label for="switch-2" class="hidden"></label>
+                <input id="switch-3" type="checkbox" class="peer sr-only" />
+                <label for="switch-3" class="hidden"></label>
+                <div class="peer h-4 w-11 rounded border bg-slate-200 after:absolute after:-top-1 after:left-0 after:h-6 after:w-6 after:rounded-md after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-green-300 peer-checked:after:translate-x-full peer-focus:ring-green-300"></div>
+              </label>
+            </div>
+
+            <div class="flex justify-between items-center mb-8 mt-4">
+              <div class="w-9/12">
+                <p  class="text-sm text-gray-600 dark:text-gray-400">Receive email when you add new investment</p>
+              </div>
+              <label class="relative inline-flex cursor-pointer items-center">
+                <input id="switch-4" type="checkbox" class="peer sr-only" />
+                <label for="switch-4" class="hidden"></label>
                 <div class="peer h-4 w-11 rounded border bg-slate-200 after:absolute after:-top-1 after:left-0 after:h-6 after:w-6 after:rounded-md after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-green-300 peer-checked:after:translate-x-full peer-focus:ring-green-300"></div>
               </label>
             </div>
@@ -43,76 +54,223 @@
           <mat-expansion-panel>
             <mat-expansion-panel-header>
               <mat-panel-title>
-                Job Applications
+                SMS
               </mat-panel-title>
               <mat-panel-description>
 
-                <mat-icon>grade</mat-icon>
+                <mat-icon>sms</mat-icon>
               </mat-panel-description>
             </mat-expansion-panel-header>
 
             <div class="flex justify-between items-center mb-8 mt-4">
               <div class="w-9/12">
-                <p id="cb12" class="text-sm text-gray-600 dark:text-gray-400">Get notified when a candidate applies to a job posting</p>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Get notified when a candidate applies to a job posting</p>
               </div>
               <label class="relative inline-flex cursor-pointer items-center">
-                <input id="switch-2" type="checkbox" class="peer sr-only" />
-                <label for="switch-2" class="hidden"></label>
+                <input id="switch-5" type="checkbox" class="peer sr-only" />
+                <label for="switch-5" class="hidden"></label>
                 <div class="peer h-4 w-11 rounded border bg-slate-200 after:absolute after:-top-1 after:left-0 after:h-6 after:w-6 after:rounded-md after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-green-300 peer-checked:after:translate-x-full peer-focus:ring-green-300"></div>
               </label>
             </div>
           </mat-expansion-panel>
 
+
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Feedback
+              </mat-panel-title>
+              <mat-panel-description>
+
+                <mat-icon>feedback</mat-icon>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <div class="flex justify-between items-center mb-8 mt-4">
+              <div class="w-9/12">
+                <p class="text-sm text-gray-600 dark:text-gray-400">Stop constantly asking for feedback</p>
+              </div>
+              <label class="relative inline-flex cursor-pointer items-center">
+                <input id="switch-6" type="checkbox" class="peer sr-only" />
+                <label for="switch-6" class="hidden"></label>
+                <div class="peer h-4 w-11 rounded border bg-slate-200 after:absolute after:-top-1 after:left-0 after:h-6 after:w-6 after:rounded-md after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-green-300 peer-checked:after:translate-x-full peer-focus:ring-green-300"></div>
+              </label>
+            </div>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Emergency
+              </mat-panel-title>
+              <mat-panel-description>
+
+                <mat-icon>emergency</mat-icon>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <div class="flex justify-between items-center mb-8 mt-4">
+              <div class="w-9/12">
+                <p class="text-sm text-gray-600 dark:text-gray-400">If someone logged from different ip address</p>
+              </div>
+              <label class="relative inline-flex cursor-pointer items-center">
+                <input id="switch-7" type="checkbox" class="peer sr-only" />
+                <label for="switch-7" class="hidden"></label>
+                <div class="peer h-4 w-11 rounded border bg-slate-200 after:absolute after:-top-1 after:left-0 after:h-6 after:w-6 after:rounded-md after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-green-300 peer-checked:after:translate-x-full peer-focus:ring-green-300"></div>
+              </label>
+            </div>
+          </mat-expansion-panel>
         </mat-accordion>
       </div>
 
+      <div class="container mx-auto w-11/12 xl:w-full">
+              <div class="w-full py-4 sm:px-0 bg-white dark:bg-gray-800 flex justify-end">
+                <button role="button" aria-label="cancel form" class="bg-gray-200 focus:outline-none transition duration-150 ease-in-out hover:bg-gray-300 dark:bg-gray-700 rounded text-indigo-600 dark:text-indigo-600 px-6 py-2 text-xs mr-4 focus:ring-2 focus:ring-offset-2 focus:ring-gray-700">Cancel</button>
+                <button role="button" aria-label="Save form" class="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 bg-indigo-700 focus:outline-none transition duration-150 ease-in-out hover:bg-indigo-600 rounded text-white px-8 py-2 text-sm" type="submit">Save</button>
+              </div>
+            </div>
     </div>
 
   </mat-tab>
   <mat-tab label="Notifications">
 
-    <div class="pb-4 border-b border-gray-300 dark:border-gray-700 px-8">
-      <div class="flex items-center text-gray-800 dark:text-gray-100">
-        <img class="dark:hidden" src="https://tuk-cdn.s3.amazonaws.com/can-uploader/simple_form-svg8.svg" alt="notification">
-        <img class="dark:hidden" src="https://tuk-cdn.s3.amazonaws.com/can-uploader/simple_form-svg8dark.svg" alt="notification">
-        <p class="text-sm font-bold ml-2 text-gray-800 dark:text-gray-100">Push Notifications</p>
+    <div class="flex flex-col justify-center items-center h-[100vh]">
+      <div class="relative flex flex-col items-center rounded-[20px] w-max-content max-w-[95%] mx-auto bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:!shadow-none p-5 pb-8 transition duration-200 linear">
+        <div class="flex flex-col">
+          <div class="mt-3 flex items-center gap-3">
+            <label class="relative inline-flex cursor-pointer items-center">
+              <input id="checkbox1"  type="checkbox" class="peer sr-only" />
+              <div class="peer h-4 w-11 rounded border bg-slate-200 after:absolute after:-top-1 after:left-0 after:h-6 after:w-6 after:rounded-md after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-green-300 peer-checked:after:translate-x-full peer-focus:ring-green-300"></div>
+            </label>
+            <label
+              for="checkbox1"
+              class="text-base font-medium text-navy-700 dark:text-white"
+            >
+              Buyer review notifications
+            </label>
+          </div>
+
+          <div class="mt-4 flex items-center gap-3">
+            <label class="relative inline-flex cursor-pointer items-center">
+            <input id="checkbox2"  type="checkbox" class="peer sr-only" />
+            <div class="peer h-4 w-11 rounded border bg-slate-200 after:absolute after:-top-1 after:left-0 after:h-6 after:w-6 after:rounded-md after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-green-300 peer-checked:after:translate-x-full peer-focus:ring-green-300"></div>
+            </label>
+            <label
+              for="checkbox2"
+              class="text-base font-medium text-navy-700 dark:text-white"
+            >
+              Buyer review notifications
+            </label>
+          </div>
+
+          <div class="mt-4 flex items-center gap-3">
+            <label class="relative inline-flex cursor-pointer items-center">
+              <input id="checkbox3"  type="checkbox" class="peer sr-only" />
+              <div class="peer h-4 w-11 rounded border bg-slate-200 after:absolute after:-top-1 after:left-0 after:h-6 after:w-6 after:rounded-md after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-green-300 peer-checked:after:translate-x-full peer-focus:ring-green-300"></div>
+            </label>
+            <label
+              for="checkbox3"
+              class="text-base font-medium text-navy-700 dark:text-white"
+            >
+              Rating reminders notifications
+            </label>
+          </div>
+
+          <div class="mt-4 flex items-center gap-3">
+            <label class="relative inline-flex cursor-pointer items-center">
+              <input id="checkbox4"  type="checkbox" class="peer sr-only" />
+              <div class="peer h-4 w-11 rounded border bg-slate-200 after:absolute after:-top-1 after:left-0 after:h-6 after:w-6 after:rounded-md after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-green-300 peer-checked:after:translate-x-full peer-focus:ring-green-300"></div>
+            </label>
+            <label
+              for="checkbox4"
+              class="text-base font-medium text-navy-700 dark:text-white"
+            >
+              Meetups near you notifications
+            </label>
+          </div>
+
+          <div class="mt-4 flex items-center gap-3">
+            <label class="relative inline-flex cursor-pointer items-center">
+              <input id="checkbox5"  type="checkbox" class="peer sr-only" />
+              <div class="peer h-4 w-11 rounded border bg-slate-200 after:absolute after:-top-1 after:left-0 after:h-6 after:w-6 after:rounded-md after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-green-300 peer-checked:after:translate-x-full peer-focus:ring-green-300"></div>
+            </label>
+            <label
+              for="checkbox5"
+              class="text-base font-medium text-navy-700 dark:text-white"
+            >
+              Company news notifications
+            </label>
+          </div>
+
+          <div class="mt-4 flex items-center gap-3">
+            <label class="relative inline-flex cursor-pointer items-center">
+              <input id="checkbox6"  type="checkbox" class="peer sr-only" />
+              <div class="peer h-4 w-11 rounded border bg-slate-200 after:absolute after:-top-1 after:left-0 after:h-6 after:w-6 after:rounded-md after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-green-300 peer-checked:after:translate-x-full peer-focus:ring-green-300"></div>
+            </label>
+            <label
+              for="checkbox6"
+              class="text-base font-medium text-navy-700 dark:text-white"
+            >
+              New launches and projects
+            </label>
+          </div>
+          <div class="mt-4 flex items-center gap-3">
+            <label class="relative inline-flex cursor-pointer items-center">
+              <input id="checkbox7"  type="checkbox" class="peer sr-only" />
+              <div class="peer h-4 w-11 rounded border bg-slate-200 after:absolute after:-top-1 after:left-0 after:h-6 after:w-6 after:rounded-md after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-green-300 peer-checked:after:translate-x-full peer-focus:ring-green-300"></div>
+            </label>
+            <label
+              for="checkbox7"
+              class="text-base font-medium text-navy-700 dark:text-white"
+            >
+              Monthly product changes
+            </label>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="px-8">
-      <div class="flex justify-between items-center mb-8 mt-4">
-        <div class="w-9/12">
-          <p class="text-sm text-gray-800 dark:text-gray-100 pb-1">Comments</p>
-          <p id="cb4" class="text-sm text-gray-600 dark:text-gray-400">Get notified when a post or comment is made</p>
-        </div>
-        <div class="cursor-pointer rounded-full bg-gray-200 relative shadow-sm">
-          <input aria-labelledby="cb4" tabindex="0" type="checkbox" name="notification_comment" id="toggle4" class="focus:outline-none checkbox w-6 h-6 rounded-full bg-white dark:bg-gray-400 absolute shadow-sm appearance-none cursor-pointer border border-transparent top-0 bottom-0 m-auto" />
-          <label class="toggle-label block w-12 h-4 overflow-hidden rounded-full bg-gray-300 dark:bg-gray-800 cursor-pointer"></label>
-        </div>
-      </div>
-      <div class="flex justify-between items-center mb-8">
-        <div class="w-9/12">
-          <p class="text-sm text-gray-800 dark:text-gray-100 pb-1">Job Applications</p>
-          <p id="cb5" class="text-sm text-gray-600 dark:text-gray-400">Get notified when a candidate applies to a job posting</p>
-        </div>
-        <div class="cursor-pointer rounded-full bg-gray-200 relative shadow-sm">
-          <input aria-labelledby="cb5" tabindex="0" type="checkbox" name="notification_application" id="toggle5" class="focus:outline-none checkbox w-6 h-6 rounded-full bg-white dark:bg-gray-400 absolute shadow-sm appearance-none cursor-pointer border border-transparent top-0 bottom-0 m-auto" />
-          <label class="toggle-label block w-12 h-4 overflow-hidden rounded-full bg-gray-300 dark:bg-gray-800 cursor-pointer"></label>
-        </div>
-      </div>
-      <div class="flex justify-between items-center mb-8">
-        <div class="w-9/12">
-          <p class="text-sm text-gray-800 dark:text-gray-100 pb-1">Product Updates</p>
-          <p id="cb6" class="text-sm text-gray-600 dark:text-gray-400">Get notifitied when there is a new product feature or upgrades</p>
-        </div>
-        <div class="cursor-pointer rounded-full bg-gray-200 relative shadow-sm">
-          <input aria-labelledby="cb6" tabindex="0" type="checkbox" name="notification_updates" id="toggle6" class="focus:outline-none checkbox w-6 h-6 rounded-full bg-white dark:bg-gray-400 absolute shadow-sm appearance-none cursor-pointer border border-transparent top-0 bottom-0 m-auto" />
-          <label class="toggle-label block w-12 h-4 overflow-hidden rounded-full bg-gray-300 dark:bg-gray-800 cursor-pointer"></label>
-        </div>
+    <div class="container mx-auto w-11/12 xl:w-full">
+      <div class="w-full py-4 sm:px-0 bg-white dark:bg-gray-800 flex justify-end">
+        <button role="button" aria-label="cancel form" class="bg-gray-200 focus:outline-none transition duration-150 ease-in-out hover:bg-gray-300 dark:bg-gray-700 rounded text-indigo-600 dark:text-indigo-600 px-6 py-2 text-xs mr-4 focus:ring-2 focus:ring-offset-2 focus:ring-gray-700">Cancel</button>
+        <button role="button" aria-label="Save form" class="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 bg-indigo-700 focus:outline-none transition duration-150 ease-in-out hover:bg-indigo-600 rounded text-white px-8 py-2 text-sm" type="submit">Save</button>
       </div>
     </div>
+
   </mat-tab>
-  <mat-tab label="Currency">Currency Settings</mat-tab>
-  <mat-tab label="Animations">Animations</mat-tab>
+  <mat-tab label="Calculations">
+    Settings for : Calculate the rate of return for last 30days/1year/all period w
+    <br>
+    TODO: Create a currency directive.
+    <br>
+    Which should be input and would accept: currencyCode,value,AllowNegative
+  <hr>
+    TODO: Create Currency Formatter: Plus options here to modified
+     <a class="bg-purple-400" href="https://javascript.plainenglish.io/a-step-by-step-guide-to-build-a-currency-formatter-directive-for-angular-reactive-form-controls-d7e2c230d05b">Currency formmater</a>
+
+    <hr>
+
+    <div>
+      <label for="price" class="block text-sm font-medium leading-6 text-gray-900">Price</label>
+      <div class="relative mt-2 rounded-md shadow-sm">
+        <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+          <span class="text-gray-500 sm:text-sm">$</span>
+        </div>
+        <input type="text" name="price" id="price" class="block w-full rounded-md border-0 py-1.5 pl-7 pr-12 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="0.00" aria-describedby="price-currency">
+        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+          <span class="text-gray-500 sm:text-sm" id="price-currency">USD</span>
+        </div>
+      </div>
+    </div>
+
+  </mat-tab>
+  <mat-tab label="Animations">
+
+    TODO: Check different types of animation
+
+    <a class="bg-blue-400" href="https://tw-elements.com/docs/standard/content-styles/animations/">Link animation</a>
+
+
+  </mat-tab>
 </mat-tab-group>
 <!--<form id="login">-->
 <!--  <div class="bg-white dark:bg-gray-800">-->

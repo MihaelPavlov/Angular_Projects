@@ -59,13 +59,6 @@
       "likes": 0
     },
     {
-      "id": 4,
-      "newsId": 1,
-      "userId": 3,
-      "comment": "dq",
-      "likes": 0
-    },
-    {
       "id": 11,
       "newsId": 3,
       "userId": 3,
@@ -76,7 +69,7 @@
       "id": 13,
       "newsId": 1,
       "userId": 3,
-      "comment": "cxzczx12",
+      "comment": "gfdgfds dkasod kasokd oaskd os",
       "likes": 0
     },
     {
@@ -111,7 +104,7 @@
       "id": 18,
       "newsId": 3,
       "userId": 3,
-      "comment": "dsa",
+      "comment": "dsa1e1",
       "likes": 0
     }
   ],

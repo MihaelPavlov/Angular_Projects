@@ -12,7 +12,8 @@ import {selectAuthUser} from "../../../../shared/ngrx/auth/auth.selectors";
 
 @Component({
   selector: "details-comments-modal",
-  templateUrl: "details-comments-pop-up.component.html"
+  templateUrl: "details-comments-pop-up.component.html",
+  styleUrls:["details-comments-pop-up.component.scss"]
 })
 export class DetailsCommentsPopUpComponent implements OnInit {
   public user!: IUser | null

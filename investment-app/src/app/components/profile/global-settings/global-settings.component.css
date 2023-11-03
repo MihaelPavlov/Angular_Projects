@@ -1,3 +1,7 @@
+.index{
+  position: relative;
+  z-index: 0;
+}
 .example-action-buttons {
   padding-bottom: 20px;
 }

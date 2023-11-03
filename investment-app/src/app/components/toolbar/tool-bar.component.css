@@ -1,35 +1,17 @@
-.navbar {
-  background-color: #333; /* Dark background color */
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
-}
+/* Error: Can't find stylesheet to import.
+ *   ,
+ * 1 | @use "src/styles/colors";
+ *   | ^^^^^^^^^^^^^^^^^^^^^^^^
+ *   '
+ *   tool-bar.component.scss 1:1  root stylesheet */
 
-.logo a {
-  color: #ffcc00; /* Yellow text color */
-  font-size: 24px;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.nav-links {
-  list-style: none;
-  display: flex;
-  gap: 20px;
-}
-
-.nav-links li a {
-  color: #fff; /* White text color */
-  text-decoration: none;
-  font-weight: bold;
-  transition: color 0.3s ease-in-out;
-}
-
-.nav-links li a:hover {
-  color: #ffcc00; /* Yellow text color on hover */
-}
-
-.active{
-  background-color: #e67e22;
+body::before {
+  font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
+      "Droid Sans Mono", monospace, monospace;
+  white-space: pre;
+  display: block;
+  padding: 1em;
+  margin-bottom: 1em;
+  border-bottom: 2px solid black;
+  content: "Error: Can't find stylesheet to import.\a   \2577 \a 1 \2502  @use \"src/styles/colors\";\d\a   \2502  ^^^^^^^^^^^^^^^^^^^^^^^^\a   \2575 \a   tool-bar.component.scss 1:1  root stylesheet";
 }

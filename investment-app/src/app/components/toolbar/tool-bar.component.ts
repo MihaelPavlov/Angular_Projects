@@ -10,7 +10,7 @@ import {Logout} from "../../../shared/ngrx/auth/auth.actions";
 @Component({
   selector: "tool-bar",
   templateUrl: "tool-bar.component.html",
-  styleUrls: ["tool-bar.component.css"]
+  styleUrls: ["tool-bar.component.scss"]
 
 })
 export class ToolBarComponent implements AfterViewInit {

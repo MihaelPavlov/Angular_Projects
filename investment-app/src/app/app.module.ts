@@ -64,6 +64,9 @@ import {ProfileComponent} from "./components/profile/profile.component";
 import {DashboardComponent} from "./components/profile/dashboard/dashboard.component";
 import {MatTabsModule} from "@angular/material/tabs";
 import {GlobalSettingsComponent} from "./components/profile/global-settings/global-settings.component";
+import {UserInformationComponent} from "./components/profile/user-information/user-information.component";
+import {MatDrawer, MatSidenavModule} from "@angular/material/sidenav";
+import {ApiSourcesComponent} from "./components/profile/api-sources/api-sources.component";
 
 
 @NgModule({
@@ -90,7 +93,9 @@ import {GlobalSettingsComponent} from "./components/profile/global-settings/glob
     CryptoDoughnutChartComponent,
     ProfileComponent,
     DashboardComponent,
-    GlobalSettingsComponent
+    GlobalSettingsComponent,
+    UserInformationComponent,
+    ApiSourcesComponent,
   ],
   imports: [
     CommonModule,
@@ -117,6 +122,7 @@ import {GlobalSettingsComponent} from "./components/profile/global-settings/glob
     MatSortModule,
     MatTooltipModule,
     MatTabsModule,
+    MatSidenavModule,
     StoreModule.forRoot(reducers, {metaReducers}),
     EffectsModule.forRoot(InvestmentEffects, NewsEffects,CryptoAssetsEffects,AuthEffects)
   ],
