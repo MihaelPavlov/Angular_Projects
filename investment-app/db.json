@@ -90,7 +90,7 @@
       "id": 16,
       "newsId": 2,
       "userId": 3,
-      "comment": "ewq",
+      "comment": "ewqfg",
       "likes": 0
     },
     {
@@ -105,6 +105,27 @@
       "newsId": 3,
       "userId": 3,
       "comment": "dsa1e1",
+      "likes": 0
+    },
+    {
+      "id": 19,
+      "newsId": 1,
+      "userId": 3,
+      "comment": "dsa",
+      "likes": 0
+    },
+    {
+      "id": 21,
+      "newsId": 1,
+      "userId": 3,
+      "comment": "tess",
+      "likes": 0
+    },
+    {
+      "id": 22,
+      "newsId": 1,
+      "userId": 3,
+      "comment": "ewq",
       "likes": 0
     }
   ],
