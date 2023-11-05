@@ -127,6 +127,13 @@
       "userId": 3,
       "comment": "ewq",
       "likes": 0
+    },
+    {
+      "id": 23,
+      "newsId": 1,
+      "userId": 3,
+      "comment": "ewqewqesssswqe",
+      "likes": 0
     }
   ],
   "investments": [

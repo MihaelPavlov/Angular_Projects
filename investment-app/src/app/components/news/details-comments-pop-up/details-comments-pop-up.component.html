@@ -51,39 +51,7 @@
         type="submit">
         Submit
       </button>
+      <button class="float-right" mat-button mat-dialog-close="" color="primary">Close</button>
     </div>
   </div>
 </div>
-<!-- Display all comments using ngFor -->
-<div *ngFor="let comment of (this.newsById$ | async)?.comments; let i = index">
-  <mat-card *ngIf="!this.isEditing || (editingComment != null && editingComment.id != comment.id); else updateComment">
-    <mat-card-content>{{ comment.comment }}</mat-card-content>
-
-
-    <!-- Edit button for your own comments -->
-    <mat-card-actions *ngIf="this.user?.id === comment.userId">
-      <button mat-stroked-button color="primary" (click)="onStartEditing(comment)">Edit</button>
-      <button mat-stroked-button color="primary" (click)="onDeleteSubmit(comment.id)">Delete</button>
-    </mat-card-actions>
-  </mat-card>
-  <ng-template #updateComment>
-    <mat-card>
-
-      <textarea matInput [(ngModel)]="this.updateCommentText"></textarea>
-      <mat-card-actions>
-        <button mat-stroked-button color="warn" (click)="onEditSubmit()">Edit</button>
-        <button mat-stroked-button color="warn" (click)="this.onCancelEditing()">Cancel</button>
-      </mat-card-actions>
-    </mat-card>
-  </ng-template>
-</div>
-
-<!-- Button to add a new comment -->
-<div *ngIf="this.user != null" class="add-comment">
-  <textarea matInput placeholder="Add a comment" [(ngModel)]="this.newCommentText"></textarea>
-  <button mat-raised-button color="primary" (click)="this.onAddComment()">Add Comment</button>
-</div>
-
-<mat-card-actions>
-  <button mat-button mat-dialog-close="" color="primary">Close</button>
-</mat-card-actions>
