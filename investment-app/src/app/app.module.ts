@@ -67,6 +67,7 @@ import {GlobalSettingsComponent} from "./components/profile/global-settings/glob
 import {UserInformationComponent} from "./components/profile/user-information/user-information.component";
 import {MatDrawer, MatSidenavModule} from "@angular/material/sidenav";
 import {ApiSourcesComponent} from "./components/profile/api-sources/api-sources.component";
+import {WatchlistComponent} from "./components/profile/watchlist/watchlist.component";
 
 
 @NgModule({
@@ -96,6 +97,7 @@ import {ApiSourcesComponent} from "./components/profile/api-sources/api-sources.
     GlobalSettingsComponent,
     UserInformationComponent,
     ApiSourcesComponent,
+    WatchlistComponent
   ],
   imports: [
     CommonModule,

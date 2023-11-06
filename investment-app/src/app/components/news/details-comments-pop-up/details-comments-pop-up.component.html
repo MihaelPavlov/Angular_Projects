@@ -13,7 +13,7 @@
         </mat-card-content>
 
         <!-- Edit button for your own comments -->
-        <mat-card-actions *ngIf="this.user?.id === comment.userId">
+        <mat-card-actions class="block mt-2" *ngIf="this.user?.id === comment.userId">
           <button mat-stroked-button color="primary" (click)="onStartEditing(comment)">Edit</button>
           <button mat-stroked-button color="primary" (click)="onDeleteSubmit(comment.id)">Delete</button>
         </mat-card-actions>

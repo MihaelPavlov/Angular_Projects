@@ -1,0 +1,190 @@
+<section class="container py-10 px-4 mx-auto">
+  <div class="sm:flex sm:items-center sm:justify-between">
+    <div>
+      <div class="flex items-center gap-x-3">
+        <h2 class="text-lg font-medium text-gray-800 dark:text-white">Watchlist</h2>
+
+        <span class="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">240 items that you watch</span>
+      </div>
+
+      <p class="mt-1 text-sm text-gray-500 dark:text-gray-300">All assets that you currently watch.</p>
+    </div>
+
+    <div class="flex items-center mt-4 gap-x-3">
+      <button
+        class="flex items-center justify-center w-1/2 px-4 py-2 text-sm text-gray-700 transition-colors duration-200 bg-white border rounded-lg gap-x-2 sm:w-auto dark:hover:bg-gray-800 dark:bg-gray-900 hover:bg-gray-100 dark:text-gray-200 dark:border-gray-700">
+        <mat-icon>ios_share</mat-icon>
+
+        <span>Export</span>
+      </button>
+
+      <button
+        class="flex items-center justify-center w-1/2 px-4 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600">
+        <mat-icon>add_circle</mat-icon>
+
+        <span>Add vendor</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="mt-6 md:flex md:items-center md:justify-between">
+    <div
+      class="inline-flex overflow-hidden bg-white border divide-x rounded-lg dark:bg-gray-900 rtl:flex-row-reverse dark:border-gray-700 dark:divide-gray-700">
+      <button
+        class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 bg-gray-100 sm:text-sm dark:bg-gray-800 dark:text-gray-300">
+        View all
+      </button>
+
+      <button
+        class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 sm:text-sm dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100">
+        Crypto
+      </button>
+
+      <button
+        class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 sm:text-sm dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100">
+        Stocks
+      </button>
+    </div>
+
+    <div class="relative flex items-center mt-4 md:mt-0">
+            <span class="absolute">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                     stroke="currentColor" class="w-5 h-5 mx-3 text-gray-400 dark:text-gray-600">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
+                </svg>
+            </span>
+
+      <input type="text" placeholder="Search"
+             class="block w-full py-1.5 pr-5 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-80 placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40">
+    </div>
+  </div>
+
+  <div class="flex flex-col mt-6">
+    <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+        <div class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
+          <table mat-table multiTemplateDataRows [dataSource]="dataSource" class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+
+            <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef>Asset</th>
+              <td mat-cell *matCellDef="let element">
+                  <h2>{{element.name}}</h2>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef>Status</th>
+              <td mat-cell *matCellDef="let element">
+                <div
+                  class="inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
+                  {{element.status}}
+                </div>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="about">
+              <th mat-header-cell *matHeaderCellDef>Description</th>
+              <td mat-cell *matCellDef="let element" class="px-4 py-4 text-sm whitespace-nowrap">
+                <div>
+                  <h4 class="text-gray-700 dark:text-gray-200">{{element.about}}</h4>
+                  <p class="text-gray-500 dark:text-gray-400">{{element.about}}</p>
+                </div>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="change">
+              <th mat-header-cell *matHeaderCellDef>% Change</th>
+              <td mat-cell *matCellDef="let element" class="px-4 py-4 text-sm whitespace-nowrap">
+                <div
+                  class="inline px-3 py-1 text-sm font-normal rounded-full text-red-400-500 gap-x-2 bg-red-100/60 dark:bg-gray-800">
+                  {{element.change}}
+                </div>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="marketCap">
+              <th mat-header-cell *matHeaderCellDef>MarketCap</th>
+              <td mat-cell *matCellDef="let element" class="px-4 py-4 text-sm whitespace-nowrap">
+                <div
+                  class="inline px-3 py-1 text-sm font-normal rounded-full text-blue-400-500 gap-x-2 bg-blue-100/60 dark:bg-gray-800">
+                  {{element.marketCap}}
+                </div>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="expand">
+              <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+              <td mat-cell *matCellDef="let element">
+                <button mat-icon-button aria-label="expand row" (click)="(expandedElement = expandedElement === element ? null : element); $event.stopPropagation()">
+                  <mat-icon *ngIf="expandedElement !== element">keyboard_arrow_down</mat-icon>
+                  <mat-icon *ngIf="expandedElement === element">keyboard_arrow_up</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="expandedDetail">
+              <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayWithExpand.length">
+                <div class="example-element-detail"
+                     [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                  <div class="example-element-diagram">
+                    <div class="example-element-position"> {{element.symbol}} </div>
+                    <div class="example-element-symbol"> {{element.name}} </div>
+                    <div class="example-element-name"> {{element.status}} </div>
+                  </div>
+                  <div class="example-element-description">
+                    {{element.about}}
+                    <span class="example-element-description-attribution"> -- Wikipedia </span>
+                  </div>
+                </div>
+              </td>
+            </ng-container>
+<!--            <ng-container matColumnDef="actions">-->
+<!--              <th mat-header-cell *matHeaderCellDef>Actions</th>-->
+<!--              <td mat-cell *matCellDef="let element" class="px-4 py-4 text-sm whitespace-nowrap">-->
+<!--                <button-->
+<!--                  class="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100">-->
+<!--                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"-->
+<!--                       stroke="currentColor" class="w-6 h-6">-->
+<!--                    <path stroke-linecap="round" stroke-linejoin="round"-->
+<!--                          d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"/>-->
+<!--                  </svg>-->
+<!--                </button>-->
+<!--              </td>-->
+<!--            </ng-container>-->
+            <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
+            <tr mat-row *matRowDef="let element; columns: columnsToDisplayWithExpand;"
+                class="example-element-row"
+                [class.example-expanded-row]="expandedElement === element"
+                (click)="expandedElement = expandedElement === element ? null : element">
+            </tr>
+            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+            </tbody>
+
+
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-6 sm:flex sm:items-center sm:justify-between ">
+    <div class="text-sm text-gray-500 dark:text-gray-400">
+      Page <span class="font-medium text-gray-700 dark:text-gray-100">1 of 10</span>
+    </div>
+
+    <div class="flex items-center mt-4 gap-x-4 sm:mt-0">
+      <a href="#"
+         class="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md sm:w-auto gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800">
+        <mat-icon>arrow_back</mat-icon>
+        <span>
+          previous
+        </span>
+      </a>
+
+      <a href="#"
+         class="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md sm:w-auto gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800">
+        <span>
+          Next
+        </span>
+        <mat-icon>arrow_forward</mat-icon>
+      </a>
+    </div>
+  </div>
+</section>

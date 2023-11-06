@@ -17,6 +17,7 @@ import {DashboardComponent} from "../components/profile/dashboard/dashboard.comp
 import {GlobalSettingsComponent} from "../components/profile/global-settings/global-settings.component";
 import {UserInformationComponent} from "../components/profile/user-information/user-information.component";
 import {ApiSourcesComponent} from "../components/profile/api-sources/api-sources.component";
+import {WatchlistComponent} from "../components/profile/watchlist/watchlist.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -33,7 +34,8 @@ const routes: Routes = [
   {path: 'dashboard', component: DashboardComponent},
   {path: 'global-settings', component: GlobalSettingsComponent},
   {path: 'user-information', component: UserInformationComponent},
-  {path: 'api-sources', component: ApiSourcesComponent}
+  {path: 'api-sources', component: ApiSourcesComponent},
+  {path: 'watchlist', component: WatchlistComponent}
 ]
 
 @NgModule({
