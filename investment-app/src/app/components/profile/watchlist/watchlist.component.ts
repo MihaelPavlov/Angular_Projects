@@ -14,7 +14,7 @@ const ELEMENT_DATA: Asset[] = [
   {symbol: "BTC", name: 'Bitcoin', status: 'On Market', about: 'Hdsadsa dqwd q dqwd wq', change: 10, marketCap:102},
   {symbol: "ETH", name: 'Ethereum', status: 'On Market', about: 'lorem20   ewqe wqewq', change: 210, marketCap:1012312},
   {symbol: "CAL", name: 'Calcium', status: 'Not On Market', about: 'He wqewq ewq', change: 10, marketCap:102},
-  {symbol: "LID", name: 'Lido', status: 'Pre Sale', about: 'H', change: 10, marketCap:102},
+  {symbol: "LID", name: 'Lido', status: 'Pre Sale', about: 'H', change: -45, marketCap:102},
 
 ];
 @Component({
