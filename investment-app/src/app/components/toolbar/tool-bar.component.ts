@@ -5,7 +5,6 @@ import {select, Store} from "@ngrx/store";
 import {AuthInitialState} from "../../../shared/ngrx/auth/auth.reducer";
 import {selectAuthUser} from "../../../shared/ngrx/auth/auth.selectors";
 import {Observable} from "rxjs";
-import {Logout} from "../../../shared/ngrx/auth/auth.actions";
 
 @Component({
   selector: "tool-bar",
@@ -21,10 +20,5 @@ export class ToolBarComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.user = this.store.pipe(select(selectAuthUser));
-  }
-
-  onLogout() {
-    this.store
-      .dispatch(new Logout())
   }
 }

@@ -3,6 +3,16 @@ import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/com
 import {Observable} from "rxjs";
 import {AuthService} from "../../lib/services/auth.service";
 
+/* check this files in vanguard project
+to understand how the authentication in identity server work
+* auth.service.ts
+* tools.service.ts
+* auth.guard.ts
+* html.module.ts
+* auth.interceptor.ts
+*
+*
+* */
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   constructor(private authService: AuthService) {

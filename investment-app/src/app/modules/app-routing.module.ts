@@ -18,6 +18,9 @@ import {GlobalSettingsComponent} from "../components/profile/global-settings/glo
 import {UserInformationComponent} from "../components/profile/user-information/user-information.component";
 import {ApiSourcesComponent} from "../components/profile/api-sources/api-sources.component";
 import {WatchlistComponent} from "../components/profile/watchlist/watchlist.component";
+import {
+  NotificationSettingsComponent
+} from "../components/profile/notification-settings/notification-settings.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -35,7 +38,8 @@ const routes: Routes = [
   {path: 'global-settings', component: GlobalSettingsComponent},
   {path: 'user-information', component: UserInformationComponent},
   {path: 'api-sources', component: ApiSourcesComponent},
-  {path: 'watchlist', component: WatchlistComponent}
+  {path: 'watchlist', component: WatchlistComponent},
+  {path: 'notification-settings', component: NotificationSettingsComponent},
 ]
 
 @NgModule({

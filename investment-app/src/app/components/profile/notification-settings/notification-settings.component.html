@@ -1,0 +1,147 @@
+<div >
+   <div class="flex flex-col top-0 left-0 w-96 bg-white h-full border-r">
+  <div class=" bg-gray-100 dark:bg-gray-800 rounded-xl p-5 mx-1 border shadow-sm">
+    <div class="inline-flex items-center justify-between w-full">
+      <h3 class="font-bold text-xl sm:text-2xl text-gray-800 dark:text-white">Notifications</h3>
+
+      <div class="flex justify-end">
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item >History Log</button>
+          <button mat-menu-item >Global Settings</button>
+          <button mat-menu-item class="hover:text-red-500" >Clear All</button>
+        </mat-menu>
+      </div>
+    </div>
+    <p class="mt-8 font-medium text-gray-500 text-sm sm:text-base dark:text-white">Today</p>
+    <div class="mt-2 px-6 py-4 bg-white rounded-lg shadow w-full">
+      <div class="flex items-center justify-between w-full">
+        <div class="inline-flex items-center">
+          <img
+            src="https://cdn-icons-png.flaticon.com/128/763/763812.png"
+            alt="Training Icon" class="w-6 h-6 mr-3">
+          <h3 class="font-bold text-base text-gray-800">Alert</h3>
+        </div>
+        <p class="text-xs text-gray-500">
+          2 min ago
+        </p>
+      </div>
+      <p class="mt-1 text-sm">
+        Check you stocks
+      </p>
+      <div class="flex justify-end">
+        <button
+          class="inline-flex items-end text-xs sm:text-sm bg-white px-2 sm:px-3 py-2 text-blue-500  rounded font-medium
+         shadow border focus:outline-none transform active:scale-75 transition-transform duration-700 hover:bg-blue-500
+          hover:text-white hover:-translate-y-1 hover:scale-110 dark:text-gray-800 dark:hover:bg-gray-100">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 sm:mr-2" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd"
+                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                  clip-rule="evenodd" />
+          </svg>
+          Remove
+        </button>
+      </div>
+    </div>
+    <div class="mt-2 px-6 py-4 bg-white rounded-lg shadow w-full">
+      <div class=" inline-flex items-center justify-between w-full">
+        <div class="inline-flex items-center">
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/893/893257.png"
+            alt="Messages Icon" class="w-6 h-6 mr-3">
+          <h3 class="font-bold text-base text-gray-800">Email</h3>
+        </div>
+        <p class="text-xs text-gray-500">
+          1 hour ago
+        </p>
+      </div>
+      <p class="mt-1 text-sm">
+        We send you the monthly update of your portfolio. Enjoy reading!
+      </p>
+      <div class="flex justify-end">
+        <button
+          class="inline-flex items-end text-xs sm:text-sm bg-white px-2 sm:px-3 py-2 text-blue-500  rounded font-medium
+         shadow border focus:outline-none transform active:scale-75 transition-transform duration-700 hover:bg-blue-500
+          hover:text-white hover:-translate-y-1 hover:scale-110 dark:text-gray-800 dark:hover:bg-gray-100">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 sm:mr-2" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd"
+                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                  clip-rule="evenodd" />
+          </svg>
+          Remove
+        </button>
+      </div>
+    </div>
+    <p class="mt-8 font-medium text-gray-500 dark:text-white text-sm sm:text-base">Yesterday</p>
+    <div class="mt-2 px-6 py-4 bg-white rounded-lg shadow w-full">
+      <div class="flex items-center justify-between w-full">
+        <div class="inline-flex items-center">
+          <img
+            src="https://cdn-icons-png.flaticon.com/128/763/763812.png"
+            alt="Training Icon" class="w-6 h-6 mr-3">
+          <h3 class="font-bold text-base text-gray-800">Alert</h3>
+        </div>
+        <p class="text-xs text-gray-500">
+          2 min ago
+        </p>
+      </div>
+      <p class="mt-1 text-sm">
+        Check you stocks
+      </p>
+      <div class="flex justify-end">
+        <button
+          class="inline-flex items-end text-xs sm:text-sm bg-white px-2 sm:px-3 py-2 text-blue-500  rounded font-medium
+         shadow border focus:outline-none transform active:scale-75 transition-transform duration-700 hover:bg-blue-500
+          hover:text-white hover:-translate-y-1 hover:scale-110 dark:text-gray-800 dark:hover:bg-gray-100">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 sm:mr-2" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd"
+                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                  clip-rule="evenodd" />
+          </svg>
+          Remove
+        </button>
+      </div>
+    </div>
+    <div class="mt-2 px-6 py-4 bg-white rounded-lg shadow w-full">
+      <div class="flex items-center justify-between w-full">
+        <div class="inline-flex items-center">
+          <img
+            src="https://cdn-icons-png.flaticon.com/128/763/763812.png"
+            alt="Training Icon" class="w-6 h-6 mr-3">
+          <h3 class="font-bold text-base text-gray-800">Alert</h3>
+        </div>
+        <p class="text-xs text-gray-500">
+          2 min ago
+        </p>
+      </div>
+      <p class="mt-1 text-sm">
+        Check you stocks
+      </p>
+      <div class="flex justify-end">
+        <button
+          class="inline-flex items-end text-xs sm:text-sm bg-white px-2 sm:px-3 py-2 text-blue-500  rounded font-medium
+         shadow border focus:outline-none transform active:scale-75 transition-transform duration-700 hover:bg-blue-500
+          hover:text-white hover:-translate-y-1 hover:scale-110 dark:text-gray-800 dark:hover:bg-gray-100">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 sm:mr-2" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd"
+                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                  clip-rule="evenodd" />
+          </svg>
+          Remove
+        </button>
+      </div>
+    </div>
+    <button
+      class="inline-flex text-sm bg-white justify-center px-4 py-2 mt-12 w-full text-red-500 items-center rounded font-medium
+     shadow border focus:outline-none transform active:scale-75 transition-transform duration-700 hover:bg-red-500
+      hover:text-white hover:-translate-y-1 hover:scale-110 dark:hover:bg-white dark:text-gray-800 dark:hover:text-gray-800">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 sm:mr-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      Clear all notifications
+    </button>
+  </div>
+   </div>
+</div>

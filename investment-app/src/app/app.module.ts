@@ -65,9 +65,12 @@ import {DashboardComponent} from "./components/profile/dashboard/dashboard.compo
 import {MatTabsModule} from "@angular/material/tabs";
 import {GlobalSettingsComponent} from "./components/profile/global-settings/global-settings.component";
 import {UserInformationComponent} from "./components/profile/user-information/user-information.component";
-import {MatDrawer, MatSidenavModule} from "@angular/material/sidenav";
+import {MatSidenavModule} from "@angular/material/sidenav";
 import {ApiSourcesComponent} from "./components/profile/api-sources/api-sources.component";
 import {WatchlistComponent} from "./components/profile/watchlist/watchlist.component";
+import {
+  NotificationSettingsComponent
+} from "./components/profile/notification-settings/notification-settings.component";
 
 
 @NgModule({
@@ -97,7 +100,8 @@ import {WatchlistComponent} from "./components/profile/watchlist/watchlist.compo
     GlobalSettingsComponent,
     UserInformationComponent,
     ApiSourcesComponent,
-    WatchlistComponent
+    WatchlistComponent,
+    NotificationSettingsComponent
   ],
   imports: [
     CommonModule,
@@ -126,7 +130,7 @@ import {WatchlistComponent} from "./components/profile/watchlist/watchlist.compo
     MatTabsModule,
     MatSidenavModule,
     StoreModule.forRoot(reducers, {metaReducers}),
-    EffectsModule.forRoot(InvestmentEffects, NewsEffects,CryptoAssetsEffects,AuthEffects)
+    EffectsModule.forRoot(InvestmentEffects, NewsEffects, CryptoAssetsEffects, AuthEffects)
   ],
   providers: [
     TOAST_DEFAULT_OPTIONS,

@@ -13,8 +13,23 @@
       <li><a>Welcome {{this.user.username}}</a></li>
       <li><a routerLinkActive="active" routerLink="/my-investments">My Investments</a></li>
       <li><a routerLinkActive="active" routerLink="/create">Add New Investment</a></li>
-      <li><a (click)="onLogout()">Logout</a></li>
+      <li>
+        <mat-drawer-container class="bg-none size" [hasBackdrop]="false">
+          <mat-drawer position="end" class="" #drawer1 mode="over">
+            <notification-settings></notification-settings>
+          </mat-drawer>
+          <mat-drawer-content class="mat-container ">
 
+            <div>
+              <button type="button" mat-button (click)="drawer1.toggle()">
+                <mat-icon class="text-white">notifications</mat-icon>
+              </button>
+            </div>
+          </mat-drawer-content>
+
+        </mat-drawer-container>
+
+      </li>
       <li>
         <mat-drawer-container class="bg-none size" [hasBackdrop]="false">
           <mat-drawer position="end" class="sidenav-custom-container" #drawer mode="over">
