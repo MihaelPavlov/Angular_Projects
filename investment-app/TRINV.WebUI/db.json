@@ -166,6 +166,16 @@
       "purchasePrice": 13,
       "currency": 3,
       "investmentType": 0
+    },
+    {
+      "userId": 3,
+      "investmentName": "dogecoin",
+      "symbol": "231",
+      "quantity": 231,
+      "purchasePrice": 231,
+      "currency": 0,
+      "investmentType": 0,
+      "id": 6
     }
   ],
   "notifications": [
