@@ -1,0 +1,40 @@
+﻿@page
+@model TRINV.IdentityServer.Pages.Account.Login.Index
+
+<form asp-page="/Account/Login/Index" novalidate id="form" name="form" class="form">
+	<input type="hidden" asp-for="Input.ReturnUrl" />
+	<input type="hidden" asp-for="Input.ResetPasswordUrl" />
+	<input type="hidden" asp-for="Input.IsExtrenalLogin" />
+
+	<h2 class="header">
+		Login
+	</h2>
+	<div class="content-section">
+		<div class="input-block u-margin-top-small">
+			<label asp-for="Input.Username" class="input-label">Email</label>
+			<input id="username" class="input-field" asp-for="Input.Username" required>
+			<span id="err_username" asp-validation-for="Input.Username" class="emsg"></span>
+		</div>
+
+		<div class="input-block u-margin-top-small">
+			<div class="password-title-wrapper">
+				<label asp-for="Input.Password" class="input-label">Password</label>
+				@if (!string.IsNullOrWhiteSpace(Model.Input.ResetPasswordUrl))
+				{
+					<a href="@Model.Input.ResetPasswordUrl" class="link">Forgot Password</a>
+				}
+			</div>
+
+			<div class="password_content">
+				<input asp-for="Input.Password" id="password" type="password" value="@Model.Input.Password" class="input-field" minlength="8" maxlength="100">
+				<input type="checkbox" id="togglePassword" />
+				<label id="passwordEyeLabel" for="togglePassword"></label>
+			</div>
+
+			<span id="err_password" asp-validation-for="Input.Password" class="emsg"></span>
+		</div>
+	</div>
+	<div class="info-section u-margin-top-medium">
+		<button id="submit" name="Input.Button" value="login" class="btn btn--blue">Continue</button>
+	</div>
+</form>
