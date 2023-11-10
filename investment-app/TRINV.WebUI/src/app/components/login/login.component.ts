@@ -41,7 +41,6 @@ ngOnInit() {
 
     // this.authService.login(String(this.loginForm.controls.email.value), String(this.loginForm.controls.password.value)).subscribe({
     //   next: result => {
-    //     console.log('login', result?.user)
     //     if (result != null) {
     //       this.authService.fetchUser(result.user);
     //       this.authService.setToken(result.accessToken);
@@ -55,7 +54,6 @@ ngOnInit() {
     //     this.isLoading = false;
     //   },
     //   error: response => {
-    //     console.log(response)
     //     this.toastService.error({message: `Something get wrong ${response.error}`, type: ToastType.Error})
     //     this.isLoading = false;
     //   }

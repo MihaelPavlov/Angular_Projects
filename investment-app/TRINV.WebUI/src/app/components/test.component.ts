@@ -12,7 +12,6 @@ export class TestComponent{
   });
 
   onSubmit(form: NgForm){
-    console.log(form)
-    this
+
   }
 }

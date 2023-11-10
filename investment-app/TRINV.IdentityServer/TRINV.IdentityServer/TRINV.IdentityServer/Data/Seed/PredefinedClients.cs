@@ -20,10 +20,11 @@ internal static class PredefinedClients
             RequireClientSecret = false,
 
             // Where to redirect to after login.
-            RedirectUris = { "https://localhost:5027/signin-oidc" }, //TODO: Change port
+            RedirectUris = { "https://localhost:5025/home/signin" },
+            AllowedCorsOrigins = { "https://localhost:5025" },
 
             // Where to redirect to after logout.
-            PostLogoutRedirectUris = { "https://localhost:5027/signout-callback-oidc" }, //TODO: Change port
+            PostLogoutRedirectUris = { "https://localhost:5025/signout-callback-oidc" },
 
             AllowedScopes =
                 {

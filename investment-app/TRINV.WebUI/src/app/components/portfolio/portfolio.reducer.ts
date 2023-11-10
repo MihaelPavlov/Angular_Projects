@@ -73,7 +73,6 @@ export function investmentsListReducer(state: InvestmentInitialState = initialSt
         isLoading: true,
       }
     case portfolioActions.DELETE_INVESTMENT_SUCCESS:
-      console.log('From delete success' , ...state.investments.filter(x => x.id !== action.payload.id))
       return {
         ...state,
         isLoading: false,
