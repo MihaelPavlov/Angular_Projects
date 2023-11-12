@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit} from "@angular/core";
+import {AfterViewInit, ChangeDetectorRef, Component, OnInit} from "@angular/core";
 import {AuthService} from "../../../lib/services/auth.service";
 
 @Component({
@@ -10,7 +10,13 @@ import {AuthService} from "../../../lib/services/auth.service";
 export class ToolBarComponent implements OnInit, AfterViewInit {
   public userAuthenticated = false;
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private cdRef: ChangeDetectorRef) {
+    this.authService.loginChanged
+      .subscribe(userAuthenticated => {
+        console.log('login changes, -> is user authenticaterd -> ' , userAuthenticated)
+        this.userAuthenticated = userAuthenticated;
+        this.cdRef.detectChanges();
+      })
   }
 
   ngOnInit() {
