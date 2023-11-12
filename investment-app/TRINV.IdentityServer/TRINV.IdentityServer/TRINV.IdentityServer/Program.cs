@@ -53,6 +53,9 @@ builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options => option
 // identity server
 builder.Services.AddIdentityServer(options =>
 {
+    options.Events.RaiseSuccessEvents = true;
+    options.Events.RaiseFailureEvents = true;
+    options.Events.RaiseErrorEvents = true;
     options.Caching.ResourceStoreExpiration = TimeSpan.FromMinutes(15);
     options.Caching.ClientStoreExpiration = TimeSpan.FromMinutes(15);
     options.ServerSideSessions.RemoveExpiredSessionsFrequency = TimeSpan.FromMinutes(60);

@@ -1,7 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthInitialState} from "../shared/ngrx/auth/auth.reducer";
-import {Store} from "@ngrx/store";
-import {AutoLogin} from "../shared/ngrx/auth/auth.actions";
+import {AuthService} from "../lib/services/auth.service";
 
 @Component({
   selector: 'app-root',
@@ -10,11 +8,20 @@ import {AutoLogin} from "../shared/ngrx/auth/auth.actions";
 })
 export class AppComponent implements OnInit {
   title = 'tracking-investments-app';
-
-  constructor(private store: Store<AuthInitialState>) {
+  public userAuthenticated = false;
+  constructor(private _authService: AuthService){
+    this._authService.loginChanged
+      .subscribe(userAuthenticated => {
+        console.log('login changes, -> is user authenticaterd -> ' , userAuthenticated)
+        this.userAuthenticated = userAuthenticated;
+      })
   }
 
-  ngOnInit() {
-    this.store.dispatch(new AutoLogin());
+  ngOnInit(): void {
+    this._authService.isAuthenticated()
+      .then(userAuthenticated => {
+        this.userAuthenticated = userAuthenticated;
+        console.log(' is user authenticaterd -> ' , userAuthenticated)
+      })
   }
 }

@@ -8,7 +8,6 @@ import * as fromNewsActions from "../news.action";
 import * as fromNewsSelectors from "../news.selectors";
 import {INews} from "../../../models/news";
 import {Observable} from "rxjs";
-import {selectAuthUser} from "../../../../shared/ngrx/auth/auth.selectors";
 
 @Component({
   selector: "details-comments-modal",
@@ -30,13 +29,13 @@ export class DetailsCommentsPopUpComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.store.pipe(select(selectAuthUser)).subscribe({
-      next: response => {
-        if (response != null) {
-          this.user = response;
-        }
-      }
-    })
+    // this.store.pipe(select(selectAuthUser)).subscribe({
+    //   next: response => {
+    //     if (response != null) {
+    //       this.user = response;
+    //     }
+    //   }
+    // })
     this.newsById$ = this.store.pipe(select(fromNewsSelectors.selectNewsById))
 
     this.store.dispatch(fromNewsActions.GetCommentsByNewsId({newsId: this.data.newsId}))

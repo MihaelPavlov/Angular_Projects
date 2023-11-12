@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace TRINV.InvestTrackApplication.Controllers;
 
+[Authorize]
 public class BaseController : Controller
 {
     [Authorize]

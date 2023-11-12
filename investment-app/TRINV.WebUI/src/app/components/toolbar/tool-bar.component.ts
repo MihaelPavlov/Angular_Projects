@@ -1,10 +1,5 @@
-import {AfterViewInit, Component} from "@angular/core";
+import {AfterViewInit, Component, OnInit} from "@angular/core";
 import {AuthService} from "../../../lib/services/auth.service";
-import {IUser} from "../../models/user";
-import {select, Store} from "@ngrx/store";
-import {AuthInitialState} from "../../../shared/ngrx/auth/auth.reducer";
-import {selectAuthUser} from "../../../shared/ngrx/auth/auth.selectors";
-import {Observable} from "rxjs";
 
 @Component({
   selector: "tool-bar",
@@ -12,13 +7,20 @@ import {Observable} from "rxjs";
   styleUrls: ["tool-bar.component.scss"]
 
 })
-export class ToolBarComponent implements AfterViewInit {
-  public user!: Observable<IUser | null>;
+export class ToolBarComponent implements OnInit, AfterViewInit {
+  public userAuthenticated = false;
 
-  constructor(private authService: AuthService, private store: Store<AuthInitialState>) {
+  constructor(private authService: AuthService) {
+  }
+
+  ngOnInit() {
+    this.authService.isAuthenticated()
+      .then(userAuthenticated => {
+        this.userAuthenticated = userAuthenticated;
+        console.log(' is user authenticaterd -> ' , userAuthenticated)
+      })
   }
 
   ngAfterViewInit() {
-    this.user = this.store.pipe(select(selectAuthUser));
   }
 }

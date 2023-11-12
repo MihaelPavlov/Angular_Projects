@@ -21,10 +21,14 @@ import {WatchlistComponent} from "../components/profile/watchlist/watchlist.comp
 import {
   NotificationSettingsComponent
 } from "../components/profile/notification-settings/notification-settings.component";
+import {SigninRedirectCallbackComponent} from "../components/sign-in-redirect-callback.component";
+import {SignoutRedirectCallbackComponent} from "../components/sign-out-redirect-callback.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'my-investments', component: InvestmentListComponent},
+  {path: 'signin-callback', component: SigninRedirectCallbackComponent},
+  {path: 'signout-callback', component: SignoutRedirectCallbackComponent},
   {path: 'create', canActivate: [AuthGuardService], component: AddUpdateInvestmentComponent},
   {path: 'update/:id', component: AddUpdateInvestmentComponent},
   {path: 'investment-details/:id', component: InvestmentDetailsComponent},

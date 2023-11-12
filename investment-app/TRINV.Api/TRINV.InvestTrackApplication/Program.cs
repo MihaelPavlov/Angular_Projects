@@ -5,7 +5,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services
-    .AddAuthentication("Bearer")
+    .AddAuthentication(config =>
+    {
+        config.DefaultScheme = "Bearer";
+    })
     .AddJwtBearer("Bearer", config =>
     {
         // Works with OpenId Connect.
@@ -44,7 +47,6 @@ app.UseCors(cors => cors
         .AllowAnyHeader()
         .AllowAnyMethod());
 
-app.UseHttpsRedirection();
 app.UseRouting();
 
 app.UseAuthentication();

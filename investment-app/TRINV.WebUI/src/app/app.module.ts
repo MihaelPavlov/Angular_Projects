@@ -22,7 +22,6 @@ import {InvestmentEffects} from "./components/portfolio/portfolio.effects";
 import {NewsEffects} from "./components/news/news.effects";
 import {CoinsComponent} from "./components/crypto_assets/coins/coins.component";
 import {CryptoAssetsEffects} from "./components/crypto_assets/crypto-assets.effects";
-import {AuthEffects} from "../shared/ngrx/auth/auth.effects";
 import {
   CryptoDoughnutChartComponent
 } from "./components/crypto_assets/charts/doughnut-chart/crypto-doughnut-chart.component";
@@ -38,6 +37,8 @@ import {
 import {SharedModule} from "./modules/shared/shared.module";
 import {StoreModule} from "@ngrx/store";
 import {metaReducers, reducers} from "../shared/ngrx/app.reducer";
+import {SigninRedirectCallbackComponent} from "./components/sign-in-redirect-callback.component";
+import {SignoutRedirectCallbackComponent} from "./components/sign-out-redirect-callback.component";
 
 @NgModule({
   declarations: [
@@ -61,12 +62,14 @@ import {metaReducers, reducers} from "../shared/ngrx/app.reducer";
     UserInformationComponent,
     ApiSourcesComponent,
     WatchlistComponent,
-    NotificationSettingsComponent
+    NotificationSettingsComponent,
+    SigninRedirectCallbackComponent,
+    SignoutRedirectCallbackComponent
   ],
   imports: [
     SharedModule,
     StoreModule.forRoot(reducers, {metaReducers}),
-    EffectsModule.forRoot(InvestmentEffects, NewsEffects, CryptoAssetsEffects, AuthEffects)
+    EffectsModule.forRoot(InvestmentEffects, NewsEffects, CryptoAssetsEffects)
   ],
   providers: [],
   bootstrap: [AppComponent]

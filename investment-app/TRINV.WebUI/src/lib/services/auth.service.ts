@@ -1,57 +1,76 @@
 import {Injectable} from "@angular/core";
-import {Observable} from "rxjs";
 import {IUser} from "../../app/models/user";
-import {RestApiService} from "./rest-api.service";
+import {UserManager, User, UserManagerSettings,} from 'oidc-client';
+import {Subject} from "rxjs";
 
 @Injectable({
   providedIn: "root"
 })
 export class AuthService {
-  private readonly tokenKey = 'aut_jwt_token';
-  public tokenExpirationTimer: any;
+  private readonly _userManager: UserManager;
+  private _user!: User | null;
+  private _loginChangedSubject = new Subject<boolean>();
+  public loginChanged = this._loginChangedSubject.asObservable();
 
-  constructor(private readonly restApiService: RestApiService) {
-
+  constructor() {
+    this._userManager = new UserManager(this.idpSettings);
   }
 
-  public isAuthenticated(): boolean {
-    return !!this.getToken();
+  public async loginStart() : Promise<void>{
+    await this._userManager.signinRedirect();
   }
 
-  public getTokenKey(): string {
-    return this.tokenKey;
+  // Called after loginStart is successfully
+  public loginFinish = (): Promise<User> => {
+    return this._userManager.signinRedirectCallback()
+      .then(user => {
+        this._user = user;
+        console.log('user -> ',this._user)
+        this._loginChangedSubject.next(this.isUserExpired(user));
+        return user;
+      })
   }
 
-  public getUserByToken(tokenData: { token: string, email: string }): Observable<IUser[]> {
-    return this.restApiService.get<IUser[]>(`users?email=${tokenData.email}`)
+  public async logoutStart() {
+    await this._userManager.signoutRedirect();
   }
 
-  public register(user: IUser): Observable<AuthResponseData | null> {
-    return this.restApiService.post<AuthResponseData>('register', user)
+  // Called after logoutStart is successfully
+  public logoutFinish() {
+    this._user = null;
+    return this._userManager.signoutRedirectCallback();
   }
 
-  public login(email: string, password: string): Observable<AuthResponseData | null> {
-    return this.restApiService.post<AuthResponseData>('login', {email, password});
+  public isAuthenticated = (): Promise<boolean> => {
+    return this._userManager.getUser()
+      .then(user => {
+        if (this._user !== user) {
+          this._loginChangedSubject.next(this.isUserExpired(user));
+        }
+
+        this._user = user;
+        return this.isUserExpired(user);
+      })
   }
 
-  public setToken(token: string, email: string) {
-    localStorage.setItem(this.tokenKey, JSON.stringify({token, email}));
+  private isUserExpired = (user: User | null): boolean => {
+    return !!user && !user.expired;
   }
 
-  public getToken(): string | null {
-    return localStorage.getItem((this.tokenKey))
-  }
-
-  public logout(): void {
-    localStorage.removeItem(this.tokenKey);
-
-    if (this.tokenExpirationTimer) {
-      clearTimeout(this.tokenExpirationTimer);
+  private get idpSettings(): UserManagerSettings {
+    return {
+      authority: AuthConstants.idpAuthority, // Identity Server
+      client_id: AuthConstants.clientId, // Main Client
+      redirect_uri: `${AuthConstants.clientRoot}/signin-callback`, // After authentication where we are redirected
+      scope: "openid profile main_api",
+      response_type: "code",
+      post_logout_redirect_uri: `${AuthConstants.clientRoot}/signout-callback` // After logout where we are redirected
     }
   }
 }
 
-export interface AuthResponseData {
-  accessToken: string,
-  user: IUser
+export class AuthConstants {
+  public static clientRoot = "http://localhost:4200";
+  public static idpAuthority = "https://localhost:5001/"
+  public static clientId = "WebClient_ID";
 }

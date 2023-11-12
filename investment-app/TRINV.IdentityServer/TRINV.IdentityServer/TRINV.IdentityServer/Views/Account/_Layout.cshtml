@@ -10,13 +10,8 @@
     <link rel="icon" type="image/x-icon" href="~/favicon.png" />
 </head>
 <body>
-    <div class="page-wrapper">
-        <div class="inner-wrapper">
-            <img class="logo" src="~/img/hbr-logo.svg" />
-            <div class="content">
-                @RenderBody()
-            </div>
-        </div>
+    <div>
+        @RenderBody()
     </div>
 
     @RenderSection("scripts", required: false)

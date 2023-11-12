@@ -1,14 +1,8 @@
 import {Component, Input, OnDestroy, OnInit, ViewChild} from "@angular/core";
 import {
-  DoughnutAnimationOptions,
   ArcElement,
-  BarController,
-  BarElement,
-  CategoryScale,
-  Chart, DatasetController, DoughnutController, Legend, Animations,
-  LinearScale, LineController, LineElement,
-  PieController, PointElement, Title,
-  Tooltip, TooltipItem
+  Chart, DoughnutController, Legend, Title,
+  Tooltip,
 } from "chart.js";
 
 @Component({
@@ -23,7 +17,7 @@ export class CryptoDoughnutChartComponent implements OnInit, OnDestroy {
   public chart: any;
 
   constructor() {
-    Chart.register( Tooltip, Title, DoughnutController, ArcElement,Legend);
+    Chart.register(Tooltip, Title, DoughnutController, ArcElement, Legend);
   }
 
   ngOnDestroy(): void {
@@ -37,11 +31,11 @@ export class CryptoDoughnutChartComponent implements OnInit, OnDestroy {
       type: 'doughnut',
       data: this.data,
       options: {
-        animation: { duration: 1000 },
+        animation: {duration: 1000},
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-          tooltip:{
+          tooltip: {
             yAlign: 'top',
             xAlign: 'center',
             position: 'nearest',
@@ -49,12 +43,12 @@ export class CryptoDoughnutChartComponent implements OnInit, OnDestroy {
             axis: 'x',
           },
           legend: {
-            display:true,
+            display: true,
             position: 'bottom',
-            align:'center',
-            labels:{
-              boxWidth:20,
-              padding:15.0,
+            align: 'center',
+            labels: {
+              boxWidth: 20,
+              padding: 15.0,
             }
           },
           title: {

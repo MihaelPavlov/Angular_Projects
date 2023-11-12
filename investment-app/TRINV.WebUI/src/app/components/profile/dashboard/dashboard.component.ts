@@ -8,7 +8,6 @@ import {InvestmentService} from "../../../services/investment.service";
 import {Router} from "@angular/router";
 import {ToastService} from "../../../../lib/services/toast.service";
 import {AppState} from "../../../../shared/ngrx/app.reducer";
-import {selectAuthUser} from "../../../../shared/ngrx/auth/auth.selectors";
 import {Observable, Subscription} from "rxjs";
 import {IUser} from "../../../models/user";
 
@@ -32,13 +31,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
               private toastService: ToastService,
               private store: Store<AppState>) {
 
-    this.subscriptions.push(this.store.pipe(select(selectAuthUser)).subscribe({
-      next: response => {
-        if (response != null) {
-          this.user = response;
-        }
-      }
-    }));
+    // this.subscriptions.push(this.store.pipe(select(selectAuthUser)).subscribe({
+    //   next: response => {
+    //     if (response != null) {
+    //       this.user = response;
+    //     }
+    //   }
+    // }));
   }
 
   ngOnDestroy(): void {

@@ -29,8 +29,6 @@ import {FormatNumberPipe} from "../../pipes/round-number.pipe";
 import {ToastComponent} from "../../components/shared/toast/toast.component";
 import {DataListService} from "../../services/data-list.servie";
 import {AuthGuardService} from "../../guards/auth-guard.service";
-import {StoreModule} from "@ngrx/store";
-import {metaReducers, reducers} from "../../../shared/ngrx/app.reducer";
 import {TOAST_DEFAULT_OPTIONS} from "../../models/toast";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {AuthInterceptor} from "../../interceptors/auth.interceptor";

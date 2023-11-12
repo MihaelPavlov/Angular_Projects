@@ -18,14 +18,14 @@ internal static class PredefinedClients
             // Requires a PKCE code.
             RequirePkce = true,
             RequireClientSecret = false,
-
+            
             // Where to redirect to after login.
-            RedirectUris = { "https://localhost:5025/home/signin" },
-            AllowedCorsOrigins = { "https://localhost:5025" },
+            RedirectUris =new List<string> { "http://localhost:4200/signin-callback"},
+            AllowedCorsOrigins = { "http://localhost:4200" },
 
             // Where to redirect to after logout.
-            PostLogoutRedirectUris = { "https://localhost:5025/signout-callback-oidc" },
-
+            PostLogoutRedirectUris = new List<string> { "http://localhost:4200/signout-callback" },
+            //BackChannelLogoutUri = "http://localhost:4200/backchannel-logout",
             AllowedScopes =
                 {
                     "main_api",

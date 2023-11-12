@@ -8,7 +8,6 @@ import {Observable} from "rxjs";
 import {AuthService} from "../../../../lib/services/auth.service";
 import {IUser} from "../../../models/user";
 import {ToastService} from "../../../../lib/services/toast.service";
-import {ToastType} from "../../../models/toast";
 import {select, Store} from "@ngrx/store";
 import {IInvestment} from "../../../models/investment";
 import {AddInvestment, GetInvestmentById, UpdateInvestment} from "../portfolio.action";
@@ -16,7 +15,6 @@ import {selectInvestment} from "../portfolio.selectors";
 import {ICryptoAsset} from "../../../models/cryptoAsset";
 import {GetAllCoins} from "../../crypto_assets/crypto-assets.actions";
 import {selectCoinList} from "../../crypto_assets/crypto-assets.selectors";
-import {selectAuthUser} from "../../../../shared/ngrx/auth/auth.selectors";
 
 @Component({
   selector: "add-update-investment",
@@ -61,13 +59,13 @@ export class AddUpdateInvestmentComponent implements OnInit {
 
     this.updateModel();
 
-    this.store.pipe(select(selectAuthUser)).subscribe({
-      next: response => {
-        if (response != null) {
-          this.user = response;
-        }
-      }
-    })
+    // this.store.pipe(select(selectAuthUser)).subscribe({
+    //   next: response => {
+    //     if (response != null) {
+    //       this.user = response;
+    //     }
+    //   }
+    // })
   }
 
   updateModel(): void {

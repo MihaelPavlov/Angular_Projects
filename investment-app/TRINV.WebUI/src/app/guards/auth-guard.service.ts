@@ -1,24 +1,26 @@
 import {Injectable} from "@angular/core";
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from "@angular/router";
-import {Observable} from "rxjs";
 import {AuthService} from "../../lib/services/auth.service";
 import {ToastService} from "../../lib/services/toast.service";
 import {ToastType} from "../models/toast";
 
 @Injectable()
 export class AuthGuardService  {
+
   constructor(private authService: AuthService, private router: Router, private toastService: ToastService) {
   }
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+  async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
+    const userAuthenticated = await this.authService.isAuthenticated();
+    console.log('inside -> auth guard -> ', userAuthenticated)
 
-    if (this.authService.isAuthenticated()) {
+    if (userAuthenticated) {
       return true;
     } else {
-      this.toastService.error({message: "You are not allowed", type: ToastType.Error})
+      this.toastService.error({ message: "You are not allowed", type: ToastType.Error });
       this.router.navigate(['/']);
+      return false;
     }
-    return false;
   }
 
 }
