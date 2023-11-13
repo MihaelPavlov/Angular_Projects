@@ -4,7 +4,7 @@
   </div>
   <ul class="nav-links">
     <li><a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" routerLink="/">Home</a></li>
-    <li><a routerLinkActive="active" routerLink="/news">News</a></li>
+    <li><a routerLinkActive="active" (click)="testRequest()" routerLink="/news">News</a></li>
     <li><a routerLinkActive="active" routerLink="/coins">Coins</a></li>
     <ng-container *ngIf="!this.userAuthenticated">
       <li><a routerLinkActive="active" routerLink="/register">Sign Up</a></li>

@@ -1,5 +1,8 @@
 import {AfterViewInit, ChangeDetectorRef, Component, OnInit} from "@angular/core";
 import {AuthService} from "../../../lib/services/auth.service";
+import {RestApiService} from "../../../lib/services/rest-api.service";
+import {HttpClient} from "@angular/common/http";
+import {catchError, map, of, tap} from "rxjs";
 
 @Component({
   selector: "tool-bar",
@@ -10,7 +13,7 @@ import {AuthService} from "../../../lib/services/auth.service";
 export class ToolBarComponent implements OnInit, AfterViewInit {
   public userAuthenticated = false;
 
-  constructor(private authService: AuthService, private cdRef: ChangeDetectorRef) {
+  constructor(private authService: AuthService, private cdRef: ChangeDetectorRef,private http: HttpClient) {
     this.authService.loginChanged
       .subscribe(userAuthenticated => {
         console.log('login changes, -> is user authenticaterd -> ' , userAuthenticated)
@@ -27,6 +30,18 @@ export class ToolBarComponent implements OnInit, AfterViewInit {
       })
   }
 
+testRequest(){
+ this.http.get(`https://localhost:7201/`)
+    .pipe(
+      tap((result: any) => console.log("authenticated result from our resource-> ",result)),
+      catchError(error=>{
+        console.log('error from request -> ', error)
+        return of(error)
+      }))
+   .subscribe(response =>{
+     console.log('response from request ------->' , response)
+   });
+}
   ngAfterViewInit() {
   }
 }

@@ -39,6 +39,7 @@ import {StoreModule} from "@ngrx/store";
 import {metaReducers, reducers} from "../shared/ngrx/app.reducer";
 import {SigninRedirectCallbackComponent} from "./components/sign-in-redirect-callback.component";
 import {SignoutRedirectCallbackComponent} from "./components/sign-out-redirect-callback.component";
+import {UnauthorizedRedirectModalComponent} from "./components/unauthorized-redirect-modal.component";
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import {SignoutRedirectCallbackComponent} from "./components/sign-out-redirect-c
     WatchlistComponent,
     NotificationSettingsComponent,
     SigninRedirectCallbackComponent,
-    SignoutRedirectCallbackComponent
+    SignoutRedirectCallbackComponent,
+    UnauthorizedRedirectModalComponent
   ],
   imports: [
     SharedModule,

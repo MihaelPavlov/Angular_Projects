@@ -2,6 +2,7 @@ import {Injectable} from "@angular/core";
 import {IUser} from "../../app/models/user";
 import {UserManager, User, UserManagerSettings,} from 'oidc-client';
 import {Subject} from "rxjs";
+import {ActivatedRouteSnapshot} from "@angular/router";
 
 @Injectable({
   providedIn: "root"
@@ -18,6 +19,7 @@ export class AuthService {
 
   public async loginStart() : Promise<void>{
     await this._userManager.signinRedirect();
+
   }
 
   // Called after loginStart is successfully
@@ -50,6 +52,13 @@ export class AuthService {
 
         this._user = user;
         return this.isUserExpired(user);
+      })
+  }
+
+  public getAccessToken = (): Promise<string | null> => {
+    return this._userManager.getUser()
+      .then(user => {
+        return !!user && !user.expired ? user.access_token : null;
       })
   }
 
