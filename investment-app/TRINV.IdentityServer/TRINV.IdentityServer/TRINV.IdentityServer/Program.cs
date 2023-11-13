@@ -4,6 +4,7 @@ using TRINV.IdentityServer.Application.Infrastructure;
 using TRINV.IdentityServer.Data;
 using TRINV.IdentityServer.Data.Models;
 using TRINV.IdentityServer.Data.Seed;
+using TRINV.IdentityServer.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,8 +35,7 @@ if (environmentSettings.IsLocal)
 #region Configure Services
 
 // gates
-//builder.Services.AddRazorPages();
-builder.Services.AddControllersWithViews(); // TODO: Create ApiExceptionFilterAttribute for the controllers
+builder.Services.AddControllersWithViews(options => options.Filters.Add<ApiExceptionFilterAttribute>());
 
 // SQL server
 var sqlMigrationsAssemblyName = typeof(Program).Assembly.FullName;
@@ -89,7 +89,7 @@ var app = builder.Build();
 
 #region Configure Application
 
-app.UseExceptionHandler("/Home/ServerError");// TODO: Fix this exception handler
+app.UseExceptionHandler("/Home/ServerError");
 app.UseRouting();
 app.UseIdentityServer();
 //app.UseAuthorization();

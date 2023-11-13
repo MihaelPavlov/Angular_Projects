@@ -8,36 +8,28 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualBasic;
 using TRINV.IdentityServer.Data.Models;
 using TRINV.IdentityServer.Models;
-using static IdentityModel.OidcConstants;
 
 namespace TRINV.IdentityServer.Controllers;
 
 public class AccountController : Controller
 {
-    private readonly SignInManager<ApplicationUser> signInManager;
-    private readonly UserManager<ApplicationUser> userManager;
-    private readonly IIdentityServerInteractionService interaction;
-    private readonly IEventService events;
-    private readonly IAuthenticationSchemeProvider schemeProvider;
-    private readonly IIdentityProviderStore identityProviderStore;
+    readonly SignInManager<ApplicationUser> signInManager;
+    readonly UserManager<ApplicationUser> userManager;
+    readonly IIdentityServerInteractionService interaction;
+    readonly IEventService events;
 
     public AccountController(
         UserManager<ApplicationUser> userManager,
         SignInManager<ApplicationUser> signInManager,
          IIdentityServerInteractionService interaction,
-        IEventService events,
-       IAuthenticationSchemeProvider schemeProvider,
-        IIdentityProviderStore identityProviderStore)
+        IEventService events)
     {
         this.signInManager = signInManager;
         this.userManager = userManager;
         this.interaction = interaction;
         this.events = events;
-        this.schemeProvider = schemeProvider;
-        this.identityProviderStore = identityProviderStore;
     }
 
 
@@ -50,8 +42,7 @@ public class AccountController : Controller
             return View(new LoginViewModel { ReturnUrl = returnUrl });
         }
 
-        throw new ArgumentNullException("Context is not valid!");
-
+        return Redirect("/Home/Error");
     }
 
     [HttpPost]
@@ -60,7 +51,7 @@ public class AccountController : Controller
         var context = await interaction.GetAuthorizationContextAsync(model.ReturnUrl);
         if (ModelState.IsValid)
         {
-            var resultFromSignIn = await signInManager.PasswordSignInAsync(model.Username, model.Password, false, lockoutOnFailure: true);
+            var resultFromSignIn = await signInManager.PasswordSignInAsync(model.Username, model.Password, false, lockoutOnFailure: false);
 
             if (resultFromSignIn.Succeeded)
             {
@@ -89,23 +80,12 @@ public class AccountController : Controller
                 }
             }
 
-            await events.RaiseAsync(new UserLoginFailureEvent(model.Username, "invalid credentials", clientId: context?.Client.ClientId));
-            ModelState.AddModelError(string.Empty, "Invalid username or password");
         }
 
-        //var result = await this.signInManager
-        //    .PasswordSignInAsync(model.Username, model.Password, false, false);
+        await events.RaiseAsync(new UserLoginFailureEvent(model.Username, "invalid credentials", clientId: context?.Client.ClientId));
+        ModelState.AddModelError(string.Empty, "Invalid username or password");
 
-        //if (result.Succeeded)
-        //{
-        //    return Redirect(model.ReturnUrl);
-        //}
-        //else
-        //{
-        //    throw new UnauthorizedAccessException();
-        //}
-
-        return View();
+        return View(model);
     }
 
     [HttpGet]
@@ -211,7 +191,7 @@ public class AccountController : Controller
     {
         var logout = await interaction.GetLogoutContextAsync(logoutId);
 
-        var model  = new LoggedOutViewModel
+        var model = new LoggedOutViewModel
         {
             AutomaticRedirectAfterSignOut = false,
             PostLogoutRedirectUri = logout?.PostLogoutRedirectUri,
@@ -221,4 +201,9 @@ public class AccountController : Controller
         return Redirect(model.PostLogoutRedirectUri);
     }
 
+    [HttpGet]
+    public IActionResult AccessDenied()
+    {
+        return View();
+    }
 }

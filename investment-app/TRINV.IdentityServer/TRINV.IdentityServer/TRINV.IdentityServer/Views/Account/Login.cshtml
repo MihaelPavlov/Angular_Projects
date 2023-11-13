@@ -1,23 +1,26 @@
 ﻿@model TRINV.IdentityServer.Models.LoginViewModel
 
+<partial name="_ValidationSummary" />
+
+
 <form asp-controller="Account" asp-action="Login" method="post">
-        <input type="hidden" asp-for="ReturnUrl" />
-        <div>
-            <label>Username</label>
-            <input asp-for="Username" />
-        </div>
-        <div>
-            <label>Password</label>
-            <input asp-for="Password" />
-        </div>
-        <div>
-            <button type="submit">Login</button>
-        </div>
-    </form> 
+    <input type="hidden" asp-for="ReturnUrl" />
     <div>
-        <a asp-controller="Account"
-           asp-action="Register"
-           asp-route-returnUrl="@Model.ReturnUrl">
-            Register
-        </a>
+        <label asp-for="Username">Username</label>
+        <input asp-for="Username" />
     </div>
+    <div>
+        <label asp-for="Password">Password</label>
+        <input asp-for="Password" />
+    </div>
+    <div>
+        <button type="submit">Login</button>
+    </div>
+</form>
+<div>
+    <a asp-controller="Account"
+       asp-action="Register"
+       asp-route-returnUrl="@Model.ReturnUrl">
+        Register
+    </a>
+</div>
