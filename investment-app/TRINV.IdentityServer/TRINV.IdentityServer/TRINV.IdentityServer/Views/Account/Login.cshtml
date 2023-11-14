@@ -24,3 +24,66 @@
         Register
     </a>
 </div>
+
+
+<div class="login-container">
+    <form >
+        <div class="form-group">
+          
+            <label for="email">Email:</label>
+            <input type="text" id="email" >
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" >
+        </div>
+
+        <button type="submit">Login</button>
+    </form>
+</div>
+
+<style>
+    .login-container {
+        max-width: 300px;
+        margin: 0 auto;
+        padding: 40px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        background-color: rgba(255, 255, 255, 0.8);
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+    }
+
+    button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+
+    .error-message {
+        color: #ff0000;
+        margin-top: 10px;
+    }
+
+</style>
+
