@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TRINV.Application\TRINV.Application.csproj" />
+  </ItemGroup>
+
 </Project>

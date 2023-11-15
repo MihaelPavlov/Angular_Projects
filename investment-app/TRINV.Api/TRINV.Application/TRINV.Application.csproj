@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TRINV.Domain\TRINV.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
