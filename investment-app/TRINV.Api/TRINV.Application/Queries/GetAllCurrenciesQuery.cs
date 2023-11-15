@@ -2,7 +2,7 @@
 {
     
 
-    public class GetAllCurrencies
+    public class GetAllCurrenciesQuery
     {
 
     }
