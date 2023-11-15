@@ -13,4 +13,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TRINV.Application\TRINV.Application.csproj" />
+    <ProjectReference Include="..\TRINV.Infrastructure\TRINV.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
