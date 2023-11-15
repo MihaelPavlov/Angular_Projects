@@ -98,6 +98,7 @@ app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "[TRINT] Identity Server API V1");
 });
+app.UseStaticFiles();
 
 #endregion Configure Application
 

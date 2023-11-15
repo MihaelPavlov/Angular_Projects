@@ -1,89 +1,76 @@
 ﻿@model TRINV.IdentityServer.Models.LoginViewModel
 
-<partial name="_ValidationSummary" />
-
-
-<form asp-controller="Account" asp-action="Login" method="post">
-    <input type="hidden" asp-for="ReturnUrl" />
-    <div>
-        <label asp-for="Username">Username</label>
-        <input asp-for="Username" />
+<div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+    <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+        <img class="mx-auto h-10 w-auto" src="/images/cost_of_investment_icon.jpg" alt="Cost Of Investment Icon">
+        <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign in to your account</h2>
     </div>
-    <div>
-        <label asp-for="Password">Password</label>
-        <input asp-for="Password" />
+
+    <partial name="_ValidationSummary" />
+
+    <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        <form asp-controller="Account" asp-action="Login" method="post" class="space-y-6">
+            <input type="hidden" asp-for="ReturnUrl" />
+            <div>
+                <label asp-for="Email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
+                <div class="mt-2">
+                    <input asp-for="Email" type="email" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset color sm:text-sm sm:leading-6">
+                </div>
+            </div>
+
+            <div>
+                <div class="flex items-center justify-between">
+                    <label asp-for="Password" class="block text-sm font-medium leading-6 text-gray-900">Password</label>
+                    <div class="text-sm">
+                        <a class="font-semibold color">Forgot password?</a>
+                    </div>
+                </div>
+                <div class="mt-2">
+                    <input asp-for="Password" type="password" class="block w-full color rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6">
+                </div>
+            </div>
+
+            <div>
+                <button type="submit" class="flex w-full justify-center rounded-md bg-color px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">Sign in</button>
+            </div>
+        </form>
+
+        <p class="mt-10 text-center text-sm text-gray-500">
+            Not a member?
+            <a asp-controller="Account"
+               asp-action="Register"
+               asp-route-returnUrl="@Model.ReturnUrl"
+               class="font-semibold leading-6 color">
+                Start a 14 day free trial
+            </a>
+        </p>
     </div>
-    <div>
-        <button type="submit">Login</button>
-    </div>
-</form>
-<div>
-    <a asp-controller="Account"
-       asp-action="Register"
-       asp-route-returnUrl="@Model.ReturnUrl">
-        Register
-    </a>
-</div>
-
-
-<div class="login-container">
-    <form >
-        <div class="form-group">
-          
-            <label for="email">Email:</label>
-            <input type="text" id="email" >
-        </div>
-        <div class="form-group">
-            <label for="password">Password:</label>
-            <input type="password" id="password" >
-        </div>
-
-        <button type="submit">Login</button>
-    </form>
 </div>
 
 <style>
-    .login-container {
-        max-width: 300px;
-        margin: 0 auto;
-        padding: 40px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        background-color: rgba(255, 255, 255, 0.8);
+    .color {
+        color: #F1CA55;
     }
 
-    .form-group {
-        margin-bottom: 15px;
+        .color:hover {
+            color: #F1CA25;
+        }
+
+        .color:focus {
+            border-color: #F1CA55
+        }
+
+        .color:focus-visible {
+            border-color: #F1CA55
+        }
+    .bg-color {
+        background-color: #F1CA55;
     }
 
-    label {
-        display: block;
-        font-weight: bold;
-        margin-bottom: 5px;
-    }
-
-    input[type="text"],
-    input[type="password"] {
-        width: 100%;
-        padding: 8px;
-        border: 1px solid #ccc;
-        border-radius: 3px;
-    }
-
-    button {
-        background-color: #007bff;
-        color: #fff;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 3px;
-        cursor: pointer;
-    }
-
-    .error-message {
-        color: #ff0000;
-        margin-top: 10px;
-    }
+        .bg-color:hover {
+            background-color: #F1CA25;
+        }
 
 </style>
+
 

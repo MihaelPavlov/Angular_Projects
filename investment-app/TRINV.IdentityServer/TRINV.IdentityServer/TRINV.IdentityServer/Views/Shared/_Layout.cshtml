@@ -6,19 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
 
     <title>TR INV APP</title>
-
     <link rel="icon" type="image/x-icon" href="~/favicon.png" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
 </head>
 <body>
     <div class="page-wrapper">
-        <div class="inner-wrapper">
-            <img class="logo" src="~/img/hbr-logo.svg" />
-            <div class="content">
-                @RenderBody()
-            </div>
-        </div>
+        @RenderBody()
     </div>
-
     @RenderSection("scripts", required: false)
 </body>
 </html>

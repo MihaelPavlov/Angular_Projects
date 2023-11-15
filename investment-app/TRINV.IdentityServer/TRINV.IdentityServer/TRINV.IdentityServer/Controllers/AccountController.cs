@@ -51,11 +51,11 @@ public class AccountController : Controller
         var context = await interaction.GetAuthorizationContextAsync(model.ReturnUrl);
         if (ModelState.IsValid)
         {
-            var resultFromSignIn = await signInManager.PasswordSignInAsync(model.Username, model.Password, false, lockoutOnFailure: false);
+            var resultFromSignIn = await signInManager.PasswordSignInAsync(model.Email, model.Password, false, lockoutOnFailure: false);
 
             if (resultFromSignIn.Succeeded)
             {
-                var user = await userManager.FindByNameAsync(model.Username);
+                var user = await userManager.FindByNameAsync(model.Email);
                 await events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id.ToString(), user.UserName, clientId: context?.Client.ClientId));
 
                 if (context != null)
@@ -82,7 +82,7 @@ public class AccountController : Controller
 
         }
 
-        await events.RaiseAsync(new UserLoginFailureEvent(model.Username, "invalid credentials", clientId: context?.Client.ClientId));
+        await events.RaiseAsync(new UserLoginFailureEvent(model.Email, "invalid credentials", clientId: context?.Client.ClientId));
         ModelState.AddModelError(string.Empty, "Invalid username or password");
 
         return View(model);
