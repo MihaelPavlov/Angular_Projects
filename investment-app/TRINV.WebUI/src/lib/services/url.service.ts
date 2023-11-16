@@ -4,7 +4,7 @@ import {Injectable} from "@angular/core";
   providedIn:'root'
 })
 export class UrlService{
-  private originUrl = 'http://localhost:3000'
+  private originUrl = 'https://localhost:7201'
 
   generateUrl(): string{
    let url =new URL(`${this.originUrl}`);

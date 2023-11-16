@@ -19,7 +19,6 @@ export class AuthService {
 
   public async loginStart() : Promise<void>{
     await this._userManager.signinRedirect();
-
   }
 
   // Called after loginStart is successfully
