@@ -1,0 +1,20 @@
+
+table {
+  min-width: 90vh ;
+}
+
+.wrapper {
+  //width: 100vh ;
+  // margin: 5%;
+  padding: 20px;
+  max-height: 50rem;
+  margin-bottom: 20px;
+
+  font-family: 'Helvetica Neue', sans-serif;
+ }
+.bg-color{
+  background-color: #8f9096 !important;
+}
+.mat-mdc-dialog-surface {
+  overflow: hidden !important;
+}

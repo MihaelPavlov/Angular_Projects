@@ -1,5 +1,5 @@
 import {Component, OnInit, Renderer2, ViewChild} from "@angular/core";
-import {CoinService} from "../../../../lib/services/coin.service";
+import {CoinService} from "../../../../shared/services/coin.service";
 import {ICryptoAsset} from "../../../models/cryptoAsset";
 import {select, Store} from "@ngrx/store";
 import {Observable} from "rxjs";

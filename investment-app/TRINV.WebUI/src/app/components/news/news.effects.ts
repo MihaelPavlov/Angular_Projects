@@ -6,7 +6,7 @@ import {concatMap, map, mergeMap, of, switchMap, tap} from "rxjs";
 import {INews} from "../../models/news";
 import {NewsCommentsService} from "../../services/news-comments.service";
 import {IComment} from "../../models/comment";
-import {ToastService} from "../../../lib/services/toast.service";
+import {ToastService} from "../../../shared/services/toast.service";
 import {ToastType} from "../../models/toast";
 import {CreateNewsComment} from "./news.action";
 

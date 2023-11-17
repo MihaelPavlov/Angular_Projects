@@ -1,17 +1,18 @@
-import {AuthService} from "../../lib/services/auth.service";
+import {AuthService} from "../../shared/services/auth.service";
 import {Component, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
+import {PATH} from "../../shared/configs/path.configs";
 
 @Component({
-  selector: 'app-signout-redirect-callback',
+  selector: 'app-sign-out-redirect-callback',
   template: `<div></div>`
 })
-export class SignoutRedirectCallbackComponent implements OnInit {
+export class SignOutRedirectCallbackComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) { }
   ngOnInit(): void {
     this.authService.logoutFinish()
       .then(_ => {
-        this.router.navigate(['/'], { replaceUrl: true });
+        this.router.navigate([PATH.CLIENT.HOME], { replaceUrl: true });
       })
   }
 }

@@ -11,7 +11,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatMenuModule} from "@angular/material/menu";
 import {MatIconModule} from "@angular/material/icon";
 import {MatCardModule} from "@angular/material/card";
-import {HttpModule} from "../../../lib/http/http.module";
+import {HttpModule} from "../../../shared/http/http.module";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatDialogModule} from "@angular/material/dialog";
@@ -28,10 +28,10 @@ import {FormatNumberWithColorPipe} from "../../pipes/format-number-with-color.pi
 import {FormatNumberPipe} from "../../pipes/round-number.pipe";
 import {ToastComponent} from "../../components/shared/toast/toast.component";
 import {DataListService} from "../../services/data-list.servie";
-import {AuthGuardService} from "../../guards/auth-guard.service";
+import {AuthGuardService} from "../../../shared/http/auth-guard.service";
 import {TOAST_DEFAULT_OPTIONS} from "../../models/toast";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
-import {AuthInterceptor} from "../../interceptors/auth.interceptor";
+import {AuthInterceptor} from "../../../shared/http/auth.interceptor";
 
 const pipes = [
   CurrencyToSymbolPipe,

@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {RestApiService} from "../../lib/services/rest-api.service";
+import {RestApiService} from "../../shared/services/rest-api.service";
 import {BehaviorSubject, map, Observable} from "rxjs";
 import {IComment} from "../models/comment";
 

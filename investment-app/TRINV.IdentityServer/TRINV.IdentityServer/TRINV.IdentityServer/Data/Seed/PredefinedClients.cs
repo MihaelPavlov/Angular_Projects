@@ -20,11 +20,11 @@ internal static class PredefinedClients
             RequireClientSecret = false,
             
             // Where to redirect to after login.
-            RedirectUris =new List<string> { "http://localhost:4200/signin-callback"},
+            RedirectUris =new List<string> { "http://localhost:4200/sign-in-callback"},
             AllowedCorsOrigins = { "http://localhost:4200" },
 
             // Where to redirect to after logout.
-            PostLogoutRedirectUris = new List<string> { "http://localhost:4200/signout-callback" },
+            PostLogoutRedirectUris = new List<string> { "http://localhost:4200/sign-out-callback" },
             //BackChannelLogoutUri = "http://localhost:4200/backchannel-logout",
             AllowedScopes =
                 {
