@@ -6,7 +6,7 @@ import {DataListService} from "../../../services/data-list.servie";
 import {IInvestment} from "../../../models/investment";
 import {InvestmentService} from "../../../services/investment.service";
 import {Router} from "@angular/router";
-import {ToastService} from "../../../../lib/services/toast.service";
+import {ToastService} from "../../../../shared/services/toast.service";
 import {AppState} from "../../../../shared/ngrx/app.reducer";
 import {Observable, Subscription} from "rxjs";
 import {IUser} from "../../../models/user";

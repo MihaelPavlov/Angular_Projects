@@ -1,7 +1,5 @@
-import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {Component} from "@angular/core";
-import {AuthService} from "../../lib/services/auth.service";
-import {Router} from "@angular/router";
+import {AuthService} from "../../shared/services/auth.service";
 
 @Component({
   selector: "unauthorized-redirect-modal",

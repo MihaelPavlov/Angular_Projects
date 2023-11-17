@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {IInvestment} from "../models/investment";
 import { Observable} from "rxjs";
-import {RestApiService} from "../../lib/services/rest-api.service";
+import {RestApiService} from "../../shared/services/rest-api.service";
 
 @Injectable({
   providedIn: "root"

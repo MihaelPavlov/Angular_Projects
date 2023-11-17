@@ -1,5 +1,5 @@
-import {Component} from "@angular/core";
-import {AuthService} from "../../../lib/services/auth.service";
+import { Component} from "@angular/core";
+import {AuthService} from "../../../../shared/services/auth.service";
 
 @Component({
   selector: "register",

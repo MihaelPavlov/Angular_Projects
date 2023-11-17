@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
 import * as fromCryptoAssetsActions from "./crypto-assets.actions";
 import {concatMap, map} from "rxjs";
-import {CoinResult, CoinService} from "../../../lib/services/coin.service";
+import {CoinResult, CoinService} from "../../../shared/services/coin.service";
 
 @Injectable()
 export class CryptoAssetsEffects {

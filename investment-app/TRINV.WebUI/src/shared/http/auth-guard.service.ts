@@ -1,10 +1,10 @@
 import {Injectable} from "@angular/core";
 import {ActivatedRouteSnapshot, Router, RouterStateSnapshot} from "@angular/router";
-import {AuthService} from "../../lib/services/auth.service";
-import {ToastService} from "../../lib/services/toast.service";
-import {ToastType} from "../models/toast";
-import {MatDialog, MatDialogRef} from "@angular/material/dialog";
-import {UnauthorizedRedirectModalComponent} from "../components/unauthorized-redirect-modal.component";
+import {AuthService} from "../services/auth.service";
+import {ToastService} from "../services/toast.service";
+import {ToastType} from "../../app/models/toast";
+import {MatDialog} from "@angular/material/dialog";
+import {UnauthorizedRedirectModalComponent} from "../../app/components/unauthorized-redirect-modal.component";
 
 @Injectable()
 export class AuthGuardService {
