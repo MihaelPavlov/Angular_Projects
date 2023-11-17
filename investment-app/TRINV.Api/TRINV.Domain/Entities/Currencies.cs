@@ -1,4 +1,4 @@
-﻿namespace TRINV.Domain.Entity
+﻿namespace TRINV.Domain.Entities
 {
 
     public class Currencies
