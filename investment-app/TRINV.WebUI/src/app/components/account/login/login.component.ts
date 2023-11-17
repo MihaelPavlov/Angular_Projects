@@ -1,8 +1,8 @@
 import { Component, OnInit} from "@angular/core";
 import {AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from "@angular/forms";
-import {AuthService} from "../../../lib/services/auth.service";
+import {AuthService} from "../../../../shared/services/auth.service";
 import {Router} from "@angular/router";
-import {ToastService} from "../../../lib/services/toast.service";
+import {ToastService} from "../../../../shared/services/toast.service";
 import {select, Store} from "@ngrx/store";
 
 @Component({

@@ -3,7 +3,7 @@ import {IInvestment} from "../../../models/investment";
 import {InvestmentService} from "../../../services/investment.service";
 import {Router} from "@angular/router";
 import {IUser} from "../../../models/user";
-import {ToastService} from "../../../../lib/services/toast.service";
+import {ToastService} from "../../../../shared/services/toast.service";
 import {ToastType} from "../../../models/toast";
 import {MatSort} from "@angular/material/sort";
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";

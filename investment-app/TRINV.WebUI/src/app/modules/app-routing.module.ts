@@ -5,9 +5,9 @@ import {InvestmentListComponent} from "../components/portfolio/investment-list/i
 import {
   AddUpdateInvestmentComponent
 } from "../components/portfolio/add-update-investment/add-update-investment.component";
-import {RegisterComponent} from "../components/register/register.component";
-import {LoginComponent} from "../components/login/login.component";
-import {AuthGuardService} from "../guards/auth-guard.service";
+import {RegisterComponent} from "../components/account/register/register.component";
+import {LoginComponent} from "../components/account/login/login.component";
+import {AuthGuardService} from "../../shared/http/auth-guard.service";
 import {TestComponent} from "../components/test.component";
 import {NewsListComponent} from "../components/news/news-list/news-list.component";
 import {HomeComponent} from "../components/home/home.component";
@@ -21,14 +21,15 @@ import {WatchlistComponent} from "../components/profile/watchlist/watchlist.comp
 import {
   NotificationSettingsComponent
 } from "../components/profile/notification-settings/notification-settings.component";
-import {SigninRedirectCallbackComponent} from "../components/sign-in-redirect-callback.component";
-import {SignoutRedirectCallbackComponent} from "../components/sign-out-redirect-callback.component";
+import {SignInRedirectCallbackComponent} from "../components/account/sign-in-callback/sign-in-redirect-callback.component";
+import {SignOutRedirectCallbackComponent} from "../components/sign-out-redirect-callback.component";
+import {HistoryLogComponent} from "../components/shared/history-log/history-log.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'my-investments', canActivate: [AuthGuardService], component: InvestmentListComponent},
-  {path: 'signin-callback',component: SigninRedirectCallbackComponent},
-  {path: 'signout-callback', component: SignoutRedirectCallbackComponent},
+  {path: 'sign-in-callback',component: SignInRedirectCallbackComponent},
+  {path: 'sign-out-callback', component: SignOutRedirectCallbackComponent},
   {path: 'create', canActivate: [AuthGuardService], component: AddUpdateInvestmentComponent},
   {path: 'update/:id', canActivate: [AuthGuardService], component: AddUpdateInvestmentComponent},
   {path: 'investment-details/:id', canActivate: [AuthGuardService], component: InvestmentDetailsComponent},
@@ -44,6 +45,7 @@ const routes: Routes = [
   {path: 'api-sources', canActivate: [AuthGuardService], component: ApiSourcesComponent},
   {path: 'watchlist', canActivate: [AuthGuardService], component: WatchlistComponent},
   {path: 'notification-settings', canActivate: [AuthGuardService], component: NotificationSettingsComponent},
+  {path: 'history-log', canActivate: [AuthGuardService], component: HistoryLogComponent},
 ]
 
 @NgModule({

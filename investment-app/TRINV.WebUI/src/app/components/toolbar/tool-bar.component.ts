@@ -1,6 +1,6 @@
 import {AfterViewInit, ChangeDetectorRef, Component, OnInit} from "@angular/core";
-import {AuthService} from "../../../lib/services/auth.service";
-import {RestApiService} from "../../../lib/services/rest-api.service";
+import {AuthService} from "../../../shared/services/auth.service";
+import {RestApiService} from "../../../shared/services/rest-api.service";
 import {HttpClient} from "@angular/common/http";
 import {catchError, map, of, tap} from "rxjs";
 

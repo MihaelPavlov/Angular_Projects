@@ -1,7 +1,7 @@
 import {AfterViewInit, Component} from "@angular/core";
 import {Observable} from "rxjs";
 import {IUser} from "../../models/user";
-import {AuthService} from "../../../lib/services/auth.service";
+import {AuthService} from "../../../shared/services/auth.service";
 
 @Component({
   selector: "profile",
