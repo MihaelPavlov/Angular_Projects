@@ -9,7 +9,7 @@
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item >History Log</button>
+          <button mat-menu-item (click)="this.openDialogHistoryLog()" >History Log</button>
           <button mat-menu-item >Global Settings</button>
           <button mat-menu-item class="hover:text-red-500" >Clear All</button>
         </mat-menu>

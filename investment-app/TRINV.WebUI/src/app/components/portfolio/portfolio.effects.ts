@@ -4,7 +4,7 @@ import {InvestmentService} from "../../services/investment.service";
 import {Injectable} from "@angular/core";
 import * as fromInvestments from "./portfolio.action";
 import {IInvestment} from "../../models/investment";
-import {ToastService} from "../../../lib/services/toast.service";
+import {ToastService} from "../../../shared/services/toast.service";
 import {ToastType} from "../../models/toast";
 
 @Injectable()

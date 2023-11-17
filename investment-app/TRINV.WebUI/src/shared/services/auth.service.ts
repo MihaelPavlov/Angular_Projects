@@ -3,6 +3,9 @@ import {IUser} from "../../app/models/user";
 import {UserManager, User, UserManagerSettings,} from 'oidc-client';
 import {Subject} from "rxjs";
 import {ActivatedRouteSnapshot} from "@angular/router";
+import {PATH} from "../configs/path.configs";
+import {IdentityServerConfigs} from "../configs/identity-server.configs";
+import {URL_CLIENT} from "../configs/url.configs";
 
 @Injectable({
   providedIn: "root"
@@ -19,7 +22,6 @@ export class AuthService {
 
   public async loginStart() : Promise<void>{
     await this._userManager.signinRedirect();
-
   }
 
   // Called after loginStart is successfully
@@ -68,12 +70,12 @@ export class AuthService {
 
   private get idpSettings(): UserManagerSettings {
     return {
-      authority: AuthConstants.idpAuthority, // Identity Server
-      client_id: AuthConstants.clientId, // Main Client
-      redirect_uri: `${AuthConstants.clientRoot}/signin-callback`, // After authentication where we are redirected
-      scope: "openid profile main_api",
-      response_type: "code",
-      post_logout_redirect_uri: `${AuthConstants.clientRoot}/signout-callback` // After logout where we are redirected
+      authority: IdentityServerConfigs.URL_IDENTITY_SERVER, // Identity Server
+      client_id: IdentityServerConfigs.CLIENT_ID, // Main Client
+      redirect_uri: `${URL_CLIENT}/${PATH.CLIENT.ACCOUNT.SIGN_IN_CALLBACK}`, // After authentication where we are redirected
+      scope: IdentityServerConfigs.SCOPE_VARIABLES,
+      response_type: IdentityServerConfigs.RESPONSE_TYPE,
+      post_logout_redirect_uri: `${URL_CLIENT}/${PATH.CLIENT.ACCOUNT.SIGN_OUT_CALLBACK}` // After logout where we are redirected
     }
   }
 }

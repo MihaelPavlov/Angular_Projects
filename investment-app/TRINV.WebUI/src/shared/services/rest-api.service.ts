@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {map, Observable} from "rxjs";
-import {UrlService} from "./url.service";
+import {URL_INVEST_TRACKER} from "../configs/url.configs";
 
 @Injectable({
   providedIn: 'root'
@@ -9,8 +9,8 @@ import {UrlService} from "./url.service";
 export class RestApiService {
   private readonly baseUrl;
 
-  constructor(private http: HttpClient, private urlService: UrlService) {
-    this.baseUrl = urlService.generateUrl();
+  constructor(private http: HttpClient) {
+    this.baseUrl = URL_INVEST_TRACKER
   }
 
   public get<T>(path: string, options?: object): Observable<T> {

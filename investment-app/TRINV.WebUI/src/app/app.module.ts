@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
-import {LoginComponent} from "./components/login/login.component";
-import {RegisterComponent} from "./components/register/register.component";
+import {LoginComponent} from "./components/account/login/login.component";
+import {RegisterComponent} from "./components/account/register/register.component";
 import {
   AddUpdateInvestmentComponent
 } from "./components/portfolio/add-update-investment/add-update-investment.component";
@@ -37,9 +37,14 @@ import {
 import {SharedModule} from "./modules/shared/shared.module";
 import {StoreModule} from "@ngrx/store";
 import {metaReducers, reducers} from "../shared/ngrx/app.reducer";
-import {SigninRedirectCallbackComponent} from "./components/sign-in-redirect-callback.component";
-import {SignoutRedirectCallbackComponent} from "./components/sign-out-redirect-callback.component";
+import {
+  SignInRedirectCallbackComponent
+} from "./components/account/sign-in-callback/sign-in-redirect-callback.component";
+import {
+  SignOutRedirectCallbackComponent
+} from "./components/sign-out-redirect-callback.component";
 import {UnauthorizedRedirectModalComponent} from "./components/unauthorized-redirect-modal.component";
+import {HistoryLogComponent} from "./components/shared/history-log/history-log.component";
 
 @NgModule({
   declarations: [
@@ -64,9 +69,10 @@ import {UnauthorizedRedirectModalComponent} from "./components/unauthorized-redi
     ApiSourcesComponent,
     WatchlistComponent,
     NotificationSettingsComponent,
-    SigninRedirectCallbackComponent,
-    SignoutRedirectCallbackComponent,
-    UnauthorizedRedirectModalComponent
+    SignInRedirectCallbackComponent,
+    SignOutRedirectCallbackComponent,
+    UnauthorizedRedirectModalComponent,
+    HistoryLogComponent
   ],
   imports: [
     SharedModule,
