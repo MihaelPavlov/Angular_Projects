@@ -4,35 +4,20 @@ import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 import {DataListService} from "../../../services/data-list.servie";
 
-export interface PeriodicElement {
+export interface historyLogData {
   name: string;
-  position: number;
-  weight: number;
-  symbol: string;
+  action: string;
+  type: string;
+  removedDate: string;
 }
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
+const ELEMENT_DATA: historyLogData[] = [
+  {name: "test", action:"removed", removedDate:"13/05/2023",type:"Alert"},
+  {name: "Neww lorem", action:"added", removedDate:"13/05/2023",type:"Notification"},
+  {name: "test", action:"removed", removedDate:"13/05/2023",type:"Alert"},
+  {name: "test", action:"removed", removedDate:"13/05/2023",type:"Alert"},
+  {name: "test", action:"removed", removedDate:"13/05/2023",type:"Alert"},
+  {name: "test", action:"removed", removedDate:"13/05/2023",type:"Alert"},
+  {name: "test", action:"removed", removedDate:"13/05/2023",type:"Alert"}
 
 ];
 
@@ -44,13 +29,13 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class HistoryLogComponent implements OnInit{
   toppings = new FormControl('test');
 
-  toppingList: string[]= ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
-  displayedColumns: string[] = ['name', 'weight', 'symbol', 'position'];
+  toppingList: string[]= ['Action', 'Name', 'Description', 'Type', 'Removed Date', "Appear Date", "Details"];
+  displayedColumns: string[] = ['name', 'action', 'type', 'removedDate'];
   columnsToDisplay: string[] = this.displayedColumns.slice();
-  data!: MatTableDataSource<PeriodicElement> ;
+  data!: MatTableDataSource<historyLogData> ;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private dataListService: DataListService<PeriodicElement>) {
+  constructor(private dataListService: DataListService<historyLogData>) {
 }
   @ViewChild(MatPaginator) set matPaginator(mp: MatPaginator) {
     this.paginator = mp;
