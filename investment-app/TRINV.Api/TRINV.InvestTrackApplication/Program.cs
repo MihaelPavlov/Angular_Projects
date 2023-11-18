@@ -36,12 +36,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddMediatR(cfg =>
-{
-    cfg.RegisterServicesFromAssembly(typeof(GetAllCurrenciesQuery).Assembly);
-    cfg.RegisterServicesFromAssembly(typeof(GetAllCurrenciesHandler).Assembly);
-});
-builder.Services.AddScoped<IInvestmentAppDbContext>(provider => provider.GetService<InvestmentAppDbContext>()!);
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<Program>());
 
 var app = builder.Build();
 
