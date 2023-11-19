@@ -1,7 +1,7 @@
 ﻿namespace TRINV.Application.Interfaces
 {
 
-    public interface IInvestmentAppDbContext
+    public interface IUnitOfWork
     {
 
     }
