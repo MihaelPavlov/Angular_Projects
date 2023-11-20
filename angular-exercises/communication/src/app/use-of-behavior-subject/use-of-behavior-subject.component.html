@@ -1,0 +1,11 @@
+<div class="container">
+  <div class="row">
+    <div  *ngFor ="let pokemon of (pokemons | async)" class="col-md-4">
+      <div class="pokemon-card">
+        <img src="{{pokemon.url}}" alt="{{pokemon.name}}">
+        <h3>{{pokemon.name}}</h3>
+        <p>{{pokemon.id}}</p>
+      </div>
+    </div>
+  </div>
+</div>
