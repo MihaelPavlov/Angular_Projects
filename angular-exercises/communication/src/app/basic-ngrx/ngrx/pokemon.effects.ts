@@ -1,9 +1,9 @@
 import {Injectable} from "@angular/core";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
-import * as pokemonActions from "./pokemon.actions";
+import {GetAllPokemons, GetAllPokemonsSuccess} from "./pokemon.actions";
 import {PokemonService} from "../services/pokemon.service";
 import {Pokemon} from "../../models/pokemon";
-import {map, of, switchMap} from "rxjs";
+import {delay, map, of, switchMap} from "rxjs";
 
 @Injectable({
   providedIn:"root"
@@ -12,13 +12,24 @@ export class PokemonsEffects {
 
   getPokemons$ = createEffect(()=> {
     return this.actions$.pipe(
-      ofType(pokemonActions.GET_ALL_POKEMONS),
-      switchMap((data: pokemonActions.GetAllPokemons) => {
+      ofType(GetAllPokemons),
+      switchMap(x => {
         return this.pokemonService.getPokemons()
-      })),
+      }),delay(2000),// Addind this delay to be able to see the loading
       map((pokemons: Pokemon[]) => {
-        return new pokemonActions.GetAllPokemonsSuccess({pokemons});
-      })
+        let mappedPokemons = [];
+        for (const pokemon of pokemons) {
+          const pokemonId = pokemon.url.split("/")[6];
+
+          mappedPokemons.push({
+            id: (pokemonId as unknown) as number,
+            name:pokemon.name,
+            url:`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonId}.png`
+          });
+        }
+
+        return GetAllPokemonsSuccess(mappedPokemons);
+      }))
   });
 
   constructor(
