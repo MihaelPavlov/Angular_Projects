@@ -2,14 +2,12 @@
 {
     using System;
     using System.Collections.Generic;
-
     using TRINV.IdentityServer.Exceptions;
     using Exceptions;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Filters;
     using Microsoft.Extensions.Logging;
-
 
     public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
     {
