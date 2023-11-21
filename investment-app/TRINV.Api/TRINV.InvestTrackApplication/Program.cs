@@ -28,10 +28,7 @@ builder.Services
             .RequireClaim("scope", "main_api")));
 
 builder.Services.AddCors();
-builder.Services.AddControllers(options =>
-{
-    options.Filters.Add(typeof(ApiExceptionFilterAttribute));
-});
+builder.Services.AddControllers(options => options.Filters.Add(typeof(ApiExceptionFilterAttribute)));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
