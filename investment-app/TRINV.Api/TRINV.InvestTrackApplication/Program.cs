@@ -1,9 +1,6 @@
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.IdentityModel.Tokens;
-using TRINV.Application.Handlers;
-using TRINV.Application.Interfaces;
-using TRINV.Application.Queries;
-using TRINV.Infrastructure;
+using TRINV.Shared.Business.Filters;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,12 +28,16 @@ builder.Services
             .RequireClaim("scope", "main_api")));
 
 builder.Services.AddCors();
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add(typeof(ApiExceptionFilterAttribute));
+});
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<Program>());
+
 
 
 
