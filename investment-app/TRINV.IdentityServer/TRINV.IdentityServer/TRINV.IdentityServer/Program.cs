@@ -4,7 +4,7 @@ using TRINV.IdentityServer.Application.Infrastructure;
 using TRINV.IdentityServer.Data;
 using TRINV.IdentityServer.Data.Models;
 using TRINV.IdentityServer.Data.Seed;
-using TRINV.IdentityServer.Filters;
+using TRINV.Shared.Business.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
