@@ -38,6 +38,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<Program>());
 
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
