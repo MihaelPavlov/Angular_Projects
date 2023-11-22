@@ -5,6 +5,11 @@
 
     public class Investment
     {
+        public Investment()
+        {
+            IsFromOutsideProvider = false;
+        }
+
         [Key]
         public int Id { get; set; }
 
