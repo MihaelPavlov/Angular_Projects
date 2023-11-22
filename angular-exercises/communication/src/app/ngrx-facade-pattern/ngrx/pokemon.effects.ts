@@ -3,10 +3,10 @@ import {Actions, createEffect, ofType} from "@ngrx/effects";
 import {PokemonService} from "../services/pokemon.service";
 import {Pokemon} from "../../models/pokemon";
 import {delay, map, switchMap} from "rxjs";
-import {pokemonsActions} from "./pokemon-1.actions";
+import {pokemonsActions} from "./pokemon.actions";
 
 @Injectable()
-export class PokemonsEffects_1 {
+export class PokemonsEffects {
   getPokemons1$ = createEffect(()=>
     this.actions$.pipe(
       ofType(pokemonsActions.load),
