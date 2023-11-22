@@ -2,8 +2,8 @@ import {inject, Injectable} from "@angular/core";
 import {Store} from "@ngrx/store";
 import {Observable} from "rxjs";
 import {Pokemon} from "../../models/pokemon";
-import * as pokemonActions from "../ngrx/pokemon-1.actions";
-import {fromPokemons} from "../ngrx/pokemon-1.selectors";
+import * as pokemonActions from "../ngrx/pokemon.actions";
+import {fromPokemons} from "../ngrx/pokemon.selectors";
 
 @Injectable({
   providedIn: "root"

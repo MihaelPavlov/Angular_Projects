@@ -1,5 +1,5 @@
 import {createSelector} from "@ngrx/store";
-import {pokemonFeature} from "./pokemon-1.reducers";
+import {pokemonFeature} from "./pokemon.reducers";
 import {Pokemon} from "../../models/pokemon";
 
 const {selectCustomersState, selectPokemons,selectIsLoading} = pokemonFeature;

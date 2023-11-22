@@ -1,4 +1,4 @@
-import {Component, inject} from "@angular/core";
+import {Component} from "@angular/core";
 import {Observable} from "rxjs";
 import {Pokemon} from "../models/pokemon";
 import {CommonModule} from "@angular/common";
@@ -21,8 +21,5 @@ export class NgrxFacadePatternComponent {
     pokemonFacade.load();
     this.pokemons = pokemonFacade.pokemons$;
     this.isLoading = pokemonFacade.isLoading$;
-    console.log(this.pokemons);
   }
-
-
 }
