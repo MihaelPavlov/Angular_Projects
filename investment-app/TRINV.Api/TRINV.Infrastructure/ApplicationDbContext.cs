@@ -17,6 +17,7 @@
 
         public DbSet<GlobalSetting> GlobalSettings { get; set; }
 
+        public DbSet<News> News { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
