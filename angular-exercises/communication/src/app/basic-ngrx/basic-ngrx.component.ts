@@ -1,7 +1,6 @@
 import {Component, OnInit,} from "@angular/core";
-import {HttpClientModule} from "@angular/common/http";
 import {CommonModule} from "@angular/common";
-import {select, Store, StoreModule} from "@ngrx/store";
+import {select, Store} from "@ngrx/store";
 import {selectIsLoading, selectPokemonList} from "./ngrx/pokemon.selectors";
 import {Observable} from "rxjs";
 import {Pokemon} from "../models/pokemon";

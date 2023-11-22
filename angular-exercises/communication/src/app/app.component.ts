@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import {UseOfBehaviorSubjectComponent} from "./use-of-behavior-subject/use-of-behavior-subject.component";
 import {BasicNgrxComponent} from "./basic-ngrx/basic-ngrx.component";
+import {NgrxFacadePatternComponent} from "./ngrx-facade-pattern/ngrx-facade-pattern.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, UseOfBehaviorSubjectComponent, BasicNgrxComponent],
+  imports: [CommonModule, RouterOutlet, UseOfBehaviorSubjectComponent, BasicNgrxComponent,NgrxFacadePatternComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
