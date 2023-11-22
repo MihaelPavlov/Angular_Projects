@@ -13,7 +13,9 @@
 
         }
 
-        public DbSet<Investment> Investments { get; set; } = null!;
+        public DbSet<Investment> Investments { get; set; }
+
+        public DbSet<GlobalSetting> GlobalSettings { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
