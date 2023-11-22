@@ -14,5 +14,11 @@
             public const int DescriptionMaxLength = 250;
         }
 
+        public static class News
+        {
+            public const int NameMaxLength = 50;
+            public const int DescriptionMaxLength = 250;
+            public const int ImageUrlMaxLength = 2000;
+        }
     }
 }
