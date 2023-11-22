@@ -1,11 +1,10 @@
 ﻿namespace TRINV.Infrastructure
 {
+    using Interfaces;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
 
-    public interface IApplicationDbContextFactory : IDbContextFactory<ApplicationDbContext>
-    {
-    }
+
 
     public class ApplicationDbContextFactory : IApplicationDbContextFactory
     {

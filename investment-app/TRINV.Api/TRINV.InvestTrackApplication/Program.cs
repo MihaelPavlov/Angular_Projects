@@ -1,13 +1,12 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using TRINV.Infrastructure;
+using TRINV.Infrastructure.Interfaces;
 using TRINV.Shared.Business.Filters;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 string connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
                           throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
