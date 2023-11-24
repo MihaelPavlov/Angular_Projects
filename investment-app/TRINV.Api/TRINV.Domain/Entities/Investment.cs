@@ -8,7 +8,6 @@ public class Investment
 {
     public Investment()
     {
-        IsFromOutsideProvider = false;
     }
 
     [Key]
@@ -38,4 +37,3 @@ public class Investment
 
     public bool IsFromOutsideProvider { get; set; }
 }
-
