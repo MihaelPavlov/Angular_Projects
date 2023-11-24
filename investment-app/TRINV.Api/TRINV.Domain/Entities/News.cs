@@ -7,9 +7,6 @@ public class News
 {
     public News()
     {
-        this.ViewsCount = 0;
-        this.UpVote = 0;
-        this.DownVote = 0;
     }
 
     [Key]
@@ -39,4 +36,3 @@ public class News
     public string ImageUrl { get; set; } = null!;
 
 }
-
