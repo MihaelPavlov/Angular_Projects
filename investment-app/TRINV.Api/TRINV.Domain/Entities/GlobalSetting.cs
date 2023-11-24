@@ -5,7 +5,6 @@ using static Validations.EntityValidationConstants.GlobalSetting;
 
 public class GlobalSetting
 {
-
     [Key]
     public int Id { get; set; }
 
@@ -19,4 +18,3 @@ public class GlobalSetting
 
     public bool IsManageable { get; set; }
 }
-
