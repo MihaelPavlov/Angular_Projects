@@ -6,8 +6,6 @@ public class NewsComment
 {
     public NewsComment()
     {
-        this.UpVote = 0;
-        this.DownVote = 0;
     }
 
     [Key]
@@ -27,4 +25,3 @@ public class NewsComment
 
     public DateTime UpdatedOn { get; set; }
 }
-
