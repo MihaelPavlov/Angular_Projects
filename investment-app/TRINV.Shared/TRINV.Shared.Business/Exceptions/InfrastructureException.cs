@@ -3,7 +3,7 @@
 public class InfrastructureException: Exception
 {
     /// <summary>
-    /// Any communication excpetions.
+    /// Any communication exceptions.
     /// </summary>
     /// <param name="message"></param>
     public InfrastructureException(string message) : base(message) { }

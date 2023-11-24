@@ -1,9 +1,5 @@
-﻿namespace TRINV.Application.Handlers
+﻿namespace TRINV.Application.Handlers;
+
+public class GetAllCurrenciesHandler
 {
-    
-
-    public class GetAllCurrenciesHandler
-    {
-
-    }
 }

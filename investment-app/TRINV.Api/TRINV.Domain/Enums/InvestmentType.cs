@@ -1,10 +1,8 @@
-﻿namespace TRINV.Domain.Enums
+﻿namespace TRINV.Domain.Enums;
+
+public enum InvestmentType
 {
-    
-    public enum InvestmentType
-    {
-        Stock = 0,
-        Cryptocurrency = 1,
-        SavingsAccount = 2,
-    }
+    Stock = 0,
+    Cryptocurrency = 1,
+    SavingsAccount = 2,
 }

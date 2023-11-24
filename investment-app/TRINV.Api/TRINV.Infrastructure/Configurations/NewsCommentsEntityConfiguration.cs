@@ -1,16 +1,15 @@
-﻿namespace TRINV.Infrastructure.Configurations
-{
-    using Microsoft.EntityFrameworkCore.Metadata.Builders;
-    using Microsoft.EntityFrameworkCore;
-    using Domain.Entities;
+﻿namespace TRINV.Infrastructure.Configurations;
 
-    internal class NewsCommentsEntityConfiguration : IEntityTypeConfiguration<NewsComment>
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore;
+using Domain.Entities;
+
+internal class NewsCommentsEntityConfiguration : IEntityTypeConfiguration<NewsComment>
+{
+    public void Configure(EntityTypeBuilder<NewsComment> builder)
     {
-        public void Configure(EntityTypeBuilder<NewsComment> builder)
-        {
-            builder
-                .Property(i => i.CreatedOn)
-                .HasDefaultValueSql("GETDATE()");
-        }
+        builder
+            .Property(i => i.CreatedOn)
+            .HasDefaultValueSql("GETDATE()");
     }
 }

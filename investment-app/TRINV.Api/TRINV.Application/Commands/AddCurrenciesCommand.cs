@@ -1,8 +1,5 @@
-﻿namespace TRINV.Application.Commands
-{
-    
-    public class AddCurrenciesCommand
-    {
+﻿namespace TRINV.Application.Commands;
 
-    }
+public class AddCurrenciesCommand
+{
 }
