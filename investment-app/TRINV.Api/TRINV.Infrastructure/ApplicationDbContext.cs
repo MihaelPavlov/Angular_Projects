@@ -2,11 +2,11 @@
 
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection;
 using Configurations;
 
 public class ApplicationDbContext : DbContext
 {
+
     public ApplicationDbContext() { }
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -24,12 +24,18 @@ public class ApplicationDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
-        Assembly configAssembly = Assembly.GetAssembly(typeof(InvestmentEntityConfigurations)) ??
-                                  Assembly.GetExecutingAssembly();
-
-        builder.ApplyConfigurationsFromAssembly(configAssembly);
+        CommonMapping.Configure(builder);
 
         base.OnModelCreating(builder);
     }
-}
 
+    protected override void OnConfiguring(DbContextOptionsBuilder builder)
+    {
+#if DEBUG
+        if (!builder.IsConfigured)
+        {
+            builder.UseSqlServer(@"Server=(local);Database=InvestTrackerDb;Trusted_Connection=True;TrustServerCertificate=True");
+        }
+#endif
+    }
+}

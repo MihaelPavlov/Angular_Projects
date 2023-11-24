@@ -5,21 +5,17 @@ using static Validations.EntityValidationConstants.GlobalSetting;
 
 public class GlobalSetting
 {
-    public GlobalSetting()
-    {
-        IsManageable = false;
-    }
 
     [Key]
     public int Id { get; set; }
 
     [Required]
     [MaxLength(NameMaxLength)]
-    public string Name { get; set; } = null!;
+    public string Name { get; set; } = string.Empty;
 
     [Required]
     [MaxLength(DescriptionMaxLength)]
-    public string Description { get; set; } = null!;
+    public string Description { get; set; } = string.Empty;
 
     public bool IsManageable { get; set; }
 }

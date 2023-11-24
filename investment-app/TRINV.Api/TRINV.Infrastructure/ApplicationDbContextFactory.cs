@@ -6,7 +6,8 @@ using Microsoft.Extensions.Configuration;
 
 public class ApplicationDbContextFactory : IApplicationDbContextFactory
 {
-    private readonly IConfiguration _connectionContext;
+    readonly IConfiguration _connectionContext;
+
     public ApplicationDbContextFactory(IConfiguration connectionContext)
     {
         _connectionContext = connectionContext;
@@ -25,4 +26,3 @@ public class ApplicationDbContextFactory : IApplicationDbContextFactory
         return new ApplicationDbContext(optionBuilder.Options);
     }
 }
-
