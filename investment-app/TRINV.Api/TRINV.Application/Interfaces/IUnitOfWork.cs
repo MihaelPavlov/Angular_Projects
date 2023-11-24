@@ -1,8 +1,6 @@
-﻿namespace TRINV.Application.Interfaces
+﻿namespace TRINV.Application.Interfaces;
+
+public interface IUnitOfWork
 {
 
-    public interface IUnitOfWork
-    {
-
-    }
 }

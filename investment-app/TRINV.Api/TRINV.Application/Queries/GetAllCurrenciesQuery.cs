@@ -1,9 +1,6 @@
-﻿namespace TRINV.Application.Queries
+﻿namespace TRINV.Application.Queries;
+
+public class GetAllCurrenciesQuery
 {
-    
 
-    public class GetAllCurrenciesQuery
-    {
-
-    }
 }
