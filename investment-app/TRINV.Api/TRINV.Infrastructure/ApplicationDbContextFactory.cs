@@ -1,30 +1,28 @@
-﻿namespace TRINV.Infrastructure
+﻿namespace TRINV.Infrastructure;
+
+using Interfaces;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+
+public class ApplicationDbContextFactory : IApplicationDbContextFactory
 {
-    using Interfaces;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Configuration;
+    readonly IConfiguration _connectionContext;
 
-
-
-    public class ApplicationDbContextFactory : IApplicationDbContextFactory
+    public ApplicationDbContextFactory(IConfiguration connectionContext)
     {
-        private readonly IConfiguration _connectionContext;
-        public ApplicationDbContextFactory(IConfiguration connectionContext)
-        {
-            _connectionContext = connectionContext;
-        }
+        _connectionContext = connectionContext;
+    }
 
-        public ApplicationDbContext CreateDbContext()
-        {
-            var connectionString = _connectionContext.GetConnectionString("DefaultConnection") ??
-                                   throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+    public ApplicationDbContext CreateDbContext()
+    {
+        var connectionString = _connectionContext.GetConnectionString("DefaultConnection") ??
+                               throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
-            var optionBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
-            optionBuilder
-                .UseSqlServer(connectionString)
-                .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+        var optionBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+        optionBuilder
+            .UseSqlServer(connectionString)
+            .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 
-            return new ApplicationDbContext(optionBuilder.Options);
-        }
+        return new ApplicationDbContext(optionBuilder.Options);
     }
 }

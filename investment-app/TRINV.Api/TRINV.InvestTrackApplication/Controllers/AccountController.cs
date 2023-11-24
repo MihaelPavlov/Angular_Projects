@@ -1,9 +1,9 @@
-﻿using MediatR;
+﻿namespace TRINV.InvestTrackApplication.Controllers;
+
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TRINV.InvestTrackApplication.Commands;
-
-namespace TRINV.InvestTrackApplication.Controllers;
+using Commands;
 
 [Route("[controller]")]
 public class AccountController : ControllerBase

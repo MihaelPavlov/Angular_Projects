@@ -1,4 +1,4 @@
-﻿namespace TRINV.IdentityServer.Exceptions;
+﻿namespace TRINV.Shared.Business.Exceptions;
 
 public class ValidationErrorsException : Exception
 {

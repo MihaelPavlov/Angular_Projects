@@ -1,10 +1,8 @@
-﻿namespace TRINV.Infrastructure.Interfaces
+﻿namespace TRINV.Infrastructure.Interfaces;
+
+using Microsoft.EntityFrameworkCore;
+
+public interface IApplicationDbContextFactory : IDbContextFactory<ApplicationDbContext>
 {
-    using Microsoft.EntityFrameworkCore;
 
-
-    public interface IApplicationDbContextFactory : IDbContextFactory<ApplicationDbContext>
-    {
-
-    }
 }
