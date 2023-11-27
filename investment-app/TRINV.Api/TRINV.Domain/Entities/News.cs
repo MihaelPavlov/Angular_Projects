@@ -5,10 +5,6 @@ using static Validations.EntityValidationConstants.News;
 
 public class News
 {
-    public News()
-    {
-    }
-
     [Key]
     public int Id { get; set; }
 
@@ -34,5 +30,4 @@ public class News
     [Required]
     [MaxLength(ImageUrlMaxLength)]
     public string ImageUrl { get; set; } = null!;
-
 }
