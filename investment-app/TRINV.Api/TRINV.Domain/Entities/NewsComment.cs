@@ -4,12 +4,6 @@ using System.ComponentModel.DataAnnotations;
 
 public class NewsComment
 {
-    public NewsComment()
-    {
-        this.UpVote = 0;
-        this.DownVote = 0;
-    }
-
     [Key]
     public int Id { get; set; }
 
@@ -27,4 +21,3 @@ public class NewsComment
 
     public DateTime UpdatedOn { get; set; }
 }
-

@@ -10,14 +10,11 @@ internal static class CommonMapping
         builder.Entity<Investment>(entity =>
         {
             entity.Property(i => i.CreatedOn).HasDefaultValueSql("GETDATE()");
-            
         });
 
         builder.Entity<NewsComment>(entity =>
         {
-            entity
-                .Property(i => i.CreatedOn)
-                .HasDefaultValueSql("GETDATE()");
+            entity.Property(i => i.CreatedOn).HasDefaultValueSql("GETDATE()");
         });
     }
 }

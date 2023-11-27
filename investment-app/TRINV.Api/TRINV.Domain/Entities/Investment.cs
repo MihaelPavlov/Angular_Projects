@@ -6,11 +6,6 @@ using static Validations.EntityValidationConstants.Investment;
 
 public class Investment
 {
-    public Investment()
-    {
-        IsFromOutsideProvider = false;
-    }
-
     [Key]
     public int Id { get; set; }
 
@@ -38,4 +33,3 @@ public class Investment
 
     public bool IsFromOutsideProvider { get; set; }
 }
-

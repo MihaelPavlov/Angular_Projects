@@ -1,7 +1,5 @@
 using Microsoft.IdentityModel.Tokens;
-using TRINV.Infrastructure;
 using TRINV.Infrastructure.Configurations;
-using TRINV.Infrastructure.Interfaces;
 using TRINV.Shared.Business.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
