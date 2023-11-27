@@ -6,10 +6,6 @@ using static Validations.EntityValidationConstants.Investment;
 
 public class Investment
 {
-    public Investment()
-    {
-    }
-
     [Key]
     public int Id { get; set; }
 
