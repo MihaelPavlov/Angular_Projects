@@ -5,12 +5,21 @@ import {provideClientHydration} from '@angular/platform-browser';
 import {provideState, provideStore} from "@ngrx/store";
 import {provideEffects} from "@ngrx/effects";
 import {provideHttpClient} from "@angular/common/http";
-import {pokemonFeature} from "./ngrx-facade-pattern/ngrx/pokemon-1.reducers";
-import {PokemonsEffects_1} from "./ngrx-facade-pattern/ngrx/pokemon-1.effects";
+
+// App Config use-of-behavior-subject
+/*
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideRouter(routes),
+    provideClientHydration(),
+    provideHttpClient()]
+};
+*/
+
+// App Config for basic-ngrx
+/*
 import {PokemonsEffects} from "./basic-ngrx/ngrx/pokemon.effects";
 import {pokemonsListReducer} from "./basic-ngrx/ngrx/pokemon.reducers";
-
-
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
@@ -19,16 +28,22 @@ export const appConfig: ApplicationConfig = {
     provideEffects(PokemonsEffects),
     provideHttpClient(),]
 };
+*/
 
 // App config for ngrx-facade-pattern
-/*
+
+import {pokemonFeature} from "./ngrx-facade-pattern/ngrx/pokemon.reducers";
+import {PokemonsEffects} from "./ngrx-facade-pattern/ngrx/pokemon.effects";
+import { provideAnimations } from '@angular/platform-browser/animations';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideState(pokemonFeature),
     provideStore(),
     provideRouter(routes),
     provideClientHydration(),
-    provideEffects(PokemonsEffects_1),
-    provideHttpClient(),]
+    provideEffects(PokemonsEffects),
+    provideHttpClient(),
+    provideAnimations()
+]
 };
-*/
+

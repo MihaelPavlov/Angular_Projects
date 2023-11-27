@@ -1,6 +1,6 @@
 import {createFeature, createReducer, on} from "@ngrx/store";
 import {Pokemon} from "../../models/pokemon";
-import {pokemonsActions} from "./pokemon-1.actions";
+import {pokemonsActions} from "./pokemon.actions";
 
 export interface PokemonInitialState {
   pokemons: Pokemon[];
