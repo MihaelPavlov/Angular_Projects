@@ -4,10 +4,6 @@ using System.ComponentModel.DataAnnotations;
 
 public class NewsComment
 {
-    public NewsComment()
-    {
-    }
-
     [Key]
     public int Id { get; set; }
 
