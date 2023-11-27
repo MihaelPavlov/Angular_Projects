@@ -4,5 +4,4 @@ using Microsoft.EntityFrameworkCore;
 
 public interface IApplicationDbContextFactory : IDbContextFactory<ApplicationDbContext>
 {
-
 }
