@@ -10,3 +10,16 @@ export interface Pokemon {
   url: string,
   id: number
 }
+
+
+export interface PokemonInfo {
+  abilities: PokemonInfoAbilities[]
+}
+
+export interface PokemonInfoAbilities {
+  ability: Ability
+}
+
+export interface Ability {
+  name: string
+}

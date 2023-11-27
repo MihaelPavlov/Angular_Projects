@@ -34,6 +34,7 @@ export const appConfig: ApplicationConfig = {
 
 import {pokemonFeature} from "./ngrx-facade-pattern/ngrx/pokemon.reducers";
 import {PokemonsEffects} from "./ngrx-facade-pattern/ngrx/pokemon.effects";
+import { provideAnimations } from '@angular/platform-browser/animations';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideState(pokemonFeature),
@@ -41,6 +42,8 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideClientHydration(),
     provideEffects(PokemonsEffects),
-    provideHttpClient(),]
+    provideHttpClient(),
+    provideAnimations()
+]
 };
 
