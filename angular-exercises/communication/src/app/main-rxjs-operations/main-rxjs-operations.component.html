@@ -1,1 +1,40 @@
-<button (click)="combiningStreamTogether_GetFirstPokemonAbilities()">Click</button>
+<div class="container">
+
+  <p style="font-weight: bold;">Observe the results in the console.</p>
+
+  <select [(ngModel)]="selectedFunction" class="select-box">
+    <option value="applyProjection_GetPokemons">map</option>
+    <option value="applyFilter_GetCharmanderTransformations">filter</option>
+    <option value="tap_ConsolePokemons">tap</option>
+    <option value="switchStreamTogether_GetPokemonAbilities">switchMap</option>
+    <option value="concatStreamTogether_GetPokemonAbilities">concatMap</option>
+    <option value="combineLatestWith_GetPokemons">combineLatestWith</option>
+    <option value="startWith_EmptyArray_GetPokemons">startWith</option>
+    <option value="catchError_FromObservable">catchError</option>
+  </select>
+
+  <button (click)="executeFunction()" class="button">Click</button>
+
+  <br/><br/><br/><br/><br/>
+
+  <p style="font-weight: bold;">Demo For DebounceTime: Check the console</p>
+
+  <mat-slider (change)="this.onSliderChange($event)" class="slider">
+    <input [(ngModel)]="this.sliderValue" matSliderThumb>
+  </mat-slider>
+
+  <br/><br/><br/><br/><br/>
+
+  <p style="font-weight: bold;">Demo For DistinctUntilChanged Time: Check the console to see when the new value is
+    emitted</p>
+
+  <div class="input-group">
+    <label class="input-label">Enter value: </label>
+    <input [(ngModel)]="inputValue" class="input-field">
+    <button (click)="updateValue()" class="button">Update Value</button>
+  </div>
+  <div>
+    <p>Distinct Values: {{ distinctValue$ }}</p>
+  </div>
+
+</div>
