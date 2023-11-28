@@ -6,8 +6,6 @@ using Configurations;
 
 public class ApplicationDbContext : DbContext
 {
-    public ApplicationDbContext() { }
-
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {
@@ -21,20 +19,12 @@ public class ApplicationDbContext : DbContext
 
     public DbSet<NewsComment> NewsComments { get; set; }
 
+    public DbSet<Currency> Currencies { get; set; }
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         CommonMapping.Configure(builder);
 
         base.OnModelCreating(builder);
-    }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder builder)
-    {
-#if DEBUG
-        if (!builder.IsConfigured)
-        {
-            builder.UseSqlServer(@"Server=(local);Database=InvestTrackerDb;Trusted_Connection=True;TrustServerCertificate=True");
-        }
-#endif
     }
 }
