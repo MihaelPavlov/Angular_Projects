@@ -1,5 +1,7 @@
 ﻿namespace TRINV.Application.Commands;
 
-public class AddCurrenciesCommand
+using MediatR;
+
+public class AddCurrenciesCommand : IRequest
 {
 }

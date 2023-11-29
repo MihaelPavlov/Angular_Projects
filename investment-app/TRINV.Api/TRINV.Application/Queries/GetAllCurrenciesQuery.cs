@@ -1,5 +1,6 @@
 ﻿namespace TRINV.Application.Queries;
 
-public class GetAllCurrenciesQuery
-{
-}
+using Domain.Entities;
+using MediatR;
+
+public record GetAllCurrenciesQuery() :IRequest<HashSet<Currency>>;
