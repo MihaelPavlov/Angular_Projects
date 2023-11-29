@@ -1,12 +1,24 @@
-﻿namespace TRINV.InvestTrackApplication.Controllers
-{
-    using Microsoft.AspNetCore.Mvc;
+﻿namespace TRINV.InvestTrackApplication.Controllers;
 
-    public class CurrencyController : Controller
+using Application.Queries;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+
+[Route("/currency")]
+public class CurrencyController : ControllerBase
+{
+    private readonly IMediator _mediator;
+
+    public CurrencyController(IMediator mediator)
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+        _mediator = mediator;
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAllCurrencies()
+    {
+        var query = new GetAllCurrenciesQuery();
+        var result = await _mediator.Send(query);
+        return Ok(result);
     }
 }
