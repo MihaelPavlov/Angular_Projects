@@ -3,7 +3,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using TRINV.Application.Interfaces;
+using Application.Interfaces;
 using Repositories;
 
 public static class DI

@@ -2,9 +2,11 @@
 
 using Application.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 [Route("/currency")]
+[AllowAnonymous]
 public class CurrencyController : ControllerBase
 {
     private readonly IMediator _mediator;

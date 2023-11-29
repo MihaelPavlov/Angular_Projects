@@ -5,7 +5,7 @@ using Interfaces;
 using MediatR;
 using Queries;
 
-public class GetAllCurrenciesHandler : IRequestHandler<GetAllCurrenciesQuery, IEnumerable<Currency>>
+internal class GetAllCurrenciesHandler : IRequestHandler<GetAllCurrenciesQuery, IEnumerable<Currency>>
 {
     private readonly IRepository<Currency> _currencyRepository;
 

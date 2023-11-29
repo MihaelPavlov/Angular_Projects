@@ -1,4 +1,5 @@
 using Microsoft.IdentityModel.Tokens;
+using TRINV.Application.Queries;
 using TRINV.Infrastructure.Configurations;
 using TRINV.Shared.Business.Filters;
 
@@ -35,7 +36,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient();
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<Program>());
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetAllCurrenciesQuery).Assembly));
 
 var app = builder.Build();
 
