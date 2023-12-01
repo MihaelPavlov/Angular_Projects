@@ -4,11 +4,8 @@ using System.ComponentModel.DataAnnotations;
 using Enums;
 using static Validations.EntityValidationConstants.Investment;
 
-public class Investment
+public class Investment : BaseEntity
 {
-    [Key]
-    public int Id { get; set; }
-
     [Required]
     public int UserId { get; set; }
 

@@ -3,11 +3,8 @@
 using System.ComponentModel.DataAnnotations;
 using static Validations.EntityValidationConstants.News;
 
-public class News
+public class News : BaseEntity
 {
-    [Key]
-    public int Id { get; set; }
-
     public int UserId { get; set; }
 
     [Required]
