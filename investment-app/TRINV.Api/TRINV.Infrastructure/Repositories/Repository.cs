@@ -14,27 +14,27 @@ public class Repository<T> : IRepository<T>
         _context = context;
     }
 
-    public async Task<IEnumerable<T>> GetAllAsync()
+    public async Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken)
     {
-        return await _context.Set<T>().ToListAsync();
+        return await _context.Set<T>().ToListAsync(cancellationToken);
     }
 
-    public async Task<T?> GetByIdAsync(int id)
+    public async Task<T?> GetByIdAsync(int id, CancellationToken cancellationToken)
     {
-        return await _context.Set<T>().FindAsync(id);
+        return await _context.Set<T>().FindAsync(id, cancellationToken);
     }
 
-    public async Task Insert(T entity)
+    public async Task Insert(T entity, CancellationToken cancellationToken)
     {
-         await _context.Set<T>().AddAsync(entity);
+         await _context.Set<T>().AddAsync(entity, cancellationToken);
     }
 
-    public void Update(T entity)
+    public void Update(T entity, CancellationToken cancellationToken)
     {
         _context.Set<T>().Update(entity);
     }
 
-    public void Delete(T entity)
+    public void Delete(T entity, CancellationToken cancellationToken)
     {
         _context.Set<T>().Remove(entity);
     }

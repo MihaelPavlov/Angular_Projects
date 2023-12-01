@@ -4,13 +4,13 @@ using Domain.Entities;
 
 public interface IRepository<T> where T : BaseEntity
 {
-    Task<IEnumerable<T>> GetAllAsync();
+    Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken);
 
-    Task<T?> GetByIdAsync(int id);
+    Task<T?> GetByIdAsync(int id, CancellationToken cancellationToken);
 
-    Task Insert(T entity);
+    Task Insert(T entity, CancellationToken cancellationToken);
 
-    void Update(T entity);
+    void Update(T entity, CancellationToken cancellationToken);
 
-    void Delete(T entity);
+    void Delete(T entity, CancellationToken cancellationToken);
 }
