@@ -1,14 +1,14 @@
-import {Component} from "@angular/core";
+import {Component, DestroyRef, OnDestroy} from "@angular/core";
 import {
   BehaviorSubject, catchError,
   combineLatestWith,
   concatMap, debounceTime,
   delay, distinctUntilChanged,
-  filter,
+  filter, interval,
   map,
   Observable,
   of, startWith, Subject,
-  switchMap,
+  switchMap, takeUntil,
   tap, throwError,
 } from "rxjs";
 import {Pokemon} from "../models/pokemon";
@@ -18,6 +18,8 @@ import {MatSliderModule} from "@angular/material/slider";
 import {FormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
 import {MatFormFieldModule} from "@angular/material/form-field";
+import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
+import {Router} from "@angular/router";
 
 @Component({
   selector: "main-rxjs-operations",
@@ -38,8 +40,9 @@ export class MainRxjsOperationsComponent {
   inputValue: string = '';
   private inputValueSubject = new BehaviorSubject<string>('');
   distinctValue$!: string;
+  private otherObservable$ = new Subject<number>();
 
-  constructor(private pokemonService: PokemonService) {
+  constructor(private pokemonService: PokemonService, private router: Router, private destroyRef$: DestroyRef) {
     this.initSlider();
     this.initDistinctUntilChanged();
   }
@@ -326,6 +329,8 @@ export class MainRxjsOperationsComponent {
    ?    Handles and rethrows observable errors.
   */
   catchError_FromObservable() {
+    console.log("-----> catchError demo start <-----")
+
     throwError(() => new Error('Catch me if you can'))
       .pipe(
         catchError((error) => {
@@ -345,8 +350,70 @@ export class MainRxjsOperationsComponent {
 
   //#endregion catchError
 
+  //#region takeUntil
+
+  /*
+   * takeUntil
+   * Description:
+   *     Commonly used to complete an observable stream based on the emissions from another observable.
+   *     This is useful in scenarios where you want to stop or complete a stream of events when a certain condition is met.
+   ? Method Description:
+   ?    An observable (source$) emits values at a 1-second interval. The observable is set to complete when another observable (this.otherObservable) emits.
+   ?    After 3 seconds (mocked ngOnDestroy), the subscription is terminated, logging emitted values.
+  */
+  takeUntil_Init() {
+    console.log("-----> takeUntil demo start <-----")
+
+    const source$ = interval(1000);
+
+    // Use takeUntil to complete the observable when the otherObservable$ Subject emits
+    source$.pipe(
+      takeUntil(this.otherObservable$)
+    ).subscribe((val) => {
+      console.log(val)
+    });
+
+    setTimeout(this.mocked_call.bind(this), 3000);
+  }
+
+  mocked_call() {
+    console.log("calling the observable from takeUntil")
+    // Emit a value to complete the source$ observable when the component is destroyed
+    this.otherObservable$.next(1);
+    this.otherObservable$.complete();
+  }
+
+  //#endregion takeUntil
+
   //#region takeUntilDestroyed
 
+  /*
+    * takeUntilDestroyed
+    * Description:
+    *     Operator which completes the Observable when
+    *     the calling context (component, directive, service, etc) is destroyed.
+    ? Method Description:
+    ?    The takeUntilDestroyed_Init() method is used to demonstrate the usage
+    ?    of the takeUntilDestroyed function. It creates an observable that emits a value every second and subscribes to it. The takeUntilDestroyed function is used to unsubscribe from the observable when the component is destroyed.
+    ?    The setTimeout function is used to refresh the page after 3 seconds 1.
+  */
+  takeUntilDestroyed_Init() {
+    console.log("-----> takeUntilDestroyed demo start <-----")
+
+    const source$ = interval(1000);
+
+    source$.pipe(
+      takeUntilDestroyed(this.destroyRef$)
+    ).subscribe((val) => {
+      console.log(val)
+    });
+
+    setTimeout(this.refreshPage.bind(this), 3000);
+  }
+
+  refreshPage() {
+    window.location.href = "http://localhost:4200/";
+  }
 
   //#endregion takeUntilDestroyed
 
