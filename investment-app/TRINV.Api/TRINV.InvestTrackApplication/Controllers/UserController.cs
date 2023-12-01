@@ -1,5 +1,6 @@
 ﻿namespace TRINV.InvestTrackApplication.Controllers;
 
+using Application.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

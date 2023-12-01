@@ -2,7 +2,7 @@
 
 using MediatR;
 
-internal record CreateUserCommand : IRequest<int>;
+public record CreateUserCommand : IRequest<int>;
 
 internal class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, int>
 {
