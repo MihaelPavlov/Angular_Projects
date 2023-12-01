@@ -18,7 +18,6 @@ internal class GetAllCurrenciesHandler : IRequestHandler<GetAllCurrenciesQuery, 
     public async Task<IEnumerable<Currency>> Handle(GetAllCurrenciesQuery request, CancellationToken cancellationToken)
     {
         var result = await _currencyRepository.GetAllAsync();
-
         return result;
     }
 }

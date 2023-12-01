@@ -2,11 +2,8 @@
 
 using System.ComponentModel.DataAnnotations;
 
-public class NewsComment
+public class NewsComment : BaseEntity
 {
-    [Key]
-    public int Id { get; set; }
-
     [Required]
     public int NewsId { get; set; }
 

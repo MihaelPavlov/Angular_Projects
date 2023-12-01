@@ -15,6 +15,7 @@ public static class DI
                                  throw new InvalidOperationException("Connection string 'DefaultConnection' not found.")));
 
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+        services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
 
         return services;
     }

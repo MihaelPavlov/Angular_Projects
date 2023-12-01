@@ -1,9 +1,6 @@
 ﻿namespace TRINV.Domain.Entities;
 
-public class Currency
+public class Currency : BaseEntity
 {
-
-    public int Id { get; set; }
-
     public string Name { get; set; }
 }

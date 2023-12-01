@@ -1,12 +1,14 @@
 ﻿namespace TRINV.Application.Interfaces;
 
-public interface IRepository<T>
+using Domain.Entities;
+
+public interface IRepository<T> where T : BaseEntity
 {
     Task<IEnumerable<T>> GetAllAsync();
 
     Task<T?> GetByIdAsync(int id);
 
-    void Insert(T entity);
+    Task Insert(T entity);
 
     void Update(T entity);
 

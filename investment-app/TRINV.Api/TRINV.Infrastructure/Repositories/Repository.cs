@@ -1,10 +1,11 @@
 ﻿namespace TRINV.Infrastructure.Repositories;
 
 using Application.Interfaces;
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 public class Repository<T> : IRepository<T>
-    where T : class
+    where T : BaseEntity
 {
     private readonly ApplicationDbContext _context;
 
@@ -15,7 +16,7 @@ public class Repository<T> : IRepository<T>
 
     public async Task<IEnumerable<T>> GetAllAsync()
     {
-        return await _context.Set<T>().ToArrayAsync();
+        return await _context.Set<T>().ToListAsync();
     }
 
     public async Task<T?> GetByIdAsync(int id)
@@ -23,9 +24,9 @@ public class Repository<T> : IRepository<T>
         return await _context.Set<T>().FindAsync(id);
     }
 
-    public void Insert(T entity)
+    public async Task Insert(T entity)
     {
-        _context.Set<T>().Add(entity);
+         await _context.Set<T>().AddAsync(entity);
     }
 
     public void Update(T entity)
