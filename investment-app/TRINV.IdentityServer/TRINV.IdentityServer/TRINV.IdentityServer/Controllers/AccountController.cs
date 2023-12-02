@@ -2,7 +2,6 @@ using Duende.IdentityServer;
 using Duende.IdentityServer.Events;
 using Duende.IdentityServer.Extensions;
 using Duende.IdentityServer.Services;
-using Duende.IdentityServer.Stores;
 using IdentityModel;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -13,6 +12,7 @@ using TRINV.IdentityServer.Models;
 
 namespace TRINV.IdentityServer.Controllers;
 
+[AllowAnonymous]
 public class AccountController : Controller
 {
     readonly SignInManager<ApplicationUser> signInManager;
@@ -31,7 +31,6 @@ public class AccountController : Controller
         this.interaction = interaction;
         this.events = events;
     }
-
 
     [HttpGet]
     public async Task<IActionResult> Login(string returnUrl)
@@ -57,6 +56,14 @@ public class AccountController : Controller
             {
                 var user = await userManager.FindByNameAsync(model.Email);
                 await events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id.ToString(), user.UserName, clientId: context?.Client.ClientId));
+
+                // issue authentication cookie with subject ID and username
+                var isuser = new IdentityServerUser(user.Id.ToString())
+                {
+                    DisplayName = user.UserName
+                };
+
+                await HttpContext.SignInAsync(isuser);
 
                 if (context != null)
                 {

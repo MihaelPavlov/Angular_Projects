@@ -13,35 +13,33 @@ import {catchError, map, of, tap} from "rxjs";
 export class ToolBarComponent implements OnInit, AfterViewInit {
   public userAuthenticated = false;
 
-  constructor(private authService: AuthService, private cdRef: ChangeDetectorRef,private http: HttpClient) {
-    this.authService.loginChanged
+  constructor(private authService: AuthService, private cdRef: ChangeDetectorRef, private http: HttpClient) {
+    this.authService.isUserAuthenticated
       .subscribe(userAuthenticated => {
-        console.log('login changes, -> is user authenticaterd -> ' , userAuthenticated)
+        console.log('login changes, -> is user authenticaterd -> ', userAuthenticated)
         this.userAuthenticated = userAuthenticated;
         this.cdRef.detectChanges();
       })
   }
 
   ngOnInit() {
-    this.authService.isAuthenticated()
-      .then(userAuthenticated => {
-        this.userAuthenticated = userAuthenticated;
-        console.log(' is user authenticaterd -> ' , userAuthenticated)
-      })
+    if (this.authService.isAuthenticated())
+      this.userAuthenticated = true;
   }
 
-testRequest(){
- this.http.get(`https://localhost:7201/`)
-    .pipe(
-      tap((result: any) => console.log("authenticated result from our resource-> ",result)),
-      catchError(error=>{
-        console.log('error from request -> ', error)
-        return of(error)
-      }))
-   .subscribe(response =>{
-     console.log('response from request ------->' , response)
-   });
-}
+  testRequest() {
+    this.http.get(`https://localhost:7201/`)
+      .pipe(
+        tap((result: any) => console.log("authenticated result from our resource-> ", result)),
+        catchError(error => {
+          console.log('error from request -> ', error)
+          return of(error)
+        }))
+      .subscribe(response => {
+        console.log('response from request ------->', response)
+      });
+  }
+
   ngAfterViewInit() {
   }
 }

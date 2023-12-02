@@ -10,9 +10,8 @@ import {PATH} from "../../../../shared/configs/path.configs";
 export class SignInRedirectCallbackComponent implements OnInit {
   constructor(private _authService: AuthService, private _router: Router) { }
   ngOnInit(): void {
-    this._authService.loginFinish()
-      .then(_ => {
-        this._router.navigate([PATH.CLIENT.HOME], { replaceUrl: true });
-      })
+    if (this._authService.isAuthenticated()){
+      this._router.navigate([PATH.CLIENT.HOME], { replaceUrl: true });
+    }
   }
 }
