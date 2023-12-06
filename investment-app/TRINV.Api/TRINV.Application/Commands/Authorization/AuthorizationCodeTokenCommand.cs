@@ -7,7 +7,6 @@ namespace TRINV.Application.Commands.Authorization;
 
 public record AuthorizationCodeTokenCommand(string Code, string codeVerifier) : IRequest<AuthorizationCodeTokenModel>;
 
-
 internal class AuthorizationCodeTokenCommandHandler : IRequestHandler<AuthorizationCodeTokenCommand, AuthorizationCodeTokenModel>
 {
     public async Task<AuthorizationCodeTokenModel> Handle(AuthorizationCodeTokenCommand request, CancellationToken cancellationToken)

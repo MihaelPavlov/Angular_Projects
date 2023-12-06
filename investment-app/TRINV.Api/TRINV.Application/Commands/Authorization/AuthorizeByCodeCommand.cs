@@ -11,7 +11,6 @@ namespace TRINV.Application.Commands.Authorization;
 
 public record AuthorizeByCodeCommand(string Code, string CodeVerifier) : IRequest<object>;
 
-
 internal class AuthorizeByCodeCommandHandler : IRequestHandler<AuthorizeByCodeCommand, object>
 {
     readonly IHttpContextAccessor _contextAccessor;

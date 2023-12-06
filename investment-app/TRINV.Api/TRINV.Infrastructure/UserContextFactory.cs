@@ -8,7 +8,7 @@ namespace TRINV.Infrastructure;
 public class UserContextFactory : IUserContextFactory
 {
     readonly IHttpContextAccessor _httpContextAccessor;
-    IUserContext _defaultUserContext;
+    readonly IUserContext _defaultUserContext;
 
     public UserContextFactory(IHttpContextAccessor httpContextAccessor)
     {
@@ -47,5 +47,4 @@ public static class PrincipalExtensions
         var claim = principal.FindFirst(claimType);
         return claim != null ? claim.Value : null;
     }
-
 }
