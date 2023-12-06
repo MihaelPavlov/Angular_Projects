@@ -36,6 +36,7 @@ builder.Services.AddAuthorization(options =>
         policy.RequireAuthenticatedUser();
         policy.RequireClaim("sub");
         policy.RequireClaim("scope", new string[] { "main_api" });
+        policy.RequireClaim("email");
     })
 );
 
@@ -90,6 +91,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseSession();
 app.UseAuthorization();
+
 app.UseEndpoints(endpoints =>
 {
     endpoints

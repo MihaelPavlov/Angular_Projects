@@ -11,18 +11,18 @@ export class AppComponent implements OnInit {
   public userAuthenticated = false;
 
   constructor(private _authService: AuthService, private cdRef: ChangeDetectorRef) {
-    this._authService.isUserAuthenticated
+    this._authService.isAuthenticated()
       .subscribe(userAuthenticated => {
+        if(userAuthenticated){
+
         console.log('login changes, -> is user authenticaterd -> ', userAuthenticated)
         this.userAuthenticated = userAuthenticated;
         this.cdRef.detectChanges();
+        }
       })
   }
 
   ngOnInit(): void {
-    if (this._authService.isAuthenticated()) {
-      this.userAuthenticated = true;
-      this.cdRef.detectChanges();
-    }
+    this._authService.getUserInfo()
   }
 }

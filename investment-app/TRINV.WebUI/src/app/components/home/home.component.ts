@@ -11,6 +11,6 @@ constructor(private authService: AuthService) {
 }
 
 onCall(){
-  this.authService.callApi();
+  this.authService.getUserInfo()
 }
 }

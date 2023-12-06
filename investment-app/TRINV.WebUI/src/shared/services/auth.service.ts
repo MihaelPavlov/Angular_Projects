@@ -1,48 +1,49 @@
 import {Injectable} from "@angular/core";
 import {IUser} from "../../app/models/user";
 import {UserManager, User, UserManagerSettings,} from 'oidc-client';
-import {Subject} from "rxjs";
-import {ActivatedRoute, ActivatedRouteSnapshot} from "@angular/router";
+import {BehaviorSubject, map, Observable, Subject} from "rxjs";
+import {ActivatedRoute, ActivatedRouteSnapshot, Router} from "@angular/router";
 import {PATH} from "../configs/path.configs";
 import {IdentityServerConfigs} from "../configs/identity-server.configs";
 import {URL_CLIENT} from "../configs/url.configs";
 import * as CryptoJS from 'crypto-js';
 import {HttpClient, HttpParams} from "@angular/common/http";
+import {PersistenceService} from "./persistance.service";
 
 @Injectable({
   providedIn: "root"
 })
 export class AuthService {
-  private readonly _userManager!: UserManager;
-  private _user: IUser | null = null;
-  private _isUserAuthenticated = new Subject<boolean>();
-  public isUserAuthenticated = this._isUserAuthenticated.asObservable();
+  private isUserAuthenticatedSubject$ = new Subject<boolean>();
+  public isUserAuthenticated$ = this.isUserAuthenticatedSubject$.asObservable();
+  private userInfo$ = new BehaviorSubject<any | null>(null);
 
+  private readonly state_Key: string = "state";
+  private readonly codeVerifier_Key: string = "codeVerifier";
   tokenResponse: any;
-  userResponse: any;
 
   constructor(
+    private router: Router,
     private activatedRoute: ActivatedRoute,
-    private http: HttpClient
+    private http: HttpClient,
+    private persistenceService: PersistenceService
   ) {
-    this._userManager = new UserManager(this.idpSettings);
-
     this.activatedRoute.queryParams.subscribe((params: any) => {
-      console.log('tessssssssssssssssssssssssssssssssssssssssssssss', params)
       if (params.code) {
-        //this.getAccessToken(params.code, params.state); // uncomment, if you want to do it from UI
-        // this.getTokenFromApi(params.code, params.state); // uncomment, if you want just to get token
         this.getCookieFromApi(params.code, params.state);
-        // this.callApi()
       }
     });
   }
 
-  public async loginStart(): Promise<void> {
+  public loginStart(): void {
     const state = this.strRandom(40);
     const codeVerifier = this.strRandom(128);
-    localStorage.setItem('state', state);
-    localStorage.setItem('codeVerifier', codeVerifier);
+
+    this.persistenceService.setLocalStorageItem(this.state_Key, state);
+    this.persistenceService.setLocalStorageItem(this.codeVerifier_Key, codeVerifier);
+
+    // localStorage.setItem('state', state);
+    // localStorage.setItem('codeVerifier', codeVerifier);
     const codeVerifierHash = CryptoJS.SHA256(codeVerifier).toString(CryptoJS.enc.Base64);
     const codeChallenge = codeVerifierHash
       .replace(/=/g, '')
@@ -64,136 +65,95 @@ export class AuthService {
     window.location.href = 'https://localhost:5001/Account/Login' + '?ReturnUrl=' + encoded;
   }
 
-  public loginFinish = (): any => {
-
-    console.log('login finish redirect')
-    // return this._userManager.signinRedirectCallback()
-    //   .then(user => {
-    //     this._user = user;
-    //     console.log('user -> ',this._user)
-    //     this._loginChangedSubject.next(this.isUserExpired(user));
-    //     return user;
-    //   })
-  }
-
-  getAccessToken(code: string, state: string) {
-    if (state !== localStorage.getItem('state')) {
+  public getCookieFromApi(code: string, state: string) {
+    if (state !== this.persistenceService.getLocalStorageItem(this.state_Key)) {
       alert('Invalid callBack state');
       return;
     }
 
-    const codeVerifier = localStorage.getItem('codeVerifier');
+    const codeVerifier = this.persistenceService.getLocalStorageItem(this.codeVerifier_Key);
     if (!codeVerifier) {
-      alert('codeVerifier in localSotage is expected');
+      alert('codeVerifier in localStorage is expected');
       return;
     }
 
-    const payload = new HttpParams()
-      .append('grant_type', 'authorization_code')
-      .append('code', code)
-      .append('code_verifier', codeVerifier)
-      .append('redirect_uri', 'http://localhost:4200/sign-in-callback')
-      .append('client_id', 'WebClient_ID');
-
-    this.http.post('https://localhost:5001/connect/token', payload, {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      }
-    }).subscribe(response => {
-      this.tokenResponse = response;
-      console.log('from get access token', response)
-      this.getUserInfo();
-    }, error => {
-      console.warn('HTTP Error', error);
-    });
-  }
-
-  getUserInfo() {
-    if (!this.tokenResponse.access_token) {
-      alert('accessToken is empty');
-      return;
-    }
-
-    this.http.get('https://localhost:5001/connect/userinfo', {
-      headers: {
-        'Authorization': 'Bearer ' + this.tokenResponse.access_token
-      }
-    }).subscribe(response => {
-      this.userResponse = response;
-      console.log('from get user info -> ', response)
-    }, error => {
-      console.warn('HTTP Error', error);
-    });
-  }
-
-  getCookieFromApi(code: string, state: string) {
-    if (state !== localStorage.getItem('state')) {
-      alert('Invalid callBack state');
-      return;
-    }
-
-    const codeVerifier = localStorage.getItem('codeVerifier');
-    if (!codeVerifier) {
-      alert('codeVerifier in localSotage is expected');
-      return;
-    }
-
-    this.http.get<any>('https://localhost:7201/api/account/authorize', {
+    this.http.get<any>('https://localhost:7201/account/authorize', {
       withCredentials: true,
       headers: {
         'code': code,
         'code_verifier': codeVerifier
       }
-    }).subscribe(response => {
-      this.userResponse = response;
-      this._user = {
-        id: response.sub,
-        email: response.name
+    }).subscribe({
+      next: (response) => {
+        if (response !== null) {
+          this.userInfo$.next({id: response.sub, email: response.name})
+
+          this.isUserAuthenticatedSubject$.next(true);
+
+          this.callApi_Test()
+          this.router.navigate([PATH.CLIENT.HOME], {replaceUrl: true});
+        }
+
+        console.log('cookie from api authrorize -> ', response)
+      },
+      error: (error) => {
+        console.warn('HTTP Error', error);
       }
-      this._isUserAuthenticated.next(true);
-      console.log('cookie from api authrorize -> ', response)
-      this.callApi();
-    }, error => {
-      console.warn('HTTP Error', error);
     });
   }
 
-  callApi() {
+  // For test purpose
+  callApi_Test() {
     this.http.get<any>('https://localhost:7201/', {
       withCredentials: true,
-    }).subscribe(response => {
-      this.userResponse = response;
-      console.log('response ->', this.userResponse)
-    }, error => {
-      console.warn('HTTP Error', error);
-    });
-  }
-
-  private get idpSettings(): UserManagerSettings {
-    return {
-      authority: IdentityServerConfigs.URL_IDENTITY_SERVER, // Identity Server
-      client_id: IdentityServerConfigs.CLIENT_ID, // Main Client
-      redirect_uri: `${URL_CLIENT}/${PATH.CLIENT.ACCOUNT.SIGN_IN_CALLBACK}`, // After authentication where we are redirected
-      response_type: IdentityServerConfigs.RESPONSE_TYPE,
-      scope: IdentityServerConfigs.SCOPE_VARIABLES,
-      response_mode: "query",
-
-      post_logout_redirect_uri: `${URL_CLIENT}/${PATH.CLIENT.ACCOUNT.SIGN_OUT_CALLBACK}` // After logout where we are redirected
-    }
-  }
+    }).subscribe({
+        next: (response) => {
+          console.log('response ->', response);
+        },
+        error: (error) => {
+          console.warn('HTTP Error', error);
+        }
+      }
+    );
+  }//todo: check the challenge
 
   public async logoutStart() {
-    await this._userManager.signoutRedirect();
+    this.http.get('https://localhost:7201/account/logout', {
+      withCredentials: true
+    }).subscribe({
+      next: (response) => {
+        console.log("logout -> ", response)
+        this.persistenceService.removeLocalStorageItem(this.state_Key);
+        this.persistenceService.removeLocalStorageItem(this.codeVerifier_Key);
+        this.userInfo$.next(null);
+      },
+      error: (error) => {
+        console.warn('HTTP Error', error);
+      }
+    })
   }
 
-  // Called after logoutStart is successfully
-  public logoutFinish() {
-    this._user = null;
-    return this._userManager.signoutRedirectCallback();
+  //Todo: check is it's needed
+  public isAuthenticated = (): Observable<boolean> => {
+    console.log("user ---->", this.userInfo$.value)
+    return this.userInfo$.pipe(
+      map(user => {
+        return !!user;
+      })
+    );
   }
 
-  public isAuthenticated = (): boolean => {
-    return this._user !== null;
+  public getUserInfo() {
+    this.http.get<any>('https://localhost:7201/account/user-info', {
+      withCredentials: true
+    }).subscribe({
+      next: (response) => {
+        this.userInfo$.next({id: response.subFromClaim, email: response.email});
+      },
+      error: (error) => {
+        console.warn('HTTP Error', error);
+      }
+    });
   }
 
   private strRandom(length: number) {
@@ -205,10 +165,4 @@ export class AuthService {
     }
     return result;
   }
-}
-
-export class AuthConstants {
-  public static clientRoot = "http://localhost:4200";
-  public static idpAuthority = "https://localhost:5001/"
-  public static clientId = "WebClient_ID";
 }

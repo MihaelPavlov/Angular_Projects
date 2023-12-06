@@ -125,32 +125,12 @@ public class AccountController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Logout(string logoutId)
+    public IActionResult Logout(string returnUrl)
     {
-        var showLogoutPrompt = true;
-        if (this.User?.Identity?.IsAuthenticated != true)
-        {
-            // if the user is not authenticated, then just show logged out page
-            showLogoutPrompt = false;
-        }
-        else
-        {
-            var context = await interaction.GetLogoutContextAsync(logoutId);
-            if (context?.ShowSignoutPrompt == false)
-            {
-                // it's safe to automatically sign-out
-                showLogoutPrompt = false;
-            }
-        }
+        var model = new LogoutViewModel();
+        model.ReturnUrl = returnUrl ?? "/Account/Logout/LoggedOut";
 
-        if (showLogoutPrompt == false)
-        {
-            // if the request for logout was properly authenticated from IdentityServer, then
-            // we don't need to show the prompt and can just log the user out directly.
-            return await Logout(new LogoutViewModel { LogoutId = logoutId });
-        }
-
-        return View(new LogoutViewModel { LogoutId = logoutId });
+        return View(model);
     }
 
     [HttpPost]
@@ -193,7 +173,6 @@ public class AccountController : Controller
     }
 
     [HttpGet]
-    [AllowAnonymous]
     public async Task<IActionResult> LoggedOut(string logoutId)
     {
         var logout = await interaction.GetLogoutContextAsync(logoutId);
@@ -205,7 +184,7 @@ public class AccountController : Controller
             ClientName = String.IsNullOrEmpty(logout?.ClientName) ? logout?.ClientId : logout?.ClientName,
             SignOutIframeUrl = logout?.SignOutIFrameUrl
         };
-        return Redirect(model.PostLogoutRedirectUri);
+        return View(model.PostLogoutRedirectUri);
     }
 
     [HttpGet]

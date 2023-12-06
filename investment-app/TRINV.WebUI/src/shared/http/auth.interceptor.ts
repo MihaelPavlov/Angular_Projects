@@ -22,6 +22,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
   }
 
+  //TODO: Clean it. When you are sure that we doesn't need it
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // if (req.url.startsWith(URL_INVEST_TRACKER)) {
     //   return from(

@@ -12,10 +12,10 @@ public record AuthorizeIdentityUserByCodeCommand(string Code, string CodeVerifie
 
 internal class AuthorizeIdentityUserByCodeCommandHandler : IRequestHandler<AuthorizeIdentityUserByCodeCommand, UserInfo?>
 {
-    private const string ClientCallbackPath = "/oauth/callback";
-    private readonly IHttpClientFactory _httpClientFactory;
-    private readonly IHttpContextAccessor _contextAccessor;
-    private readonly IMediator _mediator;
+    const string ClientCallbackPath = "/oauth/callback";
+    readonly IHttpClientFactory _httpClientFactory;
+    readonly IHttpContextAccessor _contextAccessor;
+    readonly IMediator _mediator;
 
     public AuthorizeIdentityUserByCodeCommandHandler(IHttpClientFactory httpClientFactory, IHttpContextAccessor contextAccessor, IMediator mediator)
     {
