@@ -10,7 +10,7 @@ public interface IRepository<T> where T : BaseEntity
 
     Task Insert(T entity, CancellationToken cancellationToken);
 
-    void Update(T entity, CancellationToken cancellationToken);
+    void Update(T entity);
 
-    void Delete(T entity, CancellationToken cancellationToken);
+    void Delete(T entity);
 }

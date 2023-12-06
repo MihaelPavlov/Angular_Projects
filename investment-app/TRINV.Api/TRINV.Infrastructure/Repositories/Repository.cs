@@ -29,12 +29,12 @@ public class Repository<T> : IRepository<T>
          await _context.Set<T>().AddAsync(entity, cancellationToken);
     }
 
-    public void Update(T entity, CancellationToken cancellationToken)
+    public void Update(T entity)
     {
         _context.Set<T>().Update(entity);
     }
 
-    public void Delete(T entity, CancellationToken cancellationToken)
+    public void Delete(T entity)
     {
         _context.Set<T>().Remove(entity);
     }
