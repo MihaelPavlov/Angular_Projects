@@ -6,12 +6,12 @@ public interface IEnvironmentSettings
     IAdmin SuperAdmin { get; }
     bool IsLocal { get; }
 }
+
 public interface IAdmin
 {
     string Email { get; }
     string Password { get; }
 }
-
 
 public class EnvironmentSettings : IEnvironmentSettings
 {
@@ -26,7 +26,6 @@ public class EnvironmentSettings : IEnvironmentSettings
     public IAdmin SuperAdmin => this.Admin;
     public bool IsLocal => Name == LOCAL_ENVIRONMENT;
 }
-
 
 public class HBRAdmin : IAdmin
 {
