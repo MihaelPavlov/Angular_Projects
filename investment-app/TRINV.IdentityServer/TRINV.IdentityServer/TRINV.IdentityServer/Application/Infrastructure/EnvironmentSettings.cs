@@ -21,13 +21,13 @@ public class EnvironmentSettings : IEnvironmentSettings
 
     public string Name { get; set; } = string.Empty;
 
-    public HBRAdmin Admin { get; set; } = null!;
+    public Admin Admin { get; set; } = null!;
 
     public IAdmin SuperAdmin => this.Admin;
     public bool IsLocal => Name == LOCAL_ENVIRONMENT;
 }
 
-public class HBRAdmin : IAdmin
+public class Admin : IAdmin
 {
     public string Email { get; set; } = string.Empty;
     public string Password { get; set; } = string.Empty;
