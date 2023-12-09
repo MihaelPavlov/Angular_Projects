@@ -28,8 +28,7 @@ public class UserController : ControllerBase
         var response = await httpClient.PostAsync("https://localhost:5001/api/User", content);
         if (response.IsSuccessStatusCode)
         {
-            var result = await response.Content.ReadAsStringAsync();
-            Console.WriteLine(result);
+            return Ok(await response.Content.ReadAsStringAsync());
         }
 
         return BadRequest("The operation was not successful.");
