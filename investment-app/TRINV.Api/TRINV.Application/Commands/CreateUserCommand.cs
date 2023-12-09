@@ -34,10 +34,10 @@ internal class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, obj
 
     /*
     Part client.
-    Need user input. Username, password, email
-    Validation of input.
-    HttpClient for server to server communication.
-    Validation of client.
+    -Need user input. Username, password, email
+    -Validation of input.
+    -HttpClient for server to server communication.
+    -Validation of client.
     Initialize request trough HttpClient.
     Check the result from request.
 

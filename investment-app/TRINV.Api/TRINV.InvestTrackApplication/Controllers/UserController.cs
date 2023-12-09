@@ -25,12 +25,16 @@ public class UserController : ControllerBase
         var json = JsonSerializer.Serialize(command);
         var httpClient = new HttpClient();
         var content = new StringContent(json, Encoding.UTF8, "application/json");
-        var response = await httpClient.PostAsync("https://localhost:5001/Account/CreateUser", content);
+        var response = await httpClient.PostAsync("https://localhost:5001/api/User", content);
         if (response.IsSuccessStatusCode)
         {
-            return Ok("New user added successfully.");
+            var result = await response.Content.ReadAsStringAsync();
+            Console.WriteLine(result);
         }
 
         return BadRequest("The operation was not successful.");
     }
 }
+/*
+ 
+ */

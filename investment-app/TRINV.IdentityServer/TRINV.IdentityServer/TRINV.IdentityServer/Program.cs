@@ -102,9 +102,14 @@ app.UseStaticFiles();
 
 #endregion Configure Application
 
+app.UseRouting();
 app.UseEndpoints(endpoints =>
 {
-    endpoints.MapDefaultControllerRoute();
+    //endpoints.MapDefaultControllerRoute();
+    //endpoints.MapControllerRoute(
+    //    name: "default",
+    //    pattern: "{controller}/{action}/{id?}");
+    endpoints.MapControllers();
 });
 
 app.Logger.LogInformation("Migrate & Seed");
@@ -112,4 +117,3 @@ app.ApplyDefaultSeedConfiguration(app.Configuration);
 
 app.Logger.LogInformation("Application is starting...");
 app.Run();
-
