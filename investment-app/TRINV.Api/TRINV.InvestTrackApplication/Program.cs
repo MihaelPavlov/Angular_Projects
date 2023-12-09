@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.IdentityModel.Tokens;
 using TRINV.Application.Interfaces;
 using TRINV.Application.Queries;
 using TRINV.Infrastructure;

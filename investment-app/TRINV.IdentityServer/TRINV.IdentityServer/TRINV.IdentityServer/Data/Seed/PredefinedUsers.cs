@@ -60,7 +60,6 @@ internal static class PredefinedUsers
     }
 }
 
-
 internal static class UsersHelper
 {
     internal static void AddUser(this List<SeedUser> users, string email, Role role)
