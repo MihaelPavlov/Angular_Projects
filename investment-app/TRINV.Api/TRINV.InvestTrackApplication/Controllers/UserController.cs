@@ -34,6 +34,3 @@ public class UserController : ControllerBase
         return BadRequest("The operation was not successful.");
     }
 }
-/*
- 
- */

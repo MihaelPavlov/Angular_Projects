@@ -31,26 +31,4 @@ internal class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, obj
 
         return Task.FromResult<object>(user);
     }
-
-    /*
-    Part client.
-    -Need user input. Username, password, email
-    -Validation of input.
-    -HttpClient for server to server communication.
-    -Validation of client.
-    Initialize request trough HttpClient.
-    Check the result from request.
-
-    Part IdentityServer.
-    create request in controller.
-    create command. 
-    Check seed data. 
-    Email validation. 
-    Adding claim to user.
-    Create user.
-    variant 1 trough DbContext
-    variant 2 trough UserManager<ApplicationUser>
-
-    */
-
 }
