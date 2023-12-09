@@ -29,4 +29,3 @@ public class UserController : ControllerBase
         return BadRequest(result.Errors);
     }
 }
-
