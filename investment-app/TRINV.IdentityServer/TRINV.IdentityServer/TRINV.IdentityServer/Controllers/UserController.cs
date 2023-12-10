@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using Commands;
 using MediatR;
 
-[Route("api/[controller]")]
 [ApiController]
 [AllowAnonymous]
+[Route("api/[controller]")]
 public class UserController : ControllerBase
 {
     readonly IMediator _mediator;
@@ -18,7 +18,6 @@ public class UserController : ControllerBase
     }
 
     [HttpPost]
-    [AllowAnonymous]
     public async Task<IActionResult> CreateUser([FromBody]RegisterUserCommand command)
     {
         var result = await _mediator.Send(command);
