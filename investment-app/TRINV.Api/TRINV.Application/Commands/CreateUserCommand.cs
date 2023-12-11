@@ -1,9 +1,11 @@
 ﻿namespace TRINV.Application.Commands;
 
 using System.ComponentModel.DataAnnotations;
+using System.Text;
+using System.Text.Json;
 using MediatR;
 
-public record CreateUserCommand : IRequest<object>
+public record CreateUserCommand : IRequest<string>
 {
     [Required]
     [StringLength(20, ErrorMessage = "The Username must be between 3 and 20 characters long.", MinimumLength = 3)]
@@ -18,9 +20,9 @@ public record CreateUserCommand : IRequest<object>
     public string Email { get; set; }
 }
 
-internal class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, object>
+public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, string>
 {
-    public Task<object> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+    public async Task<string> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
         var user = new
         {
@@ -29,6 +31,12 @@ internal class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, obj
             request.Email,
         };
 
-        return Task.FromResult<object>(user);
+        var json = JsonSerializer.Serialize(user);
+        var httpClient = new HttpClient();
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
+        var response = await httpClient.PostAsync("https://localhost:5001/api/User", content);
+        var responseString = await response.Content.ReadAsStringAsync();
+
+        return responseString;
     }
 }

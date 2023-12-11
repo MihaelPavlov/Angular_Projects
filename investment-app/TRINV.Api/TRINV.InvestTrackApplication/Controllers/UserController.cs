@@ -20,17 +20,8 @@ public class UserController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateUser([FromBody] CreateUserCommand command)
+    public async Task<string> CreateUser(CreateUserCommand command)
     {
-        var json = JsonSerializer.Serialize(command);
-        var httpClient = new HttpClient();
-        var content = new StringContent(json, Encoding.UTF8, "application/json");
-        var response = await httpClient.PostAsync("https://localhost:5001/api/User", content);
-        if (response.IsSuccessStatusCode)
-        {
-            return Ok(await response.Content.ReadAsStringAsync());
-        }
-
-        return BadRequest("The operation was not successful.");
+        return await _mediator.Send(command);
     }
 }
