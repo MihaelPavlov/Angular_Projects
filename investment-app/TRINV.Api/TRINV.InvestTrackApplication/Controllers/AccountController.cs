@@ -1,70 +1,82 @@
-﻿namespace TRINV.InvestTrackApplication.Controllers;
-
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Commands;
+using Microsoft.AspNetCore.Authentication;
+using System.Security.Claims;
+using TRINV.Application.Commands.Authorization;
 
+namespace TRINV.InvestTrackApplication.Controllers;
+
+[ApiController]
 [Route("[controller]")]
 public class AccountController : ControllerBase
 {
     readonly IMediator _mediator;
-    readonly ILogger<AccountController> _logger;
-    readonly IHttpContextAccessor _contextAccessor;
 
-    public AccountController(IMediator mediator, ILogger<AccountController> logger, IHttpContextAccessor contextAccessor)
+    public AccountController(IMediator mediator)
     {
         _mediator = mediator;
-        _logger = logger;
-        _contextAccessor = contextAccessor;
     }
 
+    /// <summary>
+    /// Handling authorization code flow in authentication processes.
+    /// </summary>
+    /// <param name="code"></param>
+    /// <param name="codeVerifier"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>The resulting model includes details such as identity token, access token, refresh token, and user information.</returns>
+    [HttpGet]
     [AllowAnonymous]
-    [HttpGet]
-    [Route("authorize")]
-    public async Task<IActionResult> AuthorizeByCode([FromHeader(Name = "code")] string code, [FromHeader(Name = "code_verifier")] string codeVerifier)
+    [Route("token")]
+    public async Task<IActionResult> AuthorizationCodeToken([FromHeader(Name = "code")] string code, [FromHeader(Name = "code_verifier")] string codeVerifier, CancellationToken cancellationToken)
     {
-        try
-        {
-            var userInfo = await _mediator.Send(new AuthorizeIdentityUserByCodeCommand(code, codeVerifier));
+        var result = await _mediator.Send(new AuthorizationCodeTokenCommand(code, codeVerifier), cancellationToken);
+        return Ok(result);
+    }
 
-            if (userInfo == null)
-                return StatusCode(StatusCodes.Status406NotAcceptable, "Code is not acceptable to the tenat and the application.");
-
-            return Ok(userInfo);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "AuthorizeByCode error");
-            return Problem("Server error, cannot authorize");
-        }
+    /// <summary>
+    /// This method handles the authorization process for a web client using the Authorization Code flow.
+    /// It obtains an access token, retrieves user information, sets up claims for authentication, signs in the user, and returns the parsed user information as an object.
+    /// </summary>
+    /// <param name="code"></param>
+    /// <param name="codeVerifier"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Returns the parsed user information as an object</returns>
+    [HttpGet]
+    [AllowAnonymous]
+    [Route("authorize")]
+    public async Task<IActionResult> AuthorizeByCode([FromHeader(Name = "code")] string code, [FromHeader(Name = "code_verifier")] string codeVerifier, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new AuthorizeByCodeCommand(code, codeVerifier), cancellationToken);
+        return Ok(result);
     }
 
     [HttpGet]
-    [Route("userinfo")]
-    public async Task<IActionResult> UserInformation()
+    [AllowAnonymous]
+    [Route("anonymous")]
+    public IActionResult Anonymous() => new JsonResult(new { success = "anonymous" });
+
+    [HttpGet]
+    [Authorize(Policy = "ApiScope")]
+    [Route("logout")]
+    public async Task<IActionResult> Logout(CancellationToken cancellationToken)
     {
-        try
-        {
-            var host = _contextAccessor.HttpContext?.Request.Host.Host;
-            if (string.IsNullOrEmpty(host))
-                return Forbid();
+        // Clear the existing external cookie
+        await _mediator.Send(new LogoutCommand(), cancellationToken);
+        return Ok();
+    }
 
-            var userInfo = new UserInfo
-            {
-                Id = 1,
-                FirstName = "Admin",
-                LastName = "Admin",
-                Email = "admin@trinv.com",
-                Role = 0,
-            };
+    [HttpGet]
+    [Authorize(Policy = "ApiScope")]
+    [Route("user-info")]
+    public IActionResult UserInformation()
+    {
+        var subFromClaim = User.FindFirstValue("sub");
+        var email = User.FindFirstValue("email");
 
-            return Ok(userInfo);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "UserInfo error");
-            return Problem("Server error, cannot extract user");
-        }
+        // For future use of the session
+        var subFromSession = HttpContext.Session.GetString("sub");
+
+        return Ok(new { subFromClaim, email });
     }
 }

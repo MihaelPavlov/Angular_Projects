@@ -9,10 +9,10 @@ import {PATH} from "../../shared/configs/path.configs";
 })
 export class SignOutRedirectCallbackComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) { }
-  ngOnInit(): void {
-    this.authService.logoutFinish()
-      .then(_ => {
-        this.router.navigate([PATH.CLIENT.HOME], { replaceUrl: true });
-      })
+  ngOnInit(): void {//TODO: Maybe remove this signoutRedirect
+    // this.authService.logoutFinish()
+    //   .then(_ => {
+    //     this.router.navigate([PATH.CLIENT.HOME], { replaceUrl: true });
+    //   })
   }
 }

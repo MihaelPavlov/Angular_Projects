@@ -7,10 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="IdentityModel" Version="6.2.0" />
     <PackageReference Include="MediatR" Version="12.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\TRINV.Shared\TRINV.Shared.Business\TRINV.Shared.Business.csproj" />
     <ProjectReference Include="..\TRINV.Domain\TRINV.Domain.csproj" />
   </ItemGroup>
 
