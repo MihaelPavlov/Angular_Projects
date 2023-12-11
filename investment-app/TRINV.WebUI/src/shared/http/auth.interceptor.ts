@@ -19,21 +19,23 @@ to understand how the authentication in identity server work
 })
 export class AuthInterceptor implements HttpInterceptor {
   constructor(private authService: AuthService) {
+
   }
 
+  //TODO: Clean it. When you are sure that we doesn't need it
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (req.url.startsWith(URL_INVEST_TRACKER)) {
-      return from(
-        this.authService.getAccessToken()
-          .then(token => {
-            const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-            const authRequest = req.clone({headers});
-            return next.handle(authRequest).toPromise() as Promise<HttpEvent<any>>;
-          })
-      );
-    } else {
+    // if (req.url.startsWith(URL_INVEST_TRACKER)) {
+    //   return from(
+    //     this.authService.getAccessToken()
+    //       .then(token => {
+    //         const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    //         const authRequest = req.clone({headers});
+    //         return next.handle(authRequest).toPromise() as Promise<HttpEvent<any>>;
+    //       })
+    //   );
+    // } else {
       return next.handle(req);
-    }
+     // }
   }
 }
 

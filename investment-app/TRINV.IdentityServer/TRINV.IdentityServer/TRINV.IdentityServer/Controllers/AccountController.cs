@@ -2,7 +2,6 @@ using Duende.IdentityServer;
 using Duende.IdentityServer.Events;
 using Duende.IdentityServer.Extensions;
 using Duende.IdentityServer.Services;
-using Duende.IdentityServer.Stores;
 using IdentityModel;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -13,6 +12,7 @@ using TRINV.IdentityServer.Models;
 
 namespace TRINV.IdentityServer.Controllers;
 
+[AllowAnonymous]
 public class AccountController : Controller
 {
     readonly SignInManager<ApplicationUser> signInManager;
@@ -31,7 +31,6 @@ public class AccountController : Controller
         this.interaction = interaction;
         this.events = events;
     }
-
 
     [HttpGet]
     public async Task<IActionResult> Login(string returnUrl)
@@ -57,6 +56,14 @@ public class AccountController : Controller
             {
                 var user = await userManager.FindByNameAsync(model.Email);
                 await events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id.ToString(), user.UserName, clientId: context?.Client.ClientId));
+
+                // issue authentication cookie with subject ID and username
+                var isuser = new IdentityServerUser(user.Id.ToString())
+                {
+                    DisplayName = user.UserName
+                };
+
+                await HttpContext.SignInAsync(isuser);
 
                 if (context != null)
                 {
@@ -118,32 +125,12 @@ public class AccountController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Logout(string logoutId)
+    public IActionResult Logout(string returnUrl)
     {
-        var showLogoutPrompt = true;
-        if (this.User?.Identity?.IsAuthenticated != true)
-        {
-            // if the user is not authenticated, then just show logged out page
-            showLogoutPrompt = false;
-        }
-        else
-        {
-            var context = await interaction.GetLogoutContextAsync(logoutId);
-            if (context?.ShowSignoutPrompt == false)
-            {
-                // it's safe to automatically sign-out
-                showLogoutPrompt = false;
-            }
-        }
+        var model = new LogoutViewModel();
+        model.ReturnUrl = returnUrl ?? "/Account/Logout/LoggedOut";
 
-        if (showLogoutPrompt == false)
-        {
-            // if the request for logout was properly authenticated from IdentityServer, then
-            // we don't need to show the prompt and can just log the user out directly.
-            return await Logout(new LogoutViewModel { LogoutId = logoutId });
-        }
-
-        return View(new LogoutViewModel { LogoutId = logoutId });
+        return View(model);
     }
 
     [HttpPost]
@@ -186,7 +173,6 @@ public class AccountController : Controller
     }
 
     [HttpGet]
-    [AllowAnonymous]
     public async Task<IActionResult> LoggedOut(string logoutId)
     {
         var logout = await interaction.GetLogoutContextAsync(logoutId);
@@ -198,7 +184,7 @@ public class AccountController : Controller
             ClientName = String.IsNullOrEmpty(logout?.ClientName) ? logout?.ClientId : logout?.ClientName,
             SignOutIframeUrl = logout?.SignOutIFrameUrl
         };
-        return Redirect(model.PostLogoutRedirectUri);
+        return View(model.PostLogoutRedirectUri);
     }
 
     [HttpGet]

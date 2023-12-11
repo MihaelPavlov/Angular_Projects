@@ -2,12 +2,18 @@ namespace TRINV.InvestTrackApplication.Controllers;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using TRINV.Application.Interfaces;
 
-[Authorize]
-public class BaseController : Controller
+public class BaseController : ControllerBase
 {
-    [Authorize]
+    readonly IUserContext _userContext;
+
+    public BaseController(IUserContext userContext)
+    {
+        this._userContext = userContext;
+    }
+
     [Route("/")]
     [HttpGet]
-    public string Index() => "We are hidden. Boom Hackers";
+    public IActionResult Index() => new JsonResult(new { text = $"We are hidden. Boom Hackers {this._userContext.UserId}" });
 }

@@ -16,11 +16,11 @@ internal static class PredefinedClients
             AllowedGrantTypes = GrantTypes.Code,
 
             // Requires a PKCE code.
-            RequirePkce = true,
+            //RequirePkce = true,
             RequireClientSecret = false,
-            
+
             // Where to redirect to after login.
-            RedirectUris =new List<string> { "http://localhost:4200/sign-in-callback"},
+            RedirectUris = new List<string> { "http://localhost:4200/sign-in-callback" },
             AllowedCorsOrigins = { "http://localhost:4200" },
 
             // Where to redirect to after logout.
@@ -30,7 +30,8 @@ internal static class PredefinedClients
                 {
                     "main_api",
                     IdentityServerConstants.StandardScopes.OpenId,
-                    IdentityServerConstants.StandardScopes.Profile
+                    IdentityServerConstants.StandardScopes.Profile,
+                    IdentityServerConstants.LocalApi.ScopeName
                 },
 
             // Disables the consent page - the one where the user agrees to share his data.

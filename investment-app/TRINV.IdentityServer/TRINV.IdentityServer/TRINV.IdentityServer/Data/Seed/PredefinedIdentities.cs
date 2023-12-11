@@ -1,4 +1,5 @@
 ﻿using Duende.IdentityServer.Models;
+using IdentityModel;
 
 namespace TRINV.IdentityServer.Data.Seed;
 
@@ -9,14 +10,13 @@ internal static class PredefinedIdentities
         {
             new IdentityResources.OpenId(),
             new IdentityResources.Profile(),
-            //new IdentityResource()
-            //{
-            //    Name = "verification",
-            //    UserClaims = new List<string>
-            //    {
-            //        JwtClaimTypes.Email,
-            //        JwtClaimTypes.EmailVerified
-            //    }
-            //}
+            new IdentityResource()
+            {
+                Name = "verification",
+                UserClaims = new List<string>
+                {
+                    JwtClaimTypes.Email,
+                }
+            }
         };
 }

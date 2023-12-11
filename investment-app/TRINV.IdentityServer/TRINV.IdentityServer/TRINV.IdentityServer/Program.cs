@@ -60,6 +60,7 @@ builder.Services.AddIdentityServer(options =>
     options.Caching.ClientStoreExpiration = TimeSpan.FromMinutes(15);
     options.ServerSideSessions.RemoveExpiredSessionsFrequency = TimeSpan.FromMinutes(60);
 })
+    .AddServerSideSessions()
     .AddConfigurationStore(options =>
     {
         options.ConfigureDbContext = builder =>
@@ -73,6 +74,9 @@ builder.Services.AddIdentityServer(options =>
         options.EnableTokenCleanup = true; // by default 3600 seconds
     })
     .AddAspNetIdentity<ApplicationUser>();
+
+builder.Services.AddAuthentication();
+builder.Services.AddLocalApiAuthentication();
 
 // other services
 builder.Services.Configure<DataProtectionTokenProviderOptions>(o => o.TokenLifespan = TimeSpan.FromHours(24));
@@ -91,6 +95,7 @@ var app = builder.Build();
 
 app.UseExceptionHandler("/Home/ServerError");
 app.UseRouting();
+app.UseAuthorization();
 app.UseIdentityServer();
 //app.UseAuthorization();
 app.UseSwagger();
@@ -102,10 +107,9 @@ app.UseStaticFiles();
 
 #endregion Configure Application
 
-app.UseRouting();
 app.UseEndpoints(endpoints =>
 {
-    endpoints.MapControllers();
+    endpoints.MapDefaultControllerRoute().RequireAuthorization();
 });
 
 app.Logger.LogInformation("Migrate & Seed");
@@ -113,3 +117,4 @@ app.ApplyDefaultSeedConfiguration(app.Configuration);
 
 app.Logger.LogInformation("Application is starting...");
 app.Run();
+
