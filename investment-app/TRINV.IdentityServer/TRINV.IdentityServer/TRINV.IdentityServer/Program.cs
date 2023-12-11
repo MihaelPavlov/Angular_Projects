@@ -109,7 +109,8 @@ app.UseStaticFiles();
 
 app.UseEndpoints(endpoints =>
 {
-    endpoints.MapDefaultControllerRoute().RequireAuthorization();
+    endpoints.MapDefaultControllerRoute();
+    endpoints.MapControllers();
 });
 
 app.Logger.LogInformation("Migrate & Seed");
