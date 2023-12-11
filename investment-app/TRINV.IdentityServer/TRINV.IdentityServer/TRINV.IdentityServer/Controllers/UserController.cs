@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Commands;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 
 [ApiController]
 [AllowAnonymous]
@@ -18,13 +19,8 @@ public class UserController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateUser([FromBody]RegisterUserCommand command)
+    public async Task<IdentityResult> CreateUser([FromBody]RegisterUserCommand command)
     {
-        var result = await _mediator.Send(command);
-        if (result.Succeeded)
-        {
-            return Ok();
-        }
-        return BadRequest(result.Errors);
+        return await _mediator.Send(command);
     }
 }
