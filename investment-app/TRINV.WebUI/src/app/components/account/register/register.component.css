@@ -5,11 +5,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
 }
 
 .register-container {
-  max-width: 300px;
+  max-width: 150rem;
   margin: 0 auto;
   padding: 40px;
   border: 1px solid #ccc;
