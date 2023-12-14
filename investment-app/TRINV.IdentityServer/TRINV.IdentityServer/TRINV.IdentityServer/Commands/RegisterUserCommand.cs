@@ -32,7 +32,7 @@ public class CreateUserCommandHandler : IRequestHandler<RegisterUserCommand, Ide
 
     public async Task<IdentityResult> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
     {
-        var userCheck = await _userManager.FindByEmailAsync(request.Email);
+        var userCheck = await _userManager.FindByEmailAsync(request.Email.ToUpper());
         if (userCheck != null)
         {
             throw new Exception("User with provided email already exists!");
