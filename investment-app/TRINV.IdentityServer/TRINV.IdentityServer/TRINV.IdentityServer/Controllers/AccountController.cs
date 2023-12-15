@@ -51,6 +51,12 @@ public class AccountController : Controller
         if (ModelState.IsValid)
         {
             var userToSignIn = await signInManager.UserManager.FindByEmailAsync(model.Email);
+            if (userToSignIn == null)
+            {
+                await events.RaiseAsync(new UserLoginFailureEvent(model.Email, "invalid credentials", clientId: context?.Client.ClientId));
+                ModelState.AddModelError(string.Empty, "Invalid username or password");
+                return View(model);
+            }
             var resultFromSignIn = await signInManager.PasswordSignInAsync(userToSignIn.UserName, model.Password, false, lockoutOnFailure: false);
 
             if (resultFromSignIn.Succeeded)
