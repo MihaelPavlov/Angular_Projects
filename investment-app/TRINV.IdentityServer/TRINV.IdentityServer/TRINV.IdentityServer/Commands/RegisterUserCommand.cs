@@ -46,13 +46,13 @@ public class CreateUserCommandHandler : IRequestHandler<RegisterUserCommand, Ide
             AccountEnabled = true
         };
 
-        var result = await _userManager.CreateAsync(user, request.Password);
+        var result = _userManager.CreateAsync(user, request.Password).Result;
         if (!result.Succeeded)
         {
             throw new Exception(string.Join(" ", result.Errors.Select(x => x.Description)));
         }
 
-        result = await _userManager.AddClaimAsync(user, new Claim(Claims.RoleKey, ((int)Role.User).ToString()));
+        result = _userManager.AddClaimAsync(user, new Claim(Claims.RoleKey, ((int)Role.User).ToString())).Result;
         if (!result.Succeeded)
         {
             throw new Exception(string.Join(" ", result.Errors.Select(x => x.Description)));
