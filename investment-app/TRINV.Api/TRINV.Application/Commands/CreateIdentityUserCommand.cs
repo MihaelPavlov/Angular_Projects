@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Json;
 using MediatR;
 
-public record CreateUserCommand : IRequest
+public record CreateIdentityUserCommand : IRequest
 {
     [Required]
     [StringLength(20, ErrorMessage = "The Username must be between 3 and 20 characters long.", MinimumLength = 3)]
@@ -20,9 +20,9 @@ public record CreateUserCommand : IRequest
     public string Email { get; set; }
 }
 
-public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand>
+public class CreateUserCommandHandler : IRequestHandler<CreateIdentityUserCommand>
 {
-    public async Task Handle(CreateUserCommand request, CancellationToken cancellationToken)
+    public async Task Handle(CreateIdentityUserCommand request, CancellationToken cancellationToken)
     {
         var user = new
         {
