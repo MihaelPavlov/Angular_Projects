@@ -20,8 +20,8 @@ public class UserController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<string> CreateUser(CreateUserCommand command)
-    {
-        return await _mediator.Send(command);
+    public async Task CreateUser(CreateUserCommand command)
+    { 
+        await _mediator.Send(command);
     }
 }

@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Json;
 using MediatR;
 
-public record CreateUserCommand : IRequest<string>
+public record CreateUserCommand : IRequest
 {
     [Required]
     [StringLength(20, ErrorMessage = "The Username must be between 3 and 20 characters long.", MinimumLength = 3)]
@@ -20,9 +20,9 @@ public record CreateUserCommand : IRequest<string>
     public string Email { get; set; }
 }
 
-public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, string>
+public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand>
 {
-    public async Task<string> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+    public async Task Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
         var user = new
         {
@@ -35,8 +35,9 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, strin
         var httpClient = new HttpClient();
         var content = new StringContent(json, Encoding.UTF8, "application/json");
         var response = await httpClient.PostAsync("https://localhost:5001/api/User", content);
-        var responseString = await response.Content.ReadAsStringAsync();
-
-        return responseString;
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception("Failed to create user.");
+        }
     }
 }
