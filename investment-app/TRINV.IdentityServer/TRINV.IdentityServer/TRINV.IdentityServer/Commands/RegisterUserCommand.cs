@@ -53,6 +53,7 @@ public class CreateUserCommandHandler : IRequestHandler<RegisterUserCommand, Ide
         }
 
         result = _userManager.AddClaimAsync(user, new Claim(Claims.RoleKey, ((int)Role.User).ToString())).Result;
+
         if (!result.Succeeded)
         {
             throw new Exception(string.Join(" ", result.Errors.Select(x => x.Description)));
