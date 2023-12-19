@@ -1,15 +1,13 @@
 ﻿namespace TRINV.IdentityServer.Commands;
 
+using Microsoft.AspNetCore.Identity;
+using MediatR;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
-using IdentityModel;
-using MediatR;
-using Microsoft.AspNetCore.Identity;
 using TRINV.IdentityServer.Application.Common.Models;
 using TRINV.IdentityServer.Data.Models;
-using static TRINV.IdentityServer.Data.Seed.PredefinedUsers;
 
-public class RegisterUserCommand : IRequest<IdentityResult>
+public class CreateUserCommand : IRequest<IdentityResult>
 {
     [Required]
     public string UserName { get; set; }
@@ -20,7 +18,7 @@ public class RegisterUserCommand : IRequest<IdentityResult>
     public string Password { get; set; }
 }
 
-public class CreateUserCommandHandler : IRequestHandler<RegisterUserCommand, IdentityResult>
+public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, IdentityResult>
 {
     readonly UserManager<ApplicationUser> _userManager;
 
@@ -30,7 +28,7 @@ public class CreateUserCommandHandler : IRequestHandler<RegisterUserCommand, Ide
 
     }
 
-    public async Task<IdentityResult> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
+    public async Task<IdentityResult> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
         var userCheck = await _userManager.FindByEmailAsync(request.Email.ToUpper());
         if (userCheck != null)
