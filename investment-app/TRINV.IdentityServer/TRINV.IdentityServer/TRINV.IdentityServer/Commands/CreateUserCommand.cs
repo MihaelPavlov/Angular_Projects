@@ -25,7 +25,6 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Ident
     public CreateUserCommandHandler(UserManager<ApplicationUser> userManager)
     {
         _userManager = userManager;
-
     }
 
     public async Task<IdentityResult> Handle(CreateUserCommand request, CancellationToken cancellationToken)
