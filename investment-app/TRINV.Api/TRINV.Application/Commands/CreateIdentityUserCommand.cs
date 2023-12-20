@@ -20,7 +20,7 @@ public record CreateIdentityUserCommand : IRequest
     public string Email { get; set; }
 }
 
-public class CreateUserCommandHandler : IRequestHandler<CreateIdentityUserCommand>
+public class CreateIdentityUserCommandHandler : IRequestHandler<CreateIdentityUserCommand>
 {
     public async Task Handle(CreateIdentityUserCommand request, CancellationToken cancellationToken)
     {
