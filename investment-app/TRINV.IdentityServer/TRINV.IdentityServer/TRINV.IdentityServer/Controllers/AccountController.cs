@@ -50,11 +50,18 @@ public class AccountController : Controller
         var context = await interaction.GetAuthorizationContextAsync(model.ReturnUrl);
         if (ModelState.IsValid)
         {
-            var resultFromSignIn = await signInManager.PasswordSignInAsync(model.Email, model.Password, false, lockoutOnFailure: false);
+            var userToSignIn = await signInManager.UserManager.FindByEmailAsync(model.Email);
+            if (userToSignIn == null)
+            {
+                await events.RaiseAsync(new UserLoginFailureEvent(model.Email, "invalid credentials", clientId: context?.Client.ClientId));
+                ModelState.AddModelError(string.Empty, "Invalid username or password");
+                return View(model);
+            }
+            var resultFromSignIn = await signInManager.PasswordSignInAsync(userToSignIn.UserName, model.Password, false, lockoutOnFailure: false);
 
             if (resultFromSignIn.Succeeded)
             {
-                var user = await userManager.FindByNameAsync(model.Email);
+                var user = await userManager.FindByNameAsync(userToSignIn.UserName);
                 await events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id.ToString(), user.UserName, clientId: context?.Client.ClientId));
 
                 // issue authentication cookie with subject ID and username
