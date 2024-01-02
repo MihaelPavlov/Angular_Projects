@@ -19,20 +19,26 @@ export class RegisterComponent implements OnInit {
     this.registrationForm = this.fb.group({
       username: ['', Validators.required],
       email: ['', Validators.email],
-      password: [''],
-      confirmPassword: [''],
-      location: this.fb.group({
-        city: [''],
-        address: [''],
-        street: ['']
-      }),
-      notifications: this.fb.group({
-        // Add form controls for notifications as needed
-      })
+      password: ['', Validators.required],
+      // confirmPassword: [''],
+      // location: this.fb.group({
+      //   city: [''],
+      //   address: [''],
+      //   street: ['']
+      // }),
+      // notifications: this.fb.group({
+      //   // Add form controls for notifications as needed
+      // })
     })
   }
 
-  public async login(): Promise<void> {
-    await this._authService.loginStart()
+  public register(): void {
+    let values = this.registrationForm.value;
+    console.log("registration form -> ", values.username, values.email, values.password);
+    this._authService.register(values.username, values.email, values.password)
+  }
+
+  public login(): void {
+    this._authService.loginStart()
   }
 }

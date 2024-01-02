@@ -10,12 +10,12 @@ using TRINV.IdentityServer.Data.Models;
 public class CreateUserCommand : IRequest<IdentityResult>
 {
     [Required]
-    public string UserName { get; set; }
+    public string UserName { get; set; } = string.Empty;
 
     [EmailAddress]
-    public string Email { get; set; }
+    public string Email { get; set; } = string.Empty;
     [Required]
-    public string Password { get; set; }
+    public string Password { get; set; } = string.Empty;
 }
 
 public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, IdentityResult>
@@ -44,6 +44,8 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Ident
         };
 
         var result = _userManager.CreateAsync(user, request.Password).Result;
+
+        //TODO: return the errors to the caller
         if (!result.Succeeded)
         {
             throw new Exception(string.Join(" ", result.Errors.Select(x => x.Description)));
@@ -51,6 +53,7 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Ident
 
         result = _userManager.AddClaimAsync(user, new Claim(Claims.RoleKey, ((int)Role.User).ToString())).Result;
 
+        //TODO: return the errors to the caller
         if (!result.Succeeded)
         {
             throw new Exception(string.Join(" ", result.Errors.Select(x => x.Description)));

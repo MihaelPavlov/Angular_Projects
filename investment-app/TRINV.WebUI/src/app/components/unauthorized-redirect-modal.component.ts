@@ -10,8 +10,7 @@ export class UnauthorizedRedirectModalComponent {
   ) {
   }
 
-  async redirectToIdentityServer(): Promise<void> {
-    await this.authService.loginStart();
+  redirectToIdentityServer(): void {
+    this.authService.loginStart();
   }
-
 }

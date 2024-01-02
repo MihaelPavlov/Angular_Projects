@@ -7,7 +7,7 @@ import {PATH} from "../configs/path.configs";
 import {IdentityServerConfigs} from "../configs/identity-server.configs";
 import {URL_CLIENT} from "../configs/url.configs";
 import * as CryptoJS from 'crypto-js';
-import {HttpClient, HttpParams} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {PersistenceService} from "./persistance.service";
 
 @Injectable({
@@ -31,6 +31,25 @@ export class AuthService {
     this.activatedRoute.queryParams.subscribe((params: any) => {
       if (params.code) {
         this.getCookieFromApi(params.code, params.state);
+      }
+    });
+  }
+
+  public register(username: string, email : string, password: string):void{
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+      // Add other headers if needed
+    });
+    this.http.post('https://localhost:7201/user/register', {username, email, password},{
+      withCredentials: true,
+      headers
+    }).subscribe({
+      next: (response) => {
+
+        console.log('response from register -> ', response)
+      },
+      error: (error) => {
+        console.warn('HTTP Error', error);
       }
     });
   }
