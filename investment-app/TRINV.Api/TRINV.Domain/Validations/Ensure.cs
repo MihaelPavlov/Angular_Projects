@@ -40,4 +40,16 @@ public static class Ensure
         }
     }
 
+    public static void IsEqual(
+        object? value1,
+        object? value2,
+        [CallerArgumentExpression("value1")] string? paramName = null)
+    {
+        if (!value1.Equals(value2))
+        {
+            throw new ArgumentException("The objects are not equal", paramName);
+        }
+    }
+
+
 }
