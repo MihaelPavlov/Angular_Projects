@@ -16,7 +16,16 @@ public static class Ensure
     public static void IsArgumentNullOrEmpty(string? value,
             [CallerArgumentExpression("value")] string? paramName = null)
     {
-        if (!string.IsNullOrEmpty(value))
+        if (string.IsNullOrEmpty(value))
+        {
+            throw new ArgumentException("The value can't be null or empty", paramName);
+        }
+    }
+
+    public static void IsArgumentNullOrWhiteSpace(string? value,
+                [CallerArgumentExpression("value")] string? paramName = null)
+    {
+        if (string.IsNullOrWhiteSpace(value))
         {
             throw new ArgumentException("The value can't be null or empty", paramName);
         }
