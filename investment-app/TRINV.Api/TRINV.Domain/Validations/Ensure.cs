@@ -9,7 +9,7 @@ public static class Ensure
     {
         if (value == null)
         {
-            throw new ArgumentException("The value can't be null", paramName);
+            throw new ArgumentException("The argument value can't be null", paramName);
         }
     }
 
@@ -18,7 +18,7 @@ public static class Ensure
     {
         if (string.IsNullOrEmpty(value))
         {
-            throw new ArgumentException("The value can't be null or empty", paramName);
+            throw new ArgumentException("The argument value can't be null or empty", paramName);
         }
     }
 
@@ -27,7 +27,16 @@ public static class Ensure
     {
         if (string.IsNullOrWhiteSpace(value))
         {
-            throw new ArgumentException("The value can't be null or empty", paramName);
+            throw new ArgumentException("The argument value can't be null or empty", paramName);
+        }
+    }
+
+    public static void IsNull(object? value,
+                    [CallerArgumentExpression("value")] string? paramName = null)
+    {
+        if (value is null)
+        {
+            throw new ArgumentException("Object value can't be null or empty", paramName);
         }
     }
 
