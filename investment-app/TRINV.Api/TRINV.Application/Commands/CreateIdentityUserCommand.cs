@@ -4,6 +4,7 @@ using MediatR;
 using System.Text;
 using System.Text.Json;
 using System.ComponentModel.DataAnnotations;
+using Domain.Validations;
 
 public record CreateIdentityUserCommand : IRequest
 {
@@ -24,6 +25,7 @@ public class CreateIdentityUserCommandHandler : IRequestHandler<CreateIdentityUs
 {
     public async Task Handle(CreateIdentityUserCommand request, CancellationToken cancellationToken)
     {
+        Ensure.IsValidEmail(request.Email);
         var json = JsonSerializer.Serialize(new CreateIdentityUserModel(request.Username, request.Password, request.Email));
         var httpClient = new HttpClient();
         var content = new StringContent(json, Encoding.UTF8, "application/json");

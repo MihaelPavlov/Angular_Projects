@@ -1,6 +1,7 @@
 ﻿namespace TRINV.Domain.Validations;
 
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 
 public static class Ensure
 {
@@ -14,7 +15,7 @@ public static class Ensure
     }
 
     public static void IsArgumentNullOrEmpty(string? value,
-            [CallerArgumentExpression("value")] string? paramName = null)
+        [CallerArgumentExpression("value")] string? paramName = null)
     {
         if (string.IsNullOrEmpty(value))
         {
@@ -23,7 +24,7 @@ public static class Ensure
     }
 
     public static void IsArgumentNullOrWhiteSpace(string? value,
-                [CallerArgumentExpression("value")] string? paramName = null)
+        [CallerArgumentExpression("value")] string? paramName = null)
     {
         if (string.IsNullOrWhiteSpace(value))
         {
@@ -32,7 +33,7 @@ public static class Ensure
     }
 
     public static void IsNull(object? value,
-                    [CallerArgumentExpression("value")] string? paramName = null)
+        [CallerArgumentExpression("value")] string? paramName = null)
     {
         if (value is null)
         {
@@ -51,5 +52,23 @@ public static class Ensure
         }
     }
 
+    public static void IsEnumOutOfRange(Enum value, [CallerArgumentExpression("value")] string? paramName = null)
+    {
+        if (!Enum.IsDefined(typeof(Enum), value))
+        {
+            throw new ArgumentException("Enum do not exist!", paramName);
+        }
+    }
 
+    public static void IsValidEmail(string email, 
+        [CallerArgumentExpression("email")] string? paramName = null)
+    {
+        string emailPattern = @"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$";
+        var match = Regex.IsMatch(email, emailPattern);
+
+        if (!match)
+        {
+            throw new ArgumentException("The email is not valid", paramName);
+        }
+    }
 }
