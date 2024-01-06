@@ -6,8 +6,10 @@ using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 using TRINV.IdentityServer.Application.Common.Models;
 using TRINV.IdentityServer.Data.Models;
+using TRINV.Shared.Business.Exceptions;
+using TRINV.Shared.Business.Utilities;
 
-public class CreateUserCommand : IRequest<IdentityResult>
+public class CreateUserCommand : IRequest<OperationObject>
 {
     [Required]
     public string UserName { get; set; } = string.Empty;
@@ -18,17 +20,20 @@ public class CreateUserCommand : IRequest<IdentityResult>
     public string Password { get; set; } = string.Empty;
 }
 
-public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, IdentityResult>
+public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, OperationObject>
 {
+    readonly ILogger<CreateUserCommand> _logger;
     readonly UserManager<ApplicationUser> _userManager;
 
-    public CreateUserCommandHandler(UserManager<ApplicationUser> userManager)
+    public CreateUserCommandHandler(UserManager<ApplicationUser> userManager, ILogger<CreateUserCommand> logger)
     {
         _userManager = userManager;
+        _logger = logger;
     }
 
-    public async Task<IdentityResult> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+    public async Task<OperationObject> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
+        var operationResult = new OperationResult();
         var userCheck = await _userManager.FindByEmailAsync(request.Email.ToUpper());
         if (userCheck != null)
         {
@@ -48,7 +53,7 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Ident
         //TODO: return the errors to the caller
         if (!result.Succeeded)
         {
-            throw new Exception(string.Join(" ", result.Errors.Select(x => x.Description)));
+            operationResult.AppendErrorMessage(string.Join(" ", result.Errors.Select(x => x.Description)));
         }
 
         result = _userManager.AddClaimAsync(user, new Claim(Claims.RoleKey, ((int)Role.User).ToString())).Result;
@@ -56,9 +61,12 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Ident
         //TODO: return the errors to the caller
         if (!result.Succeeded)
         {
-            throw new Exception(string.Join(" ", result.Errors.Select(x => x.Description)));
+            operationResult.AppendErrorMessage(string.Join(" ", result.Errors.Select(x => x.Description)));
         }
+        operationResult.AppendErrorMessage("Invalid Username");
 
-        return result;
+        return operationResult.GetResult();
     }
 }
+
+public record Response(string[] errors);

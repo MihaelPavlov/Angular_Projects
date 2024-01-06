@@ -4,8 +4,10 @@ using MediatR;
 using System.Text;
 using System.Text.Json;
 using System.ComponentModel.DataAnnotations;
+using TRINV.Shared.Business.Utilities;
+using Microsoft.Extensions.Logging;
 
-public record CreateIdentityUserCommand : IRequest
+public record CreateIdentityUserCommand : IRequest<OperationObject>
 {
     [Required]
     [StringLength(20, ErrorMessage = "The Username must be between 3 and 20 characters long.", MinimumLength = 3)]
@@ -20,9 +22,9 @@ public record CreateIdentityUserCommand : IRequest
     public string Email { get; set; } = string.Empty;
 }
 
-public class CreateIdentityUserCommandHandler : IRequestHandler<CreateIdentityUserCommand>
+public class CreateIdentityUserCommandHandler : IRequestHandler<CreateIdentityUserCommand, OperationObject>
 {
-    public async Task Handle(CreateIdentityUserCommand request, CancellationToken cancellationToken)
+    public async Task<OperationObject> Handle(CreateIdentityUserCommand request, CancellationToken cancellationToken)
     {
         var json = JsonSerializer.Serialize(new CreateIdentityUserModel(request.Username, request.Password, request.Email));
         var httpClient = new HttpClient();
@@ -33,9 +35,21 @@ public class CreateIdentityUserCommandHandler : IRequestHandler<CreateIdentityUs
         // they might be errors like required symbols and etc. We need to return it to the front-end
         if (!response.IsSuccessStatusCode)
         {
-            throw new Exception("Failed to create user.");
+            var responseContent1 = await response.Content.ReadAsStringAsync();
+
+            // Now, you can deserialize the response content to your desired type
+            return JsonSerializer.Deserialize<OperationObject>(responseContent1);
         }
+
+        var responseContent = await response.Content.ReadAsStringAsync();
+
+        // Now, you can deserialize the response content to your desired type
+        var result = JsonSerializer.Deserialize<OperationObject>(responseContent);
+
+        return result;
     }
 }
 
 public record CreateIdentityUserModel(string Username, string Password, string Email);
+
+public record Response(string[] errors);

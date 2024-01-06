@@ -18,6 +18,8 @@ export class AuthService {
   public isUserAuthenticated$ = this.isUserAuthenticatedSubject$.asObservable();
   private userInfo$ = new BehaviorSubject<any | null>(null);
 
+  private errors$ = new BehaviorSubject<string[]>([]);
+  public errors = this.errors$.asObservable();
   private readonly state_Key: string = "state";
   private readonly codeVerifier_Key: string = "codeVerifier";
   tokenResponse: any;
@@ -44,12 +46,12 @@ export class AuthService {
       withCredentials: true,
       headers
     }).subscribe({
-      next: (response) => {
-
-        console.log('response from register -> ', response)
+      next: (response:any) => {
+        console.log('response from register -> ', response.errors)
+        this.errors$.next(response.errors as string[]);
       },
       error: (error) => {
-        console.warn('HTTP Error', error);
+        console.log('HTTP Error');
       }
     });
   }
