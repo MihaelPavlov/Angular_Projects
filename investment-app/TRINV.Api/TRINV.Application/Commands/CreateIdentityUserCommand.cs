@@ -5,9 +5,8 @@ using System.Text;
 using System.Text.Json;
 using System.ComponentModel.DataAnnotations;
 using TRINV.Shared.Business.Utilities;
-using Microsoft.Extensions.Logging;
 
-public record CreateIdentityUserCommand : IRequest<OperationObject>
+public record CreateIdentityUserCommand : IRequest<OperationErrorObject>
 {
     [Required]
     [StringLength(20, ErrorMessage = "The Username must be between 3 and 20 characters long.", MinimumLength = 3)]
@@ -22,9 +21,9 @@ public record CreateIdentityUserCommand : IRequest<OperationObject>
     public string Email { get; set; } = string.Empty;
 }
 
-public class CreateIdentityUserCommandHandler : IRequestHandler<CreateIdentityUserCommand, OperationObject>
+public class CreateIdentityUserCommandHandler : IRequestHandler<CreateIdentityUserCommand, OperationErrorObject>
 {
-    public async Task<OperationObject> Handle(CreateIdentityUserCommand request, CancellationToken cancellationToken)
+    public async Task<OperationErrorObject> Handle(CreateIdentityUserCommand request, CancellationToken cancellationToken)
     {
         var json = JsonSerializer.Serialize(new CreateIdentityUserModel(request.Username, request.Password, request.Email));
         var httpClient = new HttpClient();
@@ -36,15 +35,15 @@ public class CreateIdentityUserCommandHandler : IRequestHandler<CreateIdentityUs
         if (!response.IsSuccessStatusCode)
         {
             var responseContent1 = await response.Content.ReadAsStringAsync();
-
+            var res = JsonSerializer.Deserialize<ErrorResponse>(responseContent1);
             // Now, you can deserialize the response content to your desired type
-            return JsonSerializer.Deserialize<OperationObject>(responseContent1);
+            return new OperationErrorObject { InitialErrorMessage = res.detail, IsSuccess = false };
         }
 
         var responseContent = await response.Content.ReadAsStringAsync();
 
         // Now, you can deserialize the response content to your desired type
-        var result = JsonSerializer.Deserialize<OperationObject>(responseContent);
+        var result = JsonSerializer.Deserialize<OperationErrorObject>(responseContent);
 
         return result;
     }
@@ -52,4 +51,4 @@ public class CreateIdentityUserCommandHandler : IRequestHandler<CreateIdentityUs
 
 public record CreateIdentityUserModel(string Username, string Password, string Email);
 
-public record Response(string[] errors);
+public record ErrorResponse(int status, string detail);

@@ -12,114 +12,121 @@
             <p class="text-sm text-gray-500 font-normal leading-relaxed">Welcome to our Platform. Register a user.</p>
           </div>
         </div>
-        <div *ngIf="(errors | async) as errorMessages" class="max-w-4xl mx-auto">
-          <div *ngIf="errorMessages.length != 0" class="bg-red-50 border-l-8 border-red-900">
-            <div class="flex items-center">
-              <div  class="p-2">
-                <div  class="flex items-center">
-                  <div class="ml-2">
-                    <svg class="h-8 w-8 text-red-900 mr-2 cursor-pointer"
-                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                         stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    </svg>
-                  </div>
-                  <p class="px-6 py-4 text-red-900 font-semibold text-lg">Please fix the
-                    following
-                    errors.</p>
-                </div>
-
-                <div  class="px-16 mb-4">
-                  <li *ngFor="let errorMessage of errorMessages" class="text-md font-bold text-red-500 text-sm">{{ errorMessage }}</li>
-                </div>
-
-              </div>
-            </div>
-          </div>
-        </div>
+        <errors [errors]="errors | async" [initialException]="initialException| async "></errors>
 
         <form [formGroup]="this.registrationForm" class="divide-y divide-gray-200">
           <div class="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
             <div class="flex flex-col">
-              <label class="leading-loose" for="username">Username</label>
-              <input type="text" id="username" formControlName="username"
-                     class="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
-                     placeholder="username">
+              <app-label class="leading-loose" for="username" [appFormControl]="this.registrationForm.controls['username']">Username</app-label>
+              <input
+                #inputElement
+                matInput
+                [ngClass]="{'errorBorder':this.registrationForm.controls['username']?.invalid && this.registrationForm.controls['username']?.touched}"
+                type="text"
+                id="username"
+                formControlName="username"
+                class="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
+                placeholder="username"
+              >
+              <mat-error class="text-red-400" *ngIf="this.registrationForm.controls['username']?.invalid && this.registrationForm.controls['username']?.touched">
+                Username is required.
+              </mat-error>
             </div>
             <div class="flex flex-col">
-              <label class="leading-loose" for="email">Email</label>
-              <input type="email" id="email" formControlName="email"
-                     class="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
-                     placeholder="exmaple@gmail.com">
+              <app-label class="leading-loose" for="email" [appFormControl]="this.registrationForm.controls['email']">Email</app-label>
+              <input
+                #inputElement
+                matInput
+                [ngClass]="{'errorBorder':this.registrationForm.controls['email']?.invalid && this.registrationForm.controls['email']?.touched}"
+                type="email"
+                id="email"
+                formControlName="email"
+                class="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
+                placeholder="exmaple@gmail.com"
+              >
+              <mat-error class="text-red-400" *ngIf="this.registrationForm.controls['email']?.invalid && this.registrationForm.controls['email']?.touched">
+                Email is required.
+              </mat-error>
             </div>
 
             <div class="flex flex-col">
-              <label class="leading-loose" for="password">Password</label>
-              <input type="password" id="password" formControlName="password"
-                     class="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
-                     placeholder="required">
+              <app-label class="leading-loose" for="password" [appFormControl]="this.registrationForm.controls['password']">Password</app-label>
+              <input
+                #inputElement
+                matInput
+                [ngClass]="{'errorBorder':this.registrationForm.controls['password']?.invalid && this.registrationForm.controls['password']?.touched}"
+                type="password"
+                id="password"
+                formControlName="password"
+                class="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
+                placeholder="*****">
+              <mat-error class="text-red-400" *ngIf="this.registrationForm.controls['password']?.invalid && this.registrationForm.controls['password']?.touched">
+                Password is required.
+              </mat-error>
             </div>
-            <div class="flex flex-col">
-              <label class="leading-loose" for="confirmPassword">Confirm Password</label>
-              <input type="password" id="confirmPassword" formControlName="confirmPassword"
-                     class="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
-                     placeholder="required">
-            </div>
+<!--            <div class="flex flex-col">-->
+<!--              <label class="leading-loose" for="confirmPassword">Confirm Password</label>-->
+<!--              <input type="password" id="confirmPassword" formControlName="confirmPassword"-->
+<!--                     class="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"-->
+<!--                     placeholder="required">-->
+<!--            </div>-->
 
-            <mat-accordion class="location-top">
-              <mat-expansion-panel>
-                <mat-expansion-panel-header>
-                  <mat-panel-title>
-                    Add Location
-                  </mat-panel-title>
-                </mat-expansion-panel-header>
-                <div formGroupName="location" class="location-tab">
-                  <div class="form-group">
-                    <label for="city">City:</label>
-                    <input type="text" id="city" formControlName="city">
-                  </div>
-                  <div class="form-group">
-                    <label for="address">Address:</label>
-                    <input type="text" id="address" formControlName="address">
-                  </div>
-                  <div class="form-group">
-                    <label for="street">Street:</label>
-                    <input type="text" id="street" formControlName="street">
-                  </div>
-                </div>
-              </mat-expansion-panel>
-            </mat-accordion>
+<!--            <mat-accordion class="location-top">-->
+<!--              <mat-expansion-panel>-->
+<!--                <mat-expansion-panel-header>-->
+<!--                  <mat-panel-title>-->
+<!--                    Add Location-->
+<!--                  </mat-panel-title>-->
+<!--                </mat-expansion-panel-header>-->
+<!--                <div formGroupName="location" class="location-tab">-->
+<!--                  <div class="form-group">-->
+<!--                    <label for="city">City:</label>-->
+<!--                    <input type="text" id="city" formControlName="city">-->
+<!--                  </div>-->
+<!--                  <div class="form-group">-->
+<!--                    <label for="address">Address:</label>-->
+<!--                    <input type="text" id="address" formControlName="address">-->
+<!--                  </div>-->
+<!--                  <div class="form-group">-->
+<!--                    <label for="street">Street:</label>-->
+<!--                    <input type="text" id="street" formControlName="street">-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </mat-expansion-panel>-->
+<!--            </mat-accordion>-->
 
-            <mat-accordion class="location-top">
-              <mat-expansion-panel>
-                <mat-expansion-panel-header>
-                  <mat-panel-title>
-                    Choose Notifications
-                  </mat-panel-title>
-                </mat-expansion-panel-header>
-                <div formGroupName="notifications" class="location-tab">
-                  <!--            <div #notifications *ngFor="let notification of this.notifications" class="form-group">-->
-                  <!--              <label for="{{notification.id}}">{{notification.name}}:</label>-->
-                  <!--              <input type="checkbox" id="{{notification.id}}" name="{{notification.name}}"-->
-                  <!--                     formControlName="{{notification.name}}">-->
-                  <!--            </div>-->
-                </div>
-              </mat-expansion-panel>
-            </mat-accordion>
+<!--            <mat-accordion class="location-top">-->
+<!--              <mat-expansion-panel>-->
+<!--                <mat-expansion-panel-header>-->
+<!--                  <mat-panel-title>-->
+<!--                    Choose Notifications-->
+<!--                  </mat-panel-title>-->
+<!--                </mat-expansion-panel-header>-->
+<!--                <div formGroupName="notifications" class="location-tab">-->
+<!--                  &lt;!&ndash;            <div #notifications *ngFor="let notification of this.notifications" class="form-group">&ndash;&gt;-->
+<!--                  &lt;!&ndash;              <label for="{{notification.id}}">{{notification.name}}:</label>&ndash;&gt;-->
+<!--                  &lt;!&ndash;              <input type="checkbox" id="{{notification.id}}" name="{{notification.name}}"&ndash;&gt;-->
+<!--                  &lt;!&ndash;                     formControlName="{{notification.name}}">&ndash;&gt;-->
+<!--                  &lt;!&ndash;            </div>&ndash;&gt;-->
+<!--                </div>-->
+<!--              </mat-expansion-panel>-->
+<!--            </mat-accordion>-->
           </div>
           <div class="pt-4 flex items-center space-x-4">
 
             <button
+              type="submit"
               (click)="this.register()"
+              [ngClass]="{'disabledButton':!this.registrationForm.valid}"
               class="bg-blue-500 flex justify-center items-center w-full text-white px-4 py-3 rounded-md focus:outline-none">
               Create
             </button>
           </div>
 
 
-          <p class="pt-3">You have account ? - <a class="no-underline hover:underline hover:decoration-amber-400 hover:text-amber-400" (click)="login()">Sign In</a></p>
+          <p class="pt-3">You have account ? - <a
+            class="no-underline hover:underline hover:decoration-amber-400 hover:text-amber-400" (click)="login()">Sign
+            In</a></p>
           <br/>
 
           <div class="small-image-container">

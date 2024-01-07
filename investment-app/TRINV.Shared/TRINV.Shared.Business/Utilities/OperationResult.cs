@@ -1,5 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using System;
 using System.Text.Json.Serialization;
+using TRINV.Shared.Business.Exceptions;
 
 namespace TRINV.Shared.Business.Utilities;
 
@@ -11,14 +12,8 @@ public class OperationResult
 {
     private readonly List<Exception> _errors = new List<Exception>();
 
-    /// <summary>
-    /// Gets or sets a value indicating whether the operation is successful or not.
-    /// </summary>
     public bool Success { get; set; } = true;
 
-    /// <summary>
-    /// Gets an <see cref="List{T}"/> containing the error codes and messages of the <see cref="OperationResult{T}" />.
-    /// </summary>
     public List<Exception> Errors => this._errors;
 
     /// <summary>
@@ -32,7 +27,7 @@ public class OperationResult
     //protected ILogger Logger { get; }
 
     /// <summary>
-    /// Appends an exception to the error message collection and logs the full exception as an Error <see cref="LogEventLevel"/> level. A call to this method will set the Success property to false.
+    /// Appends an exception to the error message collection and logs the full exception as an Error.
     /// </summary>
     /// <param name="exception">The exception to log.</param>
     /// <param name="errorCode">The error code.</param>
@@ -42,7 +37,7 @@ public class OperationResult
         this.Success = false;
         this.InitialException ??= exception ?? throw new ArgumentNullException(nameof(exception));
 
-        this.AppendErrorMessage(exception.ToString(), errorCode);
+        this.AppendErrorMessage(exception.ToString(), errorCode: errorCode);
     }
 
     /// <summary>
@@ -51,18 +46,70 @@ public class OperationResult
     /// </summary>
     /// <param name="message">The error message to append.</param>
     /// <param name="errorCode">The error code.</param>
-    public void AppendErrorMessage(string message, int errorCode = 0) => this._errors.Add(new Exception(message));
-
-    public OperationObject GetResult()
+    public void AppendErrorMessage(string message, string field = "", int errorCode = 0)
     {
-        return new OperationObject { Errors = new string[] { this.Errors[0].Message }, IsSuccess = this.Success };
+        this.Success = false;
+        this.InitialException ??= new Exception(message);
+
+        if (errorCode == 422)
+        {
+            this._errors.Add(new ValidationErrorsException(field, message));
+        }
+        else
+        {
+            this._errors.Add(new Exception(message));
+        }
     }
+
+    public OperationErrorObject GetErrorsResult()
+    {
+        var res = new OperationErrorObject();
+        if (this.Errors.Count != 0)
+        {
+            res.InitialErrorMessage = this.Errors[0].Message;
+        }
+
+        var list = new List<ValidatiobObject>();
+        for (int i = 0; i < this.Errors.Count; i++)
+        {
+            var errors = (ValidationErrorsException)this.Errors[i];
+
+            foreach (var error in errors.Errors)
+            {
+                foreach (var errorMessage in errors.Errors[error.Key])
+                {
+                    list.Add(new ValidatiobObject { Field = error.Key, Message = errorMessage });
+                }
+            }
+        }
+        res.Errors = list.ToArray();
+        return res;
+    }
+
 }
 
-public class OperationObject
+public class OperationErrorObject
 {
+    [JsonPropertyName("initialErrorMessage")]
+    public string InitialErrorMessage { get; set; } = string.Empty;
+
     [JsonPropertyName("errors")]
-    public string[] Errors { get; set; } = Array.Empty<string>();
+    public ValidatiobObject[] Errors { get; set; } = Array.Empty<ValidatiobObject>();
+
     [JsonPropertyName("isSuccess")]
     public bool IsSuccess { get; set; }
+}
+
+[Serializable]
+public class ValidatiobObject
+{
+    [JsonPropertyName("field")]
+    public string Field { get; set; } = string.Empty;
+    [JsonPropertyName("message")]
+    public string Message { get; set; } = string.Empty;
+}
+
+public class OperationObject<T>
+{
+    public T? Value { get; set; }
 }
