@@ -34,19 +34,21 @@ public class CreateIdentityUserCommandHandler : IRequestHandler<CreateIdentityUs
         var response = await httpClient.PostAsync("https://localhost:5001/api/User", content);
 
         //Handle the different errors
-        // they might be errors like required symbols and etc. We need to return it to the front-end
         if (!response.IsSuccessStatusCode)
         {
             var responseContent1 = await response.Content.ReadAsStringAsync();
-            var res = JsonSerializer.Deserialize<ErrorResponse>(responseContent1);
-            // Now, you can deserialize the response content to your desired type
-            return new OperationErrorObject { InitialErrorMessage = res.detail, IsSuccess = false };
+            var errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseContent1);
+
+            ArgumentNullException.ThrowIfNull(errorResponse);
+
+            return new OperationErrorObject { InitialErrorMessage = errorResponse.detail, IsSuccess = false };
         }
 
         var responseContent = await response.Content.ReadAsStringAsync();
 
-        // Now, you can deserialize the response content to your desired type
         var result = JsonSerializer.Deserialize<OperationErrorObject>(responseContent);
+
+        ArgumentNullException.ThrowIfNull(result);
 
         return result;
     }

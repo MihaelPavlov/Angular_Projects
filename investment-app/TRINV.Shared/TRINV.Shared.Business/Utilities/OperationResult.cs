@@ -19,26 +19,12 @@ public class OperationResult
     /// <summary>
     /// Gets or sets the first exception that resulted from the operation.
     /// </summary>
-    public Exception? InitialException { get; set; }
+    public string? InitialException { get; set; }
 
     ///// <summary>
     ///// Gets an <see cref="ILoggerService"/> that can be used to log errors internally.
     ///// </summary>
     //protected ILogger Logger { get; }
-
-    /// <summary>
-    /// Appends an exception to the error message collection and logs the full exception as an Error.
-    /// </summary>
-    /// <param name="exception">The exception to log.</param>
-    /// <param name="errorCode">The error code.</param>
-    public void AppendException(Exception exception, int errorCode = 0)
-    {
-        // Append the exception as a first if it is not yet set.
-        this.Success = false;
-        this.InitialException ??= exception ?? throw new ArgumentNullException(nameof(exception));
-
-        this.AppendErrorMessage(exception.ToString(), errorCode: errorCode);
-    }
 
     /// <summary>
     /// Appends an error message to the error message collection. A call to this method will set the Success property to false.
@@ -49,7 +35,7 @@ public class OperationResult
     public void AppendErrorMessage(string message, string field = "", int errorCode = 0)
     {
         this.Success = false;
-        this.InitialException ??= new Exception(message);
+        this.InitialException ??= message;
 
         if (errorCode == 422)
         {
@@ -61,31 +47,60 @@ public class OperationResult
         }
     }
 
-    public OperationErrorObject GetErrorsResult()
+    //TODO: FIX this method handle different case of exception
+    public OperationErrorObject GetResult()
     {
-        var res = new OperationErrorObject();
+        var operationObject = new OperationErrorObject();
+
         if (this.Errors.Count != 0)
-        {
-            res.InitialErrorMessage = this.Errors[0].Message;
-        }
+            operationObject.InitialErrorMessage = this.Errors[0].Message;
 
         var list = new List<ValidatiobObject>();
         for (int i = 0; i < this.Errors.Count; i++)
         {
-            var errors = (ValidationErrorsException)this.Errors[i];
+            ValidationErrorsException errors = new ValidationErrorsException();
+            try
+            {
+                errors = (ValidationErrorsException)this.Errors[i];
 
+            }
+            catch (Exception)
+            {
+
+            }
             foreach (var error in errors.Errors)
             {
                 foreach (var errorMessage in errors.Errors[error.Key])
-                {
                     list.Add(new ValidatiobObject { Field = error.Key, Message = errorMessage });
-                }
             }
         }
-        res.Errors = list.ToArray();
-        return res;
+
+        operationObject.Errors = list.ToArray();
+        return operationObject;
     }
 
+}
+
+/// <summary>
+/// Represents a generic system operation.
+/// </summary>
+public class OperationResult<T> : OperationResult
+{
+    public OperationResult()
+    {
+    }
+
+    public OperationResult(T resultObject)
+    {
+        this.RelatedObject = resultObject;
+    }
+
+    /// <summary>
+    /// Gets or sets the related object of the operation.
+    /// </summary>
+    public T? RelatedObject { get; set; }
+
+    public OperationErrorObject OperationErrorObject => this.GetResult();
 }
 
 public class OperationErrorObject
@@ -107,9 +122,4 @@ public class ValidatiobObject
     public string Field { get; set; } = string.Empty;
     [JsonPropertyName("message")]
     public string Message { get; set; } = string.Empty;
-}
-
-public class OperationObject<T>
-{
-    public T? Value { get; set; }
 }

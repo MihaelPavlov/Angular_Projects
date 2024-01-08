@@ -5,8 +5,9 @@ import {PATH} from "../configs/path.configs";
 import {IdentityServerConfigs} from "../configs/identity-server.configs";
 import {URL_CLIENT} from "../configs/url.configs";
 import * as CryptoJS from 'crypto-js';
-import {HttpClient, HttpHeaders } from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {PersistenceService} from "./persistance.service";
+import {ErrorService} from "./error.service";
 
 @Injectable({
   providedIn: "root"
@@ -14,9 +15,9 @@ import {PersistenceService} from "./persistance.service";
 export class AuthService {
   private isUserAuthenticatedSubject$ = new Subject<boolean>();
   public isUserAuthenticated$ = this.isUserAuthenticatedSubject$.asObservable();
-  private userInfo$ = new BehaviorSubject<any | null>(null);
+  private userInfo$ = new BehaviorSubject<any | null>(null); //TODO: Create model for this userInfo
 
-  private errorsSubject$ = new BehaviorSubject<string[]>([]);
+  private errorsSubject$ = new BehaviorSubject<any[]>([]); //TODO: Create model for this any ErrorModel
   public errors$ = this.errorsSubject$.asObservable();
 
   private initialExceptionSubject$ = new BehaviorSubject<string>('');
@@ -29,7 +30,8 @@ export class AuthService {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private http: HttpClient,
-    private persistenceService: PersistenceService
+    private persistenceService: PersistenceService,
+    private errorService: ErrorService
   ) {
     this.activatedRoute.queryParams.subscribe((params: any) => {
       if (params.code) {
@@ -38,23 +40,28 @@ export class AuthService {
     });
   }
 
-  public register(username: string, email : string, password: string):void{
+  public register(username: string, email: string, password: string): void {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
       // Add other headers if needed
     });
-    this.http.post('https://localhost:7201/user/register', {username, email, password},{
+    this.http.post('https://localhost:7201/user/register', {username, email, password}, {
       withCredentials: true,
       headers
     }).subscribe({
-      next: (response:any) => {
-        console.log('response from register -> ', response.errors)
-        this.errorsSubject$.next(response.errors as string[]);
+      next: (response: any) => {
+        console.log('response from register -> ', response)
+        this.errorsSubject$.next(response.errors as any[]);
         this.initialExceptionSubject$.next(response.initialErrorMessage as string);
-
       },
-      error: (error) => {
-        console.log('HTTP Error');
+      error: (error: any) => {
+        if (error.error.errors) {
+
+          let result = this.errorService.getErrorsFromValidationAttribute(error.error.errors);
+
+          this.errorsSubject$.next(result);
+          this.initialExceptionSubject$.next(error.error.title);
+        }
       }
     });
   }
