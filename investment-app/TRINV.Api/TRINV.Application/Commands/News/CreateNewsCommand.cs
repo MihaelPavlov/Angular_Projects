@@ -19,15 +19,6 @@ public record CreateNewsCommand : IRequest
     public string Description { get; set; } = null!;
 
     [Required]
-    public int ViewsCount { get; set; }
-
-    [Required]
-    public int UpVote { get; set; }
-
-    [Required]
-    public int DownVote { get; set; }
-
-    [Required]
     [MaxLength(ImageUrlMaxLength)]
     public string ImageUrl { get; set; } = null!;
 }
@@ -35,15 +26,27 @@ public record CreateNewsCommand : IRequest
 public class CreateNewsCommandHandler : IRequestHandler<CreateNewsCommand>
 {
     readonly IRepository<News> _repository;
+    readonly IUnitOfWork _unitOfWork;
 
-    public CreateNewsCommandHandler(IRepository<News> repository)
+    public CreateNewsCommandHandler(IRepository<News> repository, IUnitOfWork unitOfWork)
     {
         _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
-    public Task Handle(CreateNewsCommand request, CancellationToken cancellationToken)
+    public async Task Handle(CreateNewsCommand request, CancellationToken cancellationToken)
     {
-        // TODO: Implement CreateNewsCommandHandler
-        return Task.FromResult(Unit.Value);
+        var news = new News
+        {
+            UserId = request.UserId,
+            Name = request.Name,
+            Description = request.Description,
+            ImageUrl = request.ImageUrl
+        };
+
+        await _repository.Insert(news, cancellationToken);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }
+
+public record CreateNewsModel(int UserId, string Name, string Description, string ImageUrl);
