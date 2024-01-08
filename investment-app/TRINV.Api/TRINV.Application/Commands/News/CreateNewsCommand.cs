@@ -34,6 +34,7 @@ public class CreateNewsCommandHandler : IRequestHandler<CreateNewsCommand>
 {
     public Task Handle(CreateNewsCommand request, CancellationToken cancellationToken)
     {
+        // TODO: Implement CreateNewsCommandHandler
         return Task.FromResult(Unit.Value);
     }
 }
