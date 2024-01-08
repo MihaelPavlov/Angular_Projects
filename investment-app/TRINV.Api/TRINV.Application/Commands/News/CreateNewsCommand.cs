@@ -38,4 +38,3 @@ public class CreateNewsCommandHandler : IRequestHandler<CreateNewsCommand>
         return Task.FromResult(Unit.Value);
     }
 }
-
