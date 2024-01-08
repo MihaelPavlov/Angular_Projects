@@ -1,8 +1,10 @@
 ﻿namespace TRINV.InvestTrackApplication.Controllers;
 
 using Application.Commands.News;
+using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
+using TRINV.Application.Queries.News;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -15,7 +17,7 @@ public class NewsController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpPost("createNews")]
+    [HttpPost("create")]
     public async Task<IActionResult> CreateNews([FromBody] CreateNewsCommand command)
     {
         await _mediator.Send(command);
@@ -23,7 +25,7 @@ public class NewsController : ControllerBase
         return Ok();
     }
 
-    [HttpPost("deleteNews")]
+    [HttpPost("delete")]
     public async Task<IActionResult> DeleteNews([FromBody] DeleteNewsCommand command)
     {
         await _mediator.Send(command);
@@ -31,12 +33,17 @@ public class NewsController : ControllerBase
         return Ok();
     }
 
-
-    [HttpPost("updateNews")]
+    [HttpPost("update")]
     public async Task<IActionResult> UpdateNews([FromBody] UpdateNewsCommand command)
     {
         await _mediator.Send(command);
 
         return Ok();
+    }
+
+    [HttpGet("{id}")]
+    public async Task<News> GetNewsById(int id)
+    {
+        return await _mediator.Send(new GetNewsByIdQuery(id));
     }
 }
