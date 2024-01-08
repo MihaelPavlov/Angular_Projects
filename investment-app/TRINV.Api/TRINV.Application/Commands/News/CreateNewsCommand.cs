@@ -2,6 +2,8 @@
 
 using MediatR;
 using System.ComponentModel.DataAnnotations;
+using Domain.Entities;
+using Interfaces;
 using static Domain.Validations.EntityValidationConstants.News;
 
 public record CreateNewsCommand : IRequest
@@ -32,6 +34,13 @@ public record CreateNewsCommand : IRequest
 
 public class CreateNewsCommandHandler : IRequestHandler<CreateNewsCommand>
 {
+    readonly IRepository<News> _repository;
+
+    public CreateNewsCommandHandler(IRepository<News> repository)
+    {
+        _repository = repository;
+    }
+
     public Task Handle(CreateNewsCommand request, CancellationToken cancellationToken)
     {
         // TODO: Implement CreateNewsCommandHandler
