@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Commands;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Http.Metadata;
+using TRINV.Shared.Business.Utilities;
 
 [ApiController]
 [AllowAnonymous]
@@ -19,8 +21,9 @@ public class UserController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IdentityResult> CreateUser([FromBody] CreateUserCommand command)
+    public async Task<OperationErrorObject> CreateUser([FromBody] CreateUserCommand command)
     {
-        return await _mediator.Send(command);
+        var result = await _mediator.Send(command);
+        return result;
     }
 }

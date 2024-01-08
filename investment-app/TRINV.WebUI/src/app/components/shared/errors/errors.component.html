@@ -1,0 +1,17 @@
+<div *ngIf="initialException as initialError" class="max-w-4xl mx-auto">
+  <div *ngIf="errors && errors.length !== 0" class="bg-red-50 border-l-8 border-red-900">
+    <div class="flex items-center">
+      <div  class="p-2">
+        <div  class="flex items-center">
+          <p class="px-6 py-4 text-red-900 font-semibold text-lg">{{initialError}}</p>
+        </div>
+
+        <div  class="px-16 mb-2">
+          <li *ngFor="let errorMessage of errors" class="text-md font-bold text-red-500 text-sm">{{ errorMessage.field }} : {{errorMessage.message}}</li>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -36,7 +36,7 @@ if (environmentSettings.IsLocal)
 
 // gates
 builder.Services.AddControllersWithViews(options => options.Filters.Add<ApiExceptionFilterAttribute>());
-
+builder.Services.AddLogging();
 // SQL server
 var sqlMigrationsAssemblyName = typeof(Program).Assembly.FullName;
 

@@ -20,8 +20,8 @@ public class UserController : ControllerBase
     [HttpPost("register")]
     public async Task<IActionResult> CreateUser([FromBody] CreateIdentityUserCommand command)
     {
-        await _mediator.Send(command);
+        var result = await _mediator.Send(command);
 
-        return Ok();
+        return Ok(result);
     }
 }
