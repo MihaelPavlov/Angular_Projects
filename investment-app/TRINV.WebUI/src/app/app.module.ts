@@ -45,6 +45,8 @@ import {
 } from "./components/sign-out-redirect-callback.component";
 import {UnauthorizedRedirectModalComponent} from "./components/unauthorized-redirect-modal.component";
 import {HistoryLogComponent} from "./components/shared/history-log/history-log.component";
+import {ErrorsComponent} from "./components/shared/errors/errors.component";
+import {AppLabelComponent} from "./components/shared/app-label/app-label.component";
 
 @NgModule({
   declarations: [
@@ -72,7 +74,9 @@ import {HistoryLogComponent} from "./components/shared/history-log/history-log.c
     SignInRedirectCallbackComponent,
     SignOutRedirectCallbackComponent,
     UnauthorizedRedirectModalComponent,
-    HistoryLogComponent
+    HistoryLogComponent,
+    ErrorsComponent,
+    AppLabelComponent
   ],
   imports: [
     SharedModule,

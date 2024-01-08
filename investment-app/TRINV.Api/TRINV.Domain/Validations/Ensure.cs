@@ -1,38 +1,29 @@
 ﻿namespace TRINV.Domain.Validations;
 
-using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
 public static class Ensure
 {
-    public static void IsArgumentNullOrEmpty(string? value,
-        [CallerArgumentExpression("value")] string? paramName = null)
+    public static bool IsArgumentNullOrEmpty(string? value)
     {
-        if (string.IsNullOrEmpty(value))
-        {
-            throw new ArgumentException("The argument value can't be null or empty", paramName);
-        }
+        return string.IsNullOrEmpty(value);
     }
 
-    public static void IsArgumentNullOrWhiteSpace(string? value,
-        [CallerArgumentExpression("value")] string? paramName = null)
+    public static bool IsArgumentNullOrWhiteSpace(string? value)
     {
-        if (string.IsNullOrWhiteSpace(value))
-        {
-            throw new ArgumentException("The argument value can't be null or white space", paramName);
-        }
+        return string.IsNullOrWhiteSpace(value);
     }
 
-    public static void IsNull<T>(T? value,
-        [CallerArgumentExpression("value")] string? paramName = null)
+    public static bool IsNull<T>(T? value)
     {
         if (value is null)
         {
-            throw new ArgumentException("Object value can't be null or empty", paramName);
+            return true;
         }
+        return false;
     }
 
-    public static void IsEqual<T>(T? value1, T? value2)
+    public static bool IsEqual<T>(T? value1, T? value2)
     {
         Type type = typeof(T);
         foreach (var field in type.GetFields())
@@ -41,29 +32,19 @@ public static class Ensure
             var fieldValue2 = field.GetValue(value2);
 
             if (fieldValue1 == null && fieldValue2 == null) continue;
-            if (fieldValue1 == null || !fieldValue1.Equals(fieldValue2)) 
-                throw new ArgumentException("The objects are not equal");
-
+            if (fieldValue1 == null || !fieldValue1.Equals(fieldValue2)) return false;
         }
+        return true;
     }
 
-    public static void IsEnumOutOfRange(Enum value, [CallerArgumentExpression("value")] string? paramName = null)
+    public static bool IsEnumOutOfRange(Enum value)
     {
-        if (!Enum.IsDefined(typeof(Enum), value))
-        {
-            throw new ArgumentException("Enum do not exist!", paramName);
-        }
+        return Enum.IsDefined(typeof(Enum), value);
     }
 
-    public static void IsValidEmail(string email, 
-        [CallerArgumentExpression("email")] string? paramName = null)
+    public static bool IsValidEmail(string email)
     {
         string emailPattern = @"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$";
-        var match = Regex.IsMatch(email, emailPattern);
-
-        if (!match)
-        {
-            throw new ArgumentException("The email is not valid", paramName);
-        }
+        return Regex.IsMatch(email, emailPattern);
     }
 }

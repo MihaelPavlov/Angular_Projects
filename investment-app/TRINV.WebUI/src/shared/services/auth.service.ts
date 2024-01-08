@@ -1,13 +1,11 @@
 import {Injectable} from "@angular/core";
-import {IUser} from "../../app/models/user";
-import {UserManager, User, UserManagerSettings,} from 'oidc-client';
 import {BehaviorSubject, map, Observable, Subject} from "rxjs";
-import {ActivatedRoute, ActivatedRouteSnapshot, Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {PATH} from "../configs/path.configs";
 import {IdentityServerConfigs} from "../configs/identity-server.configs";
 import {URL_CLIENT} from "../configs/url.configs";
 import * as CryptoJS from 'crypto-js';
-import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import {HttpClient, HttpHeaders } from "@angular/common/http";
 import {PersistenceService} from "./persistance.service";
 
 @Injectable({
@@ -18,6 +16,11 @@ export class AuthService {
   public isUserAuthenticated$ = this.isUserAuthenticatedSubject$.asObservable();
   private userInfo$ = new BehaviorSubject<any | null>(null);
 
+  private errorsSubject$ = new BehaviorSubject<string[]>([]);
+  public errors$ = this.errorsSubject$.asObservable();
+
+  private initialExceptionSubject$ = new BehaviorSubject<string>('');
+  public initialException$ = this.initialExceptionSubject$.asObservable();
   private readonly state_Key: string = "state";
   private readonly codeVerifier_Key: string = "codeVerifier";
   tokenResponse: any;
@@ -44,12 +47,14 @@ export class AuthService {
       withCredentials: true,
       headers
     }).subscribe({
-      next: (response) => {
+      next: (response:any) => {
+        console.log('response from register -> ', response.errors)
+        this.errorsSubject$.next(response.errors as string[]);
+        this.initialExceptionSubject$.next(response.initialErrorMessage as string);
 
-        console.log('response from register -> ', response)
       },
       error: (error) => {
-        console.warn('HTTP Error', error);
+        console.log('HTTP Error');
       }
     });
   }

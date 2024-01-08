@@ -6,19 +6,22 @@ using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 using TRINV.IdentityServer.Application.Common.Models;
 using TRINV.IdentityServer.Data.Models;
+using TRINV.Shared.Business.Exceptions;
+using TRINV.Shared.Business.Utilities;
 
-public class CreateUserCommand : IRequest<IdentityResult>
+public class CreateUserCommand : IRequest<OperationErrorObject>
 {
     [Required]
     public string UserName { get; set; } = string.Empty;
 
     [EmailAddress]
     public string Email { get; set; } = string.Empty;
+
     [Required]
     public string Password { get; set; } = string.Empty;
 }
 
-public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, IdentityResult>
+public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, OperationErrorObject>
 {
     readonly UserManager<ApplicationUser> _userManager;
 
@@ -27,12 +30,18 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Ident
         _userManager = userManager;
     }
 
-    public async Task<IdentityResult> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+    public async Task<OperationErrorObject> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
-        var userCheck = await _userManager.FindByEmailAsync(request.Email.ToUpper());
-        if (userCheck != null)
+        var operationResult = new OperationResult();
+
+        var isUserEmailExist = await _userManager.FindByEmailAsync(request.Email.ToUpper());
+
+        if (isUserEmailExist != null)
         {
-            throw new Exception("User with provided email already exists!");
+            operationResult.AppendErrorMessage(ErrorMessages.UserEmailExist, "Email", ErrorCode.ValidationError);
+            operationResult.AppendErrorMessage("Username is Invalid !", "Username", ErrorCode.ValidationError);
+
+            return operationResult.GetErrorsResult();
         }
 
         var user = new ApplicationUser()
@@ -45,20 +54,14 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Ident
 
         var result = _userManager.CreateAsync(user, request.Password).Result;
 
-        //TODO: return the errors to the caller
         if (!result.Succeeded)
-        {
-            throw new Exception(string.Join(" ", result.Errors.Select(x => x.Description)));
-        }
+            throw new BadRequestException(ErrorMessages.UnsuccessfulOperation);
 
         result = _userManager.AddClaimAsync(user, new Claim(Claims.RoleKey, ((int)Role.User).ToString())).Result;
 
-        //TODO: return the errors to the caller
         if (!result.Succeeded)
-        {
-            throw new Exception(string.Join(" ", result.Errors.Select(x => x.Description)));
-        }
+            throw new BadRequestException(ErrorMessages.UnsuccessfulOperation);
 
-        return result;
+        return operationResult.GetErrorsResult();
     }
 }
