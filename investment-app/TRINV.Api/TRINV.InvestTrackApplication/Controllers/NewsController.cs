@@ -22,4 +22,21 @@ public class NewsController : ControllerBase
 
         return Ok();
     }
+
+    [HttpPost("deleteNews")]
+    public async Task<IActionResult> DeleteNews([FromBody] DeleteNewsCommand command)
+    {
+        await _mediator.Send(command);
+
+        return Ok();
+    }
+
+
+    [HttpPost("updateNews")]
+    public async Task<IActionResult> UpdateNews([FromBody] UpdateNewsCommand command)
+    {
+        await _mediator.Send(command);
+
+        return Ok();
+    }
 }

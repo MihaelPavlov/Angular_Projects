@@ -27,18 +27,20 @@ public class CreateNewsCommandHandler : IRequestHandler<CreateNewsCommand>
 {
     readonly IRepository<News> _repository;
     readonly IUnitOfWork _unitOfWork;
+    readonly IUserContext _userContext;
 
-    public CreateNewsCommandHandler(IRepository<News> repository, IUnitOfWork unitOfWork)
+    public CreateNewsCommandHandler(IRepository<News> repository, IUnitOfWork unitOfWork, IUserContext userContext)
     {
         _repository = repository;
         _unitOfWork = unitOfWork;
+        _userContext = userContext;
     }
 
     public async Task Handle(CreateNewsCommand request, CancellationToken cancellationToken)
     {
         var news = new News
         {
-            UserId = request.UserId,
+            UserId = _userContext.UserId,
             Name = request.Name,
             Description = request.Description,
             ImageUrl = request.ImageUrl
