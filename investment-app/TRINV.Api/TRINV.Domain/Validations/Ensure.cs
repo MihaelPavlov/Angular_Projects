@@ -41,14 +41,23 @@ public static class Ensure
         }
     }
 
-    public static void IsEqual(
-        object? value1,
-        object? value2,
-        [CallerArgumentExpression("value1")] string? paramName = null)
+    public static void IsEqual<T>(T? value1, T? value2)
     {
-        if (!value1.Equals(value2))
+        var value1Type = value1.GetType();
+        var value2Type = value2.GetType();
+        var propertyInfo1 = value1Type.GetProperties();
+        var propertyInfo2 = value2Type.GetProperties();
+        for (int i = 0; i < propertyInfo1.Length; i++)
         {
-            throw new ArgumentException("The objects are not equal", paramName);
+            var propName1 = propertyInfo1[i].Name;
+            var propName2 = propertyInfo2[i].Name;
+            var propValue1 = propertyInfo1[i].GetValue(value1);
+            var propValue2 = propertyInfo2[i].GetValue(value2);
+
+            if (!propName1.Equals(propName2) || !propValue1.Equals(propValue2))
+            {
+                throw new ArgumentException("The objects are not equal");
+            }
         }
     }
 
