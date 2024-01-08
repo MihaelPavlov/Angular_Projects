@@ -5,15 +5,6 @@ using System.Text.RegularExpressions;
 
 public static class Ensure
 {
-    public static void IsArgumentNull(string? value,
-        [CallerArgumentExpression("value")] string? paramName = null)
-    {
-        if (value == null)
-        {
-            throw new ArgumentException("The argument value can't be null", paramName);
-        }
-    }
-
     public static void IsArgumentNullOrEmpty(string? value,
         [CallerArgumentExpression("value")] string? paramName = null)
     {
@@ -28,11 +19,11 @@ public static class Ensure
     {
         if (string.IsNullOrWhiteSpace(value))
         {
-            throw new ArgumentException("The argument value can't be null or empty", paramName);
+            throw new ArgumentException("The argument value can't be null or white space", paramName);
         }
     }
 
-    public static void IsNull(object? value,
+    public static void IsNull<T>(T? value,
         [CallerArgumentExpression("value")] string? paramName = null)
     {
         if (value is null)
