@@ -7,7 +7,7 @@
         </div>
 
         <div  class="px-16 mb-2">
-          <li *ngFor="let errorMessage of errors" class="text-md font-bold text-red-500 text-sm">{{ errorMessage.field }} : {{errorMessage.message}}</li>
+          <li *ngFor="let error of errors" class="text-md font-bold text-red-500 text-sm">{{ error.propertyName }} : {{error.errorMessage}}</li>
         </div>
 
       </div>

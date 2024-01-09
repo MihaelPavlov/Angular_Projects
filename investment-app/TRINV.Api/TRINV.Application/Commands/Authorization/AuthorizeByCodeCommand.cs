@@ -2,7 +2,6 @@
 using MediatR;
 using System.Security.Claims;
 using System.Text.Json;
-using TRINV.Shared.Business.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -26,7 +25,7 @@ internal class AuthorizeByCodeCommandHandler : IRequestHandler<AuthorizeByCodeCo
         var client = new HttpClient();
         var disco = await client.GetDiscoveryDocumentAsync("https://localhost:5001");
         if (disco.IsError)
-            throw new BadRequestException("Discovery document not found!");
+            throw new Exception("Discovery document not found!");
 
         // request token
         var tokenResponse = await client.RequestAuthorizationCodeTokenAsync(new AuthorizationCodeTokenRequest
@@ -39,7 +38,7 @@ internal class AuthorizeByCodeCommandHandler : IRequestHandler<AuthorizeByCodeCo
         });
 
         if (tokenResponse.IsError)
-            throw new BadRequestException(tokenResponse.Error + " :: " + tokenResponse.ErrorDescription);
+            throw new Exception(tokenResponse.Error + " :: " + tokenResponse.ErrorDescription);
 
         ArgumentNullException.ThrowIfNull(tokenResponse.AccessToken);
 
@@ -49,7 +48,7 @@ internal class AuthorizeByCodeCommandHandler : IRequestHandler<AuthorizeByCodeCo
 
         var response = await apiClient.GetAsync(disco.UserInfoEndpoint);
         if (!response.IsSuccessStatusCode)
-            throw new BadRequestException(response.ToString());
+            throw new Exception(response.ToString());
 
         _contextAccessor.HttpContext.Session.SetString("AccessToken", tokenResponse.AccessToken);
         //HttpContext.Session.SetString("RefreshToken", tokenResponse.RefreshToken);

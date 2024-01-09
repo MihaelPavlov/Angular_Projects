@@ -1,7 +1,6 @@
 ﻿using IdentityModel.Client;
 using MediatR;
 using System.Text.Json;
-using TRINV.Shared.Business.Exceptions;
 
 namespace TRINV.Application.Commands.Authorization;
 
@@ -15,7 +14,7 @@ internal class AuthorizationCodeTokenCommandHandler : IRequestHandler<Authorizat
         var client = new HttpClient();
         var disco = await client.GetDiscoveryDocumentAsync("https://localhost:5001", cancellationToken);
         if (disco.IsError)
-            throw new BadRequestException("Discovery document not found!");
+            throw new Exception("Discovery document not found!");
 
         // request token
         var tokenResponse = await client.RequestAuthorizationCodeTokenAsync(new AuthorizationCodeTokenRequest
@@ -29,7 +28,7 @@ internal class AuthorizationCodeTokenCommandHandler : IRequestHandler<Authorizat
         }, cancellationToken);
 
         if (tokenResponse.IsError)
-            throw new BadRequestException(tokenResponse.Error + " :: " + tokenResponse.ErrorDescription);
+            throw new Exception(tokenResponse.Error + " :: " + tokenResponse.ErrorDescription);
 
         ArgumentNullException.ThrowIfNull(tokenResponse.AccessToken);
 
@@ -38,8 +37,8 @@ internal class AuthorizationCodeTokenCommandHandler : IRequestHandler<Authorizat
         apiClient.SetBearerToken(tokenResponse.AccessToken);
 
         var response = await apiClient.GetAsync(disco.UserInfoEndpoint, cancellationToken);
-        if (!response.IsSuccessStatusCode)
-            throw new BadRequestException(response.ToString());
+        //if (!response.IsSuccessStatusCode)
+        //throw new BadRequestException(response.ToString());
 
         var content = await response.Content.ReadAsStringAsync(cancellationToken);
         var parsed = JsonDocument.Parse(content);

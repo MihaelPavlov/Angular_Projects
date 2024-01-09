@@ -1,24 +1,18 @@
-﻿namespace TRINV.Shared.Business.Exceptions;
+﻿using TRINV.Shared.Business.Exceptions.Interfaces;
+using TRINV.Shared.Business.Utilities;
 
-public class NotFoundException : Exception
+namespace TRINV.Shared.Business.Exceptions;
+
+public class NotFoundException : IError
 {
-    public NotFoundException(string message)
-    : base(message)
-    {
-    }
+    private const int UniqueKey = ErrorCode.NotFound;
 
-    public NotFoundException(string message, Exception innerException)
-        : base(message, innerException)
-    {
-    }
+    public int Key => UniqueKey;
 
-    public NotFoundException(string entityName, object key)
-        : base($"Entity \"{entityName}\" ({key}) was not found.")
-    {
-    }
+    public string Message { get; set; } = "Item was not found";
 
-    public NotFoundException(Type entityType, object key)
-        : base($"Entity \"{entityType.Name}\" ({key}) was not found.")
+    public NotFoundException(string? customMessage = null)
     {
+        this.Message = customMessage ?? this.Message;
     }
 }

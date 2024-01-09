@@ -38,10 +38,9 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Opera
 
         if (isUserEmailExist != null)
         {
-            operationResult.AppendErrorMessage(ErrorMessages.UserEmailExist, "Email", ErrorCode.ValidationError);
-            operationResult.AppendErrorMessage("Username is Invalid !", "Username", ErrorCode.ValidationError);
+            operationResult.AppendValidationError(ErrorMessages.UserEmailExist, "Email");
 
-            return operationResult.GetResult();
+            return operationResult.CompleteOperation();
         }
 
         var user = new ApplicationUser()
@@ -55,13 +54,13 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Opera
         var result = _userManager.CreateAsync(user, request.Password).Result;
 
         if (!result.Succeeded)
-            throw new BadRequestException(ErrorMessages.UnsuccessfulOperation);
+            return operationResult.ReturnWithErrorMessage(new BadRequestException(ErrorMessages.UnsuccessfulOperation));
 
         result = _userManager.AddClaimAsync(user, new Claim(Claims.RoleKey, ((int)Role.User).ToString())).Result;
 
         if (!result.Succeeded)
-            throw new BadRequestException(ErrorMessages.UnsuccessfulOperation);
-        
-        return operationResult.GetResult();
+            return operationResult.ReturnWithErrorMessage(new BadRequestException(ErrorMessages.UnsuccessfulOperation));
+
+        return operationResult.CompleteOperation();
     }
 }

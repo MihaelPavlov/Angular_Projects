@@ -51,7 +51,7 @@ export class AuthService {
     }).subscribe({
       next: (response: any) => {
         console.log('response from register -> ', response)
-        this.errorsSubject$.next(response.errors as any[]);
+        this.errorsSubject$.next(response.validationErrors as any[]);
         this.initialExceptionSubject$.next(response.initialErrorMessage as string);
       },
       error: (error: any) => {

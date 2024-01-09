@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using TRINV.Shared.Business.Exceptions;
 using TRINV.Shared.Business.Utilities;
 
 namespace TRINV.Application.Queries;
@@ -16,12 +17,16 @@ internal class ExampleQueryHandler : IRequestHandler<ExampleQuery, OperationResu
         // How we adding errors to the operation result.
 
         // One way to add error
-        operationResult.AppendErrorMessage(" Example is invalid !");
+        //if (true != false)
+        //{
+        //    return operationResult.ReturnWithErrorMessage(new BadRequestException("Custom Bad Request Message"));
+        //}
 
         // Second way to add error
         //Append error Message with error status code 
-        operationResult.AppendErrorMessage(message: " Email is invalid !", field: "Email", errorCode: ErrorCode.ValidationError);
-
+        operationResult.AppendValidationError(errorMessage: "Email is invalid !", propertyName: "Email");
+        operationResult.AppendValidationError(errorMessage: "Email is required !", propertyName: "Email");
+        return operationResult.ReturnWithErrorMessage();
         // do some bussness logic operations ............... more code more code
 
         var obj = new ExampleObject("ExampleName", "pass", "test", 32131);

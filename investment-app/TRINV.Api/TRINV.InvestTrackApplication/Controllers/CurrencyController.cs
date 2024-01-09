@@ -26,7 +26,6 @@ public class CurrencyController : ControllerBase
         return Ok(result);
     }
 
-
     [HttpGet("example")]
     public async Task<IActionResult> ExampleOfUsingOperationResult()
     {
