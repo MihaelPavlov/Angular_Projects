@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
-using TRINV.Shared.Business.Exceptions;
 
 namespace TRINV.Application.Commands.Authorization;
 
@@ -26,6 +25,6 @@ internal class LogoutCommandHandler : IRequestHandler<LogoutCommand>
         var result = await client.GetAsync("https://localhost:5001/account/logout", cancellationToken);
 
         if (!result.IsSuccessStatusCode)
-            throw new BadRequestException(result.ToString());
+            throw new Exception(result.ToString());
     }
 }

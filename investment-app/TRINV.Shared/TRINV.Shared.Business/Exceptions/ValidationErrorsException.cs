@@ -1,4 +1,6 @@
-﻿namespace TRINV.Shared.Business.Exceptions;
+﻿using System.Text.Json.Serialization;
+
+namespace TRINV.Shared.Business.Exceptions;
 
 public class ValidationErrorsException : Exception
 {
@@ -30,9 +32,13 @@ public class ValidationErrorsException : Exception
 
     public IDictionary<string, string[]> Errors { get; }
 
+    [Serializable]
     public class ValidationError
     {
+        [JsonPropertyName("propertyName")]
         public string PropertyName { get; set; }
+
+        [JsonPropertyName("errorMessage")]
         public string ErrorMessage { get; set; }
 
         public ValidationError(string propertyName, string errorMessage)
