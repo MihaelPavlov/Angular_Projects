@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Json;
 using System.ComponentModel.DataAnnotations;
 using Domain.Validations;
-using TRINV.Shared.Business.Utilities;
+using Shared.Business.Utilities;
 
 
 public record CreateIdentityUserCommand : IRequest<OperationErrorObject>

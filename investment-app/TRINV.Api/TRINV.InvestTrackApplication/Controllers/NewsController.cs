@@ -5,7 +5,7 @@ using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
 using Shared.Business.Utilities;
-using TRINV.Application.Queries.News;
+using Application.Queries.News;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -18,7 +18,7 @@ public class NewsController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpPost("create")]
+    [HttpPost("createNews")]
     public async Task<IActionResult> CreateNews([FromBody] CreateNewsCommand command)
     {
         await _mediator.Send(command);
@@ -26,7 +26,7 @@ public class NewsController : ControllerBase
         return Ok();
     }
 
-    [HttpPost("delete")]
+    [HttpPost("deleteNews")]
     public async Task<IActionResult> DeleteNews([FromBody] DeleteNewsCommand command)
     {
         await _mediator.Send(command);
@@ -34,12 +34,18 @@ public class NewsController : ControllerBase
         return Ok();
     }
 
-    [HttpPost("update")]
-    public async Task<IActionResult> UpdateNews([FromBody] UpdateNewsCommand command)
+    [HttpPost("updateNews")]
+    public async Task<OperationResult<News>> UpdateNews([FromBody] UpdateNewsCommand command)
     {
-        await _mediator.Send(command);
+        return await _mediator.Send(command);
+    }
 
-        return Ok();
+    [HttpGet("getAllNews")]
+    public async Task<IActionResult> GetNews()
+    {
+        var news = await _mediator.Send(new GetAllNewsQuery());
+
+        return Ok(news);
     }
 
     [HttpGet("{id}")]

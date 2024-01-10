@@ -10,8 +10,6 @@ using static Domain.Validations.EntityValidationConstants.News;
 
 public record CreateNewsCommand : IRequest<OperationResult<News>>
 {
-    public int UserId { get; set; }
-
     [Required]
     [MaxLength(NameMaxLength)]
     public string Name { get; set; } = null!;
@@ -41,18 +39,12 @@ internal class CreateNewsCommandHandler : IRequestHandler<CreateNewsCommand, Ope
     public async Task<OperationResult<News>> Handle(CreateNewsCommand request, CancellationToken cancellationToken)
     {
         var operationResult = new OperationResult<News>();
-        
-        var isNameNullOrEmpty = Ensure.IsArgumentNullOrEmpty(request.Name);
-        var isNameNullOrWhiteSpace = Ensure.IsArgumentNullOrWhiteSpace(request.Name);
 
-        if (isNameNullOrEmpty) operationResult.AppendValidationError("Name cannot be null or empty.");
-        if (isNameNullOrWhiteSpace) operationResult.AppendValidationError("Name cannot be null or whitespace.");
+        if (Ensure.IsArgumentNullOrWhiteSpace(request.Name)) 
+            operationResult.AppendValidationError("Name cannot be null or whitespace.", nameof(News.Name));
 
-        var isDescriptionNullOrEmpty = Ensure.IsArgumentNullOrEmpty(request.Description);
-        var isDescriptionNullOrWhiteSpace = Ensure.IsArgumentNullOrWhiteSpace(request.Description);
-
-        if (isDescriptionNullOrEmpty) operationResult.AppendValidationError("Description cannot be null or empty.");
-        if (isDescriptionNullOrWhiteSpace) operationResult.AppendValidationError("Description cannot be null or whitespace.");
+        if (Ensure.IsArgumentNullOrWhiteSpace(request.Description)) 
+            operationResult.AppendValidationError("Description cannot be null or whitespace.");
 
         var isImageUrlNullOrEmpty = Ensure.IsArgumentNullOrEmpty(request.ImageUrl);
         var isImageUrlNullOrWhiteSpace = Ensure.IsArgumentNullOrWhiteSpace(request.ImageUrl);

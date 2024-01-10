@@ -3,6 +3,7 @@
 using Domain.Entities;
 using Interfaces;
 using MediatR;
+using Shared.Business.Exceptions;
 using Shared.Business.Utilities;
 
 public record DeleteNewsCommand(int Id) : IRequest<OperationResult<News>>;
@@ -24,7 +25,9 @@ internal class DeleteNewsCommandHandler : IRequestHandler<DeleteNewsCommand, Ope
 
         var newsToDelete = await _repository.GetByIdAsync(request.Id, cancellationToken);
 
-        if (newsToDelete is null) operationResult.AppendValidationError("News with provided Id not found.");
+        if (newsToDelete is null)
+            return operationResult.ReturnWithErrorMessage(
+                new NotFoundException($"{nameof(News)} with Id {request.Id} was not found."));
 
         operationResult.RelatedObject = newsToDelete;
 
