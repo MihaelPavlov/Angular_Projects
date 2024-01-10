@@ -46,7 +46,7 @@ export class RegisterComponent implements OnInit{
       this.errorElements.forEach((errorElement: ElementRef) => {
         errorElement.nativeElement.classList.remove('errorBorder');
 
-        if(x.find((er: any)=>er.field.toLowerCase() === errorElement.nativeElement.id)){
+        if(x.find((er: any)=>er.propertyName.toLowerCase() === errorElement.nativeElement.id)){
           errorElement.nativeElement.classList.add('errorBorder');
         }
 
@@ -61,10 +61,8 @@ export class RegisterComponent implements OnInit{
     if (this.registrationForm.valid) {
       // Process form data
     let values = this.registrationForm.value;
-    console.log("registration form -> ", values.username, values.email, values.password);
     this._authService.register(values.username, values.email, values.password)
     }
-    console.log(this.registrationForm)
   }
 
   public login(): void {

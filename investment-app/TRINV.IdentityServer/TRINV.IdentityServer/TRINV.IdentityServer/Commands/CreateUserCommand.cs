@@ -8,6 +8,7 @@ using TRINV.IdentityServer.Application.Common.Models;
 using TRINV.IdentityServer.Data.Models;
 using TRINV.Shared.Business.Exceptions;
 using TRINV.Shared.Business.Utilities;
+using Duende.IdentityServer.Validation;
 
 public class CreateUserCommand : IRequest<OperationErrorObject>
 {
@@ -33,15 +34,13 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Opera
     public async Task<OperationErrorObject> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
         var operationResult = new OperationResult();
-
         var isUserEmailExist = await _userManager.FindByEmailAsync(request.Email.ToUpper());
 
         if (isUserEmailExist != null)
         {
-            operationResult.AppendErrorMessage(ErrorMessages.UserEmailExist, "Email", ErrorCode.ValidationError);
-            operationResult.AppendErrorMessage("Username is Invalid !", "Username", ErrorCode.ValidationError);
+            operationResult.AppendValidationError(ErrorMessages.UserEmailExist, "Email");
 
-            return operationResult.GetErrorsResult();
+            return operationResult.CompleteOperation();
         }
 
         var user = new ApplicationUser()
@@ -55,13 +54,13 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Opera
         var result = _userManager.CreateAsync(user, request.Password).Result;
 
         if (!result.Succeeded)
-            throw new BadRequestException(ErrorMessages.UnsuccessfulOperation);
+            return operationResult.ReturnWithErrorMessage(new BadRequestException(ErrorMessages.UnsuccessfulOperation));
 
         result = _userManager.AddClaimAsync(user, new Claim(Claims.RoleKey, ((int)Role.User).ToString())).Result;
 
         if (!result.Succeeded)
-            throw new BadRequestException(ErrorMessages.UnsuccessfulOperation);
+            return operationResult.ReturnWithErrorMessage(new BadRequestException(ErrorMessages.UnsuccessfulOperation));
 
-        return operationResult.GetErrorsResult();
+        return operationResult.CompleteOperation();
     }
 }

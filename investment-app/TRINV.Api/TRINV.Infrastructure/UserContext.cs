@@ -1,5 +1,4 @@
 ﻿using TRINV.Application.Interfaces;
-using TRINV.Shared.Business.Exceptions;
 
 namespace TRINV.Infrastructure;
 
@@ -18,7 +17,8 @@ public class UserContext : IUserContext
         {
             if (_userId.HasValue)
                 return _userId.Value;
-            throw new ForbiddenAccessException("Can not find current user.");
+
+            throw new Exception("Can not find current user.");
         }
     }
 
