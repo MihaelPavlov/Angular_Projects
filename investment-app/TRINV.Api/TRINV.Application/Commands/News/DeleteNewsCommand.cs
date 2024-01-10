@@ -3,7 +3,6 @@
 using Domain.Entities;
 using Interfaces;
 using MediatR;
-using Shared.Business.Exceptions;
 using Shared.Business.Utilities;
 
 public record DeleteNewsCommand(int Id) : IRequest<OperationResult<News>>;
