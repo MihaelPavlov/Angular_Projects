@@ -4,10 +4,11 @@ using Domain.Entities;
 using Interfaces;
 using MediatR;
 using Shared.Business.Exceptions;
+using Shared.Business.Utilities;
 
-public record DeleteNewsCommand(int Id) : IRequest;
+public record DeleteNewsCommand(int Id) : IRequest<OperationResult<News>>;
 
-internal class DeleteNewsCommandHandler : IRequestHandler<DeleteNewsCommand>
+internal class DeleteNewsCommandHandler : IRequestHandler<DeleteNewsCommand, OperationResult<News>>
 {
     readonly IRepository<News> _repository;
     readonly IUnitOfWork _unitOfWork;
@@ -18,15 +19,19 @@ internal class DeleteNewsCommandHandler : IRequestHandler<DeleteNewsCommand>
         _unitOfWork = unitOfWork;
     }
 
-    public async Task Handle(DeleteNewsCommand request, CancellationToken cancellationToken)
+    public async Task<OperationResult<News>> Handle(DeleteNewsCommand request, CancellationToken cancellationToken)
     {
+        var operationResult = new OperationResult<News>();
+
         var newsToDelete = await _repository.GetByIdAsync(request.Id, cancellationToken);
-        if (newsToDelete is null)
-        {
-            throw new NotFoundException(nameof(News), request.Id);
-        }
+
+        if (newsToDelete is null) operationResult.AppendValidationError("News with provided Id not found.");
+
+        operationResult.RelatedObject = newsToDelete;
 
         _repository.Delete(newsToDelete);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+        return operationResult;
     }
 }
