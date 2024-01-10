@@ -4,6 +4,7 @@ using Application.Commands.News;
 using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
+using Shared.Business.Utilities;
 using TRINV.Application.Queries.News;
 
 [Route("api/[controller]")]
@@ -42,7 +43,7 @@ public class NewsController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<News> GetNewsById(int id)
+    public async Task<OperationResult<News>> GetNewsById(int id)
     {
         return await _mediator.Send(new GetNewsByIdQuery(id));
     }
