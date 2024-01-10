@@ -26,7 +26,7 @@ public record UpdateNewsCommand : IRequest
     public string ImageUrl { get; set; } = null!;
 }
 
-public class UpdateNewsCommandHandler : IRequestHandler<UpdateNewsCommand>
+internal class UpdateNewsCommandHandler : IRequestHandler<UpdateNewsCommand>
 {
     readonly IRepository<News> _repository;
     readonly IUnitOfWork _unitOfWork;

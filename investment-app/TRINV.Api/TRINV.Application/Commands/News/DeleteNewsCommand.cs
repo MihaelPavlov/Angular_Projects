@@ -7,7 +7,7 @@ using Shared.Business.Exceptions;
 
 public record DeleteNewsCommand(int Id) : IRequest;
 
-public class DeleteNewsCommandHandler : IRequestHandler<DeleteNewsCommand>
+internal class DeleteNewsCommandHandler : IRequestHandler<DeleteNewsCommand>
 {
     readonly IRepository<News> _repository;
     readonly IUnitOfWork _unitOfWork;

@@ -25,7 +25,7 @@ public record CreateNewsCommand : IRequest<OperationResult<News>>
     public string ImageUrl { get; set; } = null!;
 }
 
-public class CreateNewsCommandHandler : IRequestHandler<CreateNewsCommand, OperationResult<News>>
+internal class CreateNewsCommandHandler : IRequestHandler<CreateNewsCommand, OperationResult<News>>
 {
     readonly IRepository<News> _repository;
     readonly IUnitOfWork _unitOfWork;
