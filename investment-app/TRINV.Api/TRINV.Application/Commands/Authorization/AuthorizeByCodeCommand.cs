@@ -13,7 +13,7 @@ public record AuthorizeByCodeCommand(string Code, string CodeVerifier) : IReques
 internal class AuthorizeByCodeCommandHandler : IRequestHandler<AuthorizeByCodeCommand, object>
 {
     readonly IHttpContextAccessor _contextAccessor;
-
+    
     public AuthorizeByCodeCommandHandler(IHttpContextAccessor contextAccessor)
     {
         _contextAccessor = contextAccessor;
@@ -47,6 +47,7 @@ internal class AuthorizeByCodeCommandHandler : IRequestHandler<AuthorizeByCodeCo
         apiClient.SetBearerToken(tokenResponse.AccessToken);
 
         var response = await apiClient.GetAsync(disco.UserInfoEndpoint);
+        
         if (!response.IsSuccessStatusCode)
             throw new Exception(response.ToString());
 
@@ -57,6 +58,7 @@ internal class AuthorizeByCodeCommandHandler : IRequestHandler<AuthorizeByCodeCo
         var parsed = JsonDocument.Parse(content);
         var sub = string.Empty;
         var email = string.Empty;
+        var role = string.Empty;
         foreach (var el in parsed.RootElement.EnumerateObject())
         {
             var name = el.Name;
@@ -66,8 +68,11 @@ internal class AuthorizeByCodeCommandHandler : IRequestHandler<AuthorizeByCodeCo
             if (name == "sub" && !string.IsNullOrWhiteSpace(value))
                 sub = value;
 
-            if (name == "name" && !string.IsNullOrWhiteSpace(value))
+            if (name == "email" && !string.IsNullOrWhiteSpace(value))
                 email = value;
+
+            if (name == "Role" && !string.IsNullOrWhiteSpace(value))
+                role = value;
         }
 
         // sign in
@@ -75,7 +80,8 @@ internal class AuthorizeByCodeCommandHandler : IRequestHandler<AuthorizeByCodeCo
         {
             new Claim("sub", sub),
             new Claim("scope","main_api"),
-            new Claim("email",email)
+            new Claim("email",email),
+            new Claim("role",role)
         };
 
         var claimsPrincipal = new ClaimsPrincipal(

@@ -30,14 +30,35 @@ builder.Services
     });
 
 builder.Services.AddAuthorization(options =>
+{
+    // Might not need it at all ApiScope
     options.AddPolicy("ApiScope", policy =>
     {
         policy.RequireAuthenticatedUser();
         policy.RequireClaim("sub");
         policy.RequireClaim("scope", new string[] { "main_api" });
         policy.RequireClaim("email");
-    })
-);
+        policy.RequireClaim("role");
+    });
+
+    options.AddPolicy("RequiredAdminRole", policy =>
+    {
+        policy.RequireAuthenticatedUser();
+        policy.RequireClaim("sub");
+        policy.RequireClaim("scope", new string[] { "main_api" });
+        policy.RequireClaim("email");
+        policy.RequireClaim("role","Admin");
+    });
+
+    options.AddPolicy("RequiredUserRole", policy =>
+    {
+        policy.RequireAuthenticatedUser();
+        policy.RequireClaim("sub");
+        policy.RequireClaim("scope", new string[] { "main_api" });
+        policy.RequireClaim("email");
+        policy.RequireClaim("role", "User");
+    });
+}) ;
 
 //builder.Services
 //    .AddAuthorization(config => config

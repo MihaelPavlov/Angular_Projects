@@ -51,12 +51,12 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Opera
             AccountEnabled = true
         };
 
-        var result = _userManager.CreateAsync(user, request.Password).Result;
+        var result = await _userManager.CreateAsync(user, request.Password);
 
         if (!result.Succeeded)
             return operationResult.ReturnWithErrorMessage(new BadRequestException(ErrorMessages.UnsuccessfulOperation));
 
-        result = _userManager.AddClaimAsync(user, new Claim(Claims.RoleKey, ((int)Role.User).ToString())).Result;
+        result = await _userManager.AddClaimAsync(user, new Claim(Claims.RoleKey, Role.User.ToString()));
 
         if (!result.Succeeded)
             return operationResult.ReturnWithErrorMessage(new BadRequestException(ErrorMessages.UnsuccessfulOperation));

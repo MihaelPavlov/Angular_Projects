@@ -22,7 +22,7 @@ internal static class PredefinedUsers
                 AccountEnabled = true,
                 Claims =
                 {
-                    new Claim(Claims.RoleKey, ((int)Role.Admin).ToString()),
+                    new Claim(Claims.RoleKey, Role.Admin.ToString()),
                 }
             }
         };

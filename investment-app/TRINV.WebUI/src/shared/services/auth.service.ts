@@ -179,6 +179,8 @@ export class AuthService {
       withCredentials: true
     }).subscribe({
       next: (response) => {
+        console.log('test',response);
+        
         this.userInfo$.next({id: response.subFromClaim, email: response.email});
       },
       error: (error) => {

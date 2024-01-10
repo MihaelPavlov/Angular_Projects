@@ -14,6 +14,7 @@ public class BaseController : ControllerBase
     }
 
     [Route("/")]
+    [Authorize(Policy = "RequiredAdminRole")]
     [HttpGet]
     public IActionResult Index() => new JsonResult(new { text = $"We are hidden. Boom Hackers {this._userContext.UserId}" });
 }
