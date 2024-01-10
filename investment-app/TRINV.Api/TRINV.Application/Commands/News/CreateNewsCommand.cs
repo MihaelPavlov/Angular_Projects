@@ -1,12 +1,14 @@
 ﻿namespace TRINV.Application.Commands.News;
 
-using MediatR;
-using System.ComponentModel.DataAnnotations;
 using Domain.Entities;
 using Interfaces;
+using MediatR;
+using Shared.Business.Utilities;
+using System.ComponentModel.DataAnnotations;
+using Domain.Validations;
 using static Domain.Validations.EntityValidationConstants.News;
 
-public record CreateNewsCommand : IRequest
+public record CreateNewsCommand : IRequest<OperationResult<News>>
 {
     public int UserId { get; set; }
 
@@ -23,7 +25,7 @@ public record CreateNewsCommand : IRequest
     public string ImageUrl { get; set; } = null!;
 }
 
-public class CreateNewsCommandHandler : IRequestHandler<CreateNewsCommand>
+public class CreateNewsCommandHandler : IRequestHandler<CreateNewsCommand, OperationResult<News>>
 {
     readonly IRepository<News> _repository;
     readonly IUnitOfWork _unitOfWork;
@@ -36,8 +38,28 @@ public class CreateNewsCommandHandler : IRequestHandler<CreateNewsCommand>
         _userContext = userContext;
     }
 
-    public async Task Handle(CreateNewsCommand request, CancellationToken cancellationToken)
+    public async Task<OperationResult<News>> Handle(CreateNewsCommand request, CancellationToken cancellationToken)
     {
+        var operationResult = new OperationResult<News>();
+        
+        var isNameNullOrEmpty = Ensure.IsArgumentNullOrEmpty(request.Name);
+        var isNameNullOrWhiteSpace = Ensure.IsArgumentNullOrWhiteSpace(request.Name);
+
+        if (isNameNullOrEmpty) operationResult.AppendValidationError("Name cannot be null or empty.");
+        if (isNameNullOrWhiteSpace) operationResult.AppendValidationError("Name cannot be null or whitespace.");
+
+        var isDescriptionNullOrEmpty = Ensure.IsArgumentNullOrEmpty(request.Description);
+        var isDescriptionNullOrWhiteSpace = Ensure.IsArgumentNullOrWhiteSpace(request.Description);
+
+        if (isDescriptionNullOrEmpty) operationResult.AppendValidationError("Description cannot be null or empty.");
+        if (isDescriptionNullOrWhiteSpace) operationResult.AppendValidationError("Description cannot be null or whitespace.");
+
+        var isImageUrlNullOrEmpty = Ensure.IsArgumentNullOrEmpty(request.ImageUrl);
+        var isImageUrlNullOrWhiteSpace = Ensure.IsArgumentNullOrWhiteSpace(request.ImageUrl);
+
+        if (isImageUrlNullOrEmpty) operationResult.AppendValidationError("ImageUrl cannot be null or empty.");
+        if (isImageUrlNullOrWhiteSpace) operationResult.AppendValidationError("ImageUrl cannot be null or whitespace.");
+
         var news = new News
         {
             UserId = _userContext.UserId,
@@ -46,8 +68,13 @@ public class CreateNewsCommandHandler : IRequestHandler<CreateNewsCommand>
             ImageUrl = request.ImageUrl
         };
 
+        operationResult.RelatedObject = news;
+
+
         await _repository.Insert(news, cancellationToken);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+        return operationResult;
     }
 }
 
