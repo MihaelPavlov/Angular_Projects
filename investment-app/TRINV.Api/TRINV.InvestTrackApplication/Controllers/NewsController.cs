@@ -21,17 +21,13 @@ public class NewsController : ControllerBase
     [HttpPost("createNews")]
     public async Task<IActionResult> CreateNews([FromBody] CreateNewsCommand command)
     {
-        await _mediator.Send(command);
-
-        return Ok();
+        return Ok(await _mediator.Send(command));
     }
 
     [HttpPost("deleteNews")]
     public async Task<IActionResult> DeleteNews([FromBody] DeleteNewsCommand command)
     {
-        await _mediator.Send(command);
-
-        return Ok();
+        return Ok(await _mediator.Send(command));
     }
 
     [HttpPost("updateNews")]
@@ -43,9 +39,7 @@ public class NewsController : ControllerBase
     [HttpGet("getAllNews")]
     public async Task<IActionResult> GetNews()
     {
-        var news = await _mediator.Send(new GetAllNewsQuery());
-
-        return Ok(news);
+        return Ok(await _mediator.Send(new GetAllNewsQuery()));
     }
 
     [HttpGet("{id}")]
