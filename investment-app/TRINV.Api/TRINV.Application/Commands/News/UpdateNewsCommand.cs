@@ -49,9 +49,11 @@ internal class UpdateNewsCommandHandler : IRequestHandler<UpdateNewsCommand, Ope
             return operationResult.ReturnWithErrorMessage(
                 new NotFoundException($"{nameof(News)} with Id {request.Id} was not found."));
 
+        newsToUpdate.Name = request.Name;
+        newsToUpdate.Description = request.Description;
+        newsToUpdate.ImageUrl = request.ImageUrl;
+
         operationResult.RelatedObject = newsToUpdate;
-
-
 
         _repository.Update(newsToUpdate);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
