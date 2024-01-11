@@ -44,13 +44,10 @@ internal class CreateNewsCommandHandler : IRequestHandler<CreateNewsCommand, Ope
             operationResult.AppendValidationError("Name cannot be null or whitespace.", nameof(News.Name));
 
         if (Ensure.IsArgumentNullOrWhiteSpace(request.Description)) 
-            operationResult.AppendValidationError("Description cannot be null or whitespace.");
+            operationResult.AppendValidationError("Description cannot be null or whitespace.", nameof(News.Description));
 
-        var isImageUrlNullOrEmpty = Ensure.IsArgumentNullOrEmpty(request.ImageUrl);
-        var isImageUrlNullOrWhiteSpace = Ensure.IsArgumentNullOrWhiteSpace(request.ImageUrl);
-
-        if (isImageUrlNullOrEmpty) operationResult.AppendValidationError("ImageUrl cannot be null or empty.");
-        if (isImageUrlNullOrWhiteSpace) operationResult.AppendValidationError("ImageUrl cannot be null or whitespace.");
+        if (Ensure.IsArgumentNullOrWhiteSpace(request.ImageUrl)) 
+            operationResult.AppendValidationError("ImageUrl cannot be null or whitespace.", nameof(News.ImageUrl));
 
         var news = new News
         {
@@ -61,7 +58,6 @@ internal class CreateNewsCommandHandler : IRequestHandler<CreateNewsCommand, Ope
         };
 
         operationResult.RelatedObject = news;
-
 
         await _repository.Insert(news, cancellationToken);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
