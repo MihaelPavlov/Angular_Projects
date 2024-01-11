@@ -30,13 +30,11 @@ internal class UpdateNewsCommandHandler : IRequestHandler<UpdateNewsCommand, Ope
 {
     readonly IRepository<News> _repository;
     readonly IUnitOfWork _unitOfWork;
-    readonly IUserContext _userContext;
 
-    public UpdateNewsCommandHandler(IRepository<News> repository, IUnitOfWork unitOfWork, IUserContext userContext)
+    public UpdateNewsCommandHandler(IRepository<News> repository, IUnitOfWork unitOfWork)
     {
         _repository = repository;
         _unitOfWork = unitOfWork;
-        _userContext = userContext;
     }
 
     public async Task<OperationResult<News>> Handle(UpdateNewsCommand request, CancellationToken cancellationToken)
