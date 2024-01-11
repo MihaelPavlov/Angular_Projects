@@ -17,7 +17,7 @@ public class Notification : BaseEntity
     public string Message { get; set; } = string.Empty;
 
     [Required]
-    public DateTime CreatedAt { get; set; }
+    public DateTime CreatedOn { get; set; }
 
     public bool IsRead { get; set; } //IsSeen / IsRead / IsUnread 
 

@@ -16,5 +16,10 @@ internal static class CommonMapping
         {
             entity.Property(i => i.CreatedOn).HasDefaultValueSql("GETDATE()");
         });
+
+        builder.Entity<Notification>(entity =>
+        {
+            entity.Property(i => i.CreatedOn).HasDefaultValueSql("GETDATE()");
+        });
     }
 }
