@@ -19,4 +19,9 @@ public static class EntityValidationConstants
         public const int DescriptionMaxLength = 250;
         public const int ImageUrlMaxLength = 2000;
     }
+
+    public static class Notifications
+    {
+        public const int MessageMaxLength = 500;
+    }
 }
