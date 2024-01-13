@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 using TRINV.Shared.Business.Exceptions;
 using TRINV.Shared.Business.Exceptions.Interfaces;
 using static TRINV.Shared.Business.Exceptions.ValidationErrorsException;
@@ -14,16 +12,24 @@ namespace TRINV.Shared.Business.Utilities;
 public class OperationResult
 {
     private readonly List<Exception> _validationErrors = new List<Exception>();
+    private string? _initialException;
 
     public bool Success { get; set; } = true;
-
 
     public List<Exception> ValidationErrors = new List<Exception>();
 
     /// <summary>
     /// Gets or sets the first exception that resulted from the operation.
-    /// </summary>
-    public string? InitialException { get; set; }
+    /// </summary>\
+    public string? InitialException
+    {
+        get => _initialException;
+        set
+        {
+            this.Success = false;
+            this._initialException = value;
+        }
+    }
 
     ///// <summary>
     ///// Gets an <see cref="ILoggerService"/> that can be used to log errors internally.
@@ -121,6 +127,26 @@ public class OperationResult<T> : OperationResult
             this.InitialException = error.Message;
 
         return this;
+    }
+
+    /// <summary>
+    /// Creates a new OperationResult with a different generic type.
+    /// </summary>
+    /// <typeparam name="U">The new type for the RelatedObject.</typeparam>
+    /// <param name="newRelatedObject">The new value for the RelatedObject.</param>
+    /// <returns>A new OperationResult with the specified type and value.</returns>
+    public OperationResult<U> ChangeType<U>(U? newRelatedObject = default)
+    {
+        if (newRelatedObject is null)
+            return new OperationResult<U>()
+            {
+                InitialException = this.InitialException
+            };
+
+        return new OperationResult<U>(newRelatedObject)
+        {
+            InitialException = this.InitialException
+        };
     }
 }
 
