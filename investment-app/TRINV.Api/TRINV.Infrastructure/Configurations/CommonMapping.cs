@@ -21,5 +21,10 @@ internal static class CommonMapping
         {
             entity.Property(i => i.CreatedOn).HasDefaultValueSql("GETDATE()");
         });
+
+        builder.Entity<UserNotification>(entity =>
+        {
+            entity.HasKey(x => new { x.NotificationId, x.UserId });
+        });
     }
 }
