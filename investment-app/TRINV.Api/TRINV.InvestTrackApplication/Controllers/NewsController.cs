@@ -7,7 +7,7 @@ using MediatR;
 using Shared.Business.Utilities;
 using Application.Queries.News;
 
-[Route("api/[controller]")]
+[Route("[controller]")]
 [ApiController]
 public class NewsController : ControllerBase
 {
@@ -24,13 +24,13 @@ public class NewsController : ControllerBase
         return Ok(await _mediator.Send(command));
     }
 
-    [HttpPost("deleteNews")]
+    [HttpDelete("deleteNews")]
     public async Task<IActionResult> DeleteNews([FromBody] DeleteNewsCommand command)
     {
         return Ok(await _mediator.Send(command));
     }
 
-    [HttpPost("updateNews")]
+    [HttpPut("updateNews")]
     public async Task<OperationResult<News>> UpdateNews([FromBody] UpdateNewsCommand command)
     {
         return await _mediator.Send(command);

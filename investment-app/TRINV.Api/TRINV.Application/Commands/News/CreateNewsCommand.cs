@@ -40,15 +40,6 @@ internal class CreateNewsCommandHandler : IRequestHandler<CreateNewsCommand, Ope
     {
         var operationResult = new OperationResult<News>();
 
-        if (Ensure.IsArgumentNullOrWhiteSpace(request.Name)) 
-            operationResult.AppendValidationError("Name cannot be null or whitespace.", nameof(News.Name));
-
-        if (Ensure.IsArgumentNullOrWhiteSpace(request.Description)) 
-            operationResult.AppendValidationError("Description cannot be null or whitespace.", nameof(News.Description));
-
-        if (Ensure.IsArgumentNullOrWhiteSpace(request.ImageUrl)) 
-            operationResult.AppendValidationError("ImageUrl cannot be null or whitespace.", nameof(News.ImageUrl));
-
         var news = new News
         {
             UserId = _userContext.UserId,
