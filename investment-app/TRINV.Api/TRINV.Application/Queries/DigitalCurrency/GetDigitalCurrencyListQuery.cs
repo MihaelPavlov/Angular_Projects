@@ -2,6 +2,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using TRINV.Shared.Business.Exceptions;
+using TRINV.Shared.Business.Extension;
 using TRINV.Shared.Business.Utilities;
 
 namespace TRINV.Application.Queries.DigitalCurrency;

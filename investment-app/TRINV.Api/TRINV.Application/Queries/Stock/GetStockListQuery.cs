@@ -2,6 +2,7 @@
 using TRINV.Application.Common.Queries.Models;
 using TRINV.Application.Services.StockCache.Interfaces;
 using TRINV.Shared.Business.Exceptions;
+using TRINV.Shared.Business.Extension;
 using TRINV.Shared.Business.Utilities;
 
 namespace TRINV.Application.Queries.Stock;

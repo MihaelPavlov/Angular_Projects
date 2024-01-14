@@ -1,24 +1,35 @@
-import {Component, Input, OnChanges} from "@angular/core";
-import {ToastType} from "../../../models/toast";
-import {ToastService} from "../../../../shared/services/toast.service";
+import { Component, Input, OnChanges } from '@angular/core';
+import { ToastType } from '../../../models/toast';
+import { ToastService } from '../../../../shared/services/toast.service';
+import { ValidationError } from 'src/app/models/validationError';
 
 @Component({
-  selector: "errors",
-  templateUrl: "errors.component.html"
+  selector: 'errors',
+  templateUrl: 'errors.component.html',
 })
 export class ErrorsComponent implements OnChanges {
   @Input()
-  errors: any | null = [];
+  errors: ValidationError | null = null;
 
   @Input()
-  initialException: string | null = null;
+  initialException: any | null = null;
 
-  constructor(private toastService: ToastService) {
-  }
+  constructor(private toastService: ToastService) {}
 
   ngOnChanges(): void {
-    if (this.initialException && this.errors?.length == 0) {
-      this.toastService.error({message: "Something went wrong", type: ToastType.Error});
+    console.log(this.errors);
+    console.log(this.initialException);
+
+    if (this.initialException && Object.keys(this.errors!)?.length == 0) {
+      this.toastService.error({
+        message: 'Something went wrong',
+        type: ToastType.Error,
+      });
     }
+  }
+
+  getKeys(obj: ValidationError): string[] {
+    if (obj) return Object.keys(obj);
+    return [];
   }
 }

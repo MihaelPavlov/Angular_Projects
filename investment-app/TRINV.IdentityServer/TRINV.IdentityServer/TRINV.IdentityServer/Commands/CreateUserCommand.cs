@@ -8,9 +8,9 @@ using TRINV.IdentityServer.Application.Common.Models;
 using TRINV.IdentityServer.Data.Models;
 using TRINV.Shared.Business.Exceptions;
 using TRINV.Shared.Business.Utilities;
-using Duende.IdentityServer.Validation;
+using TRINV.Shared.Business.Extension;
 
-public class CreateUserCommand : IRequest<OperationErrorObject>
+public class CreateUserCommand : IRequest<OperationResult>
 {
     [Required]
     public string UserName { get; set; } = string.Empty;
@@ -22,7 +22,7 @@ public class CreateUserCommand : IRequest<OperationErrorObject>
     public string Password { get; set; } = string.Empty;
 }
 
-public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, OperationErrorObject>
+public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, OperationResult>
 {
     readonly UserManager<ApplicationUser> _userManager;
 
@@ -31,7 +31,7 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Opera
         _userManager = userManager;
     }
 
-    public async Task<OperationErrorObject> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+    public async Task<OperationResult> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
         var operationResult = new OperationResult();
         var isUserEmailExist = await _userManager.FindByEmailAsync(request.Email.ToUpper());
@@ -40,7 +40,7 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Opera
         {
             operationResult.AppendValidationError(ErrorMessages.UserEmailExist, "Email");
 
-            return operationResult.CompleteOperation();
+            return operationResult;
         }
 
         var user = new ApplicationUser()
@@ -51,6 +51,7 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Opera
             AccountEnabled = true
         };
 
+        // TODO: Remove the uniquness for username
         var result = await _userManager.CreateAsync(user, request.Password);
 
         if (!result.Succeeded)
@@ -61,6 +62,6 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Opera
         if (!result.Succeeded)
             return operationResult.ReturnWithErrorMessage(new BadRequestException(ErrorMessages.UnsuccessfulOperation));
 
-        return operationResult.CompleteOperation();
+        return operationResult;
     }
 }

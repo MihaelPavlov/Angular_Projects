@@ -29,6 +29,33 @@ public class LoggerService : ILoggerService
     {
         if (this.OutputHelper is null) return;
 
-        this.OutputHelper.WriteLine($"{level}: {DateTime.Now.ToString("HH:mm:ss.fffffff")} {message}");
+        ConsoleColor color;
+
+        switch (level)
+        {
+            case LogEventLevel.Verbose:
+                color = ConsoleColor.Blue;
+                break;
+            case LogEventLevel.Debug:
+                color = ConsoleColor.DarkBlue;
+                break;
+            case LogEventLevel.Information:
+                color = ConsoleColor.Green;
+                break;
+            case LogEventLevel.Warning:
+                color = ConsoleColor.Yellow;
+                break;
+            case LogEventLevel.Error:
+                color = ConsoleColor.DarkRed;
+                break;
+            case LogEventLevel.Fatal:
+                color = ConsoleColor.Red;
+                break;
+            default:
+                color = ConsoleColor.White;
+                break;
+        }
+
+        this.OutputHelper.WriteLine($"{level}: {DateTime.Now.ToString("HH:mm:ss.fffffff")} {message}", color);
     }
 }

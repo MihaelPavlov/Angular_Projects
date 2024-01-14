@@ -6,5 +6,10 @@
 public class OutpuHelper : IOutputHelper
 {
     /// <inheritdoc />
-    public void WriteLine(string message) => Console.WriteLine(message);
+    public void WriteLine(string message,ConsoleColor color = ConsoleColor.White)
+    {
+        Console.ForegroundColor = color;
+        Console.WriteLine(message);
+        Console.ForegroundColor = ConsoleColor.White;
+    }
 }
