@@ -4,9 +4,9 @@ using Domain.Entities;
 
 public interface IUserNotificationRepository
 {
-    Task<IEnumerable<UserNotification>> GetAllNotificationsForUserAsync(int userId, CancellationToken cancellationToken);
+    Task<IEnumerable<UserNotification?>> GetAllNotificationsForUserAsync(int userId, CancellationToken cancellationToken);
 
-    Task<UserNotification> GetUserNotificationByIdAsync(int notificationId, int userId, CancellationToken cancellationToken);
+    Task<UserNotification?> GetUserNotificationByIdAsync(int notificationId, int userId, CancellationToken cancellationToken);
 
     Task CreateUserNotificationAsync(UserNotification userNotification, CancellationToken cancellationToken);
 

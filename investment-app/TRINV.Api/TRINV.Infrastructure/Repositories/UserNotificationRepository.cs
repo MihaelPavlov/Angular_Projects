@@ -13,7 +13,7 @@ public class UserNotificationRepository : IUserNotificationRepository
         _context = context;
     }
 
-    public async Task<IEnumerable<UserNotification>> GetAllNotificationsForUserAsync(int userId, CancellationToken cancellationToken)
+    public async Task<IEnumerable<UserNotification?>> GetAllNotificationsForUserAsync(int userId, CancellationToken cancellationToken)
     {
         var userNotifications = await _context
             .UserNotifications
@@ -23,7 +23,7 @@ public class UserNotificationRepository : IUserNotificationRepository
         return userNotifications;
     }
 
-    public async Task<UserNotification> GetUserNotificationByIdAsync(int notificationId, int userId, CancellationToken cancellationToken)
+    public async Task<UserNotification?> GetUserNotificationByIdAsync(int notificationId, int userId, CancellationToken cancellationToken)
     {
         UserNotification? userNotification = await _context
             .UserNotifications

@@ -41,6 +41,7 @@ internal class CreateUserNotificationCommandHandler : IRequestHandler<CreateUser
         };
 
         await _userNotificationRepository.CreateUserNotificationAsync(userNotification, cancellationToken);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         operationResult.RelatedObject = userNotification;
 
