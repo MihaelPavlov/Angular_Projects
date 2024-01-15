@@ -25,13 +25,13 @@ public record CreateNotificationCommand : IRequest<OperationResult<Notification>
 
 internal class CreateNotificationCommandHandler : IRequestHandler<CreateNotificationCommand, OperationResult<Notification>>
 {
+    readonly IRepository<Notification> _repository;
     readonly IUnitOfWork _unitOfWork;
-    readonly IUserContext _userContext;
 
-    public CreateNotificationCommandHandler(IUnitOfWork unitOfWork, IUserContext userContext)
+    public CreateNotificationCommandHandler(IUnitOfWork unitOfWork, IRepository<Notification> repository)
     {
         _unitOfWork = unitOfWork;
-        _userContext = userContext;
+        _repository = repository;
     }
 
     public async Task<OperationResult<Notification>> Handle(CreateNotificationCommand request,
@@ -48,6 +48,9 @@ internal class CreateNotificationCommandHandler : IRequestHandler<CreateNotifica
             NotificationType = request.NotificationType,
             Message = request.Message,
         };
+
+        await _repository.Insert(notification, cancellationToken);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         operationResult.RelatedObject = notification;
 
