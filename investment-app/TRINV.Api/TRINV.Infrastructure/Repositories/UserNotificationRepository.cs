@@ -20,6 +20,9 @@ public class UserNotificationRepository : IUserNotificationRepository
             .Where(x => x.UserId == userId && !x.IsDeleted)
             .ToArrayAsync(cancellationToken);
 
+        if(userNotifications.Length == 0)
+            return null;
+
         return userNotifications;
     }
 
