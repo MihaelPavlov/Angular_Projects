@@ -2,6 +2,7 @@
 
 using Application.Interfaces;
 using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 public class UserNotificationRepository : IUserNotificationRepository
 {
@@ -12,28 +13,61 @@ public class UserNotificationRepository : IUserNotificationRepository
         _context = context;
     }
 
-    public Task<IEnumerable<UserNotification>> GetAllNotificationsForUserAsync(int userId)
+    public async Task<IEnumerable<UserNotification>> GetAllNotificationsForUserAsync(int userId, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var userNotifications = await _context
+            .UserNotifications
+            .Where(x => x.UserId == userId && !x.IsDeleted)
+            .ToArrayAsync(cancellationToken);
+
+        return userNotifications;
     }
 
-    public Task<UserNotification> GetUserNotificationByIdAsync(int notificationId, int userId)
+    public async Task<UserNotification> GetUserNotificationByIdAsync(int notificationId, int userId, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        UserNotification? userNotification = await _context
+            .UserNotifications
+            .FirstOrDefaultAsync(x => 
+                x.NotificationId == notificationId && x.UserId == userId, cancellationToken);
+
+        return userNotification;
     }
 
-    public Task AddNotificationToUserAsync(int notificationId, int userId)
-    {
-        throw new NotImplementedException();
+    public async Task CreateUserNotificationAsync(UserNotification userNotification, CancellationToken cancellationToken)
+    { 
+        await _context
+            .UserNotifications
+            .AddAsync(userNotification, cancellationToken);
     }
 
-    public Task DeleteNotificationAsync(int notificationId, int userId)
+    public bool DeleteNotification(int notificationId, int userId)
     {
-        throw new NotImplementedException();
+        var userNotification = _context
+            .UserNotifications
+            .FirstOrDefault(x => x.NotificationId == notificationId && x.UserId == userId);
+
+        if (userNotification == null) return false;
+
+        userNotification.IsDeleted = true;
+        _context.SaveChangesAsync();
+
+        return true;
     }
 
-    public Task DeleteAllNotificationsForUserAsync(int userId)
+    public bool DeleteAllNotificationsForUser(int userId)
     {
-        throw new NotImplementedException();
+        var userNotifications = _context
+            .UserNotifications
+            .Where(x => x.UserId == userId);
+
+        if (!userNotifications.Any()) return false;
+
+        foreach (var userNotification in userNotifications)
+        {
+            userNotification.IsDeleted = true;
+        }
+
+        _context.SaveChangesAsync();
+        return true;
     }
 }

@@ -4,13 +4,13 @@ using Domain.Entities;
 
 public interface IUserNotificationRepository
 {
-    Task<IEnumerable<UserNotification>> GetAllNotificationsForUserAsync(int userId);
+    Task<IEnumerable<UserNotification>> GetAllNotificationsForUserAsync(int userId, CancellationToken cancellationToken);
 
-    Task<UserNotification> GetUserNotificationByIdAsync(int notificationId, int userId);
+    Task<UserNotification> GetUserNotificationByIdAsync(int notificationId, int userId, CancellationToken cancellationToken);
 
-    Task AddNotificationToUserAsync(int notificationId, int userId);
+    Task CreateUserNotificationAsync(UserNotification userNotification, CancellationToken cancellationToken);
 
-    Task DeleteNotificationAsync(int notificationId, int userId);
+    bool DeleteNotification(int notificationId, int userId);
 
-    Task DeleteAllNotificationsForUserAsync(int userId);
+    bool DeleteAllNotificationsForUser(int userId);
 }
