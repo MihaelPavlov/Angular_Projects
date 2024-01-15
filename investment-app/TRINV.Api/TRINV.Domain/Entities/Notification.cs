@@ -13,8 +13,10 @@ public class Notification : BaseEntity
     [MaxLength(MessageMaxLength)]
     public string Message { get; set; } = string.Empty;
 
+    // TODO: remove CreatedOn
     [Required]
     public DateTime CreatedOn { get; set; }
 
+    //TODO: remove IsDeleted
     public bool IsDeleted { get; set; }
 }

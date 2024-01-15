@@ -6,3 +6,5 @@ public enum NotificationType
     Alert = 1,
     System = 2
 }
+//TODO: Property message and ID
+//TODO: Check Enum Helper

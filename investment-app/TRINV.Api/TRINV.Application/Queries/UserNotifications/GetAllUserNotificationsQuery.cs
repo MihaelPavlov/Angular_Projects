@@ -8,7 +8,7 @@ using Shared.Business.Utilities;
 
 public record GetAllUserNotificationsQuery : IRequest<OperationResult<IEnumerable<UserNotification>>>;
 
-public class GetAllUserNotificationsQueryHandler : IRequestHandler<GetAllUserNotificationsQuery, OperationResult<IEnumerable<UserNotification>>>
+internal class GetAllUserNotificationsQueryHandler : IRequestHandler<GetAllUserNotificationsQuery, OperationResult<IEnumerable<UserNotification>>>
 {
     readonly IUserNotificationRepository _userNotificationRepository;
     readonly IUserContext _userRepository;
