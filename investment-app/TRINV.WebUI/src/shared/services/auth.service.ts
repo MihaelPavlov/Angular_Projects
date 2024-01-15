@@ -8,22 +8,23 @@ import * as CryptoJS from 'crypto-js';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {PersistenceService} from "./persistance.service";
 import {ErrorService} from "./error.service";
+import { ValidationError } from "src/app/models/validationError";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root',
 })
 export class AuthService {
   private isUserAuthenticatedSubject$ = new Subject<boolean>();
   public isUserAuthenticated$ = this.isUserAuthenticatedSubject$.asObservable();
   private userInfo$ = new BehaviorSubject<any | null>(null); //TODO: Create model for this userInfo
 
-  private errorsSubject$ = new BehaviorSubject<any[]>([]); //TODO: Create model for this any ErrorModel
+  private errorsSubject$ = new BehaviorSubject<ValidationError| null>(null);
   public errors$ = this.errorsSubject$.asObservable();
 
-  private initialExceptionSubject$ = new BehaviorSubject<string>('');
+  private initialExceptionSubject$ = new BehaviorSubject<any | null>(null);
   public initialException$ = this.initialExceptionSubject$.asObservable();
-  private readonly state_Key: string = "state";
-  private readonly codeVerifier_Key: string = "codeVerifier";
+  private readonly state_Key: string = 'state';
+  private readonly codeVerifier_Key: string = 'codeVerifier';
   tokenResponse: any;
 
   constructor(
@@ -42,28 +43,33 @@ export class AuthService {
 
   public register(username: string, email: string, password: string): void {
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
       // Add other headers if needed
     });
-    this.http.post('https://localhost:7201/user/register', {username, email, password}, {
-      withCredentials: true,
-      headers
-    }).subscribe({
-      next: (response: any) => {
-        console.log('response from register -> ', response)
-        this.errorsSubject$.next(response.validationErrors as any[]);
-        this.initialExceptionSubject$.next(response.initialErrorMessage as string);
-      },
-      error: (error: any) => {
-        if (error.error.errors) {
-
-          let result = this.errorService.getErrorsFromValidationAttribute(error.error.errors);
-
-          this.errorsSubject$.next(result);
-          this.initialExceptionSubject$.next(error.error.title);
+    this.http
+      .post(
+        'https://localhost:7201/user/register',
+        { username, email, password },
+        {
+          withCredentials: true,
+          headers,
         }
-      }
-    });
+      )
+      .subscribe({
+        next: (response: any) => {
+          console.log('response from register -> ', response);
+          this.errorsSubject$.next(
+            response.validationErrors as ValidationError
+          );
+          this.initialExceptionSubject$.next(response.initialException as any);
+        },
+        error: (error: any) => {
+          if (error.error.errors) {
+             this.errorsSubject$.next(error.error.errors as ValidationError);
+            this.initialExceptionSubject$.next(error.error.title);
+          }
+        },
+      });
   }
 
   public loginStart(): void {
@@ -71,11 +77,16 @@ export class AuthService {
     const codeVerifier = this.strRandom(128);
 
     this.persistenceService.setLocalStorageItem(this.state_Key, state);
-    this.persistenceService.setLocalStorageItem(this.codeVerifier_Key, codeVerifier);
+    this.persistenceService.setLocalStorageItem(
+      this.codeVerifier_Key,
+      codeVerifier
+    );
 
     // localStorage.setItem('state', state);
     // localStorage.setItem('codeVerifier', codeVerifier);
-    const codeVerifierHash = CryptoJS.SHA256(codeVerifier).toString(CryptoJS.enc.Base64);
+    const codeVerifierHash = CryptoJS.SHA256(codeVerifier).toString(
+      CryptoJS.enc.Base64
+    );
     const codeChallenge = codeVerifierHash
       .replace(/=/g, '')
       .replace(/\+/g, '-')
@@ -83,17 +94,23 @@ export class AuthService {
 
     const params = [
       'client_id=' + IdentityServerConfigs.CLIENT_ID,
-      'redirect_uri=' + encodeURIComponent(`${URL_CLIENT}/${PATH.CLIENT.ACCOUNT.SIGN_IN_CALLBACK}`),
+      'redirect_uri=' +
+        encodeURIComponent(
+          `${URL_CLIENT}/${PATH.CLIENT.ACCOUNT.SIGN_IN_CALLBACK}`
+        ),
       'response_type=code',
       'scope=' + 'openid profile main_api IdentityServerApi',
       'state=' + state,
       'code_challenge=' + codeChallenge,
       'code_challenge_method=S256',
-      'response_mode=query'
+      'response_mode=query',
     ];
-    const encoded = encodeURIComponent('/connect/authorize/callback?' + params.join('&'));
+    const encoded = encodeURIComponent(
+      '/connect/authorize/callback?' + params.join('&')
+    );
 
-    window.location.href = 'https://localhost:5001/Account/Login' + '?ReturnUrl=' + encoded;
+    window.location.href =
+      'https://localhost:5001/Account/Login' + '?ReturnUrl=' + encoded;
   }
 
   public getCookieFromApi(code: string, state: string) {
@@ -102,94 +119,109 @@ export class AuthService {
       return;
     }
 
-    const codeVerifier = this.persistenceService.getLocalStorageItem(this.codeVerifier_Key);
+    const codeVerifier = this.persistenceService.getLocalStorageItem(
+      this.codeVerifier_Key
+    );
     if (!codeVerifier) {
       alert('codeVerifier in localStorage is expected');
       return;
     }
 
-    this.http.get<any>('https://localhost:7201/account/authorize', {
-      withCredentials: true,
-      headers: {
-        'code': code,
-        'code_verifier': codeVerifier
-      }
-    }).subscribe({
-      next: (response) => {
-        if (response !== null) {
-          this.userInfo$.next({id: response.sub, email: response.name})
+    this.http
+      .get<any>('https://localhost:7201/account/authorize', {
+        withCredentials: true,
+        headers: {
+          code: code,
+          code_verifier: codeVerifier,
+        },
+      })
+      .subscribe({
+        next: (response) => {
+          if (response !== null) {
+            this.userInfo$.next({ id: response.sub, email: response.name });
 
-          this.isUserAuthenticatedSubject$.next(true);
+            this.isUserAuthenticatedSubject$.next(true);
 
-          this.callApi_Test()
-          this.router.navigate([PATH.CLIENT.HOME], {replaceUrl: true});
-        }
+            this.callApi_Test();
+            this.router.navigate([PATH.CLIENT.HOME], { replaceUrl: true });
+          }
 
-        console.log('cookie from api authrorize -> ', response)
-      },
-      error: (error) => {
-        console.warn('HTTP Error', error);
-      }
-    });
+          console.log('cookie from api authrorize -> ', response);
+        },
+        error: (error) => {
+          console.warn('HTTP Error', error);
+        },
+      });
   }
 
   // For test purpose
   callApi_Test() {
-    this.http.get<any>('https://localhost:7201/', {
-      withCredentials: true,
-    }).subscribe({
+    this.http
+      .get<any>('https://localhost:7201/', {
+        withCredentials: true,
+      })
+      .subscribe({
         next: (response) => {
           console.log('response ->', response);
         },
         error: (error) => {
           console.warn('HTTP Error', error);
-        }
-      }
-    );
-  }//todo: check the challenge
+        },
+      });
+  } //todo: check the challenge
 
   public async logoutStart() {
-    this.http.get('https://localhost:7201/account/logout', {
-      withCredentials: true
-    }).subscribe({
-      next: (response) => {
-        console.log("logout -> ", response)
-        this.persistenceService.removeLocalStorageItem(this.state_Key);
-        this.persistenceService.removeLocalStorageItem(this.codeVerifier_Key);
-        this.userInfo$.next(null);
-      },
-      error: (error) => {
-        console.warn('HTTP Error', error);
-      }
-    })
+    this.http
+      .get('https://localhost:7201/account/logout', {
+        withCredentials: true,
+      })
+      .subscribe({
+        next: (response) => {
+          console.log('logout -> ', response);
+          this.persistenceService.removeLocalStorageItem(this.state_Key);
+          this.persistenceService.removeLocalStorageItem(this.codeVerifier_Key);
+          this.userInfo$.next(null);
+        },
+        error: (error) => {
+          console.warn('HTTP Error', error);
+        },
+      });
   }
 
   //Todo: check is it's needed
   public isAuthenticated = (): Observable<boolean> => {
-    console.log("user ---->", this.userInfo$.value)
+    console.log('user ---->', this.userInfo$.value);
     return this.userInfo$.pipe(
-      map(user => {
+      map((user) => {
         return !!user;
       })
     );
-  }
+  };
 
   public getUserInfo() {
-    this.http.get<any>('https://localhost:7201/account/user-info', {
-      withCredentials: true
-    }).subscribe({
-      next: (response) => {
-        this.userInfo$.next({id: response.subFromClaim, email: response.email});
-      },
-      error: (error) => {
-        console.warn('HTTP Error', error);
-      }
-    });
+    this.http
+      .get<any>('https://localhost:7201/account/user-info', {
+        withCredentials: true,
+      })
+      .subscribe({
+        next: (response) => {
+          console.log('test', response);
+
+          this.userInfo$.next({
+            id: response.subFromClaim,
+            email: response.email,
+          });
+        },
+        error: (error) => {
+          console.warn('HTTP Error', error);
+        },
+      });
   }
 
   private strRandom(length: number) {
     let result = '';
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const characters =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     const charactersLength = characters.length;
     for (let i = 0; i < length; i++) {
       result += characters.charAt(Math.floor(Math.random() * charactersLength));

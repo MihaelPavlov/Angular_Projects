@@ -18,7 +18,6 @@ public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
         _logger = logger;
         _exceptionHandlers = new Dictionary<Type, Action<ExceptionContext>>
             {
-                { typeof(ValidationErrorsException), HandleValidationException },
                 { typeof(NotFoundException), HandleNotFoundException },
                 { typeof(UnauthorizedAccessException), HandleUnauthorizedAccessException },
                 { typeof(ForbiddenAccessException), HandleForbiddenAccessException },
@@ -49,13 +48,6 @@ public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
         }
 
         HandleUnknownException(context);
-    }
-
-    private void HandleValidationException(ExceptionContext context)
-    {
-        var exception = (ValidationErrorsException)context.Exception;
-        context.Result = new UnprocessableEntityObjectResult(new ValidationProblemDetails(exception.Errors));
-        context.ExceptionHandled = true;
     }
 
     private static void HandleInvalidModelStateException(ExceptionContext context)

@@ -5,10 +5,11 @@ using System.Text;
 using System.Text.Json;
 using System.ComponentModel.DataAnnotations;
 using Domain.Validations;
-using Shared.Business.Utilities;
+using TRINV.Shared.Business.Utilities;
+using TRINV.Shared.Business.Extension;
+using TRINV.Shared.Business.Exceptions;
 
-
-public record CreateIdentityUserCommand : IRequest<OperationErrorObject>
+public record CreateIdentityUserCommand : IRequest<OperationResult>
 {
     [Required]
     [StringLength(20, ErrorMessage = "The Username must be between 3 and 20 characters long.", MinimumLength = 3)]
@@ -23,9 +24,9 @@ public record CreateIdentityUserCommand : IRequest<OperationErrorObject>
     public string Email { get; set; } = string.Empty;
 }
 
-public class CreateIdentityUserCommandHandler : IRequestHandler<CreateIdentityUserCommand, OperationErrorObject>
+public class CreateIdentityUserCommandHandler : IRequestHandler<CreateIdentityUserCommand, OperationResult>
 {
-    public async Task<OperationErrorObject> Handle(CreateIdentityUserCommand request, CancellationToken cancellationToken)
+    public async Task<OperationResult> Handle(CreateIdentityUserCommand request, CancellationToken cancellationToken)
     {
         Ensure.IsValidEmail(request.Email);
         var json = JsonSerializer.Serialize(new CreateIdentityUserModel(request.Username, request.Password, request.Email));
@@ -41,12 +42,12 @@ public class CreateIdentityUserCommandHandler : IRequestHandler<CreateIdentityUs
 
             ArgumentNullException.ThrowIfNull(errorResponse);
 
-            return new OperationErrorObject { InitialErrorMessage = errorResponse.detail, IsSuccess = false };
+            return new OperationResult().ReturnWithErrorMessage(new BadRequestException(errorResponse.detail));
         }
 
         var responseContent = await response.Content.ReadAsStringAsync();
 
-        var result = JsonSerializer.Deserialize<OperationErrorObject>(responseContent);
+        var result = JsonSerializer.Deserialize<OperationResult>(responseContent);
 
         ArgumentNullException.ThrowIfNull(result);
 

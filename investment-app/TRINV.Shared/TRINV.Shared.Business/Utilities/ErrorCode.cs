@@ -1,10 +1,10 @@
 ﻿namespace TRINV.Shared.Business.Utilities;
 
-public static class ErrorCode
+public enum ErrorCode
 {
-    public const int Validation = 422;
-    public const int Forbidden = 403;
-    public const int BadRequest = 400;
-    public const int NotFound = 404;
-    public const int Infrustucture = 01;
+    Validation = 422,
+    Forbidden = 403,
+    BadRequest = 400,
+    NotFound = 404,
+    Infrustucture = 01,
 }

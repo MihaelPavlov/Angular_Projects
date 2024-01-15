@@ -1,9 +1,11 @@
+using Duende.IdentityServer.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TRINV.IdentityServer.Application.Infrastructure;
 using TRINV.IdentityServer.Data;
 using TRINV.IdentityServer.Data.Models;
 using TRINV.IdentityServer.Data.Seed;
+using TRINV.IdentityServer.Services;
 using TRINV.Shared.Business.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -33,7 +35,6 @@ if (environmentSettings.IsLocal)
 #endregion Logging
 
 #region Configure Services
-
 // gates
 builder.Services.AddControllersWithViews(options => options.Filters.Add<ApiExceptionFilterAttribute>());
 builder.Services.AddLogging();
@@ -73,7 +74,8 @@ builder.Services.AddIdentityServer(options =>
             builder.UseSqlServer(connectionString, sql => sql.MigrationsAssembly(sqlMigrationsAssemblyName));
         options.EnableTokenCleanup = true; // by default 3600 seconds
     })
-    .AddAspNetIdentity<ApplicationUser>();
+    .AddAspNetIdentity<ApplicationUser>()
+    .AddProfileService<ProfileService>();
 
 builder.Services.AddAuthentication();
 builder.Services.AddLocalApiAuthentication();

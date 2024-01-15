@@ -5,13 +5,8 @@ namespace TRINV.Shared.Business.Exceptions;
 
 public class NotFoundException : IError
 {
-    private const int UniqueKey = ErrorCode.NotFound;
-
-    public int Key => UniqueKey;
-
-    public string Message { get; set; } = "Item was not found";
-
     public NotFoundException(string? customMessage = null)
+         : base(ErrorCode.NotFound.ToString(), (int)ErrorCode.NotFound, "Item was not found")
     {
         this.Message = customMessage ?? this.Message;
     }
