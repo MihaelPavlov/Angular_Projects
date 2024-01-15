@@ -7,9 +7,6 @@ using static Validations.EntityValidationConstants.Notifications;
 public class Notification : BaseEntity
 {
     [Required]
-    public int UserId { get; set; }
-
-    [Required]
     public NotificationType NotificationType { get; set; }
 
     [Required]
@@ -18,8 +15,6 @@ public class Notification : BaseEntity
 
     [Required]
     public DateTime CreatedOn { get; set; }
-
-    public bool IsRead { get; set; } //IsSeen / IsRead / IsUnread 
 
     public bool IsDeleted { get; set; }
 }
