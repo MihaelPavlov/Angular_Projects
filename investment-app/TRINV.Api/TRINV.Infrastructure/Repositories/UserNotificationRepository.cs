@@ -68,6 +68,7 @@ public class UserNotificationRepository : IUserNotificationRepository
         }
 
         _context.SaveChangesAsync();
+
         return true;
     }
 }

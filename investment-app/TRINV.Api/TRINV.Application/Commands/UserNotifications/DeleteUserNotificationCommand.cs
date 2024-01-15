@@ -6,9 +6,9 @@ using MediatR;
 using Shared.Business.Exceptions;
 using Shared.Business.Utilities;
 
-public record DeleteUserNotificationCommand(int NotificationId) : IRequest<OperationResult<UserNotification>>;
+public record DeleteUserNotificationCommand(int NotificationId) : IRequest<OperationResult<bool>>;
 
-internal class DeleteUserNotificationCommandHandler : IRequestHandler<DeleteUserNotificationCommand, OperationResult<UserNotification>>
+internal class DeleteUserNotificationCommandHandler : IRequestHandler<DeleteUserNotificationCommand, OperationResult<bool>>
 {
     readonly IUnitOfWork _unitOfWork;
     readonly IUserNotificationRepository _userNotificationRepository;
@@ -21,9 +21,9 @@ internal class DeleteUserNotificationCommandHandler : IRequestHandler<DeleteUser
         _userContext = userContext;
     }
 
-    public async Task<OperationResult<UserNotification>> Handle(DeleteUserNotificationCommand request, CancellationToken cancellationToken)
+    public async Task<OperationResult<bool>> Handle(DeleteUserNotificationCommand request, CancellationToken cancellationToken)
     {
-        var operationResult = new OperationResult<UserNotification>();
+        var operationResult = new OperationResult<bool>();
 
         UserNotification? userNotification = await _userNotificationRepository.GetUserNotificationByIdAsync(
             request.NotificationId, _userContext.UserId, cancellationToken);
@@ -38,7 +38,7 @@ internal class DeleteUserNotificationCommandHandler : IRequestHandler<DeleteUser
             return operationResult.ReturnWithErrorMessage(
                 new BadRequestException("Operation was not successful!"));
 
-        operationResult.RelatedObject = userNotification;
+        operationResult.RelatedObject = isDeleted;
 
         return operationResult;
     }
