@@ -3,11 +3,12 @@
 using Domain.Entities;
 using Interfaces;
 using MediatR;
+using Shared.Business.Exceptions;
 using Shared.Business.Utilities;
 
-public record DeleteNotificationCommand(int NotificationId) : IRequest<OperationResult<UserNotification>>;
+public record DeleteNotificationCommand(int NotificationId) : IRequest<OperationResult<Notification>>;
 
-internal class DeleteNotificationCommandHandler : IRequestHandler<DeleteNotificationCommand, OperationResult<UserNotification>>
+internal class DeleteNotificationCommandHandler : IRequestHandler<DeleteNotificationCommand, OperationResult<Notification>>
 { 
     readonly IUnitOfWork _unitOfWork;
     readonly IRepository<Notification> _notificationRepository;
@@ -20,10 +21,23 @@ internal class DeleteNotificationCommandHandler : IRequestHandler<DeleteNotifica
         _notificationRepository = notificationRepository;
     }
 
-    public async Task<OperationResult<UserNotification>> Handle(DeleteNotificationCommand request, CancellationToken cancellationToken)
+    public async Task<OperationResult<Notification>> Handle(DeleteNotificationCommand request, CancellationToken cancellationToken)
     {
-        var operationResult = new OperationResult<UserNotification>();
+        var operationResult = new OperationResult<Notification>();
 
-        throw new NotImplementedException();
+        var notification = await _notificationRepository
+                    .GetByIdAsync(request.NotificationId, cancellationToken);
+
+        if (notification == null)
+            return operationResult.ReturnWithErrorMessage(
+                new NotFoundException($"{nameof(Notification)} was not found."));
+
+        notification.IsDeleted = true;
+
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+        operationResult.RelatedObject = notification;
+
+        return operationResult;
     }
 }
