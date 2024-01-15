@@ -49,12 +49,6 @@ internal class CreateNotificationCommandHandler : IRequestHandler<CreateNotifica
             Message = request.Message,
         };
 
-        var userNotification = new UserNotification
-        {
-            UserId = request.UserId,
-            NotificationId = notification.Id
-        };
-
         operationResult.RelatedObject = notification;
 
         return operationResult;
