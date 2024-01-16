@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using Domain.Entities;
 using Interfaces;
 using Shared.Business.Exceptions;
+using Shared.Business.Extension;
 using Shared.Business.Utilities;
 using static Domain.Validations.EntityValidationConstants.News;
 

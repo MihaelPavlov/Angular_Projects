@@ -4,6 +4,7 @@ using Domain.Entities;
 using Interfaces;
 using MediatR;
 using Shared.Business.Exceptions;
+using Shared.Business.Extension;
 using Shared.Business.Utilities;
 
 public record DeleteUserNotificationCommand(int NotificationId) : IRequest<OperationResult<bool>>;

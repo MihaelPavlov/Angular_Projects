@@ -8,6 +8,7 @@ using Shared.Business.Utilities;
 using Shared.Business.Exceptions;
 using Domain.Validations;
 using Interfaces;
+using Shared.Business.Extension;
 using static Domain.Validations.EntityValidationConstants.Notifications;
 
 public record CreateNotificationCommand : IRequest<OperationResult<Notification>>

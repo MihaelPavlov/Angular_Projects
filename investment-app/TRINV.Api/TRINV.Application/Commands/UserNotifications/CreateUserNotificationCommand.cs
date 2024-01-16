@@ -3,24 +3,22 @@
 using Domain.Entities;
 using Interfaces;
 using MediatR;
-using Shared.Business.Exceptions;
 using Shared.Business.Utilities;
 
-//TODO: Change to accept notification type //int
-public record CreateUserNotificationCommand(Enum NotificationType, string? Message = null) : IRequest<OperationResult<UserNotification>>;
+//TODO: Change to accept notification type //should be int
+public record CreateUserNotificationCommand(int NotificationType, string? Message = null) : IRequest<OperationResult<UserNotification>>;
 
 internal class CreateUserNotificationCommandHandler : IRequestHandler<CreateUserNotificationCommand, OperationResult<UserNotification>>
 {
     readonly IUnitOfWork _unitOfWork;
-    readonly IUserNotificationRepository _userNotificationRepository;
     readonly IRepository<Notification> _notificationRepository;
     readonly IUserContext _userContext;
-    public CreateUserNotificationCommandHandler(IUnitOfWork unitOfWork, 
-        IUserNotificationRepository userNotificationRepository, 
-        IRepository<Notification> notificationRepository, IUserContext userContext)
+    public CreateUserNotificationCommandHandler(
+        IUnitOfWork unitOfWork, 
+        IRepository<Notification> notificationRepository,
+        IUserContext userContext)
     {
         _unitOfWork = unitOfWork;
-        _userNotificationRepository = userNotificationRepository;
         _notificationRepository = notificationRepository;
         _userContext = userContext;
     }
@@ -31,24 +29,6 @@ internal class CreateUserNotificationCommandHandler : IRequestHandler<CreateUser
         //If null check type, get notifications from repository
         //Enum Helper
         var operationResult = new OperationResult<UserNotification>();
-
-        var notification = await _notificationRepository
-            .GetByIdAsync(request.NotificationId, cancellationToken);
-
-        if(notification == null || notification.IsDeleted) 
-            return operationResult.ReturnWithErrorMessage(new NotFoundException(
-            $"{nameof(Notification)} was not found!"));
-
-        var userNotification = new UserNotification
-        {
-            NotificationId = request.NotificationId,
-            UserId = request.UserId
-        };
-
-        await _userNotificationRepository.CreateUserNotificationAsync(userNotification, cancellationToken);
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
-
-        operationResult.RelatedObject = userNotification;
 
         return operationResult;
     }

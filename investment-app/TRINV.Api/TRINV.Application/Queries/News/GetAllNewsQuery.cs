@@ -3,6 +3,7 @@
 using Domain.Entities;
 using Interfaces;
 using MediatR;
+using Shared.Business.Extension;
 using TRINV.Shared.Business.Exceptions;
 using TRINV.Shared.Business.Utilities;
 

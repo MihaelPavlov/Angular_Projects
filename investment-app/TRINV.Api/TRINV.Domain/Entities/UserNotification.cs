@@ -2,15 +2,13 @@
 
 using System.ComponentModel.DataAnnotations;
 
-public class UserNotification
+public class UserNotification : BaseEntity
 {
-    //TODO: To add Id
     [Required]
     public int UserId { get; set; }
 
-    //TODO: Replace with notification Message 
     [Required]
-    public int NotificationId { get; set; }
+    public string? Message { get; set; }
 
     public DateTime ReceivedDate { get; set; }
 

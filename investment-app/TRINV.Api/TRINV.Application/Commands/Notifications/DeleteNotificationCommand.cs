@@ -4,6 +4,7 @@ using Domain.Entities;
 using Interfaces;
 using MediatR;
 using Shared.Business.Exceptions;
+using Shared.Business.Extension;
 using Shared.Business.Utilities;
 
 public record DeleteNotificationCommand(int NotificationId) : IRequest<OperationResult<Notification>>;
@@ -31,8 +32,6 @@ internal class DeleteNotificationCommandHandler : IRequestHandler<DeleteNotifica
         if (notification == null)
             return operationResult.ReturnWithErrorMessage(
                 new NotFoundException($"{nameof(Notification)} was not found."));
-
-        notification.IsDeleted = true;
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
