@@ -5,13 +5,8 @@ namespace TRINV.Shared.Business.Exceptions;
 
 public class InfrastructureException : IError
 {
-    private const int UniqueKey = ErrorCode.Infrustucture;
-
-    public int Key => UniqueKey;
-
-    public string Message { get; set; } = "Issues within a system's infrastructure";
-
     public InfrastructureException(string? customMessage = null)
+          : base(ErrorCode.Infrustucture.ToString(), (int)ErrorCode.Infrustucture, "Issues within a system's infrastructure")
     {
         this.Message = customMessage ?? this.Message;
     }

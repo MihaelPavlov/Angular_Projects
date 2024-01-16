@@ -25,7 +25,6 @@ public class UserContextFactory : IUserContextFactory
 
         var userIdparsed = int.TryParse(user.FindFirstValue(JwtClaimTypes.Subject), out int userId);
 
-
         return new UserContext(userId: userIdparsed ? userId : null);
     }
 }

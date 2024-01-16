@@ -1,18 +1,27 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using TRINV.Application.Interfaces;
 using TRINV.Application.Queries;
+using TRINV.Application.Services.StockCache;
+using TRINV.Application.Services.StockCache.Interfaces;
 using TRINV.Infrastructure;
 using TRINV.Infrastructure.Configurations;
 using TRINV.InvestTrackApplication.Middleware;
 using TRINV.Shared.Business.Filters;
+using TRINV.Shared.Business.Helpers.OutputHelper;
+using TRINV.Shared.Business.Logger;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddMemoryCache();
 builder.Services.AddControllers(options => options.Filters.Add(typeof(ApiExceptionFilterAttribute)));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IUserContextFactory, UserContextFactory>();
+builder.Services.AddScoped<IOutputHelper, OutpuHelper>();
+builder.Services.AddScoped<ILoggerService, LoggerService>();
+builder.Services.AddScoped<IStockCacheService, StockCacheService>();
 builder.Services.AddScoped<IUserContext>(services => services.GetRequiredService<IUserContextFactory>().CreateUserContext());
 // Add services to the container.
 builder.Services.AddInfrastructure(builder.Configuration);
@@ -30,14 +39,35 @@ builder.Services
     });
 
 builder.Services.AddAuthorization(options =>
+{
+    // Might not need it at all ApiScope
     options.AddPolicy("ApiScope", policy =>
     {
         policy.RequireAuthenticatedUser();
         policy.RequireClaim("sub");
         policy.RequireClaim("scope", new string[] { "main_api" });
         policy.RequireClaim("email");
-    })
-);
+        policy.RequireClaim("role");
+    });
+
+    options.AddPolicy("RequiredAdminRole", policy =>
+    {
+        policy.RequireAuthenticatedUser();
+        policy.RequireClaim("sub");
+        policy.RequireClaim("scope", new string[] { "main_api" });
+        policy.RequireClaim("email");
+        policy.RequireClaim("role","Admin");
+    });
+
+    options.AddPolicy("RequiredUserRole", policy =>
+    {
+        policy.RequireAuthenticatedUser();
+        policy.RequireClaim("sub");
+        policy.RequireClaim("scope", new string[] { "main_api" });
+        policy.RequireClaim("email");
+        policy.RequireClaim("role", "User");
+    });
+}) ;
 
 //builder.Services
 //    .AddAuthorization(config => config

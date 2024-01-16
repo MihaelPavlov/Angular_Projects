@@ -1,17 +1,28 @@
 <div *ngIf="initialException as initialError" class="max-w-4xl mx-auto">
-  <div *ngIf="errors && errors.length !== 0" class="bg-red-50 border-l-8 border-red-900">
+  <div
+    *ngIf="errors && getKeys(this.errors).length !== 0"
+    class="bg-red-50 border-l-8 border-red-900"
+  >
     <div class="flex items-center">
-      <div  class="p-2">
-        <div  class="flex items-center">
-          <p class="px-6 py-4 text-red-900 font-semibold text-lg">{{initialError}}</p>
+      <div class="p-2">
+        <div class="flex items-center">
+          <p class="px-6 py-4 text-red-900 font-semibold text-lg">
+            {{ initialError.message }}
+          </p>
         </div>
 
-        <div  class="px-16 mb-2">
-          <li *ngFor="let error of errors" class="text-md font-bold text-red-500 text-sm">{{ error.propertyName }} : {{error.errorMessage}}</li>
+        <div class="px-16 mb-2">
+          <li
+            *ngFor="let error of getKeys(this.errors)"
+            class="text-md font-bold text-red-500 text-sm"
+          >
+          {{ error }}
+          <ul>
+            <li class="pl-8" *ngFor="let errorMessage of this.errors[error]"> - {{errorMessage}}</li>
+          </ul>
+          </li>
         </div>
-
       </div>
     </div>
   </div>
-
 </div>

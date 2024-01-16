@@ -10,19 +10,23 @@ import {ActivatedRoute} from "@angular/router";
 import {FormBuilder, FormGroup, Validators,FormControl} from "@angular/forms";
 import {BehaviorSubject} from "rxjs";
 import {MatError} from "@angular/material/form-field";
+import { ValidationError } from "src/app/models/validationError";
 
 @Component({
-  selector: "register",
+  selector: 'register',
   templateUrl: 'register.component.html',
-  styleUrls: ['register.component.css']
+  styleUrls: ['register.component.css'],
 })
-export class RegisterComponent implements OnInit{
-  errors = new BehaviorSubject<any[] | null>(null);
-  initialException = new BehaviorSubject<string| null>(null);
+export class RegisterComponent implements OnInit {
+  errors = new BehaviorSubject<ValidationError | null>(null);
+  initialException = new BehaviorSubject<any | null>(null);
   registrationForm!: FormGroup;
-  @ViewChildren('inputElement') errorElements!: QueryList<ElementRef>
-  constructor(private fb: FormBuilder, private activatedRoute: ActivatedRoute, private _authService: AuthService) {
-  }
+  @ViewChildren('inputElement') errorElements!: QueryList<ElementRef>;
+  constructor(
+    private fb: FormBuilder,
+    private activatedRoute: ActivatedRoute,
+    private _authService: AuthService
+  ) {}
 
   ngOnInit() {
     this.registrationForm = this.fb.group({
@@ -40,33 +44,41 @@ export class RegisterComponent implements OnInit{
       // })
     });
 
-    this._authService.errors$.subscribe((x:any)=>{
+    this._authService.errors$.subscribe((x: any) => {
       this.errors.next(x);
+      const validationError = x as ValidationError;
+
+      let keys = Object.keys(validationError);
 
       this.errorElements.forEach((errorElement: ElementRef) => {
         errorElement.nativeElement.classList.remove('errorBorder');
-
-        if(x.find((er: any)=>er.propertyName.toLowerCase() === errorElement.nativeElement.id)){
+        if (
+          keys.find(
+            (er: any) => er.toLowerCase() === errorElement.nativeElement.id
+          )
+        ) {
           errorElement.nativeElement.classList.add('errorBorder');
         }
-
       });
     });
 
-    this._authService.initialException$.subscribe(x=>{
+    this._authService.initialException$.subscribe((x) => {
       this.initialException.next(x);
-    })
+    });
   }
   public register(): void {
     if (this.registrationForm.valid) {
       // Process form data
-    let values = this.registrationForm.value;
-    this._authService.register(values.username, values.email, values.password)
+      let values = this.registrationForm.value;
+      this._authService.register(
+        values.username,
+        values.email,
+        values.password
+      );
     }
   }
 
   public login(): void {
-    this._authService.loginStart()
+    this._authService.loginStart();
   }
-
 }
