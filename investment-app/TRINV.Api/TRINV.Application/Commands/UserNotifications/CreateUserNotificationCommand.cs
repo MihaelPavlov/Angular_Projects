@@ -6,7 +6,7 @@ using MediatR;
 using Shared.Business.Exceptions;
 using Shared.Business.Utilities;
 
-//TODO: Change to accept notification type
+//TODO: Change to accept notification type //int
 public record CreateUserNotificationCommand(Enum NotificationType, string? Message = null) : IRequest<OperationResult<UserNotification>>;
 
 internal class CreateUserNotificationCommandHandler : IRequestHandler<CreateUserNotificationCommand, OperationResult<UserNotification>>
