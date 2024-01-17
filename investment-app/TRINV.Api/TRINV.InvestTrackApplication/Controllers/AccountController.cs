@@ -73,10 +73,11 @@ public class AccountController : ControllerBase
     {
         var subFromClaim = User.FindFirstValue("sub");
         var email = User.FindFirstValue("email");
+        var role = User.FindFirstValue("role");
 
         // For future use of the session
         var subFromSession = HttpContext.Session.GetString("sub");
 
-        return Ok(new { subFromClaim, email });
+        return Ok(new { subFromClaim, email, role });
     }
 }

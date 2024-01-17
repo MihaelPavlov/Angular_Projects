@@ -26,7 +26,7 @@ export class CoinsComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private dataListService: DataListService<ICryptoAsset>,
-              private http: HttpClient,
+  private http: HttpClient,
               private renderer: Renderer2,
               private coinService: CoinService,
               private store: Store,

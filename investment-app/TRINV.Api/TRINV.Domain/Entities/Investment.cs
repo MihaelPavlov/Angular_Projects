@@ -2,7 +2,6 @@
 
 using System.ComponentModel.DataAnnotations;
 using Enums;
-using static Validations.EntityValidationConstants.Investment;
 
 public class Investment : BaseEntity
 {
@@ -10,7 +9,7 @@ public class Investment : BaseEntity
     public int UserId { get; set; }
 
     [Required]
-    [MaxLength(NameMaxLength)]
+    [MaxLength(50)]
     public string Name { get; set; } = null!;
 
     [Required]

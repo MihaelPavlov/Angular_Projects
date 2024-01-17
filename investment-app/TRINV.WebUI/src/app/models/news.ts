@@ -1,12 +1,14 @@
-import {IComment} from "./comment";
+import { IComment } from "./comment";
 
-export interface INews{
-  id: number
-  name: string
-  views: number
-  timeToRead :number
-  smallDescription: string
-  description: string
-  imageUrl : string
+export interface INews {
+  id: number;
+  name: string;
+  description: string;
+  shortDescription: string;
+  timeToRead: number;
+  views: number;
+  upVote: number;
+  downVote: number;
+  imageUrl: string;
   comments: IComment[]
 }

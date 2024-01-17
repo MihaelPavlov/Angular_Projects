@@ -24,29 +24,82 @@ import {
 import {SignInRedirectCallbackComponent} from "../components/account/sign-in-callback/sign-in-redirect-callback.component";
 import {SignOutRedirectCallbackComponent} from "../components/sign-out-redirect-callback.component";
 import {HistoryLogComponent} from "../components/shared/history-log/history-log.component";
+import { NewsPanelComponent } from "../components/profile/admin-news-panel/news-panel.component";
 
 const routes: Routes = [
-  {path: '', component: HomeComponent},
-  {path: 'my-investments', canActivate: [AuthGuardService], component: InvestmentListComponent},
-  {path: 'sign-in-callback',component: SignInRedirectCallbackComponent},
-  {path: 'sign-out-callback', component: SignOutRedirectCallbackComponent},
-  {path: 'create', canActivate: [AuthGuardService], component: AddUpdateInvestmentComponent},
-  {path: 'update/:id', canActivate: [AuthGuardService], component: AddUpdateInvestmentComponent},
-  {path: 'investment-details/:id', canActivate: [AuthGuardService], component: InvestmentDetailsComponent},
-  {path: 'register', component: RegisterComponent},
-  {path: 'login', component: LoginComponent},
-  {path: 'news', component: NewsListComponent},
-  {path: 'test', component: TestComponent},
-  {path: 'coins', component: CoinsComponent},
-  {path: 'profile', canActivate: [AuthGuardService], component: ProfileComponent},
-  {path: 'dashboard', canActivate: [AuthGuardService], component: DashboardComponent},
-  {path: 'global-settings', canActivate: [AuthGuardService], component: GlobalSettingsComponent},
-  {path: 'user-information', canActivate: [AuthGuardService], component: UserInformationComponent},
-  {path: 'api-sources', canActivate: [AuthGuardService], component: ApiSourcesComponent},
-  {path: 'watchlist', canActivate: [AuthGuardService], component: WatchlistComponent},
-  {path: 'notification-settings', canActivate: [AuthGuardService], component: NotificationSettingsComponent},
-  {path: 'history-log', canActivate: [AuthGuardService], component: HistoryLogComponent},
-]
+  { path: '', component: HomeComponent },
+  {
+    path: 'my-investments',
+    canActivate: [AuthGuardService],
+    component: InvestmentListComponent,
+  },
+  { path: 'sign-in-callback', component: SignInRedirectCallbackComponent },
+  { path: 'sign-out-callback', component: SignOutRedirectCallbackComponent },
+  {
+    path: 'create',
+    canActivate: [AuthGuardService],
+    component: AddUpdateInvestmentComponent,
+  },
+  {
+    path: 'update/:id',
+    canActivate: [AuthGuardService],
+    component: AddUpdateInvestmentComponent,
+  },
+  {
+    path: 'investment-details/:id',
+    canActivate: [AuthGuardService],
+    component: InvestmentDetailsComponent,
+  },
+  { path: 'register', component: RegisterComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'news', component: NewsListComponent },
+  { path: 'test', component: TestComponent },
+  { path: 'coins', component: CoinsComponent },
+  {
+    path: 'profile',
+    canActivate: [AuthGuardService],
+    component: ProfileComponent,
+  },
+  {
+    path: 'dashboard',
+    canActivate: [AuthGuardService],
+    component: DashboardComponent,
+  },
+  {
+    path: 'global-settings',
+    canActivate: [AuthGuardService],
+    component: GlobalSettingsComponent,
+  },
+  {
+    path: 'user-information',
+    canActivate: [AuthGuardService],
+    component: UserInformationComponent,
+  },
+  {
+    path: 'api-sources',
+    canActivate: [AuthGuardService],
+    component: ApiSourcesComponent,
+  },
+  {
+    path: 'watchlist',
+    canActivate: [AuthGuardService],
+    component: WatchlistComponent,
+  },
+  {
+    path: 'notification-settings',
+    canActivate: [AuthGuardService],
+    component: NotificationSettingsComponent,
+  },
+  {
+    path: 'history-log',
+    canActivate: [AuthGuardService],
+    component: HistoryLogComponent,
+  },
+  {
+    path: 'news-panel',
+    component: NewsPanelComponent,
+  },
+];
 
 @NgModule({
 

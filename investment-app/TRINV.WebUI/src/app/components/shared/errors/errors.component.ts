@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { ToastType } from '../../../models/toast';
 import { ToastService } from '../../../../shared/services/toast.service';
-import { ValidationError } from 'src/app/models/validationError';
+import { ValidationErrors } from '@angular/forms';
 
 @Component({
   selector: 'errors',
@@ -9,7 +9,7 @@ import { ValidationError } from 'src/app/models/validationError';
 })
 export class ErrorsComponent implements OnChanges {
   @Input()
-  errors: ValidationError | null = null;
+  errors: ValidationErrors | null = null;
 
   @Input()
   initialException: any | null = null;
@@ -28,7 +28,7 @@ export class ErrorsComponent implements OnChanges {
     }
   }
 
-  getKeys(obj: ValidationError): string[] {
+  getKeys(obj: ValidationErrors): string[] {
     if (obj) return Object.keys(obj);
     return [];
   }

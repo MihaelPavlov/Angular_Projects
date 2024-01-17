@@ -9,8 +9,7 @@ import {AuthService} from "../../../../shared/services/auth.service";
 import {ActivatedRoute} from "@angular/router";
 import {FormBuilder, FormGroup, Validators,FormControl} from "@angular/forms";
 import {BehaviorSubject} from "rxjs";
-import {MatError} from "@angular/material/form-field";
-import { ValidationError } from "src/app/models/validationError";
+import { ValidationErrors } from "src/app/models/validation-errors.model";
 
 @Component({
   selector: 'register',
@@ -18,7 +17,7 @@ import { ValidationError } from "src/app/models/validationError";
   styleUrls: ['register.component.css'],
 })
 export class RegisterComponent implements OnInit {
-  errors = new BehaviorSubject<ValidationError | null>(null);
+  errors = new BehaviorSubject<ValidationErrors | null>(null);
   initialException = new BehaviorSubject<any | null>(null);
   registrationForm!: FormGroup;
   @ViewChildren('inputElement') errorElements!: QueryList<ElementRef>;
@@ -46,7 +45,7 @@ export class RegisterComponent implements OnInit {
 
     this._authService.errors$.subscribe((x: any) => {
       this.errors.next(x);
-      const validationError = x as ValidationError;
+      const validationError = x as ValidationErrors;
 
       let keys = Object.keys(validationError);
 

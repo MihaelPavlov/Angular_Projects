@@ -8,7 +8,7 @@ public interface IRepository<T> where T : BaseEntity
 
     Task<T?> GetByIdAsync(int id, CancellationToken cancellationToken);
 
-    Task Insert(T entity, CancellationToken cancellationToken);
+    Task AddAsync(T entity, CancellationToken cancellationToken);
 
     void Update(T entity);
 

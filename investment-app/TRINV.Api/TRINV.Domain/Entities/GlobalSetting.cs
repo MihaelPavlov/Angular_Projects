@@ -1,16 +1,15 @@
 ﻿namespace TRINV.Domain.Entities;
 
 using System.ComponentModel.DataAnnotations;
-using static Validations.EntityValidationConstants.GlobalSetting;
 
 public class GlobalSetting : BaseEntity
 {
     [Required]
-    [MaxLength(NameMaxLength)]
+    [MaxLength(50)]
     public string Name { get; set; } = string.Empty;
 
     [Required]
-    [MaxLength(DescriptionMaxLength)]
+    [MaxLength(250)]
     public string Description { get; set; } = string.Empty;
 
     public bool IsManageable { get; set; }
