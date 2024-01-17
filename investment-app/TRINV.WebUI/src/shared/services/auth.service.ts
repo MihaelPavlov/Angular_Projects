@@ -1,14 +1,14 @@
-import {Injectable} from "@angular/core";
-import {BehaviorSubject, map, Observable, Subject} from "rxjs";
-import {ActivatedRoute, Router} from "@angular/router";
-import {PATH} from "../configs/path.configs";
-import {IdentityServerConfigs} from "../configs/identity-server.configs";
-import {URL_CLIENT} from "../configs/url.configs";
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, map, Observable, Subject } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { PATH } from '../configs/path.configs';
+import { IdentityServerConfigs } from '../configs/identity-server.configs';
+import { URL_CLIENT } from '../configs/url.configs';
 import * as CryptoJS from 'crypto-js';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {PersistenceService} from "./persistance.service";
-import {ErrorService} from "./error.service";
-import { ValidationError } from "src/app/models/validationError";
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { PersistenceService } from './persistance.service';
+import { ErrorService } from './error.service';
+import { ValidationErrors } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +18,7 @@ export class AuthService {
   public isUserAuthenticated$ = this.isUserAuthenticatedSubject$.asObservable();
   private userInfo$ = new BehaviorSubject<any | null>(null); //TODO: Create model for this userInfo
 
-  private errorsSubject$ = new BehaviorSubject<ValidationError| null>(null);
+  private errorsSubject$ = new BehaviorSubject<ValidationErrors | null>(null);
   public errors$ = this.errorsSubject$.asObservable();
 
   private initialExceptionSubject$ = new BehaviorSubject<any | null>(null);
@@ -59,13 +59,13 @@ export class AuthService {
         next: (response: any) => {
           console.log('response from register -> ', response);
           this.errorsSubject$.next(
-            response.validationErrors as ValidationError
+            response.validationErrors as ValidationErrors
           );
           this.initialExceptionSubject$.next(response.initialException as any);
         },
         error: (error: any) => {
           if (error.error.errors) {
-             this.errorsSubject$.next(error.error.errors as ValidationError);
+            this.errorsSubject$.next(error.error.errors as ValidationErrors);
             this.initialExceptionSubject$.next(error.error.title);
           }
         },
@@ -210,6 +210,7 @@ export class AuthService {
           this.userInfo$.next({
             id: response.subFromClaim,
             email: response.email,
+            role: response.role,
           });
         },
         error: (error) => {

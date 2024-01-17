@@ -2,13 +2,15 @@
 
 using Domain.Entities;
 using Interfaces;
+using Mapster;
 using MediatR;
 using Shared.Business.Exceptions;
 using Shared.Business.Utilities;
+using TRINV.Shared.Business.Extension;
 
-public record GetNewsByIdQuery(int Id) : IRequest<OperationResult<News>>;
+public record GetNewsByIdQuery(int Id) : IRequest<OperationResult<GetNewsByIdQueryModel>>;
 
-public class GetNewsByIdQueryHandler : IRequestHandler<GetNewsByIdQuery, OperationResult<News>>
+public class GetNewsByIdQueryHandler : IRequestHandler<GetNewsByIdQuery, OperationResult<GetNewsByIdQueryModel>>
 {
     readonly IRepository<News> _repository;
 
@@ -17,9 +19,9 @@ public class GetNewsByIdQueryHandler : IRequestHandler<GetNewsByIdQuery, Operati
         _repository = repository;
     }
 
-    public async Task<OperationResult<News>> Handle(GetNewsByIdQuery request, CancellationToken cancellationToken)
+    public async Task<OperationResult<GetNewsByIdQueryModel>> Handle(GetNewsByIdQuery request, CancellationToken cancellationToken)
     {
-        var operationResult = new OperationResult<News>();
+        var operationResult = new OperationResult<GetNewsByIdQueryModel>();
 
         var result = await _repository.GetByIdAsync(request.Id, cancellationToken);
 
@@ -27,8 +29,20 @@ public class GetNewsByIdQueryHandler : IRequestHandler<GetNewsByIdQuery, Operati
             return operationResult.ReturnWithErrorMessage(
                 new NotFoundException($"{nameof(News)} with Id {request.Id} was not found."));
 
-        operationResult.RelatedObject = result;
+        operationResult.RelatedObject = result.Adapt<GetNewsByIdQueryModel>();
 
         return operationResult;
     }
 }
+
+public record GetNewsByIdQueryModel(
+    int Id,
+    string Name,
+    string Description,
+    string ShortDescription,
+    int TimeToRead,
+    int Views,
+    int UpVote,
+    int DownVote,
+    string ImageUrl);
+

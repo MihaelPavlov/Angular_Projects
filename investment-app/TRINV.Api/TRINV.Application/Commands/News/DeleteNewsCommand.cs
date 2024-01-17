@@ -5,10 +5,11 @@ using Interfaces;
 using MediatR;
 using Shared.Business.Exceptions;
 using Shared.Business.Utilities;
+using TRINV.Shared.Business.Extension;
 
-public record DeleteNewsCommand(int Id) : IRequest<OperationResult<News>>;
+public record DeleteNewsCommand(int Id) : IRequest<OperationResult>;
 
-internal class DeleteNewsCommandHandler : IRequestHandler<DeleteNewsCommand, OperationResult<News>>
+internal class DeleteNewsCommandHandler : IRequestHandler<DeleteNewsCommand, OperationResult>
 {
     readonly IRepository<News> _repository;
     readonly IUnitOfWork _unitOfWork;
@@ -19,21 +20,17 @@ internal class DeleteNewsCommandHandler : IRequestHandler<DeleteNewsCommand, Ope
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<OperationResult<News>> Handle(DeleteNewsCommand request, CancellationToken cancellationToken)
+    public async Task<OperationResult> Handle(DeleteNewsCommand request, CancellationToken cancellationToken)
     {
-        var operationResult = new OperationResult<News>();
-
         var newsToDelete = await _repository.GetByIdAsync(request.Id, cancellationToken);
 
         if (newsToDelete is null)
-            return operationResult.ReturnWithErrorMessage(
+            return new OperationResult().ReturnWithErrorMessage(
                 new NotFoundException($"{nameof(News)} with Id {request.Id} was not found."));
-
-        operationResult.RelatedObject = newsToDelete;
 
         _repository.Delete(newsToDelete);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return operationResult;
+        return new OperationResult();
     }
 }

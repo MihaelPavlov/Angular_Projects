@@ -6,27 +6,32 @@ using Domain.Entities;
 using Interfaces;
 using Shared.Business.Exceptions;
 using Shared.Business.Utilities;
-using static Domain.Validations.EntityValidationConstants.News;
+using TRINV.Shared.Business.Extension;
 
-public record UpdateNewsCommand : IRequest<OperationResult<News>>
+public record UpdateNewsCommand : IRequest<OperationResult>
 {
     [Required]
     public int Id { get; set; }
 
     [Required]
-    [MaxLength(NameMaxLength)]
+    [MaxLength(100)]
     public string Name { get; set; } = null!;
 
     [Required]
-    [MaxLength(DescriptionMaxLength)]
     public string Description { get; set; } = null!;
 
     [Required]
-    [MaxLength(ImageUrlMaxLength)]
+    [MaxLength(200)]
+    public string ShortDescription { get; set; } = null!;
+
+    [Required]
     public string ImageUrl { get; set; } = null!;
+
+    [Required]
+    public int TimeToRead { get; set; }
 }
 
-internal class UpdateNewsCommandHandler : IRequestHandler<UpdateNewsCommand, OperationResult<News>>
+internal class UpdateNewsCommandHandler : IRequestHandler<UpdateNewsCommand, OperationResult>
 {
     readonly IRepository<News> _repository;
     readonly IUnitOfWork _unitOfWork;
@@ -37,25 +42,23 @@ internal class UpdateNewsCommandHandler : IRequestHandler<UpdateNewsCommand, Ope
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<OperationResult<News>> Handle(UpdateNewsCommand request, CancellationToken cancellationToken)
+    public async Task<OperationResult> Handle(UpdateNewsCommand request, CancellationToken cancellationToken)
     {
-        var operationResult = new OperationResult<News>();
-
         var newsToUpdate = await _repository.GetByIdAsync(request.Id, cancellationToken);
 
         if (newsToUpdate is null)
-            return operationResult.ReturnWithErrorMessage(
+            return new OperationResult().ReturnWithErrorMessage(
                 new NotFoundException($"{nameof(News)} with Id {request.Id} was not found."));
 
         newsToUpdate.Name = request.Name;
         newsToUpdate.Description = request.Description;
         newsToUpdate.ImageUrl = request.ImageUrl;
-
-        operationResult.RelatedObject = newsToUpdate;
+        newsToUpdate.TimeToRead = request.TimeToRead;
+        newsToUpdate.ShortDescription = request.ShortDescription;
 
         _repository.Update(newsToUpdate);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return operationResult;
+        return new OperationResult();
     }
 }

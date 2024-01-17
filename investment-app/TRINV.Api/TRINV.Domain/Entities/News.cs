@@ -1,30 +1,32 @@
 ﻿namespace TRINV.Domain.Entities;
 
 using System.ComponentModel.DataAnnotations;
-using static Validations.EntityValidationConstants.News;
 
 public class News : BaseEntity
 {
+    [Required]
+    [MaxLength(100)]
+    public string Name { get; set; } = string.Empty;
+
+    [Required]
+    public string Description { get; set; } = string.Empty;
+
+    [Required]
+    [MaxLength(200)]
+    public string ShortDescription { get; set; } = string.Empty;
+
+    [Required]
+    public string ImageUrl { get; set; } = string.Empty;
+
+    [Required]
+    public int TimeToRead { get; set; }
+
     public int UserId { get; set; }
 
-    [Required]
-    [MaxLength(NameMaxLength)]
-    public string Name { get; set; } = null!;
+    public int Views { get; set; }
 
-    [Required]
-    [MaxLength(DescriptionMaxLength)]
-    public string Description { get; set; } = null!;
-
-    [Required]
-    public int ViewsCount { get; set; }
-
-    [Required]
     public int UpVote { get; set; }
 
-    [Required]
     public int DownVote { get; set; }
 
-    [Required]
-    [MaxLength(ImageUrlMaxLength)]
-    public string ImageUrl { get; set; } = null!;
 }

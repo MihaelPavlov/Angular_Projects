@@ -1,0 +1,76 @@
+<nav>
+  <ul class="flex space-x-4" [class]="small ? '' : ''">
+    <!-- first button -->
+    <li *ngIf="firstLastButtons">
+      <a
+        class="mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-gray-300 hover:cursor-pointer"
+        [class]="
+          currentPage === 1
+            ? 'bg-transparent p-0 text-sm text-blue-gray-500 transition duration-150 ease-in-out hover:bg-gray-300'
+            : 'bg-pink-400 text-white shadow-md shadow-pink-500/20 hover:bg-pink-500'
+        "
+        (click)="selectPageNumber(1)"
+        >««</a
+      >
+    </li>
+    <!-- previous button -->
+    <li *ngIf="nextPreviousButtons">
+      <a
+        class="mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-gray-300 hover:cursor-pointer"
+        [class]="
+          currentPage === 1
+            ? 'bg-transparent p-0 text-sm text-blue-gray-500 transition duration-150 ease-in-out hover:bg-gray-300'
+            : 'bg-pink-400 text-white shadow-md shadow-pink-500/20 hover:bg-pink-500'
+        "
+        (click)="previous()"
+        >«</a
+      >
+    </li>
+    <!-- page numbers -->
+    <ng-container *ngFor="let p of totalPages; index as i">
+      <li
+        *ngIf="i + 1 >= currentPage - maxSize && i + 1 <= currentPage + maxSize"
+      >
+        <a
+          class="mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-gray-300 hover:cursor-pointer"
+          [class]="
+            currentPage === i + 1
+              ? 'bg-pink-400 text-white shadow-md shadow-pink-500/20 hover:bg-pink-500'
+              : 'bg-transparent p-0 text-sm text-blue-gray-500 transition duration-150 ease-in-out hover:bg-gray-300'
+          "
+          (click)="selectPageNumber(i + 1)"
+        >
+          {{ i + 1 }}
+        </a>
+      </li>
+    </ng-container>
+    <!-- next button -->
+    <li *ngIf="nextPreviousButtons">
+      <a
+        class="mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-gray-300 hover:cursor-pointer"
+        [class]="
+          currentPage === totalPages.length
+            ? 'bg-transparent p-0 text-sm text-blue-gray-500 transition duration-150 ease-in-out hover:bg-gray-300'
+            : 'bg-pink-400 text-white shadow-md shadow-pink-500/20 hover:bg-pink-500'
+        "
+        (click)="next()"
+        >»</a
+      >
+    </li>
+    <!-- last button -->
+    <li *ngIf="firstLastButtons">
+      <a
+        class="mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-gray-300 hover:cursor-pointer"
+        [class]="
+          currentPage === totalPages.length
+            ? 'bg-transparent p-0 text-sm text-blue-gray-500 transition duration-150 ease-in-out hover:bg-gray-300'
+            : 'bg-pink-400 text-white shadow-md shadow-pink-500/20 hover:bg-pink-500'
+        "
+        (click)="selectPageNumber(totalPages.length)"
+      >
+        »»
+      </a>
+    </li>
+  </ul>
+</nav>
+
