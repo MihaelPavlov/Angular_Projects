@@ -6,8 +6,8 @@ using Interfaces;
 using MediatR;
 using Shared.Business.Exceptions;
 using Shared.Business.Utilities;
-using Domain.Validations;
 using System.ComponentModel.DataAnnotations;
+using Enums;
 using Shared.Business.Extension;
 using static Domain.Validations.EntityValidationConstants.Notifications;
 
@@ -17,7 +17,7 @@ public record UpdateNotificationCommand : IRequest<OperationResult<Notification>
     public int Id { get; set; }
 
     [Required]
-    public NotificationType NotificationType { get; set; }
+    public int NotificationType { get; set; }
 
     [Required]
     [MaxLength(MessageMaxLength)]
@@ -39,7 +39,7 @@ internal class UpdateNotificationCommandHandler : IRequestHandler<UpdateNotifica
     {
         var operationResult = new OperationResult<Notification>();
 
-        if (Ensure.IsEnumOutOfRange(request.NotificationType))
+        if (!NotificationType.ExistById(request.NotificationType))
             return operationResult.ReturnWithErrorMessage(
                 new NotFoundException($"{nameof(Notification)} of type: {request.NotificationType} was not found."));
 

@@ -10,6 +10,8 @@ public class UserNotification : BaseEntity
     [Required]
     public string? Message { get; set; }
 
+    public int NotificationType { get; set; }
+
     public DateTime ReceivedDate { get; set; }
 
     public bool IsSeen { get; set; }

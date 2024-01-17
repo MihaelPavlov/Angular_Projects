@@ -7,7 +7,7 @@ using static Validations.EntityValidationConstants.Notifications;
 public class Notification : BaseEntity
 {
     [Required]
-    public NotificationType NotificationType { get; set; }
+    public int NotificationType { get; set; }
 
     [Required]
     [MaxLength(MessageMaxLength)]

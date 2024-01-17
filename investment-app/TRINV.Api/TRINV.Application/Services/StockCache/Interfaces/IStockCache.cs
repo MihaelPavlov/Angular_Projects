@@ -25,9 +25,9 @@ public interface IStockCache
     IEnumerable<Stock> GetAllByType(string type);
 
     /// <summary>
-    /// This method specifically returns a  key-value pair represents a stock symbol and its corresponding object.
+    /// This method specifically returns a  key-id pair represents a stock symbol and its corresponding object.
     /// </summary>
-    /// <returns>A key-value pair</returns>
+    /// <returns>A key-id pair</returns>
     Dictionary<string, Stock> GetDictionary();
 
 }

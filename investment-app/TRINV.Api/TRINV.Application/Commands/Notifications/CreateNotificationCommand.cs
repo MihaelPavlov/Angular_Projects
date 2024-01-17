@@ -1,12 +1,11 @@
 ﻿namespace TRINV.Application.Commands.Notifications;
 
 using Domain.Entities;
-using Domain.Enums;
 using MediatR;
 using System.ComponentModel.DataAnnotations;
 using Shared.Business.Utilities;
 using Shared.Business.Exceptions;
-using Domain.Validations;
+using Enums;
 using Interfaces;
 using Shared.Business.Extension;
 using static Domain.Validations.EntityValidationConstants.Notifications;
@@ -14,7 +13,7 @@ using static Domain.Validations.EntityValidationConstants.Notifications;
 public record CreateNotificationCommand : IRequest<OperationResult<Notification>>
 {
     [Required]
-    public NotificationType NotificationType { get; set; }
+    public int NotificationType { get; set; }
 
     [Required]
     [MaxLength(MessageMaxLength)]
@@ -37,7 +36,7 @@ internal class CreateNotificationCommandHandler : IRequestHandler<CreateNotifica
     {
         var operationResult = new OperationResult<Notification>();
 
-        if (Ensure.IsEnumOutOfRange(request.NotificationType))
+        if (!NotificationType.ExistById(request.NotificationType))
             return operationResult.ReturnWithErrorMessage(
                 new NotFoundException($"{nameof(Notification)} of type: {request.NotificationType} was not found."));
 

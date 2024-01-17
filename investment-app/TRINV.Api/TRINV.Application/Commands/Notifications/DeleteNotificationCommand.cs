@@ -7,9 +7,9 @@ using Shared.Business.Exceptions;
 using Shared.Business.Extension;
 using Shared.Business.Utilities;
 
-public record DeleteNotificationCommand(int NotificationId) : IRequest<OperationResult<Notification>>;
+public record DeleteNotificationCommand(int NotificationId) : IRequest<OperationResult>;
 
-internal class DeleteNotificationCommandHandler : IRequestHandler<DeleteNotificationCommand, OperationResult<Notification>>
+internal class DeleteNotificationCommandHandler : IRequestHandler<DeleteNotificationCommand, OperationResult>
 { 
     readonly IUnitOfWork _unitOfWork;
     readonly IRepository<Notification> _notificationRepository;
@@ -22,7 +22,7 @@ internal class DeleteNotificationCommandHandler : IRequestHandler<DeleteNotifica
         _notificationRepository = notificationRepository;
     }
 
-    public async Task<OperationResult<Notification>> Handle(DeleteNotificationCommand request, CancellationToken cancellationToken)
+    public async Task<OperationResult> Handle(DeleteNotificationCommand request, CancellationToken cancellationToken)
     {
         var operationResult = new OperationResult<Notification>();
 
@@ -33,9 +33,8 @@ internal class DeleteNotificationCommandHandler : IRequestHandler<DeleteNotifica
             return operationResult.ReturnWithErrorMessage(
                 new NotFoundException($"{nameof(Notification)} was not found."));
 
+        _notificationRepository.Delete(notification);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
-
-        operationResult.RelatedObject = notification;
 
         return operationResult;
     }
