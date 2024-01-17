@@ -10,7 +10,6 @@ using Shared.Business.Utilities;
 
 public record CreateUserNotificationCommand(int NotificationType, string? Message = null) : IRequest<OperationResult<UserNotification>>;
 
-//TODO: Add Message
 internal class CreateUserNotificationCommandHandler : IRequestHandler<CreateUserNotificationCommand, OperationResult<UserNotification>>
 {
     readonly IUnitOfWork _unitOfWork;
@@ -28,9 +27,6 @@ internal class CreateUserNotificationCommandHandler : IRequestHandler<CreateUser
 
     public async Task<OperationResult<UserNotification>> Handle(CreateUserNotificationCommand request, CancellationToken cancellationToken)
     {
-        //If null check type, get notifications from repository
-        //check if message is null, if not create UserNotification with the current message.
-        //Enum Helper
         var operationResult = new OperationResult<UserNotification>();
 
         if(!NotificationType.ExistById(request.NotificationType))

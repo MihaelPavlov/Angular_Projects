@@ -13,20 +13,29 @@ internal class DeleteUserNotificationCommandHandler : IRequestHandler<DeleteUser
 {
     readonly IUnitOfWork _unitOfWork;
     readonly IUserContext _userContext;
+    readonly IRepository<UserNotification> _notificationRepository;
 
     public DeleteUserNotificationCommandHandler(
         IUnitOfWork unitOfWork,
-        IUserContext userContext)
+        IUserContext userContext, 
+        IRepository<UserNotification> notificationRepository)
     {
         _unitOfWork = unitOfWork;
         _userContext = userContext;
+        _notificationRepository = notificationRepository;
     }
 
     public async Task<OperationResult> Handle(DeleteUserNotificationCommand request, CancellationToken cancellationToken)
     {
         var operationResult = new OperationResult();
 
-        //TODO: Implement
+        var notification = await _notificationRepository.GetByIdAsync(request.NotificationId, cancellationToken);
+
+        if (notification == null || notification.UserId != _userContext.UserId || notification.IsDeleted) 
+            return operationResult.ReturnWithErrorMessage(
+                new NotFoundException("Notification not found!"));
+
+        notification.IsDeleted = true;
 
         return operationResult;
     }
