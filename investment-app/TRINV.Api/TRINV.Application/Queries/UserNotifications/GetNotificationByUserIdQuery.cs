@@ -11,10 +11,10 @@ public record GetUserNotificationIdQuery(int NotificationId) : IRequest<Operatio
 
 internal class GetUserNotificationIdQueryHandler : IRequestHandler<GetUserNotificationIdQuery, OperationResult<UserNotification>>
 {
-    readonly IUserNotificationRepository _userNotificationRepository;
+    readonly IRepository<UserNotification> _userNotificationRepository;
     readonly IUserContext _userContext;
 
-    public GetUserNotificationIdQueryHandler(IUserNotificationRepository userNotificationRepository, IUserContext userContext)
+    public GetUserNotificationIdQueryHandler(IRepository<UserNotification> userNotificationRepository, IUserContext userContext)
     {
         _userNotificationRepository = userNotificationRepository;
         _userContext = userContext;
@@ -25,8 +25,7 @@ internal class GetUserNotificationIdQueryHandler : IRequestHandler<GetUserNotifi
         var operationResult = new OperationResult<UserNotification>();
 
         var userNotification = await _userNotificationRepository
-                .GetUserNotificationByIdAsync(request.NotificationId, _userContext.UserId,
-                    cancellationToken);
+            .GetByIdAsync(request.NotificationId, cancellationToken);
 
         if (userNotification == null)
             return operationResult.ReturnWithErrorMessage(new NotFoundException(

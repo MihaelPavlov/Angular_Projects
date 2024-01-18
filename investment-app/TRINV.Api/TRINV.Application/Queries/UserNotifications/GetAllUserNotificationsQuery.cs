@@ -11,10 +11,10 @@ public record GetAllUserNotificationsQuery : IRequest<OperationResult<IEnumerabl
 
 internal class GetAllUserNotificationsQueryHandler : IRequestHandler<GetAllUserNotificationsQuery, OperationResult<IEnumerable<UserNotification>>>
 {
-    readonly IUserNotificationRepository _userNotificationRepository;
+    readonly IRepository<UserNotification> _userNotificationRepository;
     readonly IUserContext _userRepository;
 
-    public GetAllUserNotificationsQueryHandler(IUserNotificationRepository userNotificationRepository, IUserContext userRepository)
+    public GetAllUserNotificationsQueryHandler(IRepository<UserNotification> userNotificationRepository, IUserContext userRepository)
     {
         _userNotificationRepository = userNotificationRepository;
         _userRepository = userRepository;
@@ -25,14 +25,17 @@ internal class GetAllUserNotificationsQueryHandler : IRequestHandler<GetAllUserN
         var operationResult = new OperationResult<IEnumerable<UserNotification>>();
 
         var userNotifications =
-            await _userNotificationRepository.GetAllNotificationsForUserAsync(_userRepository.UserId,
-                cancellationToken);
+            await _userNotificationRepository.GetAllAsync(cancellationToken);
 
-        if(userNotifications == null)
+        if(!userNotifications.Any())
             return operationResult.ReturnWithErrorMessage(new NotFoundException(
                 "No notifications were found!"));
 
-        operationResult.RelatedObject = userNotifications;
+        var allNotificationForCurrentUser = userNotifications
+            .Where(x => x.UserId == _userRepository.UserId)
+            .ToList();
+
+        operationResult.RelatedObject = allNotificationForCurrentUser;
 
         return operationResult;
     }
