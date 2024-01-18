@@ -18,25 +18,13 @@ public class NewsController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpPost("createNews")]
+    [HttpPost()]
     public async Task<IActionResult> CreateNews([FromBody] CreateNewsCommand command)
     {
         return Ok(await _mediator.Send(command));
     }
 
-    [HttpDelete("deleteNews")]
-    public async Task<IActionResult> DeleteNews([FromBody] DeleteNewsCommand command)
-    {
-        return Ok(await _mediator.Send(command));
-    }
-
-    [HttpPut("updateNews")]
-    public async Task<OperationResult<News>> UpdateNews([FromBody] UpdateNewsCommand command)
-    {
-        return await _mediator.Send(command);
-    }
-
-    [HttpGet("getAllNews")]
+    [HttpGet()]
     public async Task<IActionResult> GetNews()
     {
         return Ok(await _mediator.Send(new GetAllNewsQuery()));
@@ -46,5 +34,17 @@ public class NewsController : ControllerBase
     public async Task<OperationResult<News>> GetNewsById(int id)
     {
         return await _mediator.Send(new GetNewsByIdQuery(id));
+    }
+
+    [HttpPut("{id}")]
+    public async Task<OperationResult<News>> UpdateNews([FromBody] UpdateNewsCommand command)
+    {
+        return await _mediator.Send(command);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteNews([FromBody] DeleteNewsCommand command)
+    {
+        return Ok(await _mediator.Send(command));
     }
 }
