@@ -47,6 +47,8 @@ import {UnauthorizedRedirectModalComponent} from "./components/unauthorized-redi
 import {HistoryLogComponent} from "./components/shared/history-log/history-log.component";
 import {ErrorsComponent} from "./components/shared/errors/errors.component";
 import {AppLabelComponent} from "./components/shared/app-label/app-label.component";
+import { PaginationComponent } from './components/news/news-list/test-pagination/pagination.component';
+import { NewsPanelComponent } from './components/profile/admin-news-panel/news-panel.component';
 
 @NgModule({
   declarations: [
@@ -76,7 +78,9 @@ import {AppLabelComponent} from "./components/shared/app-label/app-label.compone
     UnauthorizedRedirectModalComponent,
     HistoryLogComponent,
     ErrorsComponent,
-    AppLabelComponent
+    AppLabelComponent,
+    PaginationComponent,
+    NewsPanelComponent
   ],
   imports: [
     SharedModule,

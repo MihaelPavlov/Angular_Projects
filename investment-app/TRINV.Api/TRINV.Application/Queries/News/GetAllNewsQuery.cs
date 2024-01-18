@@ -1,15 +1,14 @@
 ﻿namespace TRINV.Application.Queries.News;
 
-using Domain.Entities;
-using Interfaces;
 using MediatR;
-using Shared.Business.Extension;
-using TRINV.Shared.Business.Exceptions;
+using TRINV.Application.Interfaces;
 using TRINV.Shared.Business.Utilities;
+using TRINV.Domain.Entities;
+using Mapster;
 
-public record GetAllNewsQuery : IRequest<OperationResult<IEnumerable<News>>>;
+public record GetAllNewsQuery : IRequest<OperationResult<IEnumerable<GetAllNewsQueryModel>>>;
 
-internal class GetAllNewsQueryHandler : IRequestHandler<GetAllNewsQuery, OperationResult<IEnumerable<News>>>
+internal class GetAllNewsQueryHandler : IRequestHandler<GetAllNewsQuery, OperationResult<IEnumerable<GetAllNewsQueryModel>>>
 {
     readonly IRepository<News> _repository;
 
@@ -18,17 +17,25 @@ internal class GetAllNewsQueryHandler : IRequestHandler<GetAllNewsQuery, Operati
         _repository = repository;
     }
 
-    public async Task<OperationResult<IEnumerable<News>>> Handle(GetAllNewsQuery request, CancellationToken cancellationToken)
+    public async Task<OperationResult<IEnumerable<GetAllNewsQueryModel>>> Handle(GetAllNewsQuery request, CancellationToken cancellationToken)
     {
-        var operationResult = new OperationResult<IEnumerable<News>>();
+        var operationResult = new OperationResult<IEnumerable<GetAllNewsQueryModel>>();
+
         var result = await _repository.GetAllAsync(cancellationToken);
 
-        if (result is null)
-            return operationResult.ReturnWithErrorMessage(
-                new NotFoundException($"No News was found in database!"));
-
-        operationResult.RelatedObject = result;
+        operationResult.RelatedObject = result.Adapt<IEnumerable<GetAllNewsQueryModel>>();
 
         return operationResult;
     }
 }
+
+public record GetAllNewsQueryModel(
+    int Id,
+    string Name,
+    string Description,
+    string ShortDescription,
+    int TimeToRead,
+    int Views,
+    int UpVote,
+    int DownVote,
+    string ImageUrl);
