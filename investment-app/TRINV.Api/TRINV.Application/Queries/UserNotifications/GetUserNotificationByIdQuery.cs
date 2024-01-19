@@ -27,7 +27,7 @@ internal class GetUserNotificationIdQueryHandler : IRequestHandler<GetUserNotifi
         var userNotification = await _userNotificationRepository
             .GetByIdAsync(request.NotificationId, cancellationToken);
 
-        if (userNotification == null)
+        if (userNotification == null || userNotification.UserId != _userContext.UserId || userNotification.IsDeleted)
             return operationResult.ReturnWithErrorMessage(new NotFoundException(
                 $"User notification with provided Id was not found!"));
 
