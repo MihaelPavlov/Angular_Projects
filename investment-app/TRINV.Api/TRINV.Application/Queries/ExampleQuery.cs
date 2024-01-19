@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using TRINV.Shared.Business.Exceptions;
 using TRINV.Shared.Business.Extension;
 using TRINV.Shared.Business.Logger;
 using TRINV.Shared.Business.Utilities;

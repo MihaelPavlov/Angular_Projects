@@ -31,4 +31,5 @@ public class ApplicationDbContext : DbContext
 
         base.OnModelCreating(builder);
     }
+    //TODO: Add migrations
 }

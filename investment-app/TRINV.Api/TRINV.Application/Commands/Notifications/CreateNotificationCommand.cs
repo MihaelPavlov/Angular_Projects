@@ -8,7 +8,6 @@ using Shared.Business.Exceptions;
 using Enums;
 using Interfaces;
 using Shared.Business.Extension;
-using static Domain.Validations.EntityValidationConstants.Notifications;
 
 public record CreateNotificationCommand : IRequest<OperationResult<Notification>>
 {
@@ -16,7 +15,7 @@ public record CreateNotificationCommand : IRequest<OperationResult<Notification>
     public int NotificationType { get; set; }
 
     [Required]
-    [MaxLength(MessageMaxLength)]
+    [MaxLength(200)]
     public string Message { get; set; } = string.Empty;
 }
 
@@ -46,7 +45,7 @@ internal class CreateNotificationCommandHandler : IRequestHandler<CreateNotifica
             Message = request.Message,
         };
 
-        await _repository.Insert(notification, cancellationToken);
+        await _repository.AddAsync(notification, cancellationToken);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         operationResult.RelatedObject = notification;

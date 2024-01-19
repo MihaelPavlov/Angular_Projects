@@ -6,6 +6,7 @@ using Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Business.Utilities;
+using TRINV.Application.Queries.News;
 
 [Route("[controller]")]
 [ApiController]
@@ -18,34 +19,30 @@ public class UserNotificationController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpPost]
-    public async Task<OperationResult<UserNotification>> CreateUserNotification([FromBody] CreateUserNotificationCommand command)
-    {
-        return await _mediator.Send(command);
-    }
-
     [HttpGet]
-    public async Task<OperationResult<IEnumerable<UserNotification>>> GetAllUserNotifications()
-    {
-        return await _mediator.Send(new GetAllUserNotificationsQuery());
-    }
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OperationResult<IEnumerable<UserNotification>>))]
+    public async Task<IActionResult> GetUserNotificationsList(CancellationToken cancellationToken) =>
+        this.Ok(await _mediator.Send(new GetAllUserNotificationsQuery(), cancellationToken));
 
     [HttpGet("{id}")]
-    public async Task<OperationResult<UserNotification>> GetUserNotificationById(int notificationId)
-    {
-        return await _mediator.Send(new GetUserNotificationIdQuery(notificationId));
-    }
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OperationResult<UserNotification>))]
+    public async Task<IActionResult> GetUserNotificationById(int id, CancellationToken cancellationToken) =>
+         this.Ok(await _mediator.Send(new GetUserNotificationIdQuery(id), cancellationToken));
 
-    [HttpPut("{id}")]
-    public async Task<OperationResult> UpdateUserNotification([FromBody] UpdateUserNotificationCommand command)
-    {
-        return await _mediator.Send(command);
-    }
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OperationResult))]
+    public async Task<IActionResult> CreateUserNotification([FromBody] CreateUserNotificationCommand command, CancellationToken cancellationToken) => 
+        this.Ok(await _mediator.Send(command, cancellationToken));
 
-    [HttpDelete("{id}")]
-    public async Task<OperationResult> DeleteUserNotification([FromBody] DeleteUserNotificationCommand command)
-    {
-        return await _mediator.Send(command);
-    }
+    [HttpDelete]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OperationResult))]
+    public async Task<IActionResult> DeleteUserNotification([FromBody] DeleteUserNotificationCommand command, CancellationToken cancellationToken) =>
+        this.Ok(await _mediator.Send(command, cancellationToken));
+
+    [HttpPut]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OperationResult))]
+    public async Task<IActionResult> UpdateUserNotification([FromBody] UpdateUserNotificationCommand command, CancellationToken cancellationToken) =>
+        this.Ok(await _mediator.Send(command, cancellationToken));
+    
+    
 }
-

@@ -1,8 +1,6 @@
 ﻿namespace TRINV.Domain.Entities;
 
 using System.ComponentModel.DataAnnotations;
-using Enums;
-using static Validations.EntityValidationConstants.Notifications;
 
 public class Notification : BaseEntity
 {
@@ -10,6 +8,6 @@ public class Notification : BaseEntity
     public int NotificationType { get; set; }
 
     [Required]
-    [MaxLength(MessageMaxLength)]
+    [MaxLength(200)]
     public string Message { get; set; } = string.Empty;
 }

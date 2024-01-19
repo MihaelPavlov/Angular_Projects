@@ -7,7 +7,6 @@ using MediatR;
 using Shared.Business.Exceptions;
 using Shared.Business.Extension;
 using Shared.Business.Utilities;
-using TRINV.Shared.Business.Extension;
 
 public record GetNewsByIdQuery(int Id) : IRequest<OperationResult<GetNewsByIdQueryModel>>;
 

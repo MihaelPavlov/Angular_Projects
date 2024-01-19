@@ -9,7 +9,6 @@ using Shared.Business.Utilities;
 using System.ComponentModel.DataAnnotations;
 using Enums;
 using Shared.Business.Extension;
-using static Domain.Validations.EntityValidationConstants.Notifications;
 
 public record UpdateNotificationCommand : IRequest<OperationResult<Notification>>
 {
@@ -20,7 +19,7 @@ public record UpdateNotificationCommand : IRequest<OperationResult<Notification>
     public int NotificationType { get; set; }
 
     [Required]
-    [MaxLength(MessageMaxLength)]
+    [MaxLength(200)]
     public string Message { get; set; } = string.Empty;
 }
 
