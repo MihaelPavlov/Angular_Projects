@@ -3,13 +3,14 @@
 using Domain.Entities;
 using MediatR;
 using System.ComponentModel.DataAnnotations;
+using Domain.Validations;
 using Shared.Business.Utilities;
 using Shared.Business.Exceptions;
 using Enums;
 using Interfaces;
 using Shared.Business.Extension;
 
-public record CreateNotificationCommand : IRequest<OperationResult<Notification>>
+public record CreateNotificationCommand : IRequest<OperationResult>
 {
     [Required]
     public int NotificationType { get; set; }
@@ -19,7 +20,7 @@ public record CreateNotificationCommand : IRequest<OperationResult<Notification>
     public string Message { get; set; } = string.Empty;
 }
 
-internal class CreateNotificationCommandHandler : IRequestHandler<CreateNotificationCommand, OperationResult<Notification>>
+internal class CreateNotificationCommandHandler : IRequestHandler<CreateNotificationCommand, OperationResult>
 {
     readonly IRepository<Notification> _repository;
     readonly IUnitOfWork _unitOfWork;
@@ -30,10 +31,10 @@ internal class CreateNotificationCommandHandler : IRequestHandler<CreateNotifica
         _repository = repository;
     }
 
-    public async Task<OperationResult<Notification>> Handle(CreateNotificationCommand request,
+    public async Task<OperationResult> Handle(CreateNotificationCommand request,
         CancellationToken cancellationToken)
     {
-        var operationResult = new OperationResult<Notification>();
+        var operationResult = new OperationResult();
 
         if (!NotificationType.ExistById(request.NotificationType))
             return operationResult.ReturnWithErrorMessage(
@@ -47,8 +48,6 @@ internal class CreateNotificationCommandHandler : IRequestHandler<CreateNotifica
 
         await _repository.AddAsync(notification, cancellationToken);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
-
-        operationResult.RelatedObject = notification;
 
         return operationResult;
     }

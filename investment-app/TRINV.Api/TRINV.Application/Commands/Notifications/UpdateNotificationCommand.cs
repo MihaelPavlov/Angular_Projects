@@ -1,7 +1,6 @@
 ﻿namespace TRINV.Application.Commands.Notifications;
 
 using Domain.Entities;
-using Domain.Enums;
 using Interfaces;
 using MediatR;
 using Shared.Business.Exceptions;
@@ -40,7 +39,7 @@ internal class UpdateNotificationCommandHandler : IRequestHandler<UpdateNotifica
 
         if (!NotificationType.ExistById(request.NotificationType))
             return operationResult.ReturnWithErrorMessage(
-                new NotFoundException($"{nameof(Notification)} of type: {request.NotificationType} was not found."));
+                new NotFoundException("Notification type was not found."));
 
         var notification = await _repository.GetByIdAsync(request.Id, cancellationToken);
 
