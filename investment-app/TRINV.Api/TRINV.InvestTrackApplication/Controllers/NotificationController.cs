@@ -17,34 +17,30 @@ public class NotificationController : ControllerBase
     {
         _mediator = mediator;
     }
-    //TODO: implement Check the controller route Naming Convention
-    [HttpPost]
-    public async Task<OperationResult<Notification>> CreateNotification([FromBody] CreateNotificationCommand command)
-    {
-        return await _mediator.Send(command);
-    }
 
     [HttpGet]
-    public async Task<OperationResult<List<Notification>>> GetAllNotifications()
-    {
-        return await _mediator.Send(new GetAllNotificationsQuery());
-    }
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OperationResult<IEnumerable<Notification>>))]
+    public async Task<IActionResult> GetAllNotifications(CancellationToken cancellationToken) =>
+        this.Ok(await _mediator.Send(new GetAllNotificationsQuery(), cancellationToken));
 
     [HttpGet("{id}")]
-    public async Task<OperationResult<Notification>> GetNotificationById(int id)
-    {
-        return await _mediator.Send(new GetNotificationByIdQuery(id));
-    }
-
-    [HttpPut("{id}")]
-    public async Task<OperationResult<Notification>> UpdateNotification([FromBody] UpdateNotificationCommand command)
-    {
-        return await _mediator.Send(command);
-    }
-
-    [HttpDelete("{id}")]
-    public async Task<OperationResult> DeleteNotification([FromBody] DeleteNotificationCommand command)
-    {
-        return await _mediator.Send(command);
-    }
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OperationResult<Notification>))]
+    public async Task<IActionResult> GetNotificationById(int id, CancellationToken cancellationToken) =>
+        this.Ok(await _mediator.Send(new GetNotificationByIdQuery(id), cancellationToken));
+    
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OperationResult<Notification>))]
+    public async Task<IActionResult> CreateNotification([FromBody] CreateNotificationCommand command, CancellationToken cancellationToken) =>
+        this.Ok(await _mediator.Send(command, cancellationToken));
+    
+    [HttpDelete]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OperationResult))]
+    public async Task<IActionResult> DeleteNotification([FromBody] DeleteNotificationCommand command, CancellationToken cancellationToken) =>
+        this.Ok(await _mediator.Send(command, cancellationToken));
+    
+    [HttpPut]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OperationResult))]
+    public async Task<IActionResult> UpdateNotification([FromBody] UpdateNotificationCommand command, CancellationToken cancellationToken) =>
+        this.Ok(await _mediator.Send(command, cancellationToken));
+    
 }

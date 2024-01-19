@@ -23,7 +23,7 @@ public record UpdateNotificationCommand : IRequest<OperationResult<Notification>
     public string Message { get; set; } = string.Empty;
 }
 
-internal class UpdateNotificationCommandHandler : IRequestHandler<UpdateNotificationCommand, OperationResult<Notification>>
+internal class UpdateNotificationCommandHandler : IRequestHandler<UpdateNotificationCommand, OperationResult>
 {
     readonly IRepository<Notification> _repository;
     readonly IUnitOfWork _unitOfWork;
@@ -34,9 +34,9 @@ internal class UpdateNotificationCommandHandler : IRequestHandler<UpdateNotifica
         _repository = repository;
     }
 
-    public async Task<OperationResult<Notification>> Handle(UpdateNotificationCommand request, CancellationToken cancellationToken)
+    public async Task<OperationResult> Handle(UpdateNotificationCommand request, CancellationToken cancellationToken)
     {
-        var operationResult = new OperationResult<Notification>();
+        var operationResult = new OperationResult();
 
         if (!NotificationType.ExistById(request.NotificationType))
             return operationResult.ReturnWithErrorMessage(
@@ -53,8 +53,6 @@ internal class UpdateNotificationCommandHandler : IRequestHandler<UpdateNotifica
 
         _repository.Update(notification);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
-
-        operationResult.RelatedObject = notification;
 
         return operationResult;
     }
