@@ -12,48 +12,75 @@ import {select, Store} from "@ngrx/store";
 import {IInvestment} from "../../../models/investment";
 import {AddInvestment, GetInvestmentById, UpdateInvestment} from "../portfolio.action";
 import {selectInvestment} from "../portfolio.selectors";
-import {ICryptoAsset} from "../../../models/cryptoAsset";
 import {GetAllCoins} from "../../crypto_assets/crypto-assets.actions";
 import {selectCoinList} from "../../crypto_assets/crypto-assets.selectors";
+import { IDigitalCurrency } from "src/app/models/digital-currency";
 
 @Component({
-  selector: "add-update-investment",
+  selector: 'add-update-investment',
   templateUrl: 'add-update-investment.component.html',
-  styleUrls: ["add-update-investment.component.css"]
+  styleUrls: ['add-update-investment.component.css'],
 })
 export class AddUpdateInvestmentComponent implements OnInit {
-  @Input("id") id: number | undefined;
-  public user!: IUser | null
+  @Input('id') id: number | undefined;
+  public user!: IUser | null;
   public currencies!: number[];
-  public coins!: Observable<ICryptoAsset[]>
+  public coins!: Observable<IDigitalCurrency[]>;
   public investmentTypes!: number[];
   public addUpdateForm = new FormGroup({
-    investmentName: new FormControl(),
-    symbol: new FormControl(),
+    assetId: new FormControl(),
+    name: new FormControl(),
     quantity: new FormControl(),
     purchasePrice: new FormControl(),
-    currency: new FormControl(),
     investmentType: new FormControl(),
-  })
+  });
 
-  constructor(private investmentService: InvestmentService, private route: ActivatedRoute,
-              private router: Router, private authService: AuthService, private toastService: ToastService,
-              private store: Store<{ portfolio: { investments: IInvestment[]} , coins:{ coins: ICryptoAsset[]},auth: {auth:IUser}}>) {
-  }
+  constructor(
+    private investmentService: InvestmentService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private toastService: ToastService,
+    private store: Store<{
+      portfolio: { investments: IInvestment[] };
+      coins: { coins: IDigitalCurrency[] };
+      auth: { auth: IUser };
+    }>
+  ) {}
 
   ngOnInit() {
+    this.addUpdateForm
+      .get('assetId')
+      ?.valueChanges.subscribe((selectedAssetId) => {
+        this.coins.subscribe((coinList) => {
+          // Find the corresponding coin based on the selected assetId
+          const selectedCoin = coinList.find(
+            (coin) => coin.id === selectedAssetId
+          );
+
+          // Update the 'name' form control with the selected coin's name
+          if (selectedCoin) {
+            this.addUpdateForm.get('name')?.setValue(selectedCoin.name);
+          }
+        });
+      });
+   
+
     this.coins = this.store.pipe(select(selectCoinList));
     this.store.dispatch(new GetAllCoins());
 
-    this.currencies = Object.values(Currency).filter(value => typeof value === 'number') as number[];
-    this.investmentTypes = Object.values(InvestmentType).filter(value => typeof value === 'number') as number[];
+    this.currencies = Object.values(Currency).filter(
+      (value) => typeof value === 'number'
+    ) as number[];
+    this.investmentTypes = Object.values(InvestmentType).filter(
+      (value) => typeof value === 'number'
+    ) as number[];
 
-    this.route.paramMap.subscribe(params => {
+    this.route.paramMap.subscribe((params) => {
       let id = params.get('id');
       if (id != null) {
         this.id = Number(id);
 
-        this.store.dispatch(new GetInvestmentById({id: this.id}))
+        this.store.dispatch(new GetInvestmentById({ id: this.id }));
       }
     });
 
@@ -70,44 +97,42 @@ export class AddUpdateInvestmentComponent implements OnInit {
 
   updateModel(): void {
     if (this.id != undefined) {
-      this.store.pipe(select(selectInvestment)).subscribe(result => {
+      this.store.pipe(select(selectInvestment)).subscribe((result) => {
         if (result) {
-          console.log(result)
-          this.addUpdateForm.patchValue(result)
+          console.log(result);
+          this.addUpdateForm.patchValue(result);
         }
-      })
+      });
     }
   }
 
   onSubmit() {
     if (this.id != undefined) {
-      this.store.dispatch(new UpdateInvestment({
-        investment: {
-          id: this.id,
-          userId: Number(this.user?.id),
-          investmentName: this.addUpdateForm.controls.investmentName.value,
-          symbol: this.addUpdateForm.controls.symbol.value,
-          quantity: this.addUpdateForm.controls.quantity.value,
-          purchasePrice: this.addUpdateForm.controls.purchasePrice.value,
-          currency: this.addUpdateForm.controls.currency.value,
-          investmentType: this.addUpdateForm.controls.investmentType.value
-        }
-      }));
-    } else {
-      this.store.dispatch(new AddInvestment({
-        investment: {
-          userId: Number(this.user?.id),
-          investmentName: this.addUpdateForm.controls.investmentName.value,
-          symbol: this.addUpdateForm.controls.symbol.value,
-          quantity: this.addUpdateForm.controls.quantity.value,
-          purchasePrice: this.addUpdateForm.controls.purchasePrice.value,
-          currency: this.addUpdateForm.controls.currency.value,
-          investmentType: this.addUpdateForm.controls.investmentType.value
-        }
-      }));
+      this.store.dispatch(
+        new UpdateInvestment({
+          investment: {
+            id: this.id,
+            quantity: this.addUpdateForm.controls.quantity.value,
+            purchasePrice: this.addUpdateForm.controls.purchasePrice.value,
+          },
+        })
+      );
+    } else {      
+      this.store.dispatch(
+        new AddInvestment({
+          investment: {
+            assetId: this.addUpdateForm.controls.assetId.value,
+            name: this.addUpdateForm.controls.name.value,
+            quantity: this.addUpdateForm.controls.quantity.value,
+            purchasePrice: this.addUpdateForm.controls.purchasePrice.value,
+            investmentType: this.addUpdateForm.controls.investmentType.value,
+            isFromOutsideProvider: true,
+          },
+        })
+      );
     }
 
-    this.router.navigate(['/my-investments'])
+    this.router.navigate(['/my-investments']);
   }
 
   getCurrencyLabel(currency: number): string {

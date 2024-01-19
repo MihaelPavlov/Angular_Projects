@@ -37,14 +37,14 @@
     <ng-container *ngIf="!(this.isLoading$ | async)">
       <table mat-table matSort [dataSource]="this.dataSource">
         <!-- Position Column -->
-        <ng-container matColumnDef="investmentName">
-          <th mat-header-cell mat-sort-header *matHeaderCellDef>Investment Name</th>
-          <td mat-cell *matCellDef="let investment"> {{investment.investmentName}} </td>
+        <ng-container matColumnDef="assetId">
+          <th mat-header-cell mat-sort-header *matHeaderCellDef>Asset Id</th>
+          <td mat-cell *matCellDef="let investment"> {{investment.assetId}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="symbol">
-          <th mat-header-cell mat-sort-header *matHeaderCellDef>Symbol</th>
-          <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+        <ng-container matColumnDef="name">
+          <th mat-header-cell mat-sort-header *matHeaderCellDef>Name</th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
         </ng-container>
 
         <ng-container matColumnDef="quantity">
@@ -55,7 +55,7 @@
         <ng-container matColumnDef="purchasePrice">
           <th mat-header-cell mat-sort-header *matHeaderCellDef>Purchase Price</th>
           <td mat-cell
-              *matCellDef="let element"> {{element.purchasePrice}} {{element.currency | currencyToSymbol}} </td>
+              *matCellDef="let element"> {{element.purchasePrice}}</td>
         </ng-container>
 
         <ng-container matColumnDef="investmentType">

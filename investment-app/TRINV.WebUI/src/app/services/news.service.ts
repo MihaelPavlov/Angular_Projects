@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { RestApiService } from '../../shared/services/rest-api.service';
 import { Observable } from 'rxjs';
-import { OperationResult } from '../models/operation-result.model';
+import { ExtendedOperationResult } from '../models/operation-result.model';
 import { INews } from '../models/news';
 
 @Injectable({
@@ -10,8 +10,8 @@ import { INews } from '../models/news';
 export class NewsService {
   constructor(private restApiService: RestApiService) {}
 
-  getNewsList(): Observable<OperationResult<INews[]>> {
-    return this.restApiService.get<OperationResult<INews[]>>('/news');
+  getNewsList(): Observable<ExtendedOperationResult<INews[]>> {
+    return this.restApiService.get<ExtendedOperationResult<INews[]>>('/news');
   }
 
   getNewsById(id: number): Observable<INews | null> {

@@ -115,20 +115,17 @@
         </svg>
       </a>
     </div>
-    <img
-      src="{{ card.imageUrl }}"
-      alt="new image"
-      class="mb-6 shadow-md rounded-lg bg-slate-50 w-full sm:w-[17rem] sm:mb-0 xl:mb-6 xl:w-full"
-      width="1216"
-      height="640"
-    />
+      <img
+        src="{{ card.imageUrl }}"
+        alt="new image"
+       class="mb-6 shadow-md rounded-lg bg-slate-50 relative h-40 w-96 object-cover object-top"     />
   </li>
 </ul>
 <app-pagination
   class="grid justify-items-end mr-12"
   #pagination
   [collectionSize]="(newsList$| async)?.length || 0"
-  [pageSize]="2"
+  [pageSize]="4"
   [firstLastButtons]="true"
   [maxSize]="2"
 >

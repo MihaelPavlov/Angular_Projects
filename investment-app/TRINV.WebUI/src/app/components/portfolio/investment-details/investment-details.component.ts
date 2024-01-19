@@ -1,6 +1,5 @@
 import {AfterViewInit, Component, OnInit} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
-import {InvestmentService} from "../../../services/investment.service";
 import {IInvestment} from "../../../models/investment";
 import {Location} from "@angular/common";
 import {select, Store} from "@ngrx/store";
@@ -16,7 +15,6 @@ export class InvestmentDetailsComponent implements OnInit, AfterViewInit {
   investment!: IInvestment | null;
 
   constructor(private readonly route: ActivatedRoute,
-              private readonly investmentService: InvestmentService,
               private readonly location: Location,
               private readonly router: Router,
               private readonly store: Store<InvestmentInitialState>) {
@@ -27,8 +25,6 @@ export class InvestmentDetailsComponent implements OnInit, AfterViewInit {
       let id = params.get('id');
       if (typeof id === "string") {
         this.store.dispatch(new GetInvestmentById({id: parseInt(id)}))
-
-        // this.investmentService.getInvestmentById(parseInt(id))
       }
     });
   }
