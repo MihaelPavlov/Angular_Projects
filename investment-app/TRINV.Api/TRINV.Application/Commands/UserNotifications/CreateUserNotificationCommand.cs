@@ -1,6 +1,7 @@
 ﻿namespace TRINV.Application.Commands.UserNotifications;
 
 using Domain.Entities;
+using Domain.Validations;
 using Enums;
 using Interfaces;
 using MediatR;
@@ -35,7 +36,8 @@ internal class CreateUserNotificationCommandHandler : IRequestHandler<CreateUser
         
         var message = request.Message;
 
-        if (request.Message == null)
+        if (Ensure.IsArgumentNullOrEmpty(request.Message) 
+            || Ensure.IsArgumentNullOrWhiteSpace(request.Message))
         {
             message = NotificationType.GetMessageById(request.NotificationType);
         }
