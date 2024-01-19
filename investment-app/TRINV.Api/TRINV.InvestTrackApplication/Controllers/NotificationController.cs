@@ -20,7 +20,7 @@ public class NotificationController : ControllerBase
 
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OperationResult<IEnumerable<Notification>>))]
-    public async Task<IActionResult> GetAllNotifications(CancellationToken cancellationToken) =>
+    public async Task<IActionResult> GetNotificationsList(CancellationToken cancellationToken) =>
         this.Ok(await _mediator.Send(new GetAllNotificationsQuery(), cancellationToken));
 
     [HttpGet("{id}")]
