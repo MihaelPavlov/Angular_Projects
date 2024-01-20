@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TRINV.Application.Queries.Stock;
+using TRINV.Shared.Business.Utilities;
 
 namespace TRINV.InvestTrackApplication.Controllers;
 
@@ -18,7 +19,7 @@ public class StockController : ControllerBase
     }
 
     [HttpPost]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(object))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OperationResult<List<GetStockListQueryModel>>))]
     public async Task<IActionResult> GetStockList([FromBody] GetStockListQuery query, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(query, cancellationToken);

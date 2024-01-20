@@ -1,10 +1,39 @@
 <div class="wrapper">
   <div class="container">
     <h1>
+      {{ this.investmentType == 1 ? "crypto" : "stock" }}
       {{ this.id === undefined ? "Add New Investment" : "Update Investment" }}
     </h1>
     <form [formGroup]="addUpdateForm" (ngSubmit)="onSubmit()">
-      <mat-form-field class="investment-select">
+      <mat-form-field
+        *ngIf="this.investmentType === 0"
+        class="investment-select"
+      >
+        <mat-label>Investment Name</mat-label>
+        <mat-select formControlName="assetId">
+          <mat-option
+            *ngFor="let stock of this.stocks | async"
+            [value]="stock.symbol"
+          >
+            <!-- <img
+              alt="img"
+              src="https://assets.coincap.io/assets/icons/{{
+                stock.symbol.toLowerCase()
+              }}@2x.png"
+            /> -->
+            <div class="ellipsis">
+              <p style="font-size: 0.8em; opacity: 0.7">
+                {{ stock.name }} ({{ stock.symbol }})
+              </p>
+            </div>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field
+        *ngIf="this.investmentType === 1"
+        class="investment-select"
+      >
         <mat-label>Investment Name</mat-label>
         <mat-select formControlName="assetId">
           <mat-option *ngFor="let coin of this.coins | async" [value]="coin.id">
@@ -35,22 +64,23 @@
         required
       />
 
-      <label class="labelStyle">In What is Your Investment</label>
-      <mat-form-field class="investment-select">
-        <mat-label>Investment Type</mat-label>
-        <mat-select formControlName="investmentType">
-          <mat-option
-            *ngFor="let investmentType of this.investmentTypes"
-            [value]="investmentType"
-          >
-            {{ this.getInvestmentTypeLabel(investmentType) }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-
       <button type="submit">
         {{ this.id === undefined ? "Add Investment" : "Update Investment" }}
       </button>
     </form>
   </div>
 </div>
+
+
+<!-- 
+<ng-container>
+  <common-investment-selector [type]="this.investmentType">
+
+  </common-investment-selector>
+</ng-container>
+
+implement the CommonInvestmentSelectorComponent
+
+
+
+ -->

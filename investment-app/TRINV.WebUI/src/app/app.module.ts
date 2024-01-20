@@ -49,6 +49,7 @@ import {ErrorsComponent} from "./components/shared/errors/errors.component";
 import {AppLabelComponent} from "./components/shared/app-label/app-label.component";
 import { PaginationComponent } from './components/news/news-list/test-pagination/pagination.component';
 import { NewsPanelComponent } from './components/profile/admin-news-panel/news-panel.component';
+import { StocksAssetsEffects } from './components/stock_asset/stock_asset.effects';
 
 @NgModule({
   declarations: [
@@ -85,7 +86,7 @@ import { NewsPanelComponent } from './components/profile/admin-news-panel/news-p
   imports: [
     SharedModule,
     StoreModule.forRoot(reducers, {metaReducers}),
-    EffectsModule.forRoot(InvestmentEffects, NewsEffects, CryptoAssetsEffects)
+    EffectsModule.forRoot(InvestmentEffects, NewsEffects, CryptoAssetsEffects, StocksAssetsEffects)
   ],
   providers: [],
   bootstrap: [AppComponent]

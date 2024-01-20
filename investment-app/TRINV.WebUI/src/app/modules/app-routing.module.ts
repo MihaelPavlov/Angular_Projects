@@ -36,7 +36,7 @@ const routes: Routes = [
   { path: 'sign-in-callback', component: SignInRedirectCallbackComponent },
   { path: 'sign-out-callback', component: SignOutRedirectCallbackComponent },
   {
-    path: 'create',
+    path: 'create/:investmentType',
     canActivate: [AuthGuardService],
     component: AddUpdateInvestmentComponent,
   },
