@@ -9,8 +9,7 @@ using Shared.Business.Utilities;
 
 public record GetNotificationByIdQuery(int Id) : IRequest<OperationResult<Notification>>;
 
-internal class
-    GetNotificationByIdQueryHandler : IRequestHandler<GetNotificationByIdQuery, OperationResult<Notification>>
+internal class GetNotificationByIdQueryHandler : IRequestHandler<GetNotificationByIdQuery, OperationResult<Notification>>
 {
     private readonly IRepository<Notification> _repository;
 

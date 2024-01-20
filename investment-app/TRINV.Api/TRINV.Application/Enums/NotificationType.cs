@@ -19,13 +19,4 @@ public class NotificationType : EnumerationHelper
             2 => "Default System Message",
             _ => throw new ArgumentNullException("Unexisting notification type!")
         };
-
-    public static bool ExistById(int id)
-        => id switch
-        {
-            0 => true,
-            1 => true,
-            2 => true,
-            _ => false
-        };
 }

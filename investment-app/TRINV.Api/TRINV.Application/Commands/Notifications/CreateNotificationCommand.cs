@@ -9,6 +9,7 @@ using Shared.Business.Exceptions;
 using Enums;
 using Interfaces;
 using Shared.Business.Extension;
+using Shared.Business.Helpers;
 
 public record CreateNotificationCommand : IRequest<OperationResult>
 {
@@ -31,12 +32,12 @@ internal class CreateNotificationCommandHandler : IRequestHandler<CreateNotifica
         _repository = repository;
     }
 
-    public async Task<OperationResult> Handle(CreateNotificationCommand request,
-        CancellationToken cancellationToken)
+    public async Task<OperationResult> Handle(CreateNotificationCommand request, CancellationToken cancellationToken)
     {
         var operationResult = new OperationResult();
 
-        if (!NotificationType.ExistById(request.NotificationType))
+        //TODO: Test if this is working
+        if (EnumerationHelper.GetAll().Any(x => x.Id == request.NotificationType))
             return operationResult.ReturnWithErrorMessage(
                 new NotFoundException($"{nameof(Notification)} of type: {request.NotificationType} was not found."));
 
