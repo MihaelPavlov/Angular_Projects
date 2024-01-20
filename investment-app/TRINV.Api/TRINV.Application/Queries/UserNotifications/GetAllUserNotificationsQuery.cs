@@ -27,10 +27,6 @@ internal class GetAllUserNotificationsQueryHandler : IRequestHandler<GetAllUserN
         var userNotifications =
             await _userNotificationRepository.GetAllAsync(cancellationToken);
 
-        if(!userNotifications.Any())
-            return operationResult.ReturnWithErrorMessage(new NotFoundException(
-                "No notifications were found!"));
-
         var allNotificationForCurrentUser = userNotifications
             .Where(x => x.UserId == _userRepository.UserId)
             .ToList();
