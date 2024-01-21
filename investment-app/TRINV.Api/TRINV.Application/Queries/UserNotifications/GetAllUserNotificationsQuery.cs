@@ -27,6 +27,7 @@ internal class GetAllUserNotificationsQueryHandler : IRequestHandler<GetAllUserN
         var userNotifications =
             await _userNotificationRepository.GetAllAsync(cancellationToken);
 
+        //TODO: Test it!
         var allNotificationForCurrentUser = userNotifications
             .Where(x => x.UserId == _userRepository.UserId)
             .ToList();
