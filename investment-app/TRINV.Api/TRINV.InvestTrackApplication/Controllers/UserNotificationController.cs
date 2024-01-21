@@ -41,7 +41,7 @@ public class UserNotificationController : ControllerBase
 
     [HttpDelete]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OperationResult))]
-    public async Task<IActionResult> DeleteAllUserNotification([FromBody] DeleteUserNotificationCommand command, CancellationToken cancellationToken) =>
+    public async Task<IActionResult> DeleteAllUserNotification([FromBody] DeleteAllUserNotificationsCommand command,CancellationToken cancellationToken) =>
         this.Ok(await _mediator.Send(command, cancellationToken));
 
     [HttpPut]
