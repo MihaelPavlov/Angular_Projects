@@ -12,27 +12,25 @@ internal class DeleteAllUserNotificationsCommandHandler : IRequestHandler<Delete
 
     readonly IUserContext _userContext;
     readonly IUnitOfWork _unitOfWork;
-    readonly IRepository<UserNotification> _notificationRepository;
+    readonly IRepository<UserNotification> _userNotificationRepository;
 
     public DeleteAllUserNotificationsCommandHandler(
         IUserContext userContext, 
         IUnitOfWork unitOfWork, 
-        IRepository<UserNotification> notificationRepository)
+        IRepository<UserNotification> userNotificationRepository)
     {
         _userContext = userContext;
         _unitOfWork = unitOfWork;
-        _notificationRepository = notificationRepository;
+        _userNotificationRepository = userNotificationRepository;
     }
 
     public async Task<OperationResult> Handle(DeleteAllUserNotificationsCommand request, CancellationToken cancellationToken)
     {
         var operationResult = new OperationResult();
 
-        var notifications = await _notificationRepository
-            .GetAllAsync(cancellationToken);
-        var userNotifications = notifications
-            .Where(x => x.UserId == _userContext.UserId && x.IsDeleted == false)
-            .ToList();
+        var userNotifications = await _userNotificationRepository
+            .GetAllWithPredicateAsync(x => x.UserId == _userContext.UserId, cancellationToken);
+
         if (userNotifications.Any())
         {
             foreach (var userNot in userNotifications)

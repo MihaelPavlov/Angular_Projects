@@ -36,8 +36,7 @@ internal class CreateNotificationCommandHandler : IRequestHandler<CreateNotifica
     {
         var operationResult = new OperationResult();
 
-        //TODO: Test if this is working
-        if (EnumerationHelper.GetAll().Any(x => x.Id == request.NotificationType))
+        if (!NotificationType.GetAll<NotificationType>().Any(x => x.Id == request.NotificationType))
             return operationResult.ReturnWithErrorMessage(
                 new NotFoundException($"{nameof(Notification)} of type: {request.NotificationType} was not found."));
 

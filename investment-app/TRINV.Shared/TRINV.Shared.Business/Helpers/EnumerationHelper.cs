@@ -1,6 +1,5 @@
 ﻿namespace TRINV.Shared.Business.Helpers;
 
-using System.Collections;
 using System.Reflection;
 
 public abstract class EnumerationHelper : IComparable
@@ -28,13 +27,12 @@ public abstract class EnumerationHelper : IComparable
         return this.Id.CompareTo(other.Id);
     }
 
-    //TODO: To review this code as I am not sure It will work as intended.
-    public static IEnumerable<EnumerationHelper> GetAll()
-    => typeof(EnumerationHelper).GetFields(
-            BindingFlags.Public | 
-            BindingFlags.Static | 
-            BindingFlags.DeclaredOnly)
-            .Select(f => f.GetValue(null))
-            .Cast<EnumerationHelper>();
-
+    public static IEnumerable<T> GetAll<T>()
+    where T : EnumerationHelper
+    {
+        return typeof(T)
+            .GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly)
+            .Select(field => field.GetValue(null))
+            .Cast<T>();
+    }
 }

@@ -36,8 +36,8 @@ internal class UpdateNotificationCommandHandler : IRequestHandler<UpdateNotifica
     public async Task<OperationResult> Handle(UpdateNotificationCommand request, CancellationToken cancellationToken)
     {
         var operationResult = new OperationResult();
-
-        if (!NotificationType.ExistById(request.NotificationType))
+        //TODO: Throws Server Error 500.
+        if (!NotificationType.GetAll<NotificationType>().Any(x => x.Id == request.NotificationType))
             return operationResult.ReturnWithErrorMessage(
                 new NotFoundException("Notification type was not found."));
 

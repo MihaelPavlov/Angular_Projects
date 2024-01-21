@@ -17,7 +17,6 @@ public class Repository<T> : IRepository<T>
     public async Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken) =>
         await this._context.Set<T>().ToListAsync(cancellationToken);
 
-    //TODO: Test it!
     public async Task<IEnumerable<T>> GetAllWithPredicateAsync(Func<T, bool> predicate, CancellationToken cancellationToken) => 
         await this._context.Set<T>().Where(predicate).AsQueryable().ToListAsync(cancellationToken);
     

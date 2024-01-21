@@ -24,15 +24,15 @@ internal class GetAllUserNotificationsQueryHandler : IRequestHandler<GetAllUserN
     {
         var operationResult = new OperationResult<IEnumerable<UserNotification>>();
 
-        var userNotifications =
-            await _userNotificationRepository.GetAllAsync(cancellationToken);
+        //TODO: Throws server error 500!
+        var userNotifications = await _userNotificationRepository
+            .GetAllWithPredicateAsync(x => x.UserId == _userRepository.UserId, cancellationToken);
 
-        //TODO: Test it!
-        var allNotificationForCurrentUser = userNotifications
-            .Where(x => x.UserId == _userRepository.UserId)
-            .ToList();
+        if (userNotifications == null)
+            return operationResult.ReturnWithErrorMessage(
+                new NotFoundException("No notifications were found for the current user!"));
 
-        operationResult.RelatedObject = allNotificationForCurrentUser;
+        operationResult.RelatedObject = userNotifications;
 
         return operationResult;
     }
