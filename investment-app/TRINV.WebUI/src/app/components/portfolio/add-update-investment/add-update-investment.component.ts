@@ -4,7 +4,7 @@ import {
   getInvestmentTypeLabel,
   InvestmentType,
 } from '../../../../enums/investment-type.enum';
-import { FormControl, FormGroup } from '@angular/forms';
+import { ControlContainer, FormControl, FormGroup, FormGroupDirective } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { IUser } from '../../../models/user';
@@ -57,7 +57,7 @@ export class AddUpdateInvestmentComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.setRouterParams();
+    this.initForm();
     this.updateModel();
 
     // this.store.pipe(select(selectAuthUser)).subscribe({
@@ -69,41 +69,7 @@ export class AddUpdateInvestmentComponent implements OnInit {
     // })
   }
 
-  public initializeForm(): void {
-    if (this.investmentType === InvestmentType.Crypto) {
-      this.addUpdateForm
-        .get('assetId')
-        ?.valueChanges.subscribe((selectedAssetId) => {
-          this.collection$.subscribe((coinList) => {
-            const selectedCoin = coinList.find(
-              (coin) => coin.id === selectedAssetId
-            );
-
-            if (selectedCoin) {
-              this.addUpdateForm.get('name')?.setValue(selectedCoin.name);
-            }
-          });
-        });
-
-    
-    } else if (this.investmentType === InvestmentType.Stock) {
-      this.addUpdateForm
-        .get('assetId')
-        ?.valueChanges.subscribe((selectedAssetId) => {
-          this.collection$.subscribe((stockList) => {
-            const selectedStock = stockList.find(
-              (stock) => stock.symbol === selectedAssetId
-            );
-
-            if (selectedStock) {
-              this.addUpdateForm.get('name')?.setValue(selectedStock.name);
-            }
-          });
-        });
-    }
-  }
-
-  public setRouterParams(): void {
+  public initForm(): void {
     this.route.paramMap.subscribe((params) => {
       let id = params.get('id');
       let investmentType = params.get(
@@ -111,8 +77,20 @@ export class AddUpdateInvestmentComponent implements OnInit {
       ) as InvestmentType | null;
 
       this.investmentType = Number(investmentType);
+ 
+      this.addUpdateForm
+        .get('assetId')
+        ?.valueChanges.subscribe((selectedAssetId) => {
+          this.collection$.subscribe((assetList) => {
+            const selectedAsset = assetList.find(
+              (asset) => asset.symbol === selectedAssetId
+            );
 
-      if (id === null) this.initializeForm();
+            if (selectedAsset) {
+              this.addUpdateForm.get('name')?.setValue(selectedAsset.name);
+            }
+          });
+        });
 
       if (id != null) {
         this.id = Number(id);
@@ -129,7 +107,6 @@ export class AddUpdateInvestmentComponent implements OnInit {
           this.selectedAsset = result.assetId;
           this.investmentType = result.investmentType;
           this.addUpdateForm.patchValue(result);
-          // this.cd.detectChanges();
         }
       });
     }

@@ -54,8 +54,6 @@ export class InvestmentService {
   create(
     newInvestment: AddUpdateInvestment
   ): Observable<OperationResult | null> {
-    console.log('add -> ', newInvestment);
-
     return this.restApiService.post<OperationResult>(
       '/investments',
       newInvestment

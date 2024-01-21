@@ -12,7 +12,7 @@ public class CreateInvestmentCommand : IRequest<OperationResult>
     public string AssetId { get; set; } = string.Empty;
 
     [Required]
-    public string Name { get; set; } = null!;
+    public string Name { get; set; } = string.Empty;
 
     [Required]
     public decimal Quantity { get; set; }

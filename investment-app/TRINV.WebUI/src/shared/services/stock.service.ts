@@ -10,9 +10,7 @@ import { Pagination } from 'src/app/components/stock_asset/stock_asset.actions';
 export class StockService {
   constructor(private restApiService: RestApiService) {}
 
-  getAllStock(pagination: Pagination): Observable<ExtendedOperationResult<IStock[]> | null> {
-    console.log("get all stocks");
-    
+  getAllStock(pagination: Pagination): Observable<ExtendedOperationResult<IStock[]> | null> {    
     return this.restApiService.post<ExtendedOperationResult<IStock[]>>(
       '/stock',
       pagination

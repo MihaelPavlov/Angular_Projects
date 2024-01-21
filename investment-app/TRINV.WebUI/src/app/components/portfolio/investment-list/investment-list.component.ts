@@ -151,7 +151,6 @@ export class InvestmentListComponent implements OnInit, OnDestroy {
             this.groupedData[name].sumQuantity += quantity;
           }
         });
-        console.log(this.groupedData);
         this.chartData = {
           datasets: [
             {

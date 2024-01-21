@@ -93,7 +93,7 @@ namespace TRINV.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("PurchasePrice")
-                        .HasColumnType("numeric(18,8)");
+                        .HasColumnType("numeric(18,2)");
 
                     b.Property<decimal>("Quantity")
                         .HasColumnType("numeric(18,8)");

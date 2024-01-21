@@ -89,6 +89,8 @@ export class InvestmentEffects {
               })
             ),
             catchError((error) => {
+              console.log("------------------------- error ", error);
+              
               this.toastService.error({
                 message: 'Something get wrong',
                 type: ToastType.Error,
