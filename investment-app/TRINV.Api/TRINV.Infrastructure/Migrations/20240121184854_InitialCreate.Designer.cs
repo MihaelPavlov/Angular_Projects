@@ -12,7 +12,7 @@ using TRINV.Infrastructure;
 namespace TRINV.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240118193454_InitialCreate")]
+    [Migration("20240121184854_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -95,12 +95,10 @@ namespace TRINV.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("PurchasePrice")
-                        .HasPrecision(10, 8)
-                        .HasColumnType("decimal(10,8)");
+                        .HasColumnType("numeric(18,8)");
 
                     b.Property<decimal>("Quantity")
-                        .HasPrecision(10, 8)
-                        .HasColumnType("decimal(10,8)");
+                        .HasColumnType("numeric(18,8)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");

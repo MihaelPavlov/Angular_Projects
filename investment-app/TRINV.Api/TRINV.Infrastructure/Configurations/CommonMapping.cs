@@ -9,8 +9,8 @@ internal static class CommonMapping
     {
         builder.Entity<Investment>(entity =>
         {
-            entity.Property(i => i.PurchasePrice).HasPrecision(10,8);
-            entity.Property(i => i.Quantity).HasPrecision(10, 8);
+            entity.Property(i => i.PurchasePrice).HasColumnType("numeric(18,8)");
+            entity.Property(i => i.Quantity).HasColumnType("numeric(18,8)");
             entity.Property(i => i.CreatedOn).HasDefaultValueSql("GETDATE()");
         });
 

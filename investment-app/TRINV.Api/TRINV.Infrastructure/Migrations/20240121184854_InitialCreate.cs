@@ -46,8 +46,8 @@ namespace TRINV.Infrastructure.Migrations
                     UserId = table.Column<int>(type: "int", nullable: false),
                     AssetId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Quantity = table.Column<decimal>(type: "decimal(10,8)", precision: 10, scale: 8, nullable: false),
-                    PurchasePrice = table.Column<decimal>(type: "decimal(10,8)", precision: 10, scale: 8, nullable: false),
+                    Quantity = table.Column<decimal>(type: "numeric(18,8)", nullable: false),
+                    PurchasePrice = table.Column<decimal>(type: "numeric(18,8)", nullable: false),
                     InvestmentType = table.Column<int>(type: "int", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
                     IsFromOutsideProvider = table.Column<bool>(type: "bit", nullable: false)

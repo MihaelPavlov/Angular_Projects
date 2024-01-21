@@ -5,52 +5,12 @@
       {{ this.id === undefined ? "Add New Investment" : "Update Investment" }}
     </h1>
     <form [formGroup]="addUpdateForm" (ngSubmit)="onSubmit()">
-      <mat-form-field
-        *ngIf="this.investmentType === 0"
-        class="investment-select"
+      <common-investment-selector
+        [selectedAsset]="this.selectedAsset"
+        (initAssetCollectionEvent)="setCollection($event)"
+        [investmentType]="this.investmentType"
       >
-        <mat-label>Investment Name</mat-label>
-        <mat-select formControlName="assetId">
-          <mat-option
-            *ngFor="let stock of this.stocks | async"
-            [value]="stock.symbol"
-          >
-            <!-- <img
-              alt="img"
-              src="https://assets.coincap.io/assets/icons/{{
-                stock.symbol.toLowerCase()
-              }}@2x.png"
-            /> -->
-            <div class="ellipsis">
-              <p style="font-size: 0.8em; opacity: 0.7">
-                {{ stock.name }} ({{ stock.symbol }})
-              </p>
-            </div>
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field
-        *ngIf="this.investmentType === 1"
-        class="investment-select"
-      >
-        <mat-label>Investment Name</mat-label>
-        <mat-select formControlName="assetId">
-          <mat-option *ngFor="let coin of this.coins | async" [value]="coin.id">
-            <img
-              alt="img"
-              src="https://assets.coincap.io/assets/icons/{{
-                coin.symbol.toLowerCase()
-              }}@2x.png"
-            />
-            <div class="ellipsis">
-              <p style="font-size: 0.8em; opacity: 0.7">
-                {{ coin.name }} ({{ coin.symbol }})
-              </p>
-            </div>
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+      </common-investment-selector>
 
       <label class="labelStyle" for="quantity">Quantity</label>
       <input type="number" id="quantity" formControlName="quantity" required />
@@ -70,17 +30,3 @@
     </form>
   </div>
 </div>
-
-
-<!-- 
-<ng-container>
-  <common-investment-selector [type]="this.investmentType">
-
-  </common-investment-selector>
-</ng-container>
-
-implement the CommonInvestmentSelectorComponent
-
-
-
- -->
