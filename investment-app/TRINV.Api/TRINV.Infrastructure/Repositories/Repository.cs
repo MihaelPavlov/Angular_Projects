@@ -17,10 +17,12 @@ public class Repository<T> : IRepository<T>
     public async Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken) =>
         await this._context.Set<T>().ToListAsync(cancellationToken);
 
-    public async Task<IEnumerable<T>> GetAllWithPredicateAsync(Func<T, bool> predicate, CancellationToken cancellationToken) => 
-        await this._context.Set<T>().Where(predicate).AsQueryable().ToListAsync(cancellationToken);
+    public async Task<IEnumerable<T>> GetAllWithPredicateAsync(Func<T, bool> predicate, CancellationToken cancellationToken) =>
+         await Task.Run(() => this._context
+             .Set<T>()
+             .Where(predicate)
+             .ToList(), cancellationToken);
     
-
     public async Task<T?> GetByIdAsync(int id, CancellationToken cancellationToken) =>
         await this._context
         .Set<T>()

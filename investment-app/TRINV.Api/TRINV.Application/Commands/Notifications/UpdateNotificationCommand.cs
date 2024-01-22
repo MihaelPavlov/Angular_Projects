@@ -9,7 +9,7 @@ using System.ComponentModel.DataAnnotations;
 using Enums;
 using Shared.Business.Extension;
 
-public record UpdateNotificationCommand : IRequest<OperationResult<Notification>>
+public record UpdateNotificationCommand : IRequest<OperationResult>
 {
     [Required]
     public int Id { get; set; }

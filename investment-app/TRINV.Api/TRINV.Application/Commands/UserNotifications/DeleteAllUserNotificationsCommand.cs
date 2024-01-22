@@ -29,7 +29,9 @@ internal class DeleteAllUserNotificationsCommandHandler : IRequestHandler<Delete
         var operationResult = new OperationResult();
 
         var userNotifications = await _userNotificationRepository
-            .GetAllWithPredicateAsync(x => x.UserId == _userContext.UserId, cancellationToken);
+            .GetAllWithPredicateAsync(x => 
+                x.UserId == _userContext.UserId && 
+                x.IsDeleted == false, cancellationToken);
 
         if (userNotifications.Any())
         {
