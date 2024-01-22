@@ -35,11 +35,27 @@ public class CreateNewsCommentCommandHandler : IRequestHandler<CreateNewsComment
         _newsRepository = newsRepository;
     }
 
-    public Task<OperationResult> Handle(CreateNewsCommentCommand request, CancellationToken cancellationToken)
+    public async Task<OperationResult> Handle(CreateNewsCommentCommand request, CancellationToken cancellationToken)
     {
         var operationResult = new OperationResult();
 
+        var news = await _newsRepository.GetByIdAsync(request.NewsId, cancellationToken);
 
-        throw new NotImplementedException();
+        if (news == null)
+            return operationResult.ReturnWithErrorMessage(
+                new NotFoundException("News not found"));
+
+        var newComment = new NewsComment
+        {
+            NewsId = request.NewsId,
+            CreatedBy = _userContext.UserId,
+            Comment = request.Comment,
+            CreatedOn = DateTime.Now,
+        };
+
+        await _newsCommentRepository.AddAsync(newComment, cancellationToken);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+        return operationResult;
     }
 }
