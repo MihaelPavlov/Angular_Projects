@@ -54,7 +54,7 @@ internal class GetStockListQueryHandler : IRequestHandler<GetStockListQuery, Ope
 public record GetStockListQueryModel(
     string Symbol,
     string Exchange,
-    string ExchangeShortNamem,
+    string ExchangeShortName,
     decimal? Price,
     string Name,
     string Type);

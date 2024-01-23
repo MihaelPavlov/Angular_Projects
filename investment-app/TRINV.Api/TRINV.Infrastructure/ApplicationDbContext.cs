@@ -21,6 +21,10 @@ public class ApplicationDbContext : DbContext
 
     public DbSet<Currency> Currencies { get; set; }
 
+    public DbSet<Notification> Notifications { get; set; }
+
+    public DbSet<UserNotification> UserNotifications { get; set; }
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         CommonMapping.Configure(builder);

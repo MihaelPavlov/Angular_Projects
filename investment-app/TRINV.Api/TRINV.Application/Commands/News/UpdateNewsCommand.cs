@@ -5,8 +5,8 @@ using System.ComponentModel.DataAnnotations;
 using Domain.Entities;
 using Interfaces;
 using Shared.Business.Exceptions;
+using Shared.Business.Extension;
 using Shared.Business.Utilities;
-using TRINV.Shared.Business.Extension;
 
 public record UpdateNewsCommand : IRequest<OperationResult>
 {

@@ -94,7 +94,7 @@ internal class AuthorizeByCodeCommandHandler : IRequestHandler<AuthorizeByCodeCo
 
             //ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(10),
             // The time at which the authentication ticket expires. A 
-            // value set here overrides the ExpireTimeSpan option of 
+            // id set here overrides the ExpireTimeSpan option of 
             // CookieAuthenticationOptions set with AddCookie.
 
             //IsPersistent = true,
@@ -108,7 +108,7 @@ internal class AuthorizeByCodeCommandHandler : IRequestHandler<AuthorizeByCodeCo
 
             //RedirectUri = <string>
             // The full path or absolute URI to be used as an http 
-            // redirect response value.
+            // redirect response id.
         };
 
         await _contextAccessor.HttpContext.SignInAsync(
