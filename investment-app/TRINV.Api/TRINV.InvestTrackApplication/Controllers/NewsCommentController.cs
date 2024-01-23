@@ -26,4 +26,9 @@ public class NewsCommentController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OperationResult))]
     public async Task<IActionResult> UpdateNewsComment([FromBody] UpdateNewsCommentCommand command, CancellationToken cancellationToken) =>
         this.Ok(await _mediator.Send(command, cancellationToken));
+
+    [HttpDelete]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OperationResult))]
+    public async Task<IActionResult> DeleteNewsComment(int id, CancellationToken cancellationToken) => 
+        this.Ok(await _mediator.Send(new DeleteNewsCommentCommand(id), cancellationToken));
 }
