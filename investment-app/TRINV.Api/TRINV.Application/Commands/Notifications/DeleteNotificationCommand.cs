@@ -24,7 +24,7 @@ internal class DeleteNotificationCommandHandler : IRequestHandler<DeleteNotifica
 
     public async Task<OperationResult> Handle(DeleteNotificationCommand request, CancellationToken cancellationToken)
     {
-        var operationResult = new OperationResult<Notification>();
+        var operationResult = new OperationResult();
 
         var notification = await _notificationRepository
                     .GetByIdAsync(request.NotificationId, cancellationToken);

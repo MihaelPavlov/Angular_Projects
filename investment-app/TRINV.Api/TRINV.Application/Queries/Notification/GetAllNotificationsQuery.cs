@@ -24,9 +24,6 @@ internal class GetAllNotificationsQueryHandler : IRequestHandler<GetAllNotificat
 
         var notifications = await _repository.GetAllAsync(cancellationToken);
 
-        if (!notifications.Any())
-            return operationResult.ReturnWithErrorMessage(new NotFoundException("No notifications were found!"));
-
         operationResult.RelatedObject = notifications.ToList();
 
         return operationResult;

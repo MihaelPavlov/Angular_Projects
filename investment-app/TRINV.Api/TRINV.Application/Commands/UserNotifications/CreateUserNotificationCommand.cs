@@ -7,6 +7,7 @@ using Interfaces;
 using MediatR;
 using Shared.Business.Exceptions;
 using Shared.Business.Extension;
+using Shared.Business.Helpers;
 using Shared.Business.Utilities;
 
 public record CreateUserNotificationCommand(int NotificationType, string? Message = null) : IRequest<OperationResult<UserNotification>>;
@@ -30,7 +31,7 @@ internal class CreateUserNotificationCommandHandler : IRequestHandler<CreateUser
     {
         var operationResult = new OperationResult<UserNotification>();
 
-        if(!NotificationType.ExistById(request.NotificationType))
+        if (!NotificationType.GetAll<NotificationType>().Any(x => x.Id == request.NotificationType))
             return operationResult.ReturnWithErrorMessage(
                 new NotFoundException("Notification type not found!"));
         

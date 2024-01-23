@@ -37,7 +37,7 @@ public class UpdateUserNotificationCommandHandler : IRequestHandler<UpdateUserNo
 
         var notificationToUpdate = await _notificationRepository.GetByIdAsync(request.Id, cancellationToken);
 
-        if (notificationToUpdate == null)
+        if (notificationToUpdate == null || notificationToUpdate.IsDeleted)
             return operationResult.ReturnWithErrorMessage(
                 new NotFoundException("Notification not found!"));
 

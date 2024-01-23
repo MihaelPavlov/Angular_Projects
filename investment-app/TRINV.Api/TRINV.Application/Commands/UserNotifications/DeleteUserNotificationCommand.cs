@@ -37,6 +37,8 @@ internal class DeleteUserNotificationCommandHandler : IRequestHandler<DeleteUser
 
         notification.IsDeleted = true;
 
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
+
         return operationResult;
     }
 }

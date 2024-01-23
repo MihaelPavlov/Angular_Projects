@@ -1,5 +1,7 @@
 ﻿namespace TRINV.Shared.Business.Helpers;
 
+using System.Reflection;
+
 public abstract class EnumerationHelper : IComparable
 {
     protected EnumerationHelper(int id, string name)
@@ -23,5 +25,14 @@ public abstract class EnumerationHelper : IComparable
     {
         EnumerationHelper? other = obj as EnumerationHelper;
         return this.Id.CompareTo(other.Id);
+    }
+
+    public static IEnumerable<T> GetAll<T>()
+    where T : EnumerationHelper
+    {
+        return typeof(T)
+            .GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly)
+            .Select(field => field.GetValue(null))
+            .Cast<T>();
     }
 }
