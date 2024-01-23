@@ -18,7 +18,7 @@ public record UpdateNewsCommentCommand : IRequest<OperationResult>
     public string Comment { get; set; } = string.Empty;
 }
 
-public class UpdateNewsCommentCommandHandler : IRequestHandler<UpdateNewsCommentCommand, OperationResult>
+internal class UpdateNewsCommentCommandHandler : IRequestHandler<UpdateNewsCommentCommand, OperationResult>
 {
     readonly IUnitOfWork _unitOfWork;
     readonly IRepository<NewsComment> _newsCommentRepository;
