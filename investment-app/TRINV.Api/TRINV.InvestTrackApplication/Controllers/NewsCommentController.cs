@@ -1,6 +1,7 @@
 ﻿namespace TRINV.InvestTrackApplication.Controllers;
 
 using Application.Commands.NewsComment;
+using Application.Queries.NewsComment;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,6 +17,11 @@ public class NewsCommentController : ControllerBase
     {
         _mediator = mediator;
     }
+
+    [HttpGet("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OperationResult))]
+    public async Task<IActionResult> GetNewsCommentById(int id, CancellationToken cancellationToken) =>
+        this.Ok(await _mediator.Send(new GetNewsCommentByIdQuery(id), cancellationToken));
 
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OperationResult))]
