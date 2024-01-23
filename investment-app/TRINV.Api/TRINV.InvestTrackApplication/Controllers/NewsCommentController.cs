@@ -2,6 +2,7 @@
 
 using Application.Commands.NewsComment;
 using Application.Queries.NewsComment;
+using Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,6 +19,11 @@ public class NewsCommentController : ControllerBase
         _mediator = mediator;
     }
 
+    [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OperationResult<IEnumerable<NewsComment>>))]
+    public async Task<IActionResult> GetNewsCommentList(int newsId, CancellationToken cancellationToken) =>
+        this.Ok(await _mediator.Send(new GetAllCommentsByNewsIdQuery(newsId), cancellationToken));
+
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OperationResult))]
     public async Task<IActionResult> GetNewsCommentById(int id, CancellationToken cancellationToken) =>
@@ -28,13 +34,13 @@ public class NewsCommentController : ControllerBase
     public async Task<IActionResult> CreateNewsComment([FromBody] CreateNewsCommentCommand command, CancellationToken cancellationToken) =>
         this.Ok(await _mediator.Send(command, cancellationToken));
 
-    [HttpPut]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OperationResult))]
-    public async Task<IActionResult> UpdateNewsComment([FromBody] UpdateNewsCommentCommand command, CancellationToken cancellationToken) =>
-        this.Ok(await _mediator.Send(command, cancellationToken));
-
     [HttpDelete]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OperationResult))]
     public async Task<IActionResult> DeleteNewsComment(int id, CancellationToken cancellationToken) => 
         this.Ok(await _mediator.Send(new DeleteNewsCommentCommand(id), cancellationToken));
+
+    [HttpPut]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OperationResult))]
+    public async Task<IActionResult> UpdateNewsComment([FromBody] UpdateNewsCommentCommand command, CancellationToken cancellationToken) =>
+        this.Ok(await _mediator.Send(command, cancellationToken));
 }
