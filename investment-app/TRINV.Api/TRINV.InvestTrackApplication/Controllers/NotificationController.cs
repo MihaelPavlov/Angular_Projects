@@ -24,7 +24,7 @@ public class NotificationController : ControllerBase
         this.Ok(await _mediator.Send(new GetAllNotificationsQuery(), cancellationToken));
 
     [HttpGet("{id}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OperationResult<Notification>))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OperationResult<GetNotificationByIdQueryModel>))]
     public async Task<IActionResult> GetNotificationById(int id, CancellationToken cancellationToken) =>
         this.Ok(await _mediator.Send(new GetNotificationByIdQuery(id), cancellationToken));
     
