@@ -1,5 +1,33 @@
 @use "src/styles/colors";
 
+.container {
+  position: relative;
+  display: inline-block;
+}
+.container:hover .hidden-buttons {
+  display: block;
+}
+
+.hidden-buttons {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 8.5%;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  white-space: nowrap;
+}
+
+.hidden-buttons a {
+  display: inline-block;
+  margin-right: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #A997DF;
+  color: #fff;
+}
+
 .navbar {
   background-color: colors.$charcoal-grey;
   display: flex;
@@ -7,7 +35,8 @@
   align-items: center;
   padding: 10px 20px;
 }
-.size{
+
+.size {
   position: relative;
   width: 40px;
   height: 25px;
@@ -15,14 +44,14 @@
   right: 5px;
 }
 
-.mat-container{
+.mat-container {
   display: inline;
   background-color: black;
 }
-.mat-drawer-container{
+.mat-drawer-container {
   background-color: transparent;
 }
-.mat-drawer{
+.mat-drawer {
   position: fixed;
   top: 2.82rem;
 }
@@ -51,12 +80,11 @@
   color: colors.$main-color-yellow;
 }
 
-.active{
-  color: colors.$main-color-yellow ;
+.active {
+  color: colors.$main-color-yellow;
 }
 
-.icon:hover{
+.icon:hover {
   color: colors.$main-color-yellow;
   transition-duration: 0.5s;
-
 }

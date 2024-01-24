@@ -1,48 +1,32 @@
 <div class="wrapper">
   <div class="container">
-    <h1>{{ this.id === undefined ? 'Add New Investment' : 'Update Investment' }}</h1>
+    <h1>
+      {{ this.investmentType == 1 ? "crypto" : "stock" }}
+      {{ this.id === undefined ? "Add New Investment" : "Update Investment" }}
+    </h1>
     <form [formGroup]="addUpdateForm" (ngSubmit)="onSubmit()">
-      <mat-form-field class="investment-select">
-        <mat-label>Investment Name</mat-label>
-        <mat-select formControlName="investmentName">
-          <mat-option *ngFor="let coin of this.coins | async" [value]="coin.id">
-            <img alt='img' src="https://assets.coincap.io/assets/icons/{{coin.symbol.toLowerCase()}}@2x.png">
-            <div class="ellipsis">
-                <p style="font-size: 0.8em; opacity: 0.7;">{{coin.name}} ({{coin.symbol}})</p>
-            </div>
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <label class="labelStyle" for="symbol">Symbol/Ticker</label>
-      <input type="text" id="symbol" formControlName="symbol" required>
+      <common-investment-selector
+        [selectedAsset]="this.selectedAsset"
+        (initAssetCollectionEvent)="setCollection($event)"
+        [investmentType]="this.investmentType"
+      >
+      </common-investment-selector>
 
       <label class="labelStyle" for="quantity">Quantity</label>
-      <input type="number" id="quantity" formControlName="quantity" required>
+      <input type="number" id="quantity" formControlName="quantity" required />
 
       <label class="labelStyle" for="purchasePrice">Purchase Price</label>
-      <input type="number" step="0.01" id="purchasePrice" formControlName="purchasePrice" required>
+      <input
+        type="number"
+        step="0.01"
+        id="purchasePrice"
+        formControlName="purchasePrice"
+        required
+      />
 
-      <label class="labelStyle">Choose Currency</label>
-      <mat-form-field class="investment-select">
-        <mat-label>Currency</mat-label>
-        <mat-select formControlName="currency">
-          <mat-option *ngFor="let currency of this.currencies" [value]="currency">
-            {{this.getCurrencyLabel(currency)}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <label class="labelStyle">In What is Your Investment</label>
-      <mat-form-field class="investment-select">
-        <mat-label>Investment Type</mat-label>
-        <mat-select formControlName="investmentType">
-          <mat-option *ngFor="let investmentType of this.investmentTypes" [value]="investmentType">
-            {{this.getInvestmentTypeLabel(investmentType)}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <button type="submit">{{this.id === undefined ? 'Add Investment' : 'Update Investment'}}</button>
+      <button type="submit">
+        {{ this.id === undefined ? "Add Investment" : "Update Investment" }}
+      </button>
     </form>
   </div>
 </div>

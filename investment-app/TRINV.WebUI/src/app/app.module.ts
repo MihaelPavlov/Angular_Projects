@@ -49,6 +49,8 @@ import {ErrorsComponent} from "./components/shared/errors/errors.component";
 import {AppLabelComponent} from "./components/shared/app-label/app-label.component";
 import { PaginationComponent } from './components/news/news-list/test-pagination/pagination.component';
 import { NewsPanelComponent } from './components/profile/admin-news-panel/news-panel.component';
+import { StocksAssetsEffects } from './components/stock_asset/stock_asset.effects';
+import { CommonInvestmentSelector } from './components/portfolio/add-update-investment/common-investment-selector/common-investment-selector';
 
 @NgModule({
   declarations: [
@@ -80,15 +82,20 @@ import { NewsPanelComponent } from './components/profile/admin-news-panel/news-p
     ErrorsComponent,
     AppLabelComponent,
     PaginationComponent,
-    NewsPanelComponent
+    NewsPanelComponent,
+    CommonInvestmentSelector,
   ],
   imports: [
     SharedModule,
-    StoreModule.forRoot(reducers, {metaReducers}),
-    EffectsModule.forRoot(InvestmentEffects, NewsEffects, CryptoAssetsEffects)
+    StoreModule.forRoot(reducers, { metaReducers }),
+    EffectsModule.forRoot(
+      InvestmentEffects,
+      NewsEffects,
+      CryptoAssetsEffects,
+      StocksAssetsEffects
+    ),
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule {
-}
+export class AppModule {}

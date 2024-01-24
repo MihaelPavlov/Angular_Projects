@@ -7,16 +7,12 @@
       <mat-card-content>
         <div *ngIf="this.investment" class="details">
           <div class="detail-row">
-            <div class="label">Investment ID:</div>
-            <div class="value">{{ investment.id }}</div>
+            <div class="label">Asset Id:</div>
+            <div class="value">{{ investment.assetId }}</div>
           </div>
           <div class="detail-row">
-            <div class="label">Investment Name:</div>
-            <div class="value">{{ investment.investmentName }}</div>
-          </div>
-          <div class="detail-row">
-            <div class="label">Symbol:</div>
-            <div class="value">{{ investment.symbol }}</div>
+            <div class="label">Name:</div>
+            <div class="value">{{ investment.name }}</div>
           </div>
           <div class="detail-row">
             <div class="label">Quantity:</div>
@@ -24,11 +20,15 @@
           </div>
           <div class="detail-row">
             <div class="label">Purchase Price:</div>
-            <div class="value">{{ investment.purchasePrice }} {{investment.currency | currencyToSymbol}}</div>
+            <div class="value">{{ investment.purchasePrice }}$</div>
           </div>
           <div class="detail-row">
             <div class="label">Investment Type:</div>
             <div class="value">{{ investment.investmentType | investmentTypeToName}}</div>
+          </div>
+             <div class="detail-row">
+            <div class="label">Created On:</div>
+            <div class="value">{{ investment.createdOn}}</div>
           </div>
         </div>
       </mat-card-content>

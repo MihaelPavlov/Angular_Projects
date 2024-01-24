@@ -1,0 +1,26 @@
+<ng-container>
+        <mat-label class="labelStyle">Investment Name</mat-label>
+
+    <p *ngIf="this.selectedAsset" class="readonly">{{this.selectedAsset}}</p>
+  <mat-form-field *ngIf="!this.selectedAsset" class="investment-select" >
+    <mat-label>Investment Name</mat-label>
+    <mat-select  formControlName="assetId">
+      <mat-option
+        *ngFor="let asset of this.collection$ | async"
+        [value]="asset.symbol"
+      >
+        <img *ngIf="this.hasImage"
+              alt="img"
+              src="https://assets.coincap.io/assets/icons/{{
+                asset.symbol.toLowerCase()
+              }}@2x.png"
+            /> 
+        <div class="ellipsis">
+          <p style="font-size: 0.8em; opacity: 0.7">
+            {{ asset.name }} ({{ asset.symbol }})
+          </p>
+        </div>
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</ng-container>

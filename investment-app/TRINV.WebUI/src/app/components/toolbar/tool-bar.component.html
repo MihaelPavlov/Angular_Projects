@@ -1,51 +1,70 @@
 <nav class="navbar">
   <div class="logo">
-    <a  routerLink="/">TR INV</a>
+    <a routerLink="/">TR INV</a>
   </div>
   <ul class="nav-links">
-    <li><a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" routerLink="/">Home</a></li>
+    <li>
+      <a
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        routerLink="/"
+        >Home</a
+      >
+    </li>
     <li><a routerLinkActive="active" routerLink="/news">News</a></li>
     <li><a routerLinkActive="active" routerLink="/coins">Coins</a></li>
     <ng-container *ngIf="!this.userAuthenticated">
       <li><a routerLinkActive="active" routerLink="/register">Sign Up</a></li>
     </ng-container>
     <ng-container *ngIf="this.userAuthenticated">
-<!--      <li><a>Welcome {{this.user.username}}</a></li>-->
-      <li><a routerLinkActive="active" routerLink="/my-investments">My Investments</a></li>
-      <li><a routerLinkActive="active" routerLink="/create">Add New Investment</a></li>
+      <!--      <li><a>Welcome {{this.user.username}}</a></li>-->
+      <li>
+        <a routerLinkActive="active" routerLink="/my-investments"
+          >My Investments</a
+        >
+      </li>
+      <li>
+        <a class="container"
+          >Add New Investment
+          <div class="hidden-buttons">
+            <a routerLinkActive="active" (click)="this.redirectToCrypto()">Crypto</a>
+
+            <a routerLinkActive="active" (click)="this.redirectToStock()">Stocks</a>
+          </div>
+        </a>
+      </li>
       <li>
         <mat-drawer-container class="bg-none size" [hasBackdrop]="false">
           <mat-drawer position="end" class="" #drawer1 mode="over">
             <notification-settings></notification-settings>
           </mat-drawer>
-          <mat-drawer-content class="mat-container ">
-
+          <mat-drawer-content class="mat-container">
             <div>
               <button type="button" mat-button (click)="drawer1.toggle()">
                 <mat-icon class="text-white">notifications</mat-icon>
               </button>
             </div>
           </mat-drawer-content>
-
         </mat-drawer-container>
-
       </li>
       <li>
         <mat-drawer-container class="bg-none size" [hasBackdrop]="false">
-          <mat-drawer position="end" class="sidenav-custom-container" #drawer mode="over">
+          <mat-drawer
+            position="end"
+            class="sidenav-custom-container"
+            #drawer
+            mode="over"
+          >
             <profile (click)="drawer.close()"></profile>
           </mat-drawer>
-          <mat-drawer-content class="mat-container ">
-
+          <mat-drawer-content class="mat-container">
             <div>
               <button type="button" mat-button (click)="drawer.toggle()">
                 <mat-icon class="text-white">menu</mat-icon>
               </button>
             </div>
           </mat-drawer-content>
-
         </mat-drawer-container>
-
       </li>
     </ng-container>
   </ul>

@@ -8,7 +8,7 @@ import { NewsCommentsService } from '../../services/news-comments.service';
 import { IComment } from '../../models/comment';
 import { ToastService } from '../../../shared/services/toast.service';
 import { ToastType } from '../../models/toast';
-import { OperationResult } from 'src/app/models/operation-result.model';
+import { ExtendedOperationResult } from 'src/app/models/operation-result.model';
 
 @Injectable()
 export class NewsEffects {
@@ -16,8 +16,10 @@ export class NewsEffects {
     this.actions$.pipe(
       ofType(fromNews.GetNews),
       concatMap((_) => this.newsService.getNewsList()),
-      map((operation: OperationResult<INews[]>) => {
-        return fromNews.GetNewsSuccess({ news: operation.relatedObject });
+      map((operationResult: ExtendedOperationResult<INews[]>) => {
+          return fromNews.GetNewsSuccess({
+            news: operationResult.relatedObject,
+          });
       })
     )
   );

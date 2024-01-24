@@ -32,7 +32,7 @@ public class StockCacheService : IStockCacheService
             entry.SetSlidingExpiration(TimeSpan.FromHours(10));
             var operationResult = await this.GetStocks(cancellationToken);
 
-            if (!operationResult.Success)
+             if (!operationResult.Success)
                 return operationResult;
 
             entry.Value = operationResult.RelatedObject;

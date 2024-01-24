@@ -9,14 +9,13 @@ public class Investment : BaseEntity
     public int UserId { get; set; }
 
     [Required]
-    [MaxLength(50)]
+    public string AssetId { get; set; } = string.Empty;
+
+    [Required]
     public string Name { get; set; } = null!;
 
     [Required]
-    public int Symbol { get; set; }
-
-    [Required]
-    public int Quantity { get; set; }
+    public decimal Quantity { get; set; }
 
     [Required]
     public decimal PurchasePrice { get; set; }
