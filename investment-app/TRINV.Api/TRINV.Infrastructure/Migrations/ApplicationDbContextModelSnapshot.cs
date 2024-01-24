@@ -169,9 +169,7 @@ namespace TRINV.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETDATE()");
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("DownVote")
                         .HasColumnType("int");
@@ -182,7 +180,7 @@ namespace TRINV.Infrastructure.Migrations
                     b.Property<int>("UpVote")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedOn")
+                    b.Property<DateTime?>("UpdatedOn")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");

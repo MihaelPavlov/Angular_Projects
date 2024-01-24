@@ -50,7 +50,7 @@ internal class CreateNewsCommentCommandHandler : IRequestHandler<CreateNewsComme
             NewsId = request.NewsId,
             CreatedBy = _userContext.UserId,
             Comment = request.Comment,
-            CreatedOn = DateTime.Now,
+            CreatedOn = DateTime.Now
         };
 
         await _newsCommentRepository.AddAsync(newComment, cancellationToken);
