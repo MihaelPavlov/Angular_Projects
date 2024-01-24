@@ -32,7 +32,7 @@ internal class DeleteNewsCommentCommandHandler : IRequestHandler<DeleteNewsComme
 
         if (newsComment == null || newsComment.NewsId != _userContext.UserId)
             return operationResult.ReturnWithErrorMessage(
-                new NotFoundException("Comment not found"));
+                new NotFoundException($"{typeof(NewsComment)} with Id: {request.Id} was not found!"));
 
         _newsCommentRepository.Delete(newsComment);
         await _unitOfWork.SaveChangesAsync(cancellationToken);

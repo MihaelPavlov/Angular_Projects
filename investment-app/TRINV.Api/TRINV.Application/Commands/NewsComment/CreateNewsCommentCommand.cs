@@ -43,7 +43,7 @@ internal class CreateNewsCommentCommandHandler : IRequestHandler<CreateNewsComme
 
         if (news == null)
             return operationResult.ReturnWithErrorMessage(
-                new NotFoundException("News not found"));
+                new NotFoundException($"{typeof(News)} with Id: {request.NewsId} was not found!"));
 
         var newComment = new NewsComment
         {

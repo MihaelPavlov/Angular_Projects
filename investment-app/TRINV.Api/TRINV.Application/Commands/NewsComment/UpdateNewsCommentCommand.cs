@@ -14,7 +14,7 @@ public record UpdateNewsCommentCommand : IRequest<OperationResult>
     public int NewsCommentId { get; set; }
 
     [Required]
-    [MaxLength(200)]
+    [MaxLength(255)]
     public string Comment { get; set; } = string.Empty;
 }
 
@@ -42,7 +42,7 @@ internal class UpdateNewsCommentCommandHandler : IRequestHandler<UpdateNewsComme
 
         if (newsComment == null || newsComment.NewsId != _userContext.UserId)
             return operationResult.ReturnWithErrorMessage(
-                new NotFoundException("Comment not found"));
+                new NotFoundException($"{typeof(NewsComment)} with Id: {request.NewsCommentId} was not found!"));
 
         newsComment.Comment = request.Comment;
         newsComment.UpdatedOn = DateTime.Now;
