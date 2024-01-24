@@ -20,7 +20,7 @@ public class UserNotificationController : ControllerBase
     }
 
     [HttpGet]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OperationResult<IEnumerable<UserNotification>>))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OperationResult<IEnumerable<GetAllUserNotificationsQueryModel>>))]
     public async Task<IActionResult> GetUserNotificationsList(CancellationToken cancellationToken) =>
         this.Ok(await _mediator.Send(new GetAllUserNotificationsQuery(), cancellationToken));
 
