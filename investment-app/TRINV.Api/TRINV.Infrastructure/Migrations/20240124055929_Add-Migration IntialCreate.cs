@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TRINV.Infrastructure.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class AddMigrationIntialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -48,6 +48,7 @@ namespace TRINV.Infrastructure.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Quantity = table.Column<decimal>(type: "numeric(18,8)", nullable: false),
                     PurchasePrice = table.Column<decimal>(type: "numeric(18,2)", nullable: false),
+                    PurchasePricePerUnit = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     InvestmentType = table.Column<int>(type: "int", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
                     IsFromOutsideProvider = table.Column<bool>(type: "bit", nullable: false)

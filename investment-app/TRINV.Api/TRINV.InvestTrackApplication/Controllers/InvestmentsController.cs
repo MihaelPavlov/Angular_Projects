@@ -27,6 +27,14 @@ public class InvestmentsController : Controller
         return Ok(result);
     }
 
+    [HttpGet("dashboard-info")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OperationResult<GetInvestmentDashboardInfoQueryModel>))]
+    public async Task<IActionResult> GetInvestmentDasboardInfo(CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new GetInvestmentDashboardInfoQuery(), cancellationToken);
+        return Ok(result);
+    }
+
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OperationResult<GetInvestmentByIdQueryModel>))]
     public async Task<IActionResult> GetInvestmentById(int id,CancellationToken cancellationToken)

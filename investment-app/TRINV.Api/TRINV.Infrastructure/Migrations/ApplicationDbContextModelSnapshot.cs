@@ -95,6 +95,9 @@ namespace TRINV.Infrastructure.Migrations
                     b.Property<decimal>("PurchasePrice")
                         .HasColumnType("numeric(18,2)");
 
+                    b.Property<decimal>("PurchasePricePerUnit")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<decimal>("Quantity")
                         .HasColumnType("numeric(18,8)");
 

@@ -1,6 +1,8 @@
 ﻿using MediatR;
 using System.ComponentModel.DataAnnotations;
 using TRINV.Application.Interfaces;
+using TRINV.Application.Queries.DigitalCurrency;
+using TRINV.Application.Queries.Stock;
 using TRINV.Domain.Enums;
 using TRINV.Shared.Business.Exceptions;
 using TRINV.Shared.Business.Extension;
@@ -18,19 +20,22 @@ public class UpdateInvestmentCommand : IRequest<OperationResult>
 
     [Required]
     public decimal PurchasePrice { get; set; }
+
+    [Required]
+    public decimal PurchasePricePerUnit { get; set; }
 }
 
 internal class UpdateInvestmentCommandHandler : IRequestHandler<UpdateInvestmentCommand, OperationResult>
 {
     readonly IRepository<Domain.Entities.Investment> _repository;
     readonly IUnitOfWork _unitOfWork;
-    readonly IUserContext _userContext;
 
-    public UpdateInvestmentCommandHandler(IRepository<Domain.Entities.Investment> repository, IUnitOfWork unitOfWork, IUserContext userContext)
+    public UpdateInvestmentCommandHandler(
+        IRepository<Domain.Entities.Investment> repository,
+        IUnitOfWork unitOfWork)
     {
         this._repository = repository;
         this._unitOfWork = unitOfWork;
-        this._userContext = userContext;
     }
 
     public async Task<OperationResult> Handle(UpdateInvestmentCommand request, CancellationToken cancellationToken)
@@ -41,8 +46,10 @@ internal class UpdateInvestmentCommandHandler : IRequestHandler<UpdateInvestment
         if (investment is null)
             return operationResult.ReturnWithErrorMessage(new NotFoundException($"{nameof(investment)} with Id {request.Id} was not found"));
 
+
         investment.PurchasePrice = request.PurchasePrice;
         investment.Quantity = request.Quantity;
+        investment.PurchasePricePerUnit = request.PurchasePricePerUnit;
 
         this._repository.Update(investment);
 

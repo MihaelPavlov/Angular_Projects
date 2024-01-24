@@ -12,8 +12,8 @@ using TRINV.Infrastructure;
 namespace TRINV.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240123072832_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20240124055929_Add-Migration IntialCreate")]
+    partial class AddMigrationIntialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -96,6 +96,9 @@ namespace TRINV.Infrastructure.Migrations
 
                     b.Property<decimal>("PurchasePrice")
                         .HasColumnType("numeric(18,2)");
+
+                    b.Property<decimal>("PurchasePricePerUnit")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("Quantity")
                         .HasColumnType("numeric(18,8)");

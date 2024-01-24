@@ -1,7 +1,12 @@
 ﻿using MediatR;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Cryptography.X509Certificates;
 using TRINV.Application.Interfaces;
+using TRINV.Application.Queries.DigitalCurrency;
+using TRINV.Application.Queries.Stock;
 using TRINV.Domain.Enums;
+using TRINV.Shared.Business.Exceptions;
+using TRINV.Shared.Business.Extension;
 using TRINV.Shared.Business.Utilities;
 
 namespace TRINV.Application.Commands.Investment;
@@ -19,6 +24,9 @@ public class CreateInvestmentCommand : IRequest<OperationResult>
 
     [Required]
     public decimal PurchasePrice { get; set; }
+
+    [Required]
+    public decimal PurchasePricePerUnit { get; set; }
 
     [Required]
     public InvestmentType InvestmentType { get; set; }
@@ -47,6 +55,7 @@ internal class CreateInvestmentCommandHandler : IRequestHandler<CreateInvestment
             InvestmentType = request.InvestmentType,
             Name = request.Name,
             PurchasePrice = request.PurchasePrice,
+            PurchasePricePerUnit = request.PurchasePricePerUnit,
             Quantity = request.Quantity,
             UserId = 1,
             CreatedOn = DateTime.UtcNow,

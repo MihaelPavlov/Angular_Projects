@@ -21,6 +21,9 @@ public class Investment : BaseEntity
     public decimal PurchasePrice { get; set; }
 
     [Required]
+    public decimal PurchasePricePerUnit { get; set; }
+
+    [Required]
     public InvestmentType InvestmentType { get; set; }
 
     [Required]
