@@ -2,14 +2,13 @@
 
 using Domain.Entities;
 using Interfaces;
+using Mapster;
 using MediatR;
-using Shared.Business.Exceptions;
-using Shared.Business.Extension;
 using Shared.Business.Utilities;
 
-public record GetAllNotificationsQuery : IRequest<OperationResult<List<Notification>>>;
+public record GetAllNotificationsQuery : IRequest<OperationResult<IEnumerable<GetAllNotificationsQueryModel>>>;
 
-internal class GetAllNotificationsQueryHandler : IRequestHandler<GetAllNotificationsQuery, OperationResult<List<Notification>>>
+internal class GetAllNotificationsQueryHandler : IRequestHandler<GetAllNotificationsQuery, OperationResult<IEnumerable<GetAllNotificationsQueryModel>>>
 {
     readonly IRepository<Notification> _repository;
 
@@ -18,14 +17,19 @@ internal class GetAllNotificationsQueryHandler : IRequestHandler<GetAllNotificat
         _repository = repository;
     }
 
-    public async Task<OperationResult<List<Notification>>> Handle(GetAllNotificationsQuery request, CancellationToken cancellationToken)
+    public async Task<OperationResult<IEnumerable<GetAllNotificationsQueryModel>>> Handle(GetAllNotificationsQuery request, CancellationToken cancellationToken)
     {
-        var operationResult = new OperationResult<List<Notification>>();
+        var operationResult = new OperationResult<IEnumerable<GetAllNotificationsQueryModel>>();
 
         var notifications = await _repository.GetAllAsync(cancellationToken);
 
-        operationResult.RelatedObject = notifications.ToList();
+        operationResult.RelatedObject = notifications.Adapt<IEnumerable<GetAllNotificationsQueryModel>>();
 
         return operationResult;
     }
 }
+
+public record GetAllNotificationsQueryModel(
+    int Id,
+    int NotificationType,
+    string Message);

@@ -13,11 +13,5 @@ internal static class CommonMapping
             entity.Property(i => i.Quantity).HasColumnType("numeric(18,8)");
             entity.Property(i => i.CreatedOn).HasDefaultValueSql("GETDATE()");
         });
-
-        builder.Entity<NewsComment>(entity =>
-        {
-            entity.Property(i => i.CreatedOn).HasDefaultValueSql("GETDATE()");
-        });
-
     }
 }

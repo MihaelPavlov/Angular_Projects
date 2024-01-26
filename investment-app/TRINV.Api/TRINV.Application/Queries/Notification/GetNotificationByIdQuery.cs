@@ -2,14 +2,15 @@
 
 using Domain.Entities;
 using Interfaces;
+using Mapster;
 using MediatR;
 using Shared.Business.Exceptions;
 using Shared.Business.Extension;
 using Shared.Business.Utilities;
 
-public record GetNotificationByIdQuery(int Id) : IRequest<OperationResult<Notification>>;
+public record GetNotificationByIdQuery(int Id) : IRequest<OperationResult<GetNotificationByIdQueryModel>>;
 
-internal class GetNotificationByIdQueryHandler : IRequestHandler<GetNotificationByIdQuery, OperationResult<Notification>>
+internal class GetNotificationByIdQueryHandler : IRequestHandler<GetNotificationByIdQuery, OperationResult<GetNotificationByIdQueryModel>>
 {
     readonly IRepository<Notification> _repository;
 
@@ -18,17 +19,22 @@ internal class GetNotificationByIdQueryHandler : IRequestHandler<GetNotification
         _repository = repository;
     }
 
-    public async Task<OperationResult<Notification>> Handle(GetNotificationByIdQuery request, CancellationToken cancellationToken)
+    public async Task<OperationResult<GetNotificationByIdQueryModel>> Handle(GetNotificationByIdQuery request, CancellationToken cancellationToken)
     {
-        var operationResult = new OperationResult<Notification>();
+        var operationResult = new OperationResult<GetNotificationByIdQueryModel>();
 
         var notification = await _repository.GetByIdAsync(request.Id, cancellationToken);
 
         if (notification == null) 
             return operationResult.ReturnWithErrorMessage(new NotFoundException("No notification was found!"));
 
-        operationResult.RelatedObject = notification;
+        operationResult.RelatedObject = notification.Adapt<GetNotificationByIdQueryModel>();
 
         return operationResult;
     }
 }
+
+public record GetNotificationByIdQueryModel(
+    int Id,
+    int NotificationType,
+    string Message);

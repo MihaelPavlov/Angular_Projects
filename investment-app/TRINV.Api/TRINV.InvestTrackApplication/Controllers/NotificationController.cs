@@ -19,12 +19,12 @@ public class NotificationController : ControllerBase
     }
 
     [HttpGet]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OperationResult<IEnumerable<Notification>>))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OperationResult<IEnumerable<GetAllNotificationsQueryModel>>))]
     public async Task<IActionResult> GetNotificationsList(CancellationToken cancellationToken) =>
         this.Ok(await _mediator.Send(new GetAllNotificationsQuery(), cancellationToken));
 
     [HttpGet("{id}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OperationResult<Notification>))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OperationResult<GetNotificationByIdQueryModel>))]
     public async Task<IActionResult> GetNotificationById(int id, CancellationToken cancellationToken) =>
         this.Ok(await _mediator.Send(new GetNotificationByIdQuery(id), cancellationToken));
     

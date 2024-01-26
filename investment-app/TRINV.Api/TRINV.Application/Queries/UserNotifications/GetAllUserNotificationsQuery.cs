@@ -2,14 +2,15 @@
 
 using Domain.Entities;
 using Interfaces;
+using Mapster;
 using MediatR;
 using Shared.Business.Exceptions;
 using Shared.Business.Extension;
 using Shared.Business.Utilities;
 
-public record GetAllUserNotificationsQuery : IRequest<OperationResult<IEnumerable<UserNotification>>>;
+public record GetAllUserNotificationsQuery : IRequest<OperationResult<IEnumerable<GetAllUserNotificationsQueryModel>>>;
 
-internal class GetAllUserNotificationsQueryHandler : IRequestHandler<GetAllUserNotificationsQuery, OperationResult<IEnumerable<UserNotification>>>
+internal class GetAllUserNotificationsQueryHandler : IRequestHandler<GetAllUserNotificationsQuery, OperationResult<IEnumerable<GetAllUserNotificationsQueryModel>>>
 {
     readonly IRepository<UserNotification> _userNotificationRepository;
     readonly IUserContext _userRepository;
@@ -20,11 +21,10 @@ internal class GetAllUserNotificationsQueryHandler : IRequestHandler<GetAllUserN
         _userRepository = userRepository;
     }
 
-    public async Task<OperationResult<IEnumerable<UserNotification>>> Handle(GetAllUserNotificationsQuery request, CancellationToken cancellationToken)
+    public async Task<OperationResult<IEnumerable<GetAllUserNotificationsQueryModel>>> Handle(GetAllUserNotificationsQuery request, CancellationToken cancellationToken)
     {
-        var operationResult = new OperationResult<IEnumerable<UserNotification>>();
+        var operationResult = new OperationResult<IEnumerable<GetAllUserNotificationsQueryModel>>();
 
-        //TODO: Throws server error 500!
         var userNotifications = await _userNotificationRepository
             .GetAllWithPredicateAsync(x => x.UserId == _userRepository.UserId, cancellationToken);
 
@@ -32,8 +32,17 @@ internal class GetAllUserNotificationsQueryHandler : IRequestHandler<GetAllUserN
             return operationResult.ReturnWithErrorMessage(
                 new NotFoundException("No notifications were found for the current user!"));
 
-        operationResult.RelatedObject = userNotifications;
+        operationResult.RelatedObject = userNotifications.Adapt<IEnumerable<GetAllUserNotificationsQueryModel>>();
 
         return operationResult;
     }
 }
+
+public record GetAllUserNotificationsQueryModel(
+    int Id,
+    int UserId,
+    string Message,
+    int NotificationType,
+    DateTime ReceivedDate,
+    string NotificationUrl,
+    bool IsSeen);
