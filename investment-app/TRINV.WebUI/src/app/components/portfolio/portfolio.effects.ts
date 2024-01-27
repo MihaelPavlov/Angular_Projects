@@ -1,5 +1,5 @@
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { map, of, switchMap, catchError, tap } from 'rxjs';
+import { map, of, switchMap, catchError, tap, delay } from 'rxjs';
 import { InvestmentService } from '../../services/investment.service';
 import { Injectable } from '@angular/core';
 import * as fromInvestments from './portfolio.action';
@@ -20,6 +20,7 @@ export class InvestmentEffects {
       switchMap((data: fromInvestments.GetInvestments) => {
         return this.investmentService.getInvestments();
       }),
+      delay(4000), //FIXME: Remove Delay
       map((operationResult: ExtendedOperationResult<IInvestment[]>) => {
         return new fromInvestments.GetInvestmentsSuccess({
           investments: operationResult.relatedObject,
@@ -89,8 +90,8 @@ export class InvestmentEffects {
               })
             ),
             catchError((error) => {
-              console.log("------------------------- error ", error);
-              
+              console.log('------------------------- error ', error);
+
               this.toastService.error({
                 message: 'Something get wrong',
                 type: ToastType.Error,

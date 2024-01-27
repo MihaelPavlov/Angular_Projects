@@ -2,3 +2,10 @@
   position: relative;
   z-index: 0;
 }
+.text-green {
+  color: green;
+}
+
+.text-red {
+  color: red;
+}

@@ -1,266 +1,334 @@
-<mat-tab-group dynamicHeight  class="index">
+<mat-tab-group dynamicHeight class="index">
   <mat-tab label="Crypto Currencies">
     <ng-container *matTabContent>
-
       <div class="flex flex-col bg-gray-100">
 
-        <div class="flex-1 p4">
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-2 p-2">
-            <div class=" p-4">
-              <div
-                class="
-        px-5 pt-5
-     bg-white border border-gray-200 rounded-t-lg shadow hover:bg-gray-100 border-b-pink-400 border-b-4">
-                <img src="assets/images/dollar.png" alt="dollar icon"
-                     class="inline w-12 h-12 rounded-full object-cover bg-pink-400">
-
-                <h5 class=" inline pl-3 mb-1 text-2xl font-bold tracking-tight text-gray-400 dark:text-white">Total
-                  Invested
-                  Amount</h5>
-                <p class="text-center text-lg font-normal text-gray-700 dark:text-gray-400">$23321.21M</p>
-              </div>
-            </div>
-            <div class=" p-4">
-              <div
-                class="px-5 pt-5 bg-white border border-gray-200 rounded-t-lg shadow hover:bg-gray-100  border-b-purple-400 border-b-4">
-                <img src="assets/images/graph-64.png" alt="chart up"
-                     class="inline w-12 h-12 rounded-full object-cover bg-purple-400">
-
-                <h5 class="inline pl-3 mb-1 text-2xl font-bold tracking-tight text-gray-400 dark:text-white">Number of
-                  Investments</h5>
-                <p class="text-center text-lg font-normal text-gray-700 dark:text-gray-400">154</p>
-              </div>
-
-            </div>
-            <div class="p-4">
-              <div
-                class="px-5 pt-5 bg-white border border-gray-200 rounded-t-lg shadow hover:bg-gray-100  border-b-blue-400 border-b-4">
-                <img src='assets/images/return-icon.png' alt="rate of return icon"
-                     class="inline w-12 h-12 rounded-full object-cover color bg-blue-400">
-                <h5 class="inline pl-3 mb-1 text-2xl font-bold tracking-tight text-gray-400 dark:text-white">
-                  Rate of Return</h5>
-                <p class="text-center text-lg font-normal font text-gray-700 dark:text-gray-400">23.41%</p>
-              </div>
-
-            </div>
-          </div>
-        </div>
-
+        <dashboard-info></dashboard-info>
 
         <div class="flex-1 flex">
-
           <div class="flex-1 p-4">
-
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2 p-2">
-
-              <div class="bg-white p-4 rounded-md">
-                <h2 class="text-gray-500 text-lg pb-1">Sum Price Chart</h2>
-
-                <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-6"></div>
-                <div *ngIf="!(this.isLoading$ | async)">
-                   <crypto-doughnut-chart  *ngIf="this.chartData != null"
-                                                    [data]="this.chartData">
-                               </crypto-doughnut-chart>
-                </div>
-              </div>
+              <dashboard-chart class="bg-white p-4 rounded-md"></dashboard-chart>
 
               <div class="bg-white p-4 rounded-md">
                 <div class="flex">
-                <h2 class="text-gray-500 text-lg pb-1">Percent Of My Portfolio</h2>
-                  <div class="relative w-full px-2 py-2 max-w-full flex-grow flex-1 text-right">
-                    <button type="button"
-                            class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
+                  <h2 class="text-gray-500 text-lg pb-1">
+                    Percent Of My Portfolio
+                  </h2>
+                  <div
+                    class="relative w-full px-2 py-2 max-w-full flex-grow flex-1 text-right"
+                  >
+                    <button
+                      type="button"
+                      class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    >
                       See all
                     </button>
                   </div>
                 </div>
-                <div class="bg-gradient-to-r from-cyan-300 to-cyan-700 h-px"></div>
+                <div
+                  class="bg-gradient-to-r from-cyan-300 to-cyan-700 h-px"
+                ></div>
 
-                    <div class="block w-full overflow-x-auto">
-                      <table class="items-center w-full bg-transparent border-collapse">
-                        <thead class="thead-light">
-                        <tr>
-                          <th
-                            class="px-6  align-middle border-b border-b-solid border-blue-300 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap text-left">
-                            Asset
-                          </th>
-                          <th
-                            class="px-6  align-middle border-b border-b-solid border-blue-300 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap  text-left">
-                            Amount
-                          </th>
-                          <th
-                            class="px-6  align-middle border-b border-b-solid border-blue-300 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap  text-left min-w-140-px"></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                          <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                            Bitcoin
-                          </th>
-                          <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"> 0.99203</td>
-                          <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                            <div class="flex items-center"><span class="mr-2">60%</span>
-                              <div class="relative w-full">
-                                <div class="overflow-hidden h-2 text-xs flex rounded bg-red-200">
-                                  <div
-                                    class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-red-500"
-                                    style="width: 60%;"></div>
-                                </div>
+                <div class="block w-full overflow-x-auto">
+                  <table
+                    class="items-center w-full bg-transparent border-collapse"
+                  >
+                    <thead class="thead-light">
+                      <tr>
+                        <th
+                          class="px-6 align-middle border-b border-b-solid border-blue-300 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap text-left"
+                        >
+                          Asset
+                        </th>
+                        <th
+                          class="px-6 align-middle border-b border-b-solid border-blue-300 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap text-left"
+                        >
+                          Amount
+                        </th>
+                        <th
+                          class="px-6 align-middle border-b border-b-solid border-blue-300 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap text-left min-w-140-px"
+                        ></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th
+                          class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left"
+                        >
+                          Bitcoin
+                        </th>
+                        <td
+                          class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                        >
+                          0.99203
+                        </td>
+                        <td
+                          class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                        >
+                          <div class="flex items-center">
+                            <span class="mr-2">60%</span>
+                            <div class="relative w-full">
+                              <div
+                                class="overflow-hidden h-2 text-xs flex rounded bg-red-200"
+                              >
+                                <div
+                                  class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-red-500"
+                                  style="width: 60%"
+                                ></div>
                               </div>
                             </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                            Ethereum
-                          </th>
-                          <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"> 5,480</td>
-                          <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                            <div class="flex items-center"><span class="mr-2">70%</span>
-                              <div class="relative w-full">
-                                <div class="overflow-hidden h-2 text-xs flex rounded bg-emerald-200">
-                                  <div
-                                    class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-emerald-500"
-                                    style="width: 70%;"></div>
-                                </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th
+                          class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left"
+                        >
+                          Ethereum
+                        </th>
+                        <td
+                          class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                        >
+                          5,480
+                        </td>
+                        <td
+                          class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                        >
+                          <div class="flex items-center">
+                            <span class="mr-2">70%</span>
+                            <div class="relative w-full">
+                              <div
+                                class="overflow-hidden h-2 text-xs flex rounded bg-emerald-200"
+                              >
+                                <div
+                                  class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-emerald-500"
+                                  style="width: 70%"
+                                ></div>
                               </div>
                             </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left"> Google
-                          </th>
-                          <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"> 4,807</td>
-                          <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                            <div class="flex items-center"><span class="mr-2">80%</span>
-                              <div class="relative w-full">
-                                <div class="overflow-hidden h-2 text-xs flex rounded bg-purple-200">
-                                  <div
-                                    class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-purple-500" a
-                                    style="width: 80%;"></div>
-                                </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th
+                          class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left"
+                        >
+                          Google
+                        </th>
+                        <td
+                          class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                        >
+                          4,807
+                        </td>
+                        <td
+                          class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                        >
+                          <div class="flex items-center">
+                            <span class="mr-2">80%</span>
+                            <div class="relative w-full">
+                              <div
+                                class="overflow-hidden h-2 text-xs flex rounded bg-purple-200"
+                              >
+                                <div
+                                  class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-purple-500"
+                                  a
+                                  style="width: 80%"
+                                ></div>
                               </div>
                             </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                            Instagram
-                          </th>
-                          <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"> 3,678</td>
-                          <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                            <div class="flex items-center"><span class="mr-2">75%</span>
-                              <div class="relative w-full">
-                                <div class="overflow-hidden h-2 text-xs flex rounded bg-blue-300">
-                                  <div
-                                    class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-500"
-                                    style="width: 75%;"></div>
-                                </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th
+                          class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left"
+                        >
+                          Instagram
+                        </th>
+                        <td
+                          class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                        >
+                          3,678
+                        </td>
+                        <td
+                          class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                        >
+                          <div class="flex items-center">
+                            <span class="mr-2">75%</span>
+                            <div class="relative w-full">
+                              <div
+                                class="overflow-hidden h-2 text-xs flex rounded bg-blue-300"
+                              >
+                                <div
+                                  class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-500"
+                                  style="width: 75%"
+                                ></div>
                               </div>
                             </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                            twitter
-                          </th>
-                          <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"> 2,645</td>
-                          <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                            <div class="flex items-center"><span class="mr-2">30%</span>
-                              <div class="relative w-full">
-                                <div class="overflow-hidden h-2 text-xs flex rounded bg-orange-200">
-                                  <div
-                                    class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-orange-500"
-                                    style="width: 30%;"></div>
-                                </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th
+                          class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left"
+                        >
+                          twitter
+                        </th>
+                        <td
+                          class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                        >
+                          2,645
+                        </td>
+                        <td
+                          class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                        >
+                          <div class="flex items-center">
+                            <span class="mr-2">30%</span>
+                            <div class="relative w-full">
+                              <div
+                                class="overflow-hidden h-2 text-xs flex rounded bg-orange-200"
+                              >
+                                <div
+                                  class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-orange-500"
+                                  style="width: 30%"
+                                ></div>
                               </div>
                             </div>
-                          </td>
-                        </tr>
-                        </tbody>
-                      </table>
-                    </div>
-
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
 
               <div class="bg-white p-4 rounded-md">
-                <h2 class="text-gray-500 text-lg pb-4">Best Performers In Your Portfolio</h2>
+                <h2 class="text-gray-500 text-lg pb-4">
+                  Best Performers In Your Portfolio
+                </h2>
                 <div class="my-1"></div>
-                <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-6"></div>
+                <div
+                  class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-6"
+                ></div>
                 <table class="w-full table-auto text-sm">
                   <thead>
-                  <tr class="text-sm leading-normal">
-                    <th
-                      class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">
-                      Symbol
-                    </th>
-                    <th
-                      class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">
-                      Name
-                    </th>
-                    <th
-                      class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">
-                      Total
-                    </th>
-                    <th
-                      class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">
-                      Rate
-                    </th>
-                  </tr>
+                    <tr class="text-sm leading-normal">
+                      <th
+                        class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light"
+                      >
+                        Symbol
+                      </th>
+                      <th
+                        class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light"
+                      >
+                        Name
+                      </th>
+                      <th
+                        class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light"
+                      >
+                        Total
+                      </th>
+                      <th
+                        class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light"
+                      >
+                        Rate
+                      </th>
+                    </tr>
                   </thead>
                   <tbody>
-                  <tr class="hover:bg-gray-100">
-                    <td class="py-2 px-4 border-b border-grey-light"><img src="https://via.placeholder.com/40"
-                                                                          alt="Foto Perfil"
-                                                                          class="rounded-full h-10 w-10"></td>
-                    <td class="py-2 px-4 border-b border-grey-light">Bitcoin</td>
-                    <td class="py-2 px-4 border-b border-grey-light">231.21k</td>
-                    <td class="py-2 px-4 border-b border-grey-light">40%</td>
-                  </tr>
-                  <tr class="hover:bg-gray-100">
-                    <td class="py-2 px-4 border-b border-grey-light"><img src="https://via.placeholder.com/40"
-                                                                          alt="Foto Perfil"
-                                                                          class="rounded-full h-10 w-10"></td>
-                    <td class="py-2 px-4 border-b border-grey-light">Ethereum</td>
-                    <td class="py-2 px-4 border-b border-grey-light">655$</td>
-                    <td class="py-2 px-4 border-b border-grey-light">-13%</td>
-                  </tr>
-                  <tr class="hover:bg-gray-100">
-                    <td class="py-2 px-4 border-b border-grey-light"><img src="https://via.placeholder.com/40"
-                                                                          alt="Foto Perfil"
-                                                                          class="rounded-full h-10 w-10"></td>
-                    <td class="py-2 px-4 border-b border-grey-light">Ethereum</td>
-                    <td class="py-2 px-4 border-b border-grey-light">655$</td>
-                    <td class="py-2 px-4 border-b border-grey-light">-13%</td>
-                  </tr>
-                  <tr class="hover:bg-gray-100">
-                    <td class="py-2 px-4 border-b border-grey-light"><img src="https://via.placeholder.com/40"
-                                                                          alt="Foto Perfil"
-                                                                          class="rounded-full h-10 w-10"></td>
-                    <td class="py-2 px-4 border-b border-grey-light">Ethereum</td>
-                    <td class="py-2 px-4 border-b border-grey-light">655$</td>
-                    <td class="py-2 px-4 border-b border-grey-light">-13%</td>
-                  </tr>
-                  <tr class="hover:bg-gray-100">
-                    <td class="py-2 px-4 border-b border-grey-light"><img src="https://via.placeholder.com/40"
-                                                                          alt="Foto Perfil"
-                                                                          class="rounded-full h-10 w-10"></td>
-                    <td class="py-2 px-4 border-b border-grey-light">Ethereum</td>
-                    <td class="py-2 px-4 border-b border-grey-light">655$</td>
-                    <td class="py-2 px-4 border-b border-grey-light">-13%</td>
-                  </tr>
-                  <tr class="hover:bg-gray-100">
-                    <td class="py-2 px-4 border-b border-grey-light"><img src="https://via.placeholder.com/40"
-                                                                          alt="Foto Perfil"
-                                                                          class="rounded-full h-10 w-10"></td>
-                    <td class="py-2 px-4 border-b border-grey-light">Ethereum</td>
-                    <td class="py-2 px-4 border-b border-grey-light">655$</td>
-                    <td class="py-2 px-4 border-b border-grey-light">-13%</td>
-                  </tr>
+                    <tr class="hover:bg-gray-100">
+                      <td class="py-2 px-4 border-b border-grey-light">
+                        <img
+                          src="https://via.placeholder.com/40"
+                          alt="Foto Perfil"
+                          class="rounded-full h-10 w-10"
+                        />
+                      </td>
+                      <td class="py-2 px-4 border-b border-grey-light">
+                        Bitcoin
+                      </td>
+                      <td class="py-2 px-4 border-b border-grey-light">
+                        231.21k
+                      </td>
+                      <td class="py-2 px-4 border-b border-grey-light">40%</td>
+                    </tr>
+                    <tr class="hover:bg-gray-100">
+                      <td class="py-2 px-4 border-b border-grey-light">
+                        <img
+                          src="https://via.placeholder.com/40"
+                          alt="Foto Perfil"
+                          class="rounded-full h-10 w-10"
+                        />
+                      </td>
+                      <td class="py-2 px-4 border-b border-grey-light">
+                        Ethereum
+                      </td>
+                      <td class="py-2 px-4 border-b border-grey-light">655$</td>
+                      <td class="py-2 px-4 border-b border-grey-light">-13%</td>
+                    </tr>
+                    <tr class="hover:bg-gray-100">
+                      <td class="py-2 px-4 border-b border-grey-light">
+                        <img
+                          src="https://via.placeholder.com/40"
+                          alt="Foto Perfil"
+                          class="rounded-full h-10 w-10"
+                        />
+                      </td>
+                      <td class="py-2 px-4 border-b border-grey-light">
+                        Ethereum
+                      </td>
+                      <td class="py-2 px-4 border-b border-grey-light">655$</td>
+                      <td class="py-2 px-4 border-b border-grey-light">-13%</td>
+                    </tr>
+                    <tr class="hover:bg-gray-100">
+                      <td class="py-2 px-4 border-b border-grey-light">
+                        <img
+                          src="https://via.placeholder.com/40"
+                          alt="Foto Perfil"
+                          class="rounded-full h-10 w-10"
+                        />
+                      </td>
+                      <td class="py-2 px-4 border-b border-grey-light">
+                        Ethereum
+                      </td>
+                      <td class="py-2 px-4 border-b border-grey-light">655$</td>
+                      <td class="py-2 px-4 border-b border-grey-light">-13%</td>
+                    </tr>
+                    <tr class="hover:bg-gray-100">
+                      <td class="py-2 px-4 border-b border-grey-light">
+                        <img
+                          src="https://via.placeholder.com/40"
+                          alt="Foto Perfil"
+                          class="rounded-full h-10 w-10"
+                        />
+                      </td>
+                      <td class="py-2 px-4 border-b border-grey-light">
+                        Ethereum
+                      </td>
+                      <td class="py-2 px-4 border-b border-grey-light">655$</td>
+                      <td class="py-2 px-4 border-b border-grey-light">-13%</td>
+                    </tr>
+                    <tr class="hover:bg-gray-100">
+                      <td class="py-2 px-4 border-b border-grey-light">
+                        <img
+                          src="https://via.placeholder.com/40"
+                          alt="Foto Perfil"
+                          class="rounded-full h-10 w-10"
+                        />
+                      </td>
+                      <td class="py-2 px-4 border-b border-grey-light">
+                        Ethereum
+                      </td>
+                      <td class="py-2 px-4 border-b border-grey-light">655$</td>
+                      <td class="py-2 px-4 border-b border-grey-light">-13%</td>
+                    </tr>
                   </tbody>
                 </table>
                 <div class="text-right mt-4">
-                  <button class="bg-cyan-500 hover:bg-cyan-600 text-white  py-2 px-4 rounded">
+                  <button
+                    class="bg-cyan-500 hover:bg-cyan-600 text-white py-2 px-4 rounded"
+                  >
                     View All
                   </button>
                 </div>
@@ -269,72 +337,120 @@
               <div class="bg-white p-4 rounded-md">
                 <h2 class="text-gray-500 text-lg pb-4">Last Investments</h2>
                 <div class="my-1"></div>
-                <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-6"></div>
+                <div
+                  class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-6"
+                ></div>
                 <table class="w-full table-auto text-sm">
                   <thead>
-                  <tr class="text-sm leading-normal">
-                    <th
-                      class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">
-                      Crypto
-                    </th>
-                    <th
-                      class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">
-                      Date
-                    </th>
-                    <th
-                      class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">
-                      Amount
-                    </th>
-                  </tr>
+                    <tr class="text-sm leading-normal">
+                      <th
+                        class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light"
+                      >
+                        Crypto
+                      </th>
+                      <th
+                        class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light"
+                      >
+                        Date
+                      </th>
+                      <th
+                        class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light"
+                      >
+                        Amount
+                      </th>
+                    </tr>
                   </thead>
                   <tbody>
-                  <tr class="hover:bg-gray-100">
-                    <td class="py-2 px-4 border-b border-grey-light"><img src="https://via.placeholder.com/40"
-                                                                          alt="Foto Perfil"
-                                                                          class="rounded-full h-10 w-10"></td>
-                    <td class="py-2 px-4 border-b border-grey-light">27/07/2023</td>
-                    <td class="py-2 px-4 border-b border-grey-light">1500$</td>
-                  </tr>
-                  <tr class="hover:bg-gray-100">
-                    <td class="py-2 px-4 border-b border-grey-light"><img src="https://via.placeholder.com/40"
-                                                                          alt="Foto Perfil"
-                                                                          class="rounded-full h-10 w-10"></td>
-                    <td class="py-2 px-4 border-b border-grey-light">27/07/2023</td>
-                    <td class="py-2 px-4 border-b border-grey-light">1500$</td>
-                  </tr>
-                  <tr class="hover:bg-gray-100">
-                    <td class="py-2 px-4 border-b border-grey-light"><img src="https://via.placeholder.com/40"
-                                                                          alt="Foto Perfil"
-                                                                          class="rounded-full h-10 w-10"></td>
-                    <td class="py-2 px-4 border-b border-grey-light">27/07/2023</td>
-                    <td class="py-2 px-4 border-b border-grey-light">131$</td>
-                  </tr>
-                  <tr class="hover:bg-gray-100">
-                    <td class="py-2 px-4 border-b border-grey-light"><img src="https://via.placeholder.com/40"
-                                                                          alt="Foto Perfil"
-                                                                          class="rounded-full h-10 w-10"></td>
-                    <td class="py-2 px-4 border-b border-grey-light">27/07/2023</td>
-                    <td class="py-2 px-4 border-b border-grey-light">775$</td>
-                  </tr>
-                  <tr class="hover:bg-gray-100">
-                    <td class="py-2 px-4 border-b border-grey-light"><img src="https://via.placeholder.com/40"
-                                                                          alt="Foto Perfil"
-                                                                          class="rounded-full h-10 w-10"></td>
-                    <td class="py-2 px-4 border-b border-grey-light">27/07/2023</td>
-                    <td class="py-2 px-4 border-b border-grey-light">5433$</td>
-                  </tr>
-                  <tr class="hover:bg-gray-100">
-                    <td class="py-2 px-4 border-b border-grey-light"><img src="https://via.placeholder.com/40"
-                                                                          alt="Foto Perfil"
-                                                                          class="rounded-full h-10 w-10"></td>
-                    <td class="py-2 px-4 border-b border-grey-light">27/07/2023</td>
-                    <td class="py-2 px-4 border-b border-grey-light">312$</td>
-                  </tr>
-
+                    <tr class="hover:bg-gray-100">
+                      <td class="py-2 px-4 border-b border-grey-light">
+                        <img
+                          src="https://via.placeholder.com/40"
+                          alt="Foto Perfil"
+                          class="rounded-full h-10 w-10"
+                        />
+                      </td>
+                      <td class="py-2 px-4 border-b border-grey-light">
+                        27/07/2023
+                      </td>
+                      <td class="py-2 px-4 border-b border-grey-light">
+                        1500$
+                      </td>
+                    </tr>
+                    <tr class="hover:bg-gray-100">
+                      <td class="py-2 px-4 border-b border-grey-light">
+                        <img
+                          src="https://via.placeholder.com/40"
+                          alt="Foto Perfil"
+                          class="rounded-full h-10 w-10"
+                        />
+                      </td>
+                      <td class="py-2 px-4 border-b border-grey-light">
+                        27/07/2023
+                      </td>
+                      <td class="py-2 px-4 border-b border-grey-light">
+                        1500$
+                      </td>
+                    </tr>
+                    <tr class="hover:bg-gray-100">
+                      <td class="py-2 px-4 border-b border-grey-light">
+                        <img
+                          src="https://via.placeholder.com/40"
+                          alt="Foto Perfil"
+                          class="rounded-full h-10 w-10"
+                        />
+                      </td>
+                      <td class="py-2 px-4 border-b border-grey-light">
+                        27/07/2023
+                      </td>
+                      <td class="py-2 px-4 border-b border-grey-light">131$</td>
+                    </tr>
+                    <tr class="hover:bg-gray-100">
+                      <td class="py-2 px-4 border-b border-grey-light">
+                        <img
+                          src="https://via.placeholder.com/40"
+                          alt="Foto Perfil"
+                          class="rounded-full h-10 w-10"
+                        />
+                      </td>
+                      <td class="py-2 px-4 border-b border-grey-light">
+                        27/07/2023
+                      </td>
+                      <td class="py-2 px-4 border-b border-grey-light">775$</td>
+                    </tr>
+                    <tr class="hover:bg-gray-100">
+                      <td class="py-2 px-4 border-b border-grey-light">
+                        <img
+                          src="https://via.placeholder.com/40"
+                          alt="Foto Perfil"
+                          class="rounded-full h-10 w-10"
+                        />
+                      </td>
+                      <td class="py-2 px-4 border-b border-grey-light">
+                        27/07/2023
+                      </td>
+                      <td class="py-2 px-4 border-b border-grey-light">
+                        5433$
+                      </td>
+                    </tr>
+                    <tr class="hover:bg-gray-100">
+                      <td class="py-2 px-4 border-b border-grey-light">
+                        <img
+                          src="https://via.placeholder.com/40"
+                          alt="Foto Perfil"
+                          class="rounded-full h-10 w-10"
+                        />
+                      </td>
+                      <td class="py-2 px-4 border-b border-grey-light">
+                        27/07/2023
+                      </td>
+                      <td class="py-2 px-4 border-b border-grey-light">312$</td>
+                    </tr>
                   </tbody>
                 </table>
                 <div class="text-right mt-4">
-                  <button class="bg-cyan-500 hover:bg-cyan-600 text-white  py-2 px-4 rounded">
+                  <button
+                    class="bg-cyan-500 hover:bg-cyan-600 text-white py-2 px-4 rounded"
+                  >
                     View All
                   </button>
                 </div>
@@ -344,67 +460,65 @@
         </div>
       </div>
 
+      <!--      <div class="max-w-full">-->
 
-<!--      <div class="max-w-full">-->
+      <!--        <div class="flex m-10 xl:justify-around md:justify-between">-->
+      <!--          <div-->
+      <!--            class="-->
+      <!--     xl:w-96 md:w-60-->
+      <!--     px-5 pt-5-->
+      <!--     bg-white border border-gray-200 rounded-t-lg shadow hover:bg-gray-100 border-b-pink-400 border-b-4">-->
+      <!--            <img src="assets/images/dollar.png" alt="dollar icon"-->
+      <!--                 class="inline w-12 h-12 rounded-full object-cover bg-pink-400">-->
 
-<!--        <div class="flex m-10 xl:justify-around md:justify-between">-->
-<!--          <div-->
-<!--            class="-->
-<!--     xl:w-96 md:w-60-->
-<!--     px-5 pt-5-->
-<!--     bg-white border border-gray-200 rounded-t-lg shadow hover:bg-gray-100 border-b-pink-400 border-b-4">-->
-<!--            <img src="assets/images/dollar.png" alt="dollar icon"-->
-<!--                 class="inline w-12 h-12 rounded-full object-cover bg-pink-400">-->
+      <!--            <h5 class=" inline pl-3 mb-1 text-2xl font-bold tracking-tight text-gray-400 dark:text-white">Total Invested-->
+      <!--              Amount</h5>-->
+      <!--            <p class="text-center text-lg font-normal text-gray-700 dark:text-gray-400">$23321.21M</p>-->
+      <!--          </div>-->
 
-<!--            <h5 class=" inline pl-3 mb-1 text-2xl font-bold tracking-tight text-gray-400 dark:text-white">Total Invested-->
-<!--              Amount</h5>-->
-<!--            <p class="text-center text-lg font-normal text-gray-700 dark:text-gray-400">$23321.21M</p>-->
-<!--          </div>-->
+      <!--          <div-->
+      <!--            class="xl:w-96 md:w-60 px-5 pt-5 bg-white border border-gray-200 rounded-t-lg shadow hover:bg-gray-100  border-b-purple-400 border-b-4">-->
+      <!--            <img src="assets/images/graph-64.png" alt="chart up"-->
+      <!--                 class="inline w-12 h-12 rounded-full object-cover bg-purple-400">-->
 
-<!--          <div-->
-<!--            class="xl:w-96 md:w-60 px-5 pt-5 bg-white border border-gray-200 rounded-t-lg shadow hover:bg-gray-100  border-b-purple-400 border-b-4">-->
-<!--            <img src="assets/images/graph-64.png" alt="chart up"-->
-<!--                 class="inline w-12 h-12 rounded-full object-cover bg-purple-400">-->
+      <!--            <h5 class="inline pl-3 mb-1 text-2xl font-bold tracking-tight text-gray-400 dark:text-white">Number of-->
+      <!--              Investments</h5>-->
+      <!--            <p class="text-center text-lg font-normal text-gray-700 dark:text-gray-400">154</p>-->
+      <!--          </div>-->
 
-<!--            <h5 class="inline pl-3 mb-1 text-2xl font-bold tracking-tight text-gray-400 dark:text-white">Number of-->
-<!--              Investments</h5>-->
-<!--            <p class="text-center text-lg font-normal text-gray-700 dark:text-gray-400">154</p>-->
-<!--          </div>-->
+      <!--          <div-->
+      <!--            class="xl:w-96 md:w-60 px-5 pt-5 bg-white border border-gray-200 rounded-t-lg shadow hover:bg-gray-100  border-b-blue-400 border-b-4">-->
+      <!--            <img src='assets/images/return-icon.png' alt="rate of return icon"-->
+      <!--                 class="inline w-12 h-12 rounded-full object-cover color bg-blue-400">-->
+      <!--            <h5 class="inline pl-3 mb-1 text-2xl font-bold tracking-tight text-gray-400 dark:text-white">-->
+      <!--              Rate of Return</h5>-->
+      <!--            <p class="text-center text-lg font-normal font text-gray-700 dark:text-gray-400">23.41%</p>-->
+      <!--          </div>-->
+      <!--        </div>-->
 
-<!--          <div-->
-<!--            class="xl:w-96 md:w-60 px-5 pt-5 bg-white border border-gray-200 rounded-t-lg shadow hover:bg-gray-100  border-b-blue-400 border-b-4">-->
-<!--            <img src='assets/images/return-icon.png' alt="rate of return icon"-->
-<!--                 class="inline w-12 h-12 rounded-full object-cover color bg-blue-400">-->
-<!--            <h5 class="inline pl-3 mb-1 text-2xl font-bold tracking-tight text-gray-400 dark:text-white">-->
-<!--              Rate of Return</h5>-->
-<!--            <p class="text-center text-lg font-normal font text-gray-700 dark:text-gray-400">23.41%</p>-->
-<!--          </div>-->
-<!--        </div>-->
+      <!--        <div class="flex m-10 xl:justify-around md:justify-between" *ngIf="!(this.isLoading$ | async)">-->
 
-<!--        <div class="flex m-10 xl:justify-around md:justify-between" *ngIf="!(this.isLoading$ | async)">-->
+      <!--          <div-->
+      <!--            class="flex w-2/5 my-5 mx-11 justify-center bg-white border border-gray-200 rounded-md shadow hover:bg-gray-50">-->
+      <!--            <div>-->
+      <!--              <p class="text-center text-lg font-normal font text-gray-400 ml-2 mt-2">Sum Price Chart</p>-->
+      <!--              <crypto-doughnut-chart *ngIf="this.chartData != null"-->
+      <!--                                     [data]="this.chartData">-->
 
-<!--          <div-->
-<!--            class="flex w-2/5 my-5 mx-11 justify-center bg-white border border-gray-200 rounded-md shadow hover:bg-gray-50">-->
-<!--            <div>-->
-<!--              <p class="text-center text-lg font-normal font text-gray-400 ml-2 mt-2">Sum Price Chart</p>-->
-<!--              <crypto-doughnut-chart *ngIf="this.chartData != null"-->
-<!--                                     [data]="this.chartData">-->
+      <!--              </crypto-doughnut-chart>-->
+      <!--            </div>-->
+      <!--          </div>-->
 
-<!--              </crypto-doughnut-chart>-->
-<!--            </div>-->
-<!--          </div>-->
+      <!--          <div-->
+      <!--            class="flex w-2/5 my-5 mx-11 justify-center bg-white border border-gray-200 rounded-md shadow hover:bg-gray-50">-->
 
-<!--          <div-->
-<!--            class="flex w-2/5 my-5 mx-11 justify-center bg-white border border-gray-200 rounded-md shadow hover:bg-gray-50">-->
+      <!--            <crypto-doughnut-chart *ngIf="this.chartData != null"-->
+      <!--                                   [data]="this.chartData"></crypto-doughnut-chart>-->
+      <!--          </div>-->
 
-<!--            <crypto-doughnut-chart *ngIf="this.chartData != null"-->
-<!--                                   [data]="this.chartData"></crypto-doughnut-chart>-->
-<!--          </div>-->
+      <!--        </div>-->
 
-<!--        </div>-->
-
-
-<!--      </div>-->
+      <!--      </div>-->
     </ng-container>
   </mat-tab>
   <mat-tab label="Stocks">
@@ -414,58 +528,85 @@
 
         <div class="flex m-10 xl:justify-around md:justify-between">
           <div
-            class="
-     xl:w-96 md:w-60
-     px-5 pt-5
-     bg-white border border-gray-200 rounded-t-lg shadow hover:bg-gray-100 border-b-pink-400 border-b-4">
-            <img src="assets/images/dollar.png" alt="dollar icon"
-                 class="inline w-12 h-12 rounded-full object-cover bg-pink-400">
+            class="xl:w-96 md:w-60 px-5 pt-5 bg-white border border-gray-200 rounded-t-lg shadow hover:bg-gray-100 border-b-pink-400 border-b-4"
+          >
+            <img
+              src="assets/images/dollar.png"
+              alt="dollar icon"
+              class="inline w-12 h-12 rounded-full object-cover bg-pink-400"
+            />
 
-            <h5 class=" inline pl-3 mb-1 text-2xl font-bold tracking-tight text-gray-400 dark:text-white">Total Invested
-              Amount</h5>
-            <p class="text-center text-lg font-normal text-gray-700 dark:text-gray-400">$23321.21M</p>
+            <h5
+              class="inline pl-3 mb-1 text-2xl font-bold tracking-tight text-gray-400 dark:text-white"
+            >
+              Total Invested Amount
+            </h5>
+            <p
+              class="text-center text-lg font-normal text-gray-700 dark:text-gray-400"
+            >
+              $23321.21M
+            </p>
           </div>
 
           <div
-            class="xl:w-96 md:w-60 px-5 pt-5 bg-white border border-gray-200 rounded-t-lg shadow hover:bg-gray-100  border-b-purple-400 border-b-4">
-            <img src="assets/images/graph-64.png" alt="chart up"
-                 class="inline w-12 h-12 rounded-full object-cover bg-purple-400">
+            class="xl:w-96 md:w-60 px-5 pt-5 bg-white border border-gray-200 rounded-t-lg shadow hover:bg-gray-100 border-b-purple-400 border-b-4"
+          >
+            <img
+              src="assets/images/graph-64.png"
+              alt="chart up"
+              class="inline w-12 h-12 rounded-full object-cover bg-purple-400"
+            />
 
-            <h5 class="inline pl-3 mb-1 text-2xl font-bold tracking-tight text-gray-400 dark:text-white">Number of
-              Investments</h5>
-            <p class="text-center text-lg font-normal text-gray-700 dark:text-gray-400">154</p>
+            <h5
+              class="inline pl-3 mb-1 text-2xl font-bold tracking-tight text-gray-400 dark:text-white"
+            >
+              Number of Investments
+            </h5>
+            <p
+              class="text-center text-lg font-normal text-gray-700 dark:text-gray-400"
+            >
+              154
+            </p>
           </div>
 
           <div
-            class="xl:w-96 md:w-60 px-5 pt-5 bg-white border border-gray-200 rounded-t-lg shadow hover:bg-gray-100  border-b-blue-400 border-b-4">
-            <img src='assets/images/return-icon.png' alt="rate of return icon"
-                 class="inline w-12 h-12 rounded-full object-cover color bg-blue-400">
-            <h5 class="inline pl-3 mb-1 text-2xl font-bold tracking-tight text-gray-400 dark:text-white">
-              Rate of Return</h5>
-            <p class="text-center text-lg font-normal font text-gray-700 dark:text-gray-400">23.41%</p>
+            class="xl:w-96 md:w-60 px-5 pt-5 bg-white border border-gray-200 rounded-t-lg shadow hover:bg-gray-100 border-b-blue-400 border-b-4"
+          >
+            <img
+              src="assets/images/return-icon.png"
+              alt="rate of return icon"
+              class="inline w-12 h-12 rounded-full object-cover color bg-blue-400"
+            />
+            <h5
+              class="inline pl-3 mb-1 text-2xl font-bold tracking-tight text-gray-400 dark:text-white"
+            >
+              Rate of Return
+            </h5>
+            <p
+              class="text-center text-lg font-normal font text-gray-700 dark:text-gray-400"
+            >
+              23.41%
+            </p>
           </div>
         </div>
 
-        <div class="flex  justify-center" *ngIf="!(this.isLoading$ | async)">
-
+        <div class="flex justify-center" >
           <div
-            class="flex w-2/5 mx-11 justify-center bg-white border border-gray-200 rounded-md shadow hover:bg-gray-50">
-
-
+            class="flex w-2/5 mx-11 justify-center bg-white border border-gray-200 rounded-md shadow hover:bg-gray-50"
+          >
             <div>
-              <p class="text-center text-lg font-normal font text-gray-400 ml-2 mt-2">Sum Price Chart</p>
-              <crypto-doughnut-chart *ngIf="this.chartData != null"
-                                     [data]="this.chartData">
-
-              </crypto-doughnut-chart>
+              <p
+                class="text-center text-lg font-normal font text-gray-400 ml-2 mt-2"
+              >
+                Sum Price Chart
+              </p>
+       
             </div>
           </div>
           <div
-            class=" flex w-2/5 mx-11 justify-center bg-white border border-gray-200 rounded-md shadow hover:bg-gray-50">
-
-            <crypto-doughnut-chart *ngIf="this.chartData != null"
-                                   [data]="this.chartData"></crypto-doughnut-chart>
-
+            class="flex w-2/5 mx-11 justify-center bg-white border border-gray-200 rounded-md shadow hover:bg-gray-50"
+          >
+       
           </div>
         </div>
       </div>

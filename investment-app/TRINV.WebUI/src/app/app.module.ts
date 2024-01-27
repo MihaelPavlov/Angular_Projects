@@ -51,6 +51,9 @@ import { PaginationComponent } from './components/news/news-list/test-pagination
 import { NewsPanelComponent } from './components/profile/admin-news-panel/news-panel.component';
 import { StocksAssetsEffects } from './components/stock_asset/stock_asset.effects';
 import { CommonInvestmentSelector } from './components/portfolio/add-update-investment/common-investment-selector/common-investment-selector';
+import { DashboardEffect } from './components/profile/dashboard/store/dashboard.effects';
+import { DashboardInfoComponent } from './components/profile/dashboard/dashboard-info/dashboard-info.component';
+import { DashboardChartComponent } from './components/profile/dashboard/dashboard-sum-price-chart/dashboard-chart.component';
 
 @NgModule({
   declarations: [
@@ -84,6 +87,8 @@ import { CommonInvestmentSelector } from './components/portfolio/add-update-inve
     PaginationComponent,
     NewsPanelComponent,
     CommonInvestmentSelector,
+    DashboardInfoComponent,
+    DashboardChartComponent,
   ],
   imports: [
     SharedModule,
@@ -92,7 +97,8 @@ import { CommonInvestmentSelector } from './components/portfolio/add-update-inve
       InvestmentEffects,
       NewsEffects,
       CryptoAssetsEffects,
-      StocksAssetsEffects
+      StocksAssetsEffects,
+      DashboardEffect
     ),
   ],
   providers: [],

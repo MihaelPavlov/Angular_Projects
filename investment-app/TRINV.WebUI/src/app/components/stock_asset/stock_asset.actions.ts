@@ -6,7 +6,6 @@ export const GET_ALL_STOCKS = '[Stock-Assets] Get All Stocks';
 export const GET_ALL_STOCKS_SUCCESS = '[Stock-Assets] Get All Stocks Success';
 export const GET_ALL_STOCKS_ERROR = '[Stock-Assets] Get All Stocks Error';
 
-
 // without the readonly on the type the reducers doesn't work correctly
 export class GetAllStocks implements Action {
   readonly type = GET_ALL_STOCKS;

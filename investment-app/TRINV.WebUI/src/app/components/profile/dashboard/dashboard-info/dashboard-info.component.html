@@ -1,0 +1,86 @@
+
+
+<div
+  class="flex-1 p4"
+  [ngClass]="{'animate-pulse': (this.dashboardInfoIsLoading$ | async )}"
+>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-2 p-2">
+    <div class="p-4">
+      <div
+        class="px-5 pt-5 bg-white border border-gray-200 rounded-t-lg shadow hover:bg-gray-100 border-b-pink-400 border-b-4"
+      >
+        <img
+          src="assets/images/dollar.png"
+          alt="dollar icon"
+          class="inline w-12 h-12 rounded-full object-cover bg-pink-400"
+        />
+        <h5
+          class="inline pl-3 mb-1 text-2xl font-bold tracking-tight text-gray-400 dark:text-white"
+        >
+          Total Invested Amount
+        </h5>
+        <p
+          class="text-center text-lg font-normal text-gray-700 dark:text-gray-400"
+        >
+          {{
+            !(this.dashboardInfoIsLoading$ | async)
+              ? (this.dashboardInfo$?.totalInvestmentAmount | formatNumber) +
+                "$"
+              : "-"
+          }}
+        </p>
+      </div>
+    </div>
+    <div class="p-4">
+      <div
+        class="px-5 pt-5 bg-white border border-gray-200 rounded-t-lg shadow hover:bg-gray-100 border-b-purple-400 border-b-4"
+      >
+        <img
+          src="assets/images/graph-64.png"
+          alt="chart up"
+          class="inline w-12 h-12 rounded-full object-cover bg-purple-400"
+        />
+        <h5
+          class="inline pl-3 mb-1 text-2xl font-bold tracking-tight text-gray-400 dark:text-white"
+        >
+          Number of Investments
+        </h5>
+        <p
+          class="text-center text-lg font-normal text-gray-700 dark:text-gray-400"
+        >
+          {{
+            !(this.dashboardInfoIsLoading$ | async)
+              ? this.dashboardInfo$?.totalInvestments
+              : "-"
+          }}
+        </p>
+      </div>
+    </div>
+    <div class="p-4">
+      <div
+        class="px-5 pt-5 bg-white border border-gray-200 rounded-t-lg shadow hover:bg-gray-100 border-b-blue-400 border-b-4"
+      >
+        <img
+          src="assets/images/return-icon.png"
+          alt="rate of return icon"
+          class="inline w-12 h-12 rounded-full object-cover color bg-blue-400"
+        />
+        <h5
+          class="inline pl-3 mb-1 text-2xl font-bold tracking-tight text-gray-400 dark:text-white"
+        >
+          Rate of Return
+        </h5>
+        <p
+          class="text-center text-lg font-normal font text-gray-700 dark:text-gray-400"
+          [ngClass]=" !(this.dashboardInfoIsLoading$ | async) ? (this.dashboardInfo$?.rateOfReturn | numberFormatForCandle) : ''"
+        >
+          {{
+            !(this.dashboardInfoIsLoading$ | async)
+              ? (this.dashboardInfo$?.rateOfReturn | number : "1.2-2") + "%"
+              : "-"
+          }}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

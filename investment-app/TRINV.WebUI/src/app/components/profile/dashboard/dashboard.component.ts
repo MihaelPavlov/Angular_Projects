@@ -1,103 +1,31 @@
-import {Component, OnDestroy, OnInit} from "@angular/core";
-import {select, Store} from "@ngrx/store";
-import * as fromPortfolioSelectors from "../../portfolio/portfolio.selectors";
-import * as fromPortfolioActions from "../../portfolio/portfolio.action";
-import {DataListService} from "../../../services/data-list.servie";
-import {IInvestment} from "../../../models/investment";
-import {InvestmentService} from "../../../services/investment.service";
-import {Router} from "@angular/router";
-import {ToastService} from "../../../../shared/services/toast.service";
-import {AppState} from "../../../../shared/ngrx/app.reducer";
-import {Observable, Subscription} from "rxjs";
-import {IUser} from "../../../models/user";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { select, Store } from '@ngrx/store';
+import * as fromPortfolioSelectors from '../../portfolio/portfolio.selectors';
+import * as fromPortfolioActions from '../../portfolio/portfolio.action';
+import { IInvestment } from '../../../models/investment';
+import { AppState } from '../../../../shared/ngrx/app.reducer';
+import { Observable, Subscription } from 'rxjs';
+import { IUser } from '../../../models/user';
+import {
+  selectDashboardInfo,
+  selectIsLoadingInfo,
+} from './store/dashboard.selectors';
+import { IDashboardInvestmentInfo } from './models/dashboard-investment-info.interace';
+import { GetDashboardInvestmentInfo } from './store/dashboard.actions';
+import { InvestmentType } from 'src/enums/investment-type.enum';
 
 @Component({
   selector: 'dashboard',
   templateUrl: 'dashboard.component.html',
   styleUrls: ['dashboard.component.css'],
 })
-export class DashboardComponent implements OnInit, OnDestroy {
-  public chartData: any | null = null;
-  isLoading$!: Observable<boolean>;
-  user!: IUser | null;
-  groupedData: {
-    [name: string]: { sumPrice: number; sumQuantity: number; label: string };
-  } = {};
-  investments$!: Observable<IInvestment[]>;
+export class DashboardComponent   {
 
-  subscriptions: Subscription[] = [];
 
-  constructor(
-    private dataListService: DataListService<IInvestment>,
-    private investmentService: InvestmentService,
-    private router: Router,
-    private toastService: ToastService,
-    private store: Store<AppState>
-  ) {
-    // this.subscriptions.push(this.store.pipe(select(selectAuthUser)).subscribe({
-    //   next: response => {
-    //     if (response != null) {
-    //       this.user = response;
-    //     }
-    //   }
-    // }));
+  constructor(private store: Store) {
   }
 
-  ngOnDestroy(): void {
-    this.groupedData = {};
-    this.subscriptions.forEach((x) => {
-      x.unsubscribe();
-    });
+  public ngOnInit(): void {
   }
 
-  ngOnInit(): void {
-    this.isLoading$ = this.store.pipe(
-      select(fromPortfolioSelectors.selectInvestmentIsLoading)
-    );
-    this.investments$ = this.store.pipe(
-      select(fromPortfolioSelectors.selectInvestmentsList)
-    );
-
-    this.store.dispatch(
-      new fromPortfolioActions.GetInvestments({ userId: Number(this.user?.id) })
-    );
-
-    this.subscriptions.push(
-      this.investments$.subscribe((x) => {
-        this.groupedData = {};
-        x.forEach((investment) => {
-          const { name, purchasePrice, quantity } = investment;
-          if (!this.groupedData[name]) {
-            this.groupedData[name] = {
-              sumPrice: purchasePrice,
-              sumQuantity: quantity,
-              label: name,
-            };
-          } else {
-            this.groupedData[name].sumPrice += purchasePrice;
-            this.groupedData[name].sumQuantity += quantity;
-            this.groupedData[name].label = name;
-          }
-        });
-        this.chartData = {
-          labels: Object.keys(this.groupedData),
-          datasets: [
-            {
-              data: Object.values(this.groupedData).map(
-                (data) => data.sumPrice
-              ),
-              backgroundColor: [
-                'rgb(255, 205, 86)',
-                'rgb(255, 99, 132)',
-                'rgb(54, 162, 235)',
-              ],
-              hoverOffset: 1,
-            },
-          ],
-        };
-      })
-    );
-  }
 }
-
-

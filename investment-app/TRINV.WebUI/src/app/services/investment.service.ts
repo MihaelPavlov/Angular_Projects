@@ -67,8 +67,8 @@ export class InvestmentService {
   }
 
   delete(id: number): Observable<OperationResult> {
-    console.log("id delete -> ", id);
-    
+    console.log('id delete -> ', id);
+
     return this.restApiService.delete<OperationResult>(`/investments/${id}`);
   }
 }

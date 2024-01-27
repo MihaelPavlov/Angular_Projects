@@ -4,12 +4,14 @@ import {InvestmentInitialState, investmentsListReducer} from "../../app/componen
 import {NewsInitialState, newsListReducer} from "../../app/components/news/new.reducer";
 import {CoinsInitialState, coinsListReducer} from "../../app/components/crypto_assets/crypto-assets.reducer";
 import { StockInitialState, stocksListReducer } from "src/app/components/stock_asset/stock_asset.reducer";
+import { DashboardInitialState, dashboardListReducer } from "src/app/components/profile/dashboard/store/dashboard.reducer";
 
 export interface AppState {
   portfolio: InvestmentInitialState;
   news: NewsInitialState;
   coins: CoinsInitialState;
   stocks: StockInitialState;
+  dashboard: DashboardInitialState
 }
 
 export const reducers: ActionReducerMap<AppState, any> = {
@@ -17,6 +19,7 @@ export const reducers: ActionReducerMap<AppState, any> = {
   news: newsListReducer,
   coins: coinsListReducer,
   stocks: stocksListReducer,
+  dashboard: dashboardListReducer
 };
 
 export function logger(reducer: ActionReducer<any>): ActionReducer<any> {

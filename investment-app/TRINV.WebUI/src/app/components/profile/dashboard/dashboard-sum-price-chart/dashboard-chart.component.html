@@ -1,0 +1,14 @@
+<div
+  [ngClass]="!(this.isLoadingInvestments$ | async) ? '' : 'animate-pulse'"
+>
+  <h2 class="text-gray-500 text-lg pb-1">Sum Price Chart</h2>
+
+  <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-6"></div>
+  <div *ngIf="!(this.isLoadingInvestments$ | async)">
+    <crypto-doughnut-chart
+      *ngIf="this.chartData != null"
+      [data]="this.chartData"
+    >
+    </crypto-doughnut-chart>
+  </div>
+</div>
