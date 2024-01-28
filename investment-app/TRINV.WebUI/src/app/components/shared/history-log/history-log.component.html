@@ -1,9 +1,5 @@
 <!--Example table https://tailwindcomponents.com/component/table-ui-with-tailwindcss-and-alpinejs-->
 
-
-<!--<button mat-raised-button (click)="addColumn()"> Add column</button>-->
-<!--<button mat-raised-button (click)="removeColumn()"> Remove column</button>-->
-
 <div class="wrapper">
   <div class="table">
 
@@ -31,14 +27,14 @@
           <div class="relative">
             <mat-form-field class="">
               <mat-label>Columns</mat-label>
-              <mat-select [formControl]="toppings" multiple>
+              <mat-select [formControl]="form" multiple>
                 <mat-select-trigger>
-                  {{toppings.value?.[0] || ''}}
-                  <span *ngIf="(toppings.value?.length || 0) > 1" class="example-additional-selection">
-        (+{{(toppings.value?.length || 0) - 1}} {{toppings.value?.length === 2 ? 'other' : 'others'}})
+                  {{form.value?.[0] || ''}}
+                  <span *ngIf="(form.value?.length || 0) > 1" class="example-additional-selection">
+        (+{{(form.value?.length || 0) - 1}} {{form.value?.length === 2 ? 'other' : 'others'}})
       </span>
                 </mat-select-trigger>
-                <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+                <mat-option *ngFor="let header of allAvailableHeadings" [value]="header">{{header}}</mat-option>
               </mat-select>
             </mat-form-field>
 
@@ -48,7 +44,7 @@
     </div>
 
     <div class="mat-elevation-z8">
-      <table mat-table [dataSource]="this.data" >
+      <table mat-table [dataSource]="this.tableData" >
         <ng-container *ngFor="let columnName of displayedColumns; index as columnIndex;" [matColumnDef]="columnName">
           <th class=" sticky top-0 text-gray-600 font-bold uppercase text-xs"
               mat-header-cell *matHeaderCellDef> {{columnName}} </th>

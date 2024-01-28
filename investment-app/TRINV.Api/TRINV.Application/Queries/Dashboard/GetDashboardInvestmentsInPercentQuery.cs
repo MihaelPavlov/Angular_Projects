@@ -44,7 +44,7 @@ internal class GetDashboardInvestmentsInPercentQueryHandler : IRequestHandler<Ge
                     investment.Key,
                     investment.First().Name,
                     investment.Sum(x => x.Quantity),
-                    percent));
+                    decimal.Round(percent, 2)));
         }
 
         return operationResult;

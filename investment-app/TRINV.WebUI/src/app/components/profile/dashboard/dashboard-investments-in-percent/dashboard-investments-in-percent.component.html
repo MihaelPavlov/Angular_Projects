@@ -1,0 +1,88 @@
+<div
+  class="bg-white p-4 rounded-md"
+  [ngClass]="{
+    'animate-pulse': (this.isLoadingDashboardInvestmentsPercent$ | async)
+  }"
+>
+  <div class="flex">
+    <h2 class="text-gray-500 text-lg pb-1">Percent Of My Portfolio</h2>
+    <div
+      class="relative w-full px-2 py-2 max-w-full flex-grow flex-1 text-right"
+    >
+      <button
+        *ngIf="!(this.isLoadingDashboardInvestmentsPercent$ | async)"
+        type="button"
+        class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+        (click)="this.openDialogHistoryLog()"
+      >
+        See all
+      </button>
+    </div>
+  </div>
+  <div class="bg-gradient-to-r from-cyan-300 to-cyan-700 h-px"></div>
+
+  <div class="block w-full overflow-x-auto">
+    <table class="items-center w-full bg-transparent border-collapse">
+      <thead class="thead-light">
+        <tr>
+          <th
+            class="px-6 align-middle border-b border-b-solid border-blue-300 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap text-left"
+          >
+            Asset
+          </th>
+          <th
+            class="px-6 align-middle border-b border-b-solid border-blue-300 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap text-left"
+          >
+            Quantity
+          </th>
+          <th
+            class="px-6 align-middle border-b border-b-solid border-blue-300 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap text-left min-w-140-px"
+          ></th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container
+          *ngIf="!(this.isLoadingDashboardInvestmentsPercent$ | async)"
+        >
+          <tr
+            *ngFor="let investment of dashboardInvestmentsPercent; index as i"
+          >
+            <th
+              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left"
+            >
+              {{ investment.name }}
+            </th>
+            <td
+              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+            >
+              {{ investment.quantity }}
+            </td>
+            <td
+              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+            >
+              <div class="flex items-center">
+                <span class="mr-2 w-2/4"
+                  >{{ investment.percent }}%</span
+                >
+                <div class="relative w-full">
+                  <div
+                    class="overflow-hidden h-2 text-xs flex rounded {{
+                      this.colorObject[i].light
+                    }}"
+                  >
+                    <div
+                      class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center {{
+                        this.colorObject[i].darker
+                      }}"
+                      [style.width.%]="investment.percent"
+                    ></div>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+</div>
