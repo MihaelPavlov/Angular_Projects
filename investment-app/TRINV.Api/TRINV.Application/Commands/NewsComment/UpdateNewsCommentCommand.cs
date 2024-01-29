@@ -22,16 +22,13 @@ internal class UpdateNewsCommentCommandHandler : IRequestHandler<UpdateNewsComme
 {
     readonly IUnitOfWork _unitOfWork;
     readonly IRepository<NewsComment> _newsCommentRepository;
-    readonly IUserContext _userContext;
 
     public UpdateNewsCommentCommandHandler(
         IUnitOfWork unitOfWork,
-        IRepository<NewsComment> newsCommentRepository, 
-        IUserContext userContext)
+        IRepository<NewsComment> newsCommentRepository)
     {
         _unitOfWork = unitOfWork;
         _newsCommentRepository = newsCommentRepository;
-        _userContext = userContext;
     }
 
     public async Task<OperationResult> Handle(UpdateNewsCommentCommand request, CancellationToken cancellationToken)
@@ -40,7 +37,7 @@ internal class UpdateNewsCommentCommandHandler : IRequestHandler<UpdateNewsComme
 
         var newsComment = await _newsCommentRepository.GetByIdAsync(request.NewsCommentId, cancellationToken);
 
-        if (newsComment == null || newsComment.NewsId != _userContext.UserId)
+        if (newsComment == null)
             return operationResult.ReturnWithErrorMessage(
                 new NotFoundException($"{typeof(NewsComment)} with Id: {request.NewsCommentId} was not found!"));
 

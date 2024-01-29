@@ -12,16 +12,14 @@ public record DeleteNewsCommentCommand(int Id) : IRequest<OperationResult>;
 internal class DeleteNewsCommentCommandHandler : IRequestHandler<DeleteNewsCommentCommand, OperationResult>
 {
     readonly IRepository<NewsComment> _newsCommentRepository;
-    readonly IUserContext _userContext;
     readonly IUnitOfWork _unitOfWork;
 
     public DeleteNewsCommentCommandHandler(
-        IUnitOfWork unitOfWork, 
-        IRepository<NewsComment> newsCommentRepository, IUserContext userContext)
+        IUnitOfWork unitOfWork,
+        IRepository<NewsComment> newsCommentRepository)
     {
         _unitOfWork = unitOfWork;
         _newsCommentRepository = newsCommentRepository;
-        _userContext = userContext;
     }
 
     public async Task<OperationResult> Handle(DeleteNewsCommentCommand request, CancellationToken cancellationToken)
@@ -30,7 +28,7 @@ internal class DeleteNewsCommentCommandHandler : IRequestHandler<DeleteNewsComme
 
         var newsComment = await _newsCommentRepository.GetByIdAsync(request.Id, cancellationToken);
 
-        if (newsComment == null || newsComment.NewsId != _userContext.UserId)
+        if (newsComment == null)
             return operationResult.ReturnWithErrorMessage(
                 new NotFoundException($"{typeof(NewsComment)} with Id: {request.Id} was not found!"));
 

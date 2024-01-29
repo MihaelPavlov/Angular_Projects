@@ -24,6 +24,17 @@
         required
       />
 
+      <label class="labelStyle" for="purchasePricePerUnit"
+        >Purchase Price Per Unit</label
+      >
+      <input
+        type="number"
+        step="0.01"
+        id="purchasePricePerUnit"
+        formControlName="purchasePricePerUnit"
+        required
+      />
+
       <button type="submit">
         {{ this.id === undefined ? "Add Investment" : "Update Investment" }}
       </button>

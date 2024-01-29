@@ -32,5 +32,6 @@ public record GetInvestmentListQueryModel(
     string Name,
     decimal Quantity,
     decimal PurchasePrice,
+    decimal PurchasePricePerUnit,
     InvestmentType InvestmentType,
     DateTime CreatedOn);

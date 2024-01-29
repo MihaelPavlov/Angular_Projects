@@ -9,7 +9,6 @@ using Shared.Business.Exceptions;
 using Enums;
 using Interfaces;
 using Shared.Business.Extension;
-using Shared.Business.Helpers;
 
 public record CreateNotificationCommand : IRequest<OperationResult>
 {

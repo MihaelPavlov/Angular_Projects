@@ -6,6 +6,7 @@ export interface IInvestment {
   name: string;
   quantity: number;
   purchasePrice: number;
+  purchasePricePerUnit: number;
   investmentType: InvestmentType;
   createdOn: Date;
 }

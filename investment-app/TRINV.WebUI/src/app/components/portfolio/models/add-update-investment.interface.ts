@@ -6,6 +6,7 @@ export interface AddUpdateInvestment {
   name?: string;
   quantity: number;
   purchasePrice: number;
+  purchasePricePerUnit: number;
   investmentType?: InvestmentType;
   isFromOutsideProvider?: boolean;
 }

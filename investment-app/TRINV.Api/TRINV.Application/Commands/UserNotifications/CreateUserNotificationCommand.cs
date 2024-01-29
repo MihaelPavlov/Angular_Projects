@@ -15,14 +15,18 @@ public record CreateUserNotificationCommand(int NotificationType, string? Messag
 internal class CreateUserNotificationCommandHandler : IRequestHandler<CreateUserNotificationCommand, OperationResult<UserNotification>>
 {
     readonly IUnitOfWork _unitOfWork;
-    readonly IRepository<UserNotification> _notificationRepository;
+    readonly IRepository<UserNotification> _userNotificationRepository;
+    readonly IRepository<Notification> _notificationRepository;
     readonly IUserContext _userContext;
+
     public CreateUserNotificationCommandHandler(
         IUnitOfWork unitOfWork, 
-        IRepository<UserNotification> notificationRepository,
+        IRepository<UserNotification> userNotificationRepository,
+        IRepository<Notification> notificationRepository,
         IUserContext userContext)
     {
         _unitOfWork = unitOfWork;
+        _userNotificationRepository = userNotificationRepository;
         _notificationRepository = notificationRepository;
         _userContext = userContext;
     }
@@ -35,6 +39,8 @@ internal class CreateUserNotificationCommandHandler : IRequestHandler<CreateUser
             return operationResult.ReturnWithErrorMessage(
                 new NotFoundException("Notification type not found!"));
         
+
+
         var message = request.Message;
 
         if (Ensure.IsArgumentNullOrEmpty(request.Message) 
@@ -51,7 +57,7 @@ internal class CreateUserNotificationCommandHandler : IRequestHandler<CreateUser
             ReceivedDate = DateTime.Now,
         };
 
-        await _notificationRepository.AddAsync(notification, cancellationToken);
+        await _userNotificationRepository.AddAsync(notification, cancellationToken);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         operationResult.RelatedObject = notification;

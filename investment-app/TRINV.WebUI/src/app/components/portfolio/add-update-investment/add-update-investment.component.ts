@@ -4,7 +4,7 @@ import {
   getInvestmentTypeLabel,
   InvestmentType,
 } from '../../../../enums/investment-type.enum';
-import { ControlContainer, FormControl, FormGroup, FormGroupDirective } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { IUser } from '../../../models/user';
@@ -38,6 +38,7 @@ export class AddUpdateInvestmentComponent implements OnInit {
     name: new FormControl(),
     quantity: new FormControl(),
     purchasePrice: new FormControl(),
+    purchasePricePerUnit: new FormControl(),
   });
 
   constructor(
@@ -77,7 +78,7 @@ export class AddUpdateInvestmentComponent implements OnInit {
       ) as InvestmentType | null;
 
       this.investmentType = Number(investmentType);
- 
+
       this.addUpdateForm
         .get('assetId')
         ?.valueChanges.subscribe((selectedAssetId) => {
@@ -120,6 +121,8 @@ export class AddUpdateInvestmentComponent implements OnInit {
             id: this.id,
             quantity: this.addUpdateForm.controls.quantity.value,
             purchasePrice: this.addUpdateForm.controls.purchasePrice.value,
+            purchasePricePerUnit:
+              this.addUpdateForm.controls.purchasePricePerUnit.value,
           },
         })
       );
@@ -140,6 +143,8 @@ export class AddUpdateInvestmentComponent implements OnInit {
             name: this.addUpdateForm.controls.name.value,
             quantity: this.addUpdateForm.controls.quantity.value,
             purchasePrice: this.addUpdateForm.controls.purchasePrice.value,
+            purchasePricePerUnit:
+              this.addUpdateForm.controls.purchasePricePerUnit.value,
             investmentType: this.investmentType as InvestmentType,
             isFromOutsideProvider: true,
           },

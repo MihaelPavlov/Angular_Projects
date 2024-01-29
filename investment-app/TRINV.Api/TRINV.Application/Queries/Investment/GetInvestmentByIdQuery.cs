@@ -48,5 +48,6 @@ public record GetInvestmentByIdQueryModel(
     string Name,
     decimal Quantity,
     decimal PurchasePrice,
+    decimal PurchasePricePerUnit,
     InvestmentType InvestmentType,
     DateTime CreatedOn);
