@@ -43,8 +43,7 @@ public class DashboardController : Controller
     }
 
     [HttpGet("get-latest-investments")]
-    [ProducesResponseType(StatusCodes.Status200OK,
-        Type = typeof(OperationResult<IList<GetUserLatestInvestmentsQueryModel>>))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OperationResult<IList<GetUserLatestInvestmentsQueryModel>>))]
     public async Task<IActionResult> GetUserLatestInvestments(CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new GetUserLatestInvestmentsQuery(), cancellationToken);
