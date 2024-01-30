@@ -12,8 +12,8 @@ using TRINV.Infrastructure;
 namespace TRINV.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240124055929_Add-Migration IntialCreate")]
-    partial class AddMigrationIntialCreate
+    [Migration("20240130061850_InitialCreateMigration")]
+    partial class InitialCreateMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -165,13 +165,16 @@ namespace TRINV.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
                     b.Property<int>("CreatedBy")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETDATE()");
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("DownVote")
                         .HasColumnType("int");
@@ -182,7 +185,7 @@ namespace TRINV.Infrastructure.Migrations
                     b.Property<int>("UpVote")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedOn")
+                    b.Property<DateTime?>("UpdatedOn")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
