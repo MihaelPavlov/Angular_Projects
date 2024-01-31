@@ -27,10 +27,10 @@ export class NewsListComponent implements OnInit {
   ngOnInit() {
     this.newsList$ = this.store.pipe(select(fromNewsSelectors.selectNewsList));
 
-    this.store.dispatch(fromNewsActions.GetNews());
+    this.store.dispatch(fromNewsActions.GetNewsList());
   }
 
-  openDialog(news: INews) {
-    this.dialog.open(DetailsPopUpComponent, { data: { ...news } });
+  openDialog(newsId: number) {
+    this.dialog.open(DetailsPopUpComponent, { data: newsId });
   }
 }

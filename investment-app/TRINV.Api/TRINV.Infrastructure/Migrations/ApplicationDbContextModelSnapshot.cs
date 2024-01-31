@@ -188,6 +188,8 @@ namespace TRINV.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("NewsId");
+
                     b.ToTable("NewsComments");
                 });
 
@@ -242,6 +244,22 @@ namespace TRINV.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("UserNotifications");
+                });
+
+            modelBuilder.Entity("TRINV.Domain.Entities.NewsComment", b =>
+                {
+                    b.HasOne("TRINV.Domain.Entities.News", "News")
+                        .WithMany("Comments")
+                        .HasForeignKey("NewsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("News");
+                });
+
+            modelBuilder.Entity("TRINV.Domain.Entities.News", b =>
+                {
+                    b.Navigation("Comments");
                 });
 #pragma warning restore 612, 618
         }

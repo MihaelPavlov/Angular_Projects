@@ -20,7 +20,6 @@ export class InvestmentEffects {
       switchMap((data: fromInvestments.GetInvestments) => {
         return this.investmentService.getInvestments();
       }),
-      delay(4000), //FIXME: Remove Delay
       map((operationResult: ExtendedOperationResult<IInvestment[]>) => {
         return new fromInvestments.GetInvestmentsSuccess({
           investments: operationResult.relatedObject,

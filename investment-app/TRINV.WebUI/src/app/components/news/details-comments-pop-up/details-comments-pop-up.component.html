@@ -1,57 +1,141 @@
-
 <div class="bg-gray-100 p-6">
   <h2 class="text-lg font-bold mb-4">Comments</h2>
-  <div mat-dialog-content class=" flex flex-col space-y-4">
+  <div mat-dialog-content class="flex flex-col space-y-4">
     <div
-        *ngFor="let comment of (this.newsById$ | async)?.comments; let i = index"
-        class="custom-text bg-white p-4 rounded-lg shadow-md"
+      *ngFor="let comment of this.newsComments$ | async; let i = index"
+      class="custom-text bg-white p-4 rounded-lg shadow-md"
     >
-      <div  *ngIf="!this.isEditing || (editingComment != null && editingComment.id != comment.id); else updateComment">
+      <div
+        *ngIf="
+          !this.isEditing ||
+            (editingComment != null && editingComment.id != comment.id);
+          else updateComment
+        "
+      >
         <h3 class="text-lg font-bold">John Doe</h3>
         <p class="text-gray-700 text-sm mb-2">Posted on April 17, 2023</p>
-        <mat-card-content class="text-gray-700">{{comment.comment}}
+        <mat-card-content class="text-gray-700"
+          >{{ comment.comment }}
         </mat-card-content>
 
         <!-- Edit button for your own comments -->
-        <mat-card-actions class="block mt-2" *ngIf="this.user?.id === comment.userId">
-          <button mat-stroked-button color="primary" (click)="onStartEditing(comment)">Edit</button>
-          <button mat-stroked-button color="primary" (click)="onDeleteSubmit(comment.id)">Delete</button>
+        <mat-card-actions
+          class="block mt-2"
+          *ngIf="this.userId?.toString() === comment.createdBy.toString()"
+        >
+          <button
+            mat-stroked-button
+            color="primary"
+            (click)="onStartEditing(comment)"
+          >
+            Edit
+          </button>
+          <button
+            mat-stroked-button
+            color="primary"
+            (click)="onDeleteSubmit(comment.id)"
+          >
+            Delete
+          </button>
         </mat-card-actions>
       </div>
 
       <ng-template #updateComment>
-        <div >
-        <h3 class="text-lg font-bold">John Doe</h3>
-        <p class="text-gray-700 text-sm mb-2">Posted on April 17, 2023</p>
-        <textarea rows="5" cols="70" matInput [(ngModel)]="this.updateCommentText" class=" border rounded-lg p-2 border border-gray-200"></textarea>
-        <mat-card-actions>
-          <button mat-stroked-button color="warn" (click)="this.onEditSubmit()">Edit</button>
-          <button mat-stroked-button color="warn" (click)="this.onCancelEditing()">Cancel</button>
-        </mat-card-actions>
-        </div>
+        <form [formGroup]="addUpdateComment">
+          <h3 class="text-lg font-bold">John Doe</h3>
+          <p class="text-gray-700 text-sm mb-2">Posted on April 17, 2023</p>
+          <textarea
+            rows="5"
+            cols="70"
+            id="comment"
+          formControlName="comment"
+          [ngClass]="{
+            errorBorder:
+              this.addUpdateComment.controls.comment.invalid &&
+              this.addUpdateComment.controls.comment.touched
+          }"
+            class="border rounded-lg p-2 border border-gray-200"
+          ></textarea>
+           <mat-error
+          class="text-red-400 block mb-2"
+          *ngIf="
+            this.addUpdateComment.controls.comment.invalid &&
+            this.addUpdateComment.controls.comment.touched
+          "
+        >
+          Comment Text is required.
+        </mat-error>
+          <mat-card-actions>
+            <button
+              mat-stroked-button
+              color="warn"
+              type="submit"
+              (click)="this.onEditSubmit(comment.id)"
+            >
+              Edit
+            </button>
+            <button
+              mat-stroked-button
+              color="warn"
+              type="submit"
+              (click)="this.onCancelEditing()"
+            >
+              Cancel
+            </button>
+          </mat-card-actions>
+        </form>
       </ng-template>
     </div>
-    <div *ngIf="this.user != null" class="bg-white p-4 rounded-lg shadow-md">
+    <form
+      [formGroup]="addUpdateComment"
+      (ngSubmit)="this.onAddComment()"
+      *ngIf="this.userId"
+      class="bg-white p-4 rounded-lg shadow-md"
+    >
       <h3 class="text-lg font-bold mb-2">Add a comment</h3>
 
       <div class="mb-4">
-        <label class="block text-gray-700 font-bold mb-2" >
+        <label class="block text-gray-700 font-bold mb-2" for="comment">
           Comment
         </label>
         <textarea
-          matInput
-          [(ngModel)]="this.newCommentText"
+          id="comment"
+          formControlName="comment"
+          [ngClass]="{
+            errorBorder:
+              this.addUpdateComment.controls.comment.invalid &&
+              this.addUpdateComment.controls.comment.touched
+          }"
           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          rows="3" placeholder="Enter your comment"></textarea>
+          rows="3"
+          placeholder="Enter your comment"
+        ></textarea>
+        <mat-error
+          class="text-red-400"
+          *ngIf="
+            this.addUpdateComment.controls.comment.invalid &&
+            this.addUpdateComment.controls.comment.touched
+          "
+        >
+          Comment Text is required.
+        </mat-error>
       </div>
       <button
         mat-raised-button
-        (click)="this.onAddComment()"
         class="bg-cyan-500 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-        type="submit">
+        type="submit"
+        [ngClass]="{ disabledButton: !this.addUpdateComment.valid }"
+      >
         Submit
       </button>
-      <button class="float-right" mat-button mat-dialog-close="" color="primary">Close</button>
-    </div>
+      <button
+        class="float-right"
+        mat-button
+        mat-dialog-close=""
+        color="primary"
+      >
+        Close
+      </button>
+    </form>
   </div>
 </div>

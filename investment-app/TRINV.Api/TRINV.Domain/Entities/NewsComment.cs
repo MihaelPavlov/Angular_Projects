@@ -21,4 +21,6 @@ public class NewsComment : BaseEntity
     public DateTime CreatedOn { get; set; }
 
     public DateTime? UpdatedOn { get; set; }
+
+    public News News { get; set; } = null!;
 }

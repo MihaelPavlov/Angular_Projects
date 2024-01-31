@@ -3,12 +3,14 @@
 using Application.Commands.NewsComment;
 using Application.Queries.NewsComment;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Business.Utilities;
 
-[Route("[controller]")]
 [ApiController]
+[AllowAnonymous]
+[Route("[controller]")]
 public class NewsCommentController : ControllerBase
 {
     readonly IMediator _mediator;
@@ -20,7 +22,7 @@ public class NewsCommentController : ControllerBase
 
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OperationResult<IEnumerable<GetAllCommentsByNewsIdQueryModel>>))]
-    public async Task<IActionResult> GetNewsCommentList(int newsId, CancellationToken cancellationToken) =>
+    public async Task<IActionResult> GetNewsCommentList([FromQuery] int newsId, CancellationToken cancellationToken) =>
         this.Ok(await _mediator.Send(new GetAllCommentsByNewsIdQuery(newsId), cancellationToken));
 
     [HttpGet("{id}")]
@@ -29,16 +31,19 @@ public class NewsCommentController : ControllerBase
         this.Ok(await _mediator.Send(new GetNewsCommentByIdQuery(id), cancellationToken));
 
     [HttpPost]
+    [Authorize(Policy = "ApiScope")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OperationResult))]
     public async Task<IActionResult> CreateNewsComment([FromBody] CreateNewsCommentCommand command, CancellationToken cancellationToken) =>
         this.Ok(await _mediator.Send(command, cancellationToken));
 
     [HttpDelete]
+    [Authorize(Policy = "ApiScope")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OperationResult))]
-    public async Task<IActionResult> DeleteNewsComment(int id, CancellationToken cancellationToken) => 
-        this.Ok(await _mediator.Send(new DeleteNewsCommentCommand(id), cancellationToken));
+    public async Task<IActionResult> DeleteNewsComment([FromBody] DeleteNewsCommentCommand command, CancellationToken cancellationToken) =>
+        this.Ok(await _mediator.Send(command, cancellationToken));
 
     [HttpPut]
+    [Authorize(Policy = "ApiScope")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OperationResult))]
     public async Task<IActionResult> UpdateNewsComment([FromBody] UpdateNewsCommentCommand command, CancellationToken cancellationToken) =>
         this.Ok(await _mediator.Send(command, cancellationToken));

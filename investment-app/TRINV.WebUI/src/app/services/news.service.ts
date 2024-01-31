@@ -11,10 +11,15 @@ export class NewsService {
   constructor(private restApiService: RestApiService) {}
 
   getNewsList(): Observable<ExtendedOperationResult<INews[]>> {
-    return this.restApiService.get<ExtendedOperationResult<INews[]>>('/news');
+    return this.restApiService.get<ExtendedOperationResult<INews[]>>('/news', {
+      withCredentials: true,
+    });
   }
 
-  getNewsById(id: number): Observable<INews | null> {
-    return this.restApiService.get<INews | null>(`/news/${id}`);
+  getNewsById(id: number): Observable<ExtendedOperationResult<INews>> {
+    return this.restApiService.get<ExtendedOperationResult<INews>>(
+      `/news/${id}`,
+      { withCredentials: true }
+    );
   }
 }

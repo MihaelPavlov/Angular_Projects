@@ -8,30 +8,47 @@ import { NewsCommentsService } from '../../services/news-comments.service';
 import { IComment } from '../../models/comment';
 import { ToastService } from '../../../shared/services/toast.service';
 import { ToastType } from '../../models/toast';
-import { ExtendedOperationResult } from 'src/app/models/operation-result.model';
+import {
+  ExtendedOperationResult,
+  OperationResult,
+} from 'src/app/models/operation-result.model';
 
 @Injectable()
 export class NewsEffects {
-  getNews$ = createEffect(() =>
+  getNewsList$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(fromNews.GetNews),
+      ofType(fromNews.GetNewsList),
       concatMap((_) => this.newsService.getNewsList()),
       map((operationResult: ExtendedOperationResult<INews[]>) => {
-          return fromNews.GetNewsSuccess({
-            news: operationResult.relatedObject,
-          });
+        return fromNews.GetNewsListSuccess({
+          newsList: operationResult.relatedObject,
+        });
       })
     )
   );
+
+  getNewsById$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromNews.GetNewsById),
+      concatMap((action) => this.newsService.getNewsById(action.id)),
+      map((operationResult: ExtendedOperationResult<INews>) => {
+        return fromNews.GetNewsByIdSuccess({
+          news: operationResult.relatedObject,
+        });
+      })
+    )
+  );
+
   getNewsComments$ = createEffect(() =>
     this.actions$.pipe(
       ofType(fromNews.GetCommentsByNewsId),
       switchMap((action) =>
         this.newsCommentsService.getCommentsByNewsId(action.newsId).pipe(
-          map((comments: IComment[]) => {
+          map((operationResult: ExtendedOperationResult<IComment[]>) => {
+            console.log(operationResult.relatedObject);
+
             return fromNews.GetCommentsByNewsIdSuccess({
-              comments: comments,
-              newsId: action.newsId,
+              comments: operationResult.relatedObject,
             });
           })
         )
@@ -42,24 +59,42 @@ export class NewsEffects {
   createComment$ = createEffect(() =>
     this.actions$.pipe(
       ofType(fromNews.CreateNewsComment),
-      switchMap(({ comment }) => {
-        return this.newsCommentsService.createComment(comment).pipe(
-          map((comment: IComment | null) => {
-            if (comment != null) {
-              this.toastService.success({
-                message: 'Comment Created',
-                type: ToastType.Success,
+      switchMap(({ newsId, comment }) => {
+        return this.newsCommentsService.createComment(newsId, comment).pipe(
+          map((operationResult: OperationResult | null) => {
+            console.log('result from create comment');
+            if (operationResult == null || !operationResult.success) {
+              this.toastService.error({
+                message: 'Something get wrong',
+                type: ToastType.Error,
+              });
+              return fromNews.CreateNewsCommentError({ operationResult });
+            }
+
+            return fromNews.CreateNewsCommentSuccess({ newsId });
+          })
+        );
+      })
+    )
+  );
+
+  createNewsCommentSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromNews.CreateNewsCommentSuccess),
+      switchMap(({ newsId }) => {
+        return this.newsCommentsService.getCommentsByNewsId(newsId).pipe(
+          map((operationResult: ExtendedOperationResult<IComment[]>) => {
+            if (!operationResult.success) {
+              this.toastService.error({
+                message: 'Something get wrong',
+                type: ToastType.Error,
               });
 
-              return fromNews.CreateNewsCommentSuccess({ comment });
+              return fromNews.GetCommentsByNewsIdError({ operationResult });
             }
-            this.toastService.error({
-              message: 'Something get wrong',
-              type: ToastType.Error,
-            });
 
-            return fromNews.CreateNewsCommentError({
-              error: 'Comment was not created',
+            return fromNews.GetCommentsByNewsIdSuccess({
+              comments: operationResult.relatedObject,
             });
           })
         );
@@ -72,43 +107,96 @@ export class NewsEffects {
       ofType(fromNews.DeleteNewsComment),
       switchMap(({ commentId, newsId }) =>
         this.newsCommentsService.deleteComment(commentId).pipe(
-          map(() => {
+          map((operationResult: OperationResult) => {
             this.toastService.success({
               message: 'Comment Delete',
               type: ToastType.Success,
             });
-            return fromNews.DeleteNewsCommentSuccess();
+            return fromNews.DeleteNewsCommentSuccess({newsId});
           })
         )
       )
     )
   );
 
+  deleteNewsCommentSuccess$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(fromNews.DeleteNewsCommentSuccess),
+    switchMap(({ newsId }) => {
+      return this.newsCommentsService.getCommentsByNewsId(newsId).pipe(
+        map((operationResult: ExtendedOperationResult<IComment[]>) => {
+          if (!operationResult.success) {
+            this.toastService.error({
+              message: 'Something get wrong',
+              type: ToastType.Error,
+            });
+
+            return fromNews.GetCommentsByNewsIdError({ operationResult });
+          }
+
+          return fromNews.GetCommentsByNewsIdSuccess({
+            comments: operationResult.relatedObject,
+          });
+        })
+      );
+    })
+  )
+);
+
   updateComment$ = createEffect(() =>
     this.actions$.pipe(
       ofType(fromNews.UpdateNewsComment),
-      concatMap(({ comment, newsId }) =>
-        this.newsCommentsService.updateComment({ ...comment })
-      ),
-      map((comment: IComment | null) => {
-        if (comment == null) {
-          this.toastService.error({
-            message: 'Something get wrong',
-            type: ToastType.Error,
-          });
-          return fromNews.UpdateNewsCommentError({
-            error: 'Comment was not updated',
-          });
-        }
+      concatMap(({ newsId, commentId, comment }) =>
+        this.newsCommentsService.updateComment(commentId, comment).pipe(
+          map((operationResult: OperationResult | null) => {
+            if (operationResult == null) {
+              this.toastService.error({
+                message: 'Something get wrong',
+                type: ToastType.Error,
+              });
+              return fromNews.UpdateNewsCommentError({
+                operationResult: operationResult,
+              });
+            }
+            if (!operationResult.success) {
+              return fromNews.UpdateNewsCommentError({
+                operationResult: operationResult,
+              });
+            }
 
-        this.toastService.success({
-          message: 'Comment Updated',
-          type: ToastType.Success,
-        });
-        return fromNews.UpdateNewsCommentSuccess({
-          comment,
-          newsId: comment.newsId,
-        });
+            this.toastService.success({
+              message: 'Comment Updated',
+              type: ToastType.Success,
+            });
+            return fromNews.UpdateNewsCommentSuccess({
+              newsId,
+            });
+          })
+        )
+      )
+    )
+  );
+
+  updateNewsCommentSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromNews.UpdateNewsCommentSuccess),
+      switchMap(({ newsId }) => {
+        return this.newsCommentsService.getCommentsByNewsId(newsId).pipe(
+          map((operationResult: ExtendedOperationResult<IComment[]>) => {
+            if (!operationResult.success) {
+              this.toastService.error({
+                message: 'Something get wrong',
+                type: ToastType.Error,
+              });
+
+              return fromNews.GetCommentsByNewsIdError({ operationResult });
+            }
+
+            return fromNews.GetCommentsByNewsIdSuccess({
+              comments: operationResult.relatedObject,
+            });
+          })
+        );
       })
     )
   );
