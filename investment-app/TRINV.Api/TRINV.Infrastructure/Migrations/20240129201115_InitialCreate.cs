@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TRINV.Infrastructure.Migrations
 {
-    public partial class AddMigrationIntialCreate : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -80,24 +80,6 @@ namespace TRINV.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "NewsComments",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    NewsId = table.Column<int>(type: "int", nullable: false),
-                    CreatedBy = table.Column<int>(type: "int", nullable: false),
-                    UpVote = table.Column<int>(type: "int", nullable: false),
-                    DownVote = table.Column<int>(type: "int", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
-                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_NewsComments", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Notifications",
                 columns: table => new
                 {
@@ -128,6 +110,36 @@ namespace TRINV.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_UserNotifications", x => x.Id);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "NewsComments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NewsId = table.Column<int>(type: "int", nullable: false),
+                    CreatedBy = table.Column<int>(type: "int", nullable: false),
+                    Comment = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    UpVote = table.Column<int>(type: "int", nullable: false),
+                    DownVote = table.Column<int>(type: "int", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NewsComments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_NewsComments_News_NewsId",
+                        column: x => x.NewsId,
+                        principalTable: "News",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_NewsComments_NewsId",
+                table: "NewsComments",
+                column: "NewsId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -142,9 +154,6 @@ namespace TRINV.Infrastructure.Migrations
                 name: "Investments");
 
             migrationBuilder.DropTable(
-                name: "News");
-
-            migrationBuilder.DropTable(
                 name: "NewsComments");
 
             migrationBuilder.DropTable(
@@ -152,6 +161,9 @@ namespace TRINV.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "UserNotifications");
+
+            migrationBuilder.DropTable(
+                name: "News");
         }
     }
 }

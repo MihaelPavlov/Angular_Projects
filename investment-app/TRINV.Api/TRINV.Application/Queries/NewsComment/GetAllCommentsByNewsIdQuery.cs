@@ -43,7 +43,7 @@ internal class GetAllCommentsByNewsIdHandler : IRequestHandler<GetAllCommentsByN
 public record GetAllCommentsByNewsIdQueryModel(
     int Id,
     int NewsId,
-    int UserId,
+    int CreatedBy,
     string Comment,
     int UpVotes,
     int DownVotes,

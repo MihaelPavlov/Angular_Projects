@@ -1,10 +1,12 @@
-<h1 mat-dialog-title>{{this.data.name}}</h1>
-<div mat-dialog-content>{{this.data.description}}</div>
-<div mat-dialog-actions>
-  <button mat-button mat-dialog-close="">Close</button>
-  <div class="info">
-<span>Views - {{this.data.views}}</span>
-    <button mat-stroked-button (click)="this.openDialog(this.data.id)">See Comments</button>
-
+<ng-container *ngIf="this.news$ | async as news">
+  <h1 mat-dialog-title>{{news.name}}</h1>
+  <div mat-dialog-content>{{news.description}}</div>
+  <div mat-dialog-actions>
+    <button mat-button mat-dialog-close="">Close</button>
+    <div class="info">
+  <span>Views - {{news.views}}</span>
+      <button mat-stroked-button (click)="this.redirectToComments(news.id)">See Comments</button>
+  
+    </div>
   </div>
-</div>
+</ng-container>

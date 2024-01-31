@@ -29,4 +29,5 @@ public class News : BaseEntity
 
     public int DownVote { get; set; }
 
+    public List<NewsComment> Comments { get; set; } = new();
 }

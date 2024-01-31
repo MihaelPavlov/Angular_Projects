@@ -16,7 +16,8 @@ import { ValidationErrors } from '@angular/forms';
 export class AuthService {
   private isUserAuthenticatedSubject$ = new Subject<boolean>();
   public isUserAuthenticated$ = this.isUserAuthenticatedSubject$.asObservable();
-  private userInfo$ = new BehaviorSubject<any | null>(null); //TODO: Create model for this userInfo
+  private userInfoSubject$ = new BehaviorSubject<any | null>(null); //TODO: Create model for this userInfo
+  public userInfo$ = this.userInfoSubject$.asObservable();
 
   private errorsSubject$ = new BehaviorSubject<ValidationErrors | null>(null);
   public errors$ = this.errorsSubject$.asObservable();
@@ -138,7 +139,10 @@ export class AuthService {
       .subscribe({
         next: (response) => {
           if (response !== null) {
-            this.userInfo$.next({ id: response.sub, email: response.name });
+            this.userInfoSubject$.next({
+              id: response.sub,
+              email: response.name,
+            });
 
             this.isUserAuthenticatedSubject$.next(true);
 
@@ -180,7 +184,7 @@ export class AuthService {
           console.log('logout -> ', response);
           this.persistenceService.removeLocalStorageItem(this.state_Key);
           this.persistenceService.removeLocalStorageItem(this.codeVerifier_Key);
-          this.userInfo$.next(null);
+          this.userInfoSubject$.next(null);
         },
         error: (error) => {
           console.warn('HTTP Error', error);
@@ -190,8 +194,8 @@ export class AuthService {
 
   //Todo: check is it's needed
   public isAuthenticated = (): Observable<boolean> => {
-    console.log('user ---->', this.userInfo$.value);
-    return this.userInfo$.pipe(
+    console.log('user ---->', this.userInfoSubject$.value);
+    return this.userInfoSubject$.pipe(
       map((user) => {
         return !!user;
       })
@@ -207,7 +211,7 @@ export class AuthService {
         next: (response) => {
           console.log('test', response);
 
-          this.userInfo$.next({
+          this.userInfoSubject$.next({
             id: response.subFromClaim,
             email: response.email,
             role: response.role,

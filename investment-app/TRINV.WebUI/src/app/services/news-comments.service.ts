@@ -1,36 +1,68 @@
-import {Injectable} from "@angular/core";
-import {RestApiService} from "../../shared/services/rest-api.service";
-import {BehaviorSubject, map, Observable} from "rxjs";
-import {IComment} from "../models/comment";
+import { Injectable } from '@angular/core';
+import { RestApiService } from '../../shared/services/rest-api.service';
+import { BehaviorSubject, map, Observable } from 'rxjs';
+import { IComment } from '../models/comment';
+import {
+  ExtendedOperationResult,
+  OperationResult,
+} from '../models/operation-result.model';
+import { HttpHeaders } from '@angular/common/http';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root',
 })
 export class NewsCommentsService {
-  private commentsSubject$ = new BehaviorSubject<IComment[]>([])
-  public comments$ = this.commentsSubject$.asObservable()
+  private commentsSubject$ = new BehaviorSubject<IComment[]>([]);
+  public comments$ = this.commentsSubject$.asObservable();
 
-  constructor(private restApiService: RestApiService) {
-  }
+  constructor(private restApiService: RestApiService) {}
 
-  getCommentsByNewsId(newsId: number): Observable<IComment[]> {
-    return this.restApiService.get<IComment[]>(`comments`)
-      .pipe(map(x => x.filter(y => y.newsId === newsId)))
+  getCommentsByNewsId(
+    newsId: number
+  ): Observable<ExtendedOperationResult<IComment[]>> {
+    return this.restApiService.get<ExtendedOperationResult<IComment[]>>(
+      `/newsComment?newsId=${newsId}`,
+      { withCredentials: true }
+    );
   }
 
   getAllComments(): Observable<IComment[]> {
-    return this.restApiService.get<IComment[]>("comments");
+    return this.restApiService.get<IComment[]>('comments');
   }
 
-  createComment(comment: IComment): Observable<IComment | null> {
-    return this.restApiService.post<IComment>(`comments`, {...comment});
+  createComment(
+    newsId: number,
+    comment: string
+  ): Observable<OperationResult | null> {
+    return this.restApiService.post<OperationResult>(
+      `/newsComment`,
+      {
+        newsId,
+        comment,
+      },
+      { withCredentials: true }
+    );
   }
 
-  updateComment(comment: IComment): Observable<IComment | null> {
-    return this.restApiService.put<IComment>(`comments/${comment.id}`, comment)
+  updateComment(
+    newsCommentId: number,
+    comment: string
+  ): Observable<OperationResult | null> {
+    return this.restApiService.put<OperationResult>(
+      `/newsComment`,
+      {
+        newsCommentId,
+        comment,
+      },
+      { withCredentials: true }
+    );
   }
 
-  deleteComment(commentId: number): Observable<any> {
-    return this.restApiService.delete(`comments/${commentId}`);
+  deleteComment(id: number): Observable<OperationResult> {
+    const options = {withCredentials: true };
+
+    return this.restApiService.delete<OperationResult>(`/newsComment`, {
+      ...options,body:{id}
+    });
   }
 }

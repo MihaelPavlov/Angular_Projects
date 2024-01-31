@@ -1,5 +1,16 @@
+.custom-text {
+  width: 40rem;
+}
 
+.errorBorder{
+  border: 1px solid red !important;
+}
 
-.custom-text{
- width: 40rem;
+.disabledButton{
+  border: 1px solid black;
+  background-color: grey;
+  color: white;
+  padding: 15px;
+  cursor: not-allowed;
+  touch-action: none;
 }

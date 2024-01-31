@@ -22,7 +22,7 @@ export class NewsPanelComponent {
   ngOnInit() {
     this.newsList$ = this.store.pipe(select(fromNewsSelectors.selectNewsList));
 
-    this.store.dispatch(fromNewsActions.GetNews());
+    this.store.dispatch(fromNewsActions.GetNewsList());
   }
 
   //TODO: Need to create new model for AdminNews

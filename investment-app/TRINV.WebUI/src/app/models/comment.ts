@@ -1,7 +1,10 @@
 export interface IComment {
-  id?: number
-  newsId: number
-  comment: string
-  userId?: number
-  likes: number
+  id?: number;
+  newsId: number;
+  comment: string;
+  createdBy: number;
+  upVotes: number;
+  downVotes: number;
+  createdOn: Date;
+  updatedOn: Date;
 }

@@ -67,12 +67,12 @@
                 <div class="relative w-full">
                   <div
                     class="overflow-hidden h-2 text-xs flex rounded {{
-                      this.colorObject[i].light
+                      this.colorObject[i% this.colorObject.length].light
                     }}"
                   >
                     <div
                       class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center {{
-                        this.colorObject[i].darker
+                        this.colorObject[i% this.colorObject.length].darker
                       }}"
                       [style.width.%]="investment.percent"
                     ></div>

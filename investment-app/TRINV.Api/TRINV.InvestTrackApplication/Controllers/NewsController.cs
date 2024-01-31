@@ -8,9 +8,9 @@ using Shared.Business.Utilities;
 using Application.Queries.News;
 using Microsoft.AspNetCore.Authorization;
 
-[Route("[controller]")]
 [ApiController]
 [AllowAnonymous]
+[Route("[controller]")]
 public class NewsController : ControllerBase
 {
     readonly IMediator _mediator;
@@ -31,16 +31,19 @@ public class NewsController : ControllerBase
         this.Ok(await _mediator.Send(new GetNewsByIdQuery(id), cancellationToken));
 
     [HttpPost]
+    [Authorize(Policy = "ApiScope")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OperationResult))]
     public async Task<IActionResult> CreateNews([FromBody] CreateNewsCommand command, CancellationToken cancellationToken) =>
         this.Ok(await _mediator.Send(command, cancellationToken));
 
     [HttpDelete]
+    [Authorize(Policy = "ApiScope")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OperationResult))]
     public async Task<IActionResult> DeleteNews([FromBody] DeleteNewsCommand command, CancellationToken cancellationToken) =>
         this.Ok(await _mediator.Send(command, cancellationToken));
 
     [HttpPut]
+    [Authorize(Policy = "ApiScope")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OperationResult))]
     public async Task<IActionResult> UpdateNews([FromBody] UpdateNewsCommand command, CancellationToken cancellationToken) =>
         this.Ok(await _mediator.Send(command, cancellationToken));
