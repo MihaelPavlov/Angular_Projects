@@ -35,7 +35,8 @@ internal class GetUserLatestInvestmentsQueryHandler : IRequestHandler<GetUserLat
                 Name = x.Name,
                 AssetId = x.AssetId,
                 DateAdded = x.CreatedOn,
-                Amount = Math.Round(x.PurchasePrice * x.Quantity, 2)
+                Amount = Math.Round(x.PurchasePrice, 2),
+                Quantity = x.Quantity
             })
             .ToList();
 
@@ -54,4 +55,5 @@ public record GetUserLatestInvestmentsQueryModel
     public DateTime DateAdded { get; set; }
 
     public decimal Amount { get; set; }
+    public decimal Quantity { get; set; }
 }

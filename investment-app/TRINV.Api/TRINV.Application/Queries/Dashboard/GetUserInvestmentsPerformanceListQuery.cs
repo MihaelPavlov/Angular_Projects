@@ -9,10 +9,9 @@ using Shared.Business.Exceptions;
 using Shared.Business.Extension;
 using Shared.Business.Utilities;
 
-public record GetInvestmentPerformanceQuery(InvestmentType InvestmentType) : IRequest<OperationResult<List<InvestmentPerformanceQueryModel>>>;
+public record GetInvestmentPerformanceQuery(InvestmentType InvestmentType) : IRequest<OperationResult<List<GetInvestmentPerformanceQueryModel>>>;
 
-
-internal class GetInvestmentPerformanceQueryHandler : IRequestHandler<GetInvestmentPerformanceQuery, OperationResult<List<InvestmentPerformanceQueryModel>>>
+internal class GetInvestmentPerformanceQueryHandler : IRequestHandler<GetInvestmentPerformanceQuery, OperationResult<List<GetInvestmentPerformanceQueryModel>>>
 {
     readonly IRepository<Investment> _investmentRepository;
     readonly IUserContext _userContext;
@@ -25,9 +24,9 @@ internal class GetInvestmentPerformanceQueryHandler : IRequestHandler<GetInvestm
         _mediator = mediator;
     }
 
-    public async Task<OperationResult<List<InvestmentPerformanceQueryModel>>> Handle(GetInvestmentPerformanceQuery request, CancellationToken cancellationToken)
+    public async Task<OperationResult<List<GetInvestmentPerformanceQueryModel>>> Handle(GetInvestmentPerformanceQuery request, CancellationToken cancellationToken)
     {
-        var operationResult = new OperationResult<List<InvestmentPerformanceQueryModel>>();
+        var operationResult = new OperationResult<List<GetInvestmentPerformanceQueryModel>>();
 
         // TODO: This needs to be removed when stocks API's are added.
         if (request.InvestmentType != InvestmentType.Cryptocurrency)
@@ -50,42 +49,31 @@ internal class GetInvestmentPerformanceQueryHandler : IRequestHandler<GetInvestm
 
         Dictionary<string, decimal> currentPrices = new Dictionary<string, decimal>();
 
-        if(request.InvestmentType == InvestmentType.Cryptocurrency)
-        {
-            var currentCryptoPrices = await _mediator.Send(new GetDigitalCurrencyListQuery(), cancellationToken);
+        var currentCryptoPrices = await _mediator.Send(new GetDigitalCurrencyListQuery(), cancellationToken);
 
-            foreach (var item in groupedInvestments)
+        if (currentCryptoPrices == null || !currentCryptoPrices.Success || currentCryptoPrices.RelatedObject == null)
+            return operationResult.ReturnWithErrorMessage(new InfrastructureException());
+
+        currentPrices = currentCryptoPrices.RelatedObject
+            .Where(s => groupedInvestments.Any(gi => gi.Symbol == s.Symbol))
+            .ToDictionary(s => s.Symbol, p => decimal.Parse(p.PriceUsd));
+
+        var currentUserInvestmentsPerformanceList = groupedInvestments
+            .Select(investment =>
             {
-                var currentItemPrice = decimal.Parse(currentCryptoPrices.RelatedObject
-                    .Where(s => s.Symbol == item.Symbol)
-                    .Select(p =>p.PriceUsd)
-                    .FirstOrDefault());
+                var currentInvestmentPrice = currentPrices.GetValueOrDefault(investment.Symbol, 0m);
 
-                currentPrices.Add(item.Symbol, currentItemPrice);
-            }
-        }
+                var returnRate = ((currentInvestmentPrice - investment.AverageValuePerUnitInFiat) / investment.AverageValuePerUnitInFiat) * 100;
 
-        var currentUserInvestmentsPerformanceList = new List<InvestmentPerformanceQueryModel>();
-
-        foreach (var investment in groupedInvestments)
-        {
-            var currentInvestmentPrice = currentPrices[investment.Symbol];
-
-            var returnRate = ((currentInvestmentPrice - investment.AverageValuePerUnitInFiat) / investment.AverageValuePerUnitInFiat) * 100;
-
-            var result = new InvestmentPerformanceQueryModel
-            {
-                AssetId = investment.Symbol,
-                Name = investment.Name,
-                TotalInitialInvestment = Math.Round(investment.TotalValueInFiat, 2),
-                TotalCurrentInvestment = Math.Round(currentInvestmentPrice, 2),
-                Rate = Math.Round(returnRate, 2)
-            };
-
-            currentUserInvestmentsPerformanceList.Add(result);
-        }
-
-        currentUserInvestmentsPerformanceList = currentUserInvestmentsPerformanceList
+                return new GetInvestmentPerformanceQueryModel
+                {
+                    AssetId = investment.Symbol,
+                    Name = investment.Name,
+                    TotalInitialInvestment = Math.Round(investment.TotalValueInFiat, 2),
+                    TotalCurrentInvestment = Math.Round(investment.TotalValueInFiat + (investment.TotalValueInFiat * (returnRate / 100)), 2),
+                    Rate = Math.Round(returnRate, 2),
+                };
+            })
             .OrderByDescending(x => x.Rate)
             .ToList();
 
@@ -95,7 +83,7 @@ internal class GetInvestmentPerformanceQueryHandler : IRequestHandler<GetInvestm
     }
 }
 
-public record InvestmentPerformanceQueryModel
+public class GetInvestmentPerformanceQueryModel
 {
     public string AssetId { get; set; } = string.Empty;
 

@@ -5,11 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TRINV.Infrastructure.Migrations
 {
-<<<<<<<< HEAD:investment-app/TRINV.Api/TRINV.Infrastructure/Migrations/20240130061850_InitialCreateMigration.cs
-    public partial class InitialCreateMigration : Migration
-========
     public partial class InitialCreate : Migration
->>>>>>>> main:investment-app/TRINV.Api/TRINV.Infrastructure/Migrations/20240129201115_InitialCreate.cs
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

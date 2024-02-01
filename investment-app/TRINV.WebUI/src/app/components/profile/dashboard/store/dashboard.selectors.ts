@@ -19,6 +19,22 @@ export const selectInvestmentsInPercents = createSelector(
   selectDashboardState,
   (state) => state.investmentsInPercents
 );
+export const selectIsLoadingInvestmentsPerformanceList = createSelector(
+  selectDashboardState,
+  (state) => state.isinvestmentPerformanceListLoading
+);
+export const selectInvestmentsPerformanceList = createSelector(
+  selectDashboardState,
+  (state) => state.investmentPerformanceList
+);
+export const selectIsLoadingLastInvestments = createSelector(
+  selectDashboardState,
+  (state) => state.isLoadingLastInvestments
+);
+export const selectLastInvestments = createSelector(
+  selectDashboardState,
+  (state) => state.lastInvestments
+);
 export const selectError = createSelector(
   selectDashboardState,
   (state) => state.error

@@ -12,13 +12,8 @@ using TRINV.Infrastructure;
 namespace TRINV.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-<<<<<<<< HEAD:investment-app/TRINV.Api/TRINV.Infrastructure/Migrations/20240130061850_InitialCreateMigration.Designer.cs
-    [Migration("20240130061850_InitialCreateMigration")]
-    partial class InitialCreateMigration
-========
-    [Migration("20240129201115_InitialCreate")]
+    [Migration("20240131164427_InitialCreate")]
     partial class InitialCreate
->>>>>>>> main:investment-app/TRINV.Api/TRINV.Infrastructure/Migrations/20240129201115_InitialCreate.Designer.cs
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -37,7 +37,7 @@ public class DashboardController : Controller
     }
 
     [HttpGet("get-investment-performance-list")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OperationResult<IList<InvestmentPerformanceQueryModel>>))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OperationResult<List<GetInvestmentPerformanceQueryModel>>))]
     public async Task<IActionResult> GetUserInvestmentsPerformance(InvestmentType investmentType, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new GetInvestmentPerformanceQuery(investmentType), cancellationToken);
