@@ -55,6 +55,8 @@ import { DashboardEffect } from './components/profile/dashboard/store/dashboard.
 import { DashboardInfoComponent } from './components/profile/dashboard/dashboard-info/dashboard-info.component';
 import { DashboardChartComponent } from './components/profile/dashboard/dashboard-sum-price-chart/dashboard-chart.component';
 import { DashboardInvestmentsInPecentComponent } from './components/profile/dashboard/dashboard-investments-in-percent/dashboard-investments-in-percent.component';
+import { DashboardInvestmentPerformanceListComponent } from './components/profile/dashboard/dashboard-investment-performance-list/dashboard-investment-performance-list.component';
+import { DashboardLastInvestmentsComponent } from './components/profile/dashboard/dashboard-last-investments/dasbhoard-last-investments.component';
 
 @NgModule({
   declarations: [
@@ -91,6 +93,8 @@ import { DashboardInvestmentsInPecentComponent } from './components/profile/dash
     DashboardInfoComponent,
     DashboardChartComponent,
     DashboardInvestmentsInPecentComponent,
+    DashboardInvestmentPerformanceListComponent,
+    DashboardLastInvestmentsComponent
   ],
   imports: [
     SharedModule,

@@ -43,7 +43,7 @@ export class DashboardInvestmentsInPecentComponent  implements OnInit{
     },
   ];
 
-  constructor(private store: Store, public dialog: MatDialog) {}
+  constructor(private store: Store, private dialog: MatDialog) {}
 
   public ngOnInit(): void {
     this.store.pipe(select(selectInvestmentsInPercents)).subscribe((x) => {
@@ -61,9 +61,7 @@ export class DashboardInvestmentsInPecentComponent  implements OnInit{
     );
   }
 
-  openDialogHistoryLog() {
-    console.log('start');
-
+  openDialog() {
     this.dialog.open(HistoryLogComponent, {
       data: {
         data: this.dashboardInvestmentsPercent,

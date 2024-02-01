@@ -3,7 +3,7 @@
 <div class="wrapper">
   <div class="table">
 
-    <div class=" mb-4 flex justify-between items-center ">
+    <!-- <div class=" mb-4 flex justify-between items-center ">
 
       <div class="flex-1 pr-4">
         <div class="relative md:w-1/3">
@@ -41,13 +41,13 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <div class="mat-elevation-z8">
       <table mat-table [dataSource]="this.tableData" >
         <ng-container *ngFor="let columnName of displayedColumns; index as columnIndex;" [matColumnDef]="columnName">
           <th class=" sticky top-0 text-gray-600 font-bold uppercase text-xs"
-              mat-header-cell *matHeaderCellDef> {{columnName}} </th>
+              mat-header-cell *matHeaderCellDef> {{allAvailableHeadings[columnIndex]}} </th>
           <td mat-cell *matCellDef="let element"> {{element[columnName]}} </td>
         </ng-container>
 

@@ -2,12 +2,18 @@ import { OperationResult } from 'src/app/models/operation-result.model';
 import { IDashboardInvestmentInfo } from '../models/dashboard-investment-info.interace';
 import { IDashboardInvestmentsPercent } from '../models/dashboard-investments-in-percents.interface';
 import * as dashboardActions from './dashboard.actions';
+import { IDashboardInvestmentPerformance } from '../models/dashboard-investment-performance.interface';
+import { IDashboardLastInvestment } from '../models/dashboard-last-investment.interface';
 
 export interface DashboardInitialState {
   info: IDashboardInvestmentInfo | null;
   investmentsInPercents: IDashboardInvestmentsPercent[];
   isLoadingInfo: boolean;
   isLoadingInvestmentsInPercents: boolean;
+  investmentPerformanceList: IDashboardInvestmentPerformance[];
+  isinvestmentPerformanceListLoading: boolean;
+  isLoadingLastInvestments: boolean;
+  lastInvestments: IDashboardLastInvestment[];
   error: OperationResult | null;
 }
 
@@ -16,6 +22,10 @@ const initialState: DashboardInitialState = {
   investmentsInPercents: [],
   isLoadingInfo: false,
   isLoadingInvestmentsInPercents: false,
+  investmentPerformanceList: [],
+  isinvestmentPerformanceListLoading: false,
+  isLoadingLastInvestments: false,
+  lastInvestments: [],
   error: null,
 };
 
@@ -58,6 +68,40 @@ export function dashboardListReducer(
         isLoadingInvestmentsInPercents: false,
         error: action.payload.operationResult,
       };
+    case dashboardActions.GET_DASHBOARD_INVESTMENT_PERFORMANCE_LIST:
+      return {
+        ...state,
+        isinvestmentPerformanceListLoading: true,
+      };
+    case dashboardActions.GET_DASHBOARD_INVESTMENT_PERFORMANCE_LIST_SUCCESS:
+      return {
+        ...state,
+        isinvestmentPerformanceListLoading: false,
+        investmentPerformanceList: action.payload.invesmentPerformanceList,
+      };
+    case dashboardActions.GET_DASHBOARD_INVESTMENT_PERFORMANCE_LIST_FAILED:
+      return {
+        ...state,
+        isinvestmentPerformanceListLoading: false,
+        error: action.payload.operationResult,
+      };
+      case dashboardActions.GET_DASHBOARD_LAST_INVESTMENTS:
+        return {
+          ...state,
+          isLoadingLastInvestments: true,
+        };
+      case dashboardActions.GET_DASHBOARD_LAST_INVESTMENTS_SUCCESS:
+        return {
+          ...state,
+          isLoadingLastInvestments: false,
+          lastInvestments: action.payload.lastInvestments,
+        };
+      case dashboardActions.GET_DASHBOARD_LAST_INVESTMENTS_FAILED:
+        return {
+          ...state,
+          isLoadingLastInvestments: false,
+          error: action.payload.operationResult,
+        };
     default:
       return state;
   }

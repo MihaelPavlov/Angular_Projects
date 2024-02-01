@@ -1,6 +1,5 @@
-
 table {
-  min-width: 90vh ;
+  min-width: 90vh;
 }
 
 .wrapper {
@@ -9,10 +8,10 @@ table {
   padding: 20px;
   max-height: 50rem;
   margin-bottom: 20px;
-
-  font-family: 'Helvetica Neue', sans-serif;
- }
-.bg-color{
+  border-radius: 20px;
+  font-family: "Helvetica Neue", sans-serif;
+}
+.bg-color {
   background-color: #8f9096 !important;
 }
 .mat-mdc-dialog-surface {
