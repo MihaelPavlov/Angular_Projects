@@ -25,9 +25,11 @@ internal class CreateNewsCommentCommandHandler : IRequestHandler<CreateNewsComme
     readonly IRepository<News> _newsRepository;
     readonly IUserContext _userContext;
 
-    public CreateNewsCommentCommandHandler(IUnitOfWork unitOfWork, 
+    public CreateNewsCommentCommandHandler(
+        IUnitOfWork unitOfWork, 
         IUserContext userContext, 
-        IRepository<NewsComment> newsCommentRepository, IRepository<News> newsRepository)
+        IRepository<NewsComment> newsCommentRepository, 
+        IRepository<News> newsRepository)
     {
         _unitOfWork = unitOfWork;
         _userContext = userContext;

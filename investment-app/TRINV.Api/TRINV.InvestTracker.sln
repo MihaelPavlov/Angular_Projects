@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TRINV.Infrastructure", "TRI
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TRINV.Shared.Business", "..\TRINV.Shared\TRINV.Shared.Business\TRINV.Shared.Business.csproj", "{7FF3C43E-49D3-49D3-A11C-40B858F07F61}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TRINV.UnitTests", "TRINV.Tests\TRINV.UnitTests.csproj", "{1F2B710F-628B-44FC-9148-45A3B189BE7F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{7FF3C43E-49D3-49D3-A11C-40B858F07F61}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7FF3C43E-49D3-49D3-A11C-40B858F07F61}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7FF3C43E-49D3-49D3-A11C-40B858F07F61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F2B710F-628B-44FC-9148-45A3B189BE7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F2B710F-628B-44FC-9148-45A3B189BE7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F2B710F-628B-44FC-9148-45A3B189BE7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F2B710F-628B-44FC-9148-45A3B189BE7F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
