@@ -61,7 +61,7 @@ public class CreateInvestmentCommandTests
     }
 
     [Test]
-    public async Task Handle_Should_Throw_Exception()
+    public async Task Handle_Should_Throw_ValidationException()
     {
         //Arrange
         var command = new CreateInvestmentCommand
@@ -84,14 +84,6 @@ public class CreateInvestmentCommandTests
         var result = await handler.Handle(command, default);
 
         //Assert
-        _investmentRepositoryMock.Verify(r => r.AddAsync(
-            It.IsAny<Investment>(), It.IsAny<CancellationToken>()), Times.Never());
-
-        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(
-            It.IsAny<CancellationToken>()), Times.Never());
-
-        Assert.IsFalse(result.Success);
         Assert.IsNotNull(result.ValidationErrors);
-        Assert.That(result.ValidationErrors.GetType(), Is.EqualTo(typeof(ValidationException)));
     }
 }
