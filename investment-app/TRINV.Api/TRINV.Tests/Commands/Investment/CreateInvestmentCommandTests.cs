@@ -9,16 +9,9 @@ using Moq;
 [TestFixture]
 public class CreateInvestmentCommandTests
 { 
-    readonly Mock<IRepository<Investment>> _investmentRepositoryMock;
-    readonly Mock<IUnitOfWork> _unitOfWorkMock;
-    readonly Mock<IUserContext> _userContextMock;
-
-    public CreateInvestmentCommandTests()
-    {
-        _unitOfWorkMock = new();
-        _investmentRepositoryMock = new();
-        _userContextMock = new();
-    }
+    readonly Mock<IRepository<Investment>> _investmentRepositoryMock = new();
+    readonly Mock<IUnitOfWork> _unitOfWorkMock = new();
+    readonly Mock<IUserContext> _userContextMock = new();
 
     [Test]
     public async Task Handle_Should_Create_NewInvestment()
