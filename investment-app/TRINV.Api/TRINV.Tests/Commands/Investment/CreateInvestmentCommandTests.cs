@@ -1,12 +1,12 @@
 ﻿namespace TRINV.UnitTests.Commands.Investment;
 
-using System.ComponentModel.DataAnnotations;
 using Application.Interfaces;
 using Application.Commands.Investment;
 using Domain.Entities;
 using Domain.Enums;
 using Moq;
 
+[TestFixture]
 public class CreateInvestmentCommandTests
 { 
     readonly Mock<IRepository<Investment>> _investmentRepositoryMock;
@@ -18,11 +18,6 @@ public class CreateInvestmentCommandTests
         _unitOfWorkMock = new();
         _investmentRepositoryMock = new();
         _userContextMock = new();
-    }
-
-    [SetUp]
-    public void Setup()
-    {
     }
 
     [Test]
@@ -84,6 +79,6 @@ public class CreateInvestmentCommandTests
         var result = await handler.Handle(command, default);
 
         //Assert
-        Assert.IsNotNull(result.ValidationErrors);
+        Assert.IsNotNull(result.ValidationErrors.Keys);
     }
 }

@@ -17,11 +17,6 @@ public class CreateNewsCommandTests
         _newsRepositoryMock = new();
         _userContextMock = new();
     }
-    //TODO: Set up tests
-    [SetUp]
-    public void Setup()
-    {
-    }
 
     [Test]
     public async Task Handle_Should_Create_NewNews()
