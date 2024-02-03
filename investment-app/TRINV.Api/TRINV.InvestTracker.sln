@@ -5,10 +5,6 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TRINV.InvestTrackApplication", "TRINV.InvestTrackApplication\TRINV.InvestTrackApplication.csproj", "{4DEFB800-88C1-4D1E-8AC5-EAC8794227A3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "11. JavascriptClient", "..\..\..\Desktop\Identity-Server-Demystified-master\Demos\PKCE\JavascriptClient\11. JavascriptClient.csproj", "{581E3240-A62F-4351-8E35-9A8F4CD8068C}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{26E3A35A-C95F-4A6B-BAF7-0BD09FC31E15}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TRINV.Application", "TRINV.Application\TRINV.Application.csproj", "{549B5E2F-92A3-4733-9141-F29D57C19989}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TRINV.Domain", "TRINV.Domain\TRINV.Domain.csproj", "{658E32D8-62F4-4CAB-BED3-D2654D06EEDF}"
@@ -27,14 +23,6 @@ Global
 		{4DEFB800-88C1-4D1E-8AC5-EAC8794227A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4DEFB800-88C1-4D1E-8AC5-EAC8794227A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4DEFB800-88C1-4D1E-8AC5-EAC8794227A3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{581E3240-A62F-4351-8E35-9A8F4CD8068C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{581E3240-A62F-4351-8E35-9A8F4CD8068C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{581E3240-A62F-4351-8E35-9A8F4CD8068C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{581E3240-A62F-4351-8E35-9A8F4CD8068C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{26E3A35A-C95F-4A6B-BAF7-0BD09FC31E15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{26E3A35A-C95F-4A6B-BAF7-0BD09FC31E15}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{26E3A35A-C95F-4A6B-BAF7-0BD09FC31E15}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{26E3A35A-C95F-4A6B-BAF7-0BD09FC31E15}.Release|Any CPU.Build.0 = Release|Any CPU
 		{549B5E2F-92A3-4733-9141-F29D57C19989}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{549B5E2F-92A3-4733-9141-F29D57C19989}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{549B5E2F-92A3-4733-9141-F29D57C19989}.Release|Any CPU.ActiveCfg = Release|Any CPU
