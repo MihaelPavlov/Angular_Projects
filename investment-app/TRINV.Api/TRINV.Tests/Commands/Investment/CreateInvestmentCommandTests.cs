@@ -50,7 +50,7 @@ public class CreateInvestmentCommandTests
     }
 
     [Test]
-    public async Task Handle_Should_Throw_ValidationException()
+    public Task Handle_Should_Throw_ValidationException()
     {
         // Arrange
         var command = new CreateInvestmentCommand
@@ -77,10 +77,11 @@ public class CreateInvestmentCommandTests
 
         // Assert
         Assert.IsFalse(isValid);
-        Assert.AreEqual(1, validationResults.Count);
+        Assert.That(validationResults.Count, Is.EqualTo(1));
 
         var validationResult = validationResults[0];
-        Assert.AreEqual("The AssetId field is required.", validationResult.ErrorMessage);
+        Assert.That(validationResult.ErrorMessage, Is.EqualTo("The AssetId field is required."));
         CollectionAssert.Contains(validationResult.MemberNames, "AssetId");
+        return Task.CompletedTask;
     }
 }
