@@ -1,9 +1,6 @@
 ﻿using MediatR;
 using System.ComponentModel.DataAnnotations;
 using TRINV.Application.Interfaces;
-using TRINV.Application.Queries.DigitalCurrency;
-using TRINV.Application.Queries.Stock;
-using TRINV.Domain.Enums;
 using TRINV.Shared.Business.Exceptions;
 using TRINV.Shared.Business.Extension;
 using TRINV.Shared.Business.Utilities;
@@ -44,7 +41,8 @@ internal class UpdateInvestmentCommandHandler : IRequestHandler<UpdateInvestment
         var investment = await this._repository.GetByIdAsync(request.Id, cancellationToken);
 
         if (investment is null)
-            return operationResult.ReturnWithErrorMessage(new NotFoundException($"{nameof(investment)} with Id {request.Id} was not found"));
+            return operationResult.ReturnWithErrorMessage(
+                new NotFoundException($"{nameof(Domain.Entities.Investment)} with Id {request.Id} was not found!"));
 
 
         investment.PurchasePrice = request.PurchasePrice;

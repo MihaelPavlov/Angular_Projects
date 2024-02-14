@@ -7,6 +7,8 @@ using TRINV.Shared.Business.Utilities;
 
 namespace TRINV.Application.Commands.Investment;
 
+using Domain.Entities;
+
 public class DeleteInvestmentCommand : IRequest<OperationResult>
 {
     [Required]
@@ -20,10 +22,10 @@ public class DeleteInvestmentCommand : IRequest<OperationResult>
 
 internal class DeleteInvestmentCommandHandler : IRequestHandler<DeleteInvestmentCommand, OperationResult>
 {
-    readonly IRepository<Domain.Entities.Investment> _repository;
+    readonly IRepository<Investment> _repository;
     readonly IUnitOfWork _unitOfWork;
 
-    public DeleteInvestmentCommandHandler(IRepository<Domain.Entities.Investment> repository, IUnitOfWork unitOfWork)
+    public DeleteInvestmentCommandHandler(IRepository<Investment> repository, IUnitOfWork unitOfWork)
     {
         this._repository = repository;
         this._unitOfWork = unitOfWork;
@@ -35,7 +37,8 @@ internal class DeleteInvestmentCommandHandler : IRequestHandler<DeleteInvestment
         var investment = await this._repository.GetByIdAsync(request.Id, cancellationToken);
 
         if (investment is null)
-            return operationResult.ReturnWithErrorMessage(new NotFoundException($"{nameof(investment)} with Id {request.Id} was not found"));
+            return operationResult.ReturnWithErrorMessage(
+                new NotFoundException($"{typeof(Investment)} with Id: {request.Id} was not found!"));
 
         this._repository.Delete(investment);
 
